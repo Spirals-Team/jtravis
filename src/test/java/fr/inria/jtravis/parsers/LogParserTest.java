@@ -5,7 +5,6 @@ import fr.inria.jtravis.entities.Build;
 import fr.inria.jtravis.entities.BuildTool;
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Log;
-import fr.inria.spirals.jtravis.entities.*;
 import fr.inria.jtravis.helpers.BuildHelper;
 import org.junit.Test;
 

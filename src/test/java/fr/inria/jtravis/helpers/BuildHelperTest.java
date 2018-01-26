@@ -7,7 +7,6 @@ import fr.inria.jtravis.entities.Commit;
 import fr.inria.jtravis.entities.Config;
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Repository;
-import fr.inria.spirals.jtravis.entities.*;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
