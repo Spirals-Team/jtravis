@@ -52,22 +52,24 @@ public class MavenLogParser extends JavaLogParser {
             res.setPassing(res.getRunning() - (res.getFailing()+res.getErrored()+res.getSkipping()));
             this.detailedResults.add(res);
             return  true;
-        }
-        else
+        } else {
             return false;
+        }
     }
 
     @Override
     public TestsInformation parseLog(TravisFold outOfFold) {
-        if(this.globalResults == null)
+        if (this.globalResults == null) {
             this.advancedParseLog(outOfFold);
+        }
         return this.globalResults;
     }
 
     @Override
     public List<TestsInformation> parseDetailedLog(TravisFold outOfFold) {
-        if(this.detailedResults == null)
+        if (this.detailedResults == null) {
             this.advancedParseLog(outOfFold);
+        }
         return this.detailedResults;
     }
 

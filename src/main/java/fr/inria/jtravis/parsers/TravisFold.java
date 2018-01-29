@@ -2,7 +2,6 @@ package fr.inria.jtravis.parsers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
 /**
  * Created by urli on 03/01/2017.

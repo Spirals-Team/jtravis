@@ -12,8 +12,8 @@ import java.io.IOException;
  * @author Simon Urli
  */
 public class LogHelper extends AbstractHelper {
-    public final static String LOG_ENDPOINT = "logs/";
-    public final static String LOG_JOB_ENDPOINT = "/log";
+    public static final String LOG_ENDPOINT = "logs/";
+    public static final String LOG_JOB_ENDPOINT = "/log";
 
     private static LogHelper instance;
 

@@ -113,10 +113,8 @@ public class CommitPojo {
         if (committedAt != null ? !committedAt.equals(that.committedAt) : that.committedAt != null) return false;
         if (authorName != null ? !authorName.equals(that.authorName) : that.authorName != null) return false;
         if (authorEmail != null ? !authorEmail.equals(that.authorEmail) : that.authorEmail != null) return false;
-        if (committerName != null ? !committerName.equals(that.committerName) : that.committerName != null)
-            return false;
-        if (committerEmail != null ? !committerEmail.equals(that.committerEmail) : that.committerEmail != null)
-            return false;
+        if (committerName != null ? !committerName.equals(that.committerName) : that.committerName != null) return false;
+        if (committerEmail != null ? !committerEmail.equals(that.committerEmail) : that.committerEmail != null) return false;
         return compareUrl != null ? compareUrl.equals(that.compareUrl) : that.compareUrl == null;
     }
 

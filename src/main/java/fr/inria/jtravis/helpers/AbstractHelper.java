@@ -23,10 +23,10 @@ import java.util.Date;
  * @author Simon Urli
  */
 public abstract class AbstractHelper {
-    public final static String TRAVIS_API_ENDPOINT="https://api.travis-ci.org/";
+    public static final String TRAVIS_API_ENDPOINT="https://api.travis-ci.org/";
 
-    private final static String USER_AGENT = "MyClient/1.0.0";
-    private final static String ACCEPT_APP = "application/vnd.travis-ci.2+json";
+    private static final String USER_AGENT = "MyClient/1.0.0";
+    private static final String ACCEPT_APP = "application/vnd.travis-ci.2+json";
 
     private String endpoint;
     private OkHttpClient client;

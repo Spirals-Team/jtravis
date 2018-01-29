@@ -20,7 +20,7 @@ import java.util.List;
  * @author Simon Urli
  */
 public class Build extends BuildPojo implements Comparable<Build> {
-    private final static Logger LOGGER = LoggerFactory.getLogger(Build.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Build.class);
 
     private Repository repository;
     private PRInformation prInformation;

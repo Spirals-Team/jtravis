@@ -132,8 +132,7 @@ public class BuildPojo {
         if (pullRequestNumber != buildPojo.pullRequestNumber) return false;
         if (duration != buildPojo.duration) return false;
         if (number != null ? !number.equals(buildPojo.number) : buildPojo.number != null) return false;
-        if (pullRequestTitle != null ? !pullRequestTitle.equals(buildPojo.pullRequestTitle) : buildPojo.pullRequestTitle != null)
-            return false;
+        if (pullRequestTitle != null ? !pullRequestTitle.equals(buildPojo.pullRequestTitle) : buildPojo.pullRequestTitle != null) return false;
         if (state != null ? !state.equals(buildPojo.state) : buildPojo.state != null) return false;
         if (startedAt != null ? !startedAt.equals(buildPojo.startedAt) : buildPojo.startedAt != null) return false;
         if (finishedAt != null ? !finishedAt.equals(buildPojo.finishedAt) : buildPojo.finishedAt != null) return false;
