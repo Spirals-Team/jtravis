@@ -1,4 +1,4 @@
-# jtravis [![Build Status](https://travis-ci.org/Spirals-Team/jtravis.svg?branch=master)](https://travis-ci.org/Spirals-Team/jtravis)
+# jtravis [![Build Status](https://travis-ci.org/Spirals-Team/jtravis.svg?branch=master)](https://travis-ci.org/Spirals-Team/jtravis) [![Coverage Status](https://coveralls.io/repos/github/Spirals-Team/jtravis/badge.svg?branch=master)](https://coveralls.io/github/Spirals-Team/jtravis?branch=master)
 
 The purpose of this project is to propose a Java API in order to use Travis-CI API.
 
