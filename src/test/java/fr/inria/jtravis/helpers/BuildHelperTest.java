@@ -255,7 +255,7 @@ public class BuildHelperTest {
     public void testGetTheLastBuildNumberOfADate() {
         Date date = TestUtils.getDate(2017, 3, 16, 22, 59, 59);
 
-        String slug = "Spirals-Team/librepair";
+        String slug = "Spirals-Team/repairnator";
 
         int expectedBuildNumber = 215;
 
@@ -268,7 +268,7 @@ public class BuildHelperTest {
     public void testGetTheLastBuildNumberOfADate2() {
         Date date = TestUtils.getDate(2017, 3, 14, 22, 59, 59);
 
-        String slug = "Spirals-Team/librepair";
+        String slug = "Spirals-Team/repairnator";
 
         int expectedBuildNumber = 189;
 
@@ -280,7 +280,7 @@ public class BuildHelperTest {
     @Test
     public void testGetBuildsFromRepositoryInTimeInterval() {
         Repository repo = new Repository();
-        repo.setSlug("Spirals-Team/librepair");
+        repo.setSlug("Spirals-Team/repairnator");
 
         Date initialDate = TestUtils.getDate(2017, 3, 13, 23, 0, 0);
 
