@@ -6,5 +6,6 @@ package fr.inria.jtravis.entities;
  * @author Simon Urli
  */
 public enum BuildStatus {
-    FAILED, PASSED, CREATED, STARTED, ERRORED, CANCELED, RECEIVED, QUEUED
+    FAILED, PASSED, CREATED, STARTED, ERRORED, CANCELED,
+    RECEIVED, QUEUED // used for jobs
 }

@@ -1,6 +1,7 @@
 package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.entities.Build;
+import fr.inria.jtravis.entities.BuildStatus;
 import fr.inria.jtravis.entities.Config;
 import fr.inria.jtravis.entities.Job;
 import org.junit.Ignore;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Created by urli on 22/12/2016.
@@ -46,6 +48,17 @@ public class JobHelperTest {
         List<Job> jobs = JobHelper.getJobList();
         assertTrue(jobs.size() > 1);
         assertTrue(jobs.get(0).getId() > minId);
+    }
+
+    @Test
+    public void testGetFilteredJobList() {
+        List<Job> jobs = JobHelper.getJobListWithFilter(BuildStatus.FAILED);
+        assertTrue(jobs.size() > 1);
+        for (Job job : jobs) {
+            if (job.getBuildStatus() != BuildStatus.FAILED) {
+                fail("Job status should be failed but obtained: "+job.getBuildStatus());
+            }
+        }
     }
 
     @Ignore

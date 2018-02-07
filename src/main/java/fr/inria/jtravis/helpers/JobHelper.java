@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import fr.inria.jtravis.entities.BuildStatus;
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Config;
 
@@ -65,8 +66,12 @@ public class JobHelper extends AbstractHelper {
         }
     }
 
-    public static List<Job> getJobList() {
+    public static List<Job> getJobListWithFilter(BuildStatus buildStatus) {
         String resourceUrl = getInstance().getEndpoint()+JOB_ENDPOINT;
+
+        if (buildStatus != null) {
+            resourceUrl += "?state="+buildStatus.name().toLowerCase();
+        }
 
         try {
             String response = getInstance().get(resourceUrl);
@@ -84,5 +89,9 @@ public class JobHelper extends AbstractHelper {
             getInstance().getLogger().warn("Error while getting list of jobs : "+e.getMessage());
         }
         return null;
+    }
+
+    public static List<Job> getJobList() {
+        return getJobListWithFilter(null);
     }
 }
