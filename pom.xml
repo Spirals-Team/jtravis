@@ -4,9 +4,60 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
     <groupId>fr.inria.jtravis</groupId>
     <artifactId>jtravis</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <name>jtravis</name>
+    <description>jTravis is a Java API for accessing TravisCI API</description>
+    <url>https://github.com/Spirals-Team/jtravis</url>
+    <inceptionYear>2017</inceptionYear>
+
+    <licenses>
+        <license>
+            <name>LGPL-3.0</name>
+            <url>https://www.gnu.org/licenses/lgpl-3.0.en.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>Inria</name>
+        <url>http://www.inria.fr</url>
+    </organization>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/Spirals-Team/jtravis/issues</url>
+    </issueManagement>
+
+    <developers>
+        <developer>
+            <name>Simon Urli</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Fernanda Madeiral</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/Spirals-Team/jtravis</url>
+        <connection>scm:git:git@github.com:Spirals-Team/jtravis.git</connection>
+        <developerConnection>scm:git:git@github.com:Spirals-Team/jtravis.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <default.encoding>UTF-8</default.encoding>
