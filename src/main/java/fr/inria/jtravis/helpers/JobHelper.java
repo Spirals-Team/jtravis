@@ -19,7 +19,7 @@ import java.util.List;
  * @author Simon Urli
  */
 public class JobHelper extends AbstractHelper {
-    public static final String JOB_ENDPOINT = "jobs/";
+    public static final String JOB_ENDPOINT = "jobs/?sort_by=finished_at";
 
     private static JobHelper instance;
 
@@ -66,11 +66,17 @@ public class JobHelper extends AbstractHelper {
         }
     }
 
+    /**
+     * Prefer using {@see getJobList} for now
+     * @param buildStatus
+     * @return
+     */
+    @Deprecated
     public static List<Job> getJobListWithFilter(BuildStatus buildStatus) {
         String resourceUrl = getInstance().getEndpoint()+JOB_ENDPOINT;
 
         if (buildStatus != null) {
-            resourceUrl += "?state="+buildStatus.name().toLowerCase();
+            resourceUrl += "&state="+buildStatus.name().toLowerCase();
         }
 
         try {

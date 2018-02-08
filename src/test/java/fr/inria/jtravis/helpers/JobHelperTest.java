@@ -7,6 +7,9 @@ import fr.inria.jtravis.entities.Job;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -50,15 +53,27 @@ public class JobHelperTest {
         assertTrue(jobs.get(0).getId() > minId);
     }
 
+    @Ignore
     @Test
     public void testGetFilteredJobList() {
+        Instant threeDaysAgo = new Date().toInstant().minus(3, ChronoUnit.DAYS);
         List<Job> jobs = JobHelper.getJobListWithFilter(BuildStatus.FAILED);
-        assertTrue(jobs.size() > 1);
-        for (Job job : jobs) {
-            if (job.getBuildStatus() != BuildStatus.FAILED) {
-                fail("Job status should be failed but obtained: "+job.getBuildStatus());
-            }
+        assertTrue(jobs.size() > 2);
+
+        for (int i = 0; i < jobs.size()-1; i=i+2) {
+            Job job1 = jobs.get(i);
+            Job job2 = jobs.get(i+1);
+
+            assertTrue("J1 finished at: "+job1.getStartedAt()+"\nJ2 finished at: "+job2.getFinishedAt(), job1.getFinishedAt().after(job2.getFinishedAt()));
         }
+
+        /*for (Job job : jobs) {
+            if (job.getBuildStatus() != BuildStatus.FAILED || job.getFinishedAt().toInstant().isBefore(threeDaysAgo)) {
+                System.out.println("Job status should be failed but obtained: "+job.getBuildStatus()+" finished at: "+job.getFinishedAt());
+            } else {
+                System.out.println("OK");
+            }
+        }*/
     }
 
     @Ignore
