@@ -1,4 +1,4 @@
-# jtravis [![Build Status](https://travis-ci.org/Spirals-Team/jtravis.svg?branch=master)](https://travis-ci.org/Spirals-Team/jtravis) [![Coverage Status](https://coveralls.io/repos/github/Spirals-Team/jtravis/badge.svg?branch=master)](https://coveralls.io/github/Spirals-Team/jtravis?branch=master)
+# jtravis [![Maven Central](https://img.shields.io/maven-central/v/fr.inria.jtravis.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22fr.inria.jtravis%22%20AND%20a%3A%22jtravis%22) [![Build Status](https://travis-ci.org/Spirals-Team/jtravis.svg?branch=master)](https://travis-ci.org/Spirals-Team/jtravis) [![Coverage Status](https://coveralls.io/repos/github/Spirals-Team/jtravis/badge.svg?branch=master)](https://coveralls.io/github/Spirals-Team/jtravis?branch=master)
 
 The purpose of this project is to propose a Java API in order to use Travis-CI API.
 
@@ -16,7 +16,7 @@ The API can be immediately used after specifying the following dependency in you
 <dependency>
     <groupId>fr.inria.jtravis</groupId>
     <artifactId>jtravis</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 </dependency>
 ```
 
