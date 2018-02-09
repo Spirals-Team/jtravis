@@ -5,6 +5,7 @@ import fr.inria.jtravis.entities.PRInformation;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 /**
@@ -24,6 +25,8 @@ public class PRInformationHelperTest {
         Build originBuild = BuildHelper.getBuildFromId(186814810, null);
 
         PRInformation prInformation = PRInformationHelper.getPRInformationFromBuild(originBuild);
+
+        assertNotNull(prInformation);
         assertEquals("pvojtechovsky/spoon", prInformation.getOtherRepo().getSlug());
         assertEquals("master", prInformation.getBase().getBranch());
         assertEquals("lazyQueries", prInformation.getHead().getBranch());

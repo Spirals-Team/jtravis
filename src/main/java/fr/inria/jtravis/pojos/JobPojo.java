@@ -3,8 +3,9 @@ package fr.inria.jtravis.pojos;
 import java.util.Date;
 
 /**
- * Represents a job object in Travis CI API (see {@link https://docs.travis-ci.com/api#jobs})
+ * Represents a job object in Travis CI API
  *
+ * @see <a href="https://docs.travis-ci.com/api#jobs">https://docs.travis-ci.com/api#jobs</a>
  * @author Simon Urli
  */
 public class JobPojo {

@@ -4,8 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Represent a Build object of Travis CI API (see {@link https://docs.travis-ci.com/api#builds})
+ * Represent a Build object of Travis CI API
  *
+ * @see <a href="https://docs.travis-ci.com/api#builds">https://docs.travis-ci.com/api#builds</a>
  * @author Simon Urli
  */
 public class BuildPojo {

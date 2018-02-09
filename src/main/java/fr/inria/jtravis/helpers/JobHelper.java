@@ -67,9 +67,9 @@ public class JobHelper extends AbstractHelper {
     }
 
     /**
-     * Prefer using {@see getJobList} for now
-     * @param buildStatus
-     * @return
+     * Prefer using {@link #getJobList} for now
+     * @param buildStatus The status of job we want to reach
+     * @return A list of jobs with the given status
      */
     @Deprecated
     public static List<Job> getJobListWithFilter(BuildStatus buildStatus) {

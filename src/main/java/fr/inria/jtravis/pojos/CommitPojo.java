@@ -3,8 +3,9 @@ package fr.inria.jtravis.pojos;
 import java.util.Date;
 
 /**
- * Represent a Commit object in Travis CI API (see {@link https://docs.travis-ci.com/api#commits})
+ * Represent a Commit object in Travis CI API 
  *
+ * @see <a href="https://docs.travis-ci.com/api#commits">https://docs.travis-ci.com/api#commits</a>
  * @author Simon Urli
  */
 public class CommitPojo {

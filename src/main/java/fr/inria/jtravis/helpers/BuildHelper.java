@@ -415,6 +415,7 @@ public class BuildHelper extends AbstractHelper {
      * @param date The date to get the last build
      * @param after_number Used for pagination: multiple requests may have to be made to reach the interesting build
      * @param onlyAfterNumber Consider only builds after the specified after_number: should be use in conjunction with a specified after_number
+     * @return The build number of the last build before a given date from a slug.
      */
     public static int getTheLastBuildNumberOfADate(String slug, Date date, int after_number, boolean onlyAfterNumber) {
         if ((date == null) || (after_number <= 0 && onlyAfterNumber)) {
@@ -483,9 +484,10 @@ public class BuildHelper extends AbstractHelper {
     /**
      * Return the last build before the given build which respect the given status and which is from the same PR if it's a PR build. If given status is null, it will return the last build before.
      * If no build is found, it returns null.
-     * @param build
-     * @param status
-     * @return
+     * @param build The build to look before
+     * @param status The status we are looking for
+     * @param skipDateLimit if false, this will go only 2 years in the past. If true this limit is skipped and it looks as far as needed.
+     * @return The searched build or null if nothing has been found
      */
     public static Build getLastBuildOfSameBranchOfStatusBeforeBuild(Build build, BuildStatus status, boolean skipDateLimit) {
         String slug = build.getRepository().getSlug();

@@ -4,8 +4,9 @@ import fr.inria.jtravis.parsers.LogParser;
 
 /**
  * Business object to deal with log in Travis CI API
- * If the body of the log has been archived, it is lazily get as plain text from the archive using job endpoint (see {@link https://docs.travis-ci.com/api#logs})
+ * If the body of the log has been archived, it is lazily get as plain text from the archive using job endpoint
  *
+ * @see <a href="https://docs.travis-ci.com/api#logs">https://docs.travis-ci.com/api#logs</a>
  * @author Simon Urli
  */
 public class Log {

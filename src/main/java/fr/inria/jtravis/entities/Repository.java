@@ -19,8 +19,8 @@ public class Repository extends RepositoryPojo {
     /**
      * Get the last build of the current repository. If onMaster is specified it will only look for builds created by push on master or cron.
      *
-     * @param onMaster
-     * @return
+     * @param onMaster True if the last build should be search only on the master branch
+     * @return The last build
      */
     public Build getLastBuild(boolean onMaster) {
 

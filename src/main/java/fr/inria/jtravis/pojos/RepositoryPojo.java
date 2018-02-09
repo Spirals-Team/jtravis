@@ -1,8 +1,9 @@
 package fr.inria.jtravis.pojos;
 
 /**
- * Represent a repository object in Travis CI API (see {@link https://docs.travis-ci.com/api#repositories})
+ * Represent a repository object in Travis CI API
  *
+ * @see <a href="https://docs.travis-ci.com/api#repositories">https://docs.travis-ci.com/api#repositories</a>
  * @author Simon Urli
  */
 public class RepositoryPojo {
