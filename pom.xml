@@ -54,7 +54,7 @@
 
     <scm>
         <url>https://github.com/Spirals-Team/jtravis</url>
-        <connection>scm:git:git@github.com:Spirals-Team/jtravis.git</connection>
+        <connection>scm:git:git://github.com:Spirals-Team/jtravis.git</connection>
         <developerConnection>scm:git:git@github.com:Spirals-Team/jtravis.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
