@@ -38,6 +38,10 @@ public class Repository extends Entity {
     @Expose
     private boolean starred;
 
+    private Build currentBuild;
+
+    private Build lastStartedBuild;
+
 
     private Build lastBuild;
     private Build lastBuildOnMaster;
