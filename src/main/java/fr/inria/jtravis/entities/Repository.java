@@ -180,6 +180,7 @@ public class Repository extends Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Repository that = (Repository) o;
         return id == that.id &&
                 active == that.active &&
@@ -189,6 +190,8 @@ public class Repository extends Entity {
                 Objects.equals(slug, that.slug) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(githubLanguage, that.githubLanguage) &&
+                Objects.equals(currentBuild, that.currentBuild) &&
+                Objects.equals(lastStartedBuild, that.lastStartedBuild) &&
                 Objects.equals(lastBuild, that.lastBuild) &&
                 Objects.equals(lastBuildOnMaster, that.lastBuildOnMaster) &&
                 Objects.equals(lastAccess, that.lastAccess);
@@ -197,6 +200,6 @@ public class Repository extends Entity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, slug, active, privateProperty, description, githubLanguage, starred, lastBuild, lastBuildOnMaster, lastAccess);
+        return Objects.hash(super.hashCode(), id, name, slug, active, privateProperty, description, githubLanguage, starred, currentBuild, lastStartedBuild, lastBuild, lastBuildOnMaster, lastAccess);
     }
 }

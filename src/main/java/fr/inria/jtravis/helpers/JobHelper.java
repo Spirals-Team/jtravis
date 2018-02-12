@@ -7,7 +7,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import fr.inria.jtravis.entities.BuildStatus;
 import fr.inria.jtravis.entities.Job;
-import fr.inria.jtravis.entities.Config;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,8 +39,6 @@ public class JobHelper extends AbstractHelper {
 
             if (jobJson.has("config")) {
                 JsonElement configJSON = jobJson.getAsJsonObject("config");
-                Config config = ConfigHelper.getConfigFromJsonElement(configJSON);
-                result.setConfig(config);
             }
             return result;
         } catch (JsonSyntaxException jsonSyntaxException) {

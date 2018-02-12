@@ -1,7 +1,9 @@
 package fr.inria.jtravis.entities;
 
-import fr.inria.jtravis.pojos.JobPojo;
+import com.google.gson.annotations.Expose;
 import fr.inria.jtravis.helpers.LogHelper;
+
+import java.util.Date;
 
 /**
  * Business object to deal with job in Travis CI API
@@ -9,17 +11,151 @@ import fr.inria.jtravis.helpers.LogHelper;
  *
  * @author Simon Urli
  */
-public class Job extends JobPojo {
-    private Config config;
+public class Job extends Entity {
+    @Expose
+    private int id;
+
+    @Expose
+    private boolean allowFailure;
+
+    @Expose
+    private String number;
+
+    @Expose
+    private String state;
+
+    @Expose
+    private Date startedAt;
+
+    @Expose
+    private Date finishedAt;
+
+    @Expose
+    private Build build;
+
+    @Expose
+    private String queue;
+
+    @Expose
+    private Repository repository;
+
+    @Expose
+    private Commit commit;
+
+    @Expose
+    private User owner;
+
+    @Expose
+    private Date createdAt;
+
+    @Expose
+    private Date updatedAt;
+
     private Log log;
     private BuildTool buildTool;
 
-    public Config getConfig() {
-        return config;
+    public int getId() {
+        return id;
     }
 
-    public void setConfig(Config config) {
-        this.config = config;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isAllowFailure() {
+        return allowFailure;
+    }
+
+    public void setAllowFailure(boolean allowFailure) {
+        this.allowFailure = allowFailure;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Date getStartedAt() {
+        return startedAt;
+    }
+
+    public void setStartedAt(Date startedAt) {
+        this.startedAt = startedAt;
+    }
+
+    public Date getFinishedAt() {
+        return finishedAt;
+    }
+
+    public void setFinishedAt(Date finishedAt) {
+        this.finishedAt = finishedAt;
+    }
+
+    public Build getBuild() {
+        return build;
+    }
+
+    public void setBuild(Build build) {
+        this.build = build;
+    }
+
+    public String getQueue() {
+        return queue;
+    }
+
+    public void setQueue(String queue) {
+        this.queue = queue;
+    }
+
+    public Repository getRepository() {
+        return repository;
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    public Commit getCommit() {
+        return commit;
+    }
+
+    public void setCommit(Commit commit) {
+        this.commit = commit;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public BuildStatus getBuildStatus() {
@@ -60,34 +196,5 @@ public class Job extends JobPojo {
         }
 
         return Integer.parseInt(numbers[1]);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        Job job = (Job) o;
-
-        if (config != null ? !config.equals(job.config) : job.config != null) return false;
-        return log != null ? log.equals(job.log) : job.log == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (config != null ? config.hashCode() : 0);
-        result = 31 * result + (log != null ? log.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Job{" +
-                super.toString() +
-                "config=" + config +
-                ", log=" + log +
-                '}';
     }
 }

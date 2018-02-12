@@ -1,14 +1,11 @@
 package fr.inria.jtravis.entities;
 
-import fr.inria.jtravis.helpers.BuildHelper;
-import fr.inria.jtravis.helpers.JobHelper;
-import fr.inria.jtravis.helpers.PRInformationHelper;
-import fr.inria.jtravis.helpers.RepositoryHelper;
-import fr.inria.jtravis.pojos.BuildPojo;
+import com.google.gson.annotations.Expose;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,14 +16,58 @@ import java.util.List;
  *
  * @author Simon Urli
  */
-public class Build extends BuildPojo implements Comparable<Build> {
+public class Build extends Entity implements Comparable<Build> {
     private static final Logger LOGGER = LoggerFactory.getLogger(Build.class);
 
+    @Expose
+    private int id;
+
+    @Expose
+    private String number;
+
+    @Expose
+    private String state;
+
+    @Expose
+    private int duration;
+
+    @Expose
+    private String eventType;
+
+    @Expose
+    private String previousState;
+
+    @Expose
+    private String pullRequestTitle;
+
+    @Expose
+    private int pullRequestNumber;
+
+    @Expose
+    private Date startedAt;
+
+    @Expose
+    private Date finishedAt;
+
+    @Expose
     private Repository repository;
-    private PRInformation prInformation;
+
+    @Expose
+    private Branch branch;
+
+    @Expose
     private Commit commit;
-    private Config config;
+
+    @Expose
     private List<Job> jobs;
+
+    @Expose
+    private Date updatedAt;
+
+    @Expose
+    private String tag;
+
+    private PRInformation prInformation;
     private String completeLog;
     private BuildTool buildTool;
 
@@ -35,8 +76,104 @@ public class Build extends BuildPojo implements Comparable<Build> {
         this.jobs = new ArrayList<Job>();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+    public String getPreviousState() {
+        return previousState;
+    }
+
+    public void setPreviousState(String previousState) {
+        this.previousState = previousState;
+    }
+
+    public String getPullRequestTitle() {
+        return pullRequestTitle;
+    }
+
+    public void setPullRequestTitle(String pullRequestTitle) {
+        this.pullRequestTitle = pullRequestTitle;
+    }
+
+    public int getPullRequestNumber() {
+        return pullRequestNumber;
+    }
+
+    public void setPullRequestNumber(int pullRequestNumber) {
+        this.pullRequestNumber = pullRequestNumber;
+    }
+
+    public Date getStartedAt() {
+        return startedAt;
+    }
+
+    public void setStartedAt(Date startedAt) {
+        this.startedAt = startedAt;
+    }
+
+    public Date getFinishedAt() {
+        return finishedAt;
+    }
+
+    public void setFinishedAt(Date finishedAt) {
+        this.finishedAt = finishedAt;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public void refreshStatus() {
-        Build b = BuildHelper.getBuildFromId(this.getId(), null);
+        /*Build b = BuildHelper.getBuildFromId(this.getId(), null);
         if (b != null && (this.getState() == null || !this.getState().equals(b.getState()))) {
             this.jobs.clear();
             this.completeLog = null;
@@ -48,7 +185,7 @@ public class Build extends BuildPojo implements Comparable<Build> {
             this.setFinishedAt(b.getFinishedAt());
             this.setDuration(b.getDuration());
             this.setJobIds(b.getJobIds());
-        }
+        }*/
     }
 
     public BuildStatus getBuildStatus() {
@@ -59,28 +196,7 @@ public class Build extends BuildPojo implements Comparable<Build> {
         }
     }
 
-    public void setRepository(Repository repository) {
-        this.repository = repository;
-    }
-
-    public Repository getRepository() {
-        if (repository == null) {
-            if (this.getRepositoryId() != 0) {
-                this.repository = RepositoryHelper.getRepositoryFromId(this.getRepositoryId());
-            }
-        }
-        return repository;
-    }
-
-    public void setCommit(Commit commit) {
-        this.commit = commit;
-    }
-
-    public Commit getCommit() {
-        return commit;
-    }
-
-    public boolean addJob(Job job) {
+    /*public boolean addJob(Job job) {
         if (this.getJobIds().contains(job.getId()) && !jobs.contains(job)) {
             return this.jobs.add(job);
         }
@@ -97,13 +213,13 @@ public class Build extends BuildPojo implements Comparable<Build> {
             }
         }
         return jobs;
-    }
+    }*/
 
     public void clearJobs() {
         this.jobs.clear();
     }
 
-    public String getCompleteLog() {
+    /*public String getCompleteLog() {
         if (!this.getJobs().isEmpty() && (this.completeLog == null || this.completeLog.equals(""))) {
             this.completeLog = "";
             for (Job job : this.getJobs()) {
@@ -142,46 +258,7 @@ public class Build extends BuildPojo implements Comparable<Build> {
         }
 
         return buildTool;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        Build build = (Build) o;
-
-        if (repository != null ? !repository.equals(build.repository) : build.repository != null) return false;
-        if (commit != null ? !commit.equals(build.commit) : build.commit != null) return false;
-        if (config != null ? !config.equals(build.config) : build.config != null) return false;
-        if (jobs != null ? !jobs.equals(build.jobs) : build.jobs != null) return false;
-        return completeLog != null ? completeLog.equals(build.completeLog) : build.completeLog == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (repository != null ? repository.hashCode() : 0);
-        result = 31 * result + (commit != null ? commit.hashCode() : 0);
-        result = 31 * result + (config != null ? config.hashCode() : 0);
-        result = 31 * result + (jobs != null ? jobs.hashCode() : 0);
-        result = 31 * result + (completeLog != null ? completeLog.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        String repo = (repository == null) ? "" : repository.toString();
-        return "Build{" +
-                super.toString() +
-                ", repository=" + repo +
-                ", commit=" + commit +
-                ", config=" + config +
-                ", jobs=" + jobs +
-                ", completeLog='" + completeLog + '\'' +
-                '}';
-    }
+    }*/
 
     @Override
     public int compareTo(Build o) {

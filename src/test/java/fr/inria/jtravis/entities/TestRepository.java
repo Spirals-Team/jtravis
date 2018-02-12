@@ -35,6 +35,7 @@ public class TestRepository {
         expectedRepository.setActive(true);
         expectedRepository.setPrivateProperty(false);
         expectedRepository.setStarred(false);
+        expectedRepository.setUri("/repo/2800492");
 
         assertEquals(expectedRepository, result);
     }

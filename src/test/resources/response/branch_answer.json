@@ -1,0 +1,31 @@
+{
+  "@type": "branch",
+  "@href": "/repo/891/branch/master",
+  "@representation": "standard",
+  "name": "master",
+  "repository": {
+    "@type": "repository",
+    "@href": "/repo/891",
+    "@representation": "minimal",
+    "id": 891,
+    "name": "rails",
+    "slug": "rails/rails"
+  },
+  "default_branch": true,
+  "exists_on_github": true,
+  "last_build": {
+    "@type": "build",
+    "@href": "/build/340499707",
+    "@representation": "minimal",
+    "id": 340499707,
+    "number": "50024",
+    "state": "failed",
+    "duration": 69519,
+    "event_type": "push",
+    "previous_state": "errored",
+    "pull_request_title": null,
+    "pull_request_number": null,
+    "started_at": "2018-02-12T14:09:31Z",
+    "finished_at": "2018-02-12T14:53:31Z"
+  }
+}
