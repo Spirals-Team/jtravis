@@ -1,5 +1,6 @@
 package fr.inria.jtravis.helpers;
 
+import fr.inria.jtravis.auth.TokenReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.google.gson.FieldNamingPolicy;
@@ -26,7 +27,6 @@ public abstract class AbstractHelper {
     public static final String TRAVIS_API_ENDPOINT="https://api.travis-ci.org/";
 
     private static final String USER_AGENT = "MyClient/1.0.0";
-    private static final String ACCEPT_APP = "application/vnd.travis-ci.2+json";
 
     private String endpoint;
     private OkHttpClient client;
@@ -50,7 +50,12 @@ public abstract class AbstractHelper {
     }
 
     private Request.Builder requestBuilder(String url) {
-        return new Request.Builder().header("User-Agent",USER_AGENT).header("Accept", ACCEPT_APP).url(url);
+        String token = "token " + TokenReader.fromEnvironment();
+        return new Request.Builder()
+                .header("User-Agent",USER_AGENT)
+                .header("Travis-API-Version", "3")
+                .header("Authorization", token)
+                .url(url);
     }
 
     private void checkResponse(Response response) throws IOException {
@@ -109,8 +114,9 @@ public abstract class AbstractHelper {
         return result;
     }
 
-    protected static Gson createGson() {
-        return new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+    public static Gson createGson() {
+        return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
     }
 
 }

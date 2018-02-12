@@ -1,0 +1,38 @@
+{
+  "@type": "repository",
+  "@href": "/repo/2800492",
+  "@representation": "standard",
+  "@permissions": {
+    "read": true,
+    "admin": true,
+    "activate": true,
+    "deactivate": true,
+    "star": true,
+    "unstar": true,
+    "create_cron": true,
+    "create_env_var": true,
+    "create_key_pair": true,
+    "delete_key_pair": true,
+    "create_request": true
+  },
+  "id": 2800492,
+  "name": "spoon",
+  "slug": "INRIA/spoon",
+  "description": "Spoon is a library to analyze, transform, rewrite, transpile Java source code (incl Java 9 modules). It parses source files to build a well-designed AST with powerful analysis and transformation API. Made at Inria with :heart:, :beers: and :sparkles:.",
+  "github_language": null,
+  "active": true,
+  "private": false,
+  "owner": {
+    "@type": "organization",
+    "id": 83206,
+    "login": "INRIA",
+    "@href": "/org/83206"
+  },
+  "default_branch": {
+    "@type": "branch",
+    "@href": "/repo/2800492/branch/master",
+    "@representation": "minimal",
+    "name": "master"
+  },
+  "starred": false
+}

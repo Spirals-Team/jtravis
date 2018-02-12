@@ -17,7 +17,7 @@ import java.util.Map;
  * @author Simon Urli
  */
 public class RepositoryHelper extends AbstractHelper {
-    public static final String REPO_ENDPOINT = "repos/";
+    public static final String REPO_ENDPOINT = "repo/";
 
     private static final int NB_REPO_BEFORE_CLEANING_CACHE = 10000;
     private static final int TIME_BEFORE_DELETION_FROM_CACHE_IN_SECONDS = 2*60*60; // 2 hours
