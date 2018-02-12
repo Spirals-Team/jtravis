@@ -17,7 +17,7 @@ public class TestRepository {
 
     @Test
     public void testRetrieveRepositoryFromJsonResponse() throws IOException {
-        String filePath = "./src/test/resources/response/spoon-get-repo.json";
+        String filePath = "./src/test/resources/response/repo_answer.json";
         String fileContent = StringUtils.join(Files.readAllLines(new File(filePath).toPath()), "\n");
 
         JsonParser parser = new JsonParser();
