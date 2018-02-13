@@ -29,7 +29,7 @@ public class LogHelper extends AbstractHelper {
     }
 
     public static Log getLogFromJob(Job job) {
-        if (job.getId() != 0) {
+        /*if (job.getId() != 0) {
             if (job.getState() == StateType.FAILED || job.getState() == StateType.PASSED || job.getState() == StateType.ERRORED) {
                 String logJobUrl = getInstance().getEndpoint()+JobHelper.JOB_ENDPOINT+job.getId()+LOG_JOB_ENDPOINT;
                 try {
@@ -41,7 +41,7 @@ public class LogHelper extends AbstractHelper {
             } else {
                 getInstance().getLogger().warn("Error when getting log from job id "+job.getId()+" : build status is neither failed or passed: "+job.getState().name());
             }
-        }
+        }*/
         return null;
     }
 }

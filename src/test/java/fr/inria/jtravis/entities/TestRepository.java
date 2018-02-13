@@ -28,6 +28,18 @@ public class TestRepository extends AbstractTest {
         expectedRepository.setStarred(false);
         expectedRepository.setUri("/repo/2800492");
 
+        Owner owner = new Owner();
+        owner.setType(OwnerType.ORGANIZATION);
+        owner.setId(83206);
+        owner.setLogin("INRIA");
+        owner.setUri("/org/83206");
+        expectedRepository.setOwner(owner);
+
+        Branch defaultBranch = new Branch();
+        defaultBranch.setUri("/repo/2800492/branch/master");
+        defaultBranch.setName("master");
+        expectedRepository.setDefaultBranch(defaultBranch);
+
         assertEquals(expectedRepository, result);
     }
 }

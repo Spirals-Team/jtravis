@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
  * Created by urli on 23/12/2016.
  */
 public class LogHelperTest {
-    static String logBegin = "travis_fold:start:worker_info";
+    /*static String logBegin = "travis_fold:start:worker_info";
 
     static String passingLogEnd = "Done. Your build exited with 0.";
     static String failingLogEnd = "Done. Your build exited with 1.";
@@ -76,5 +76,5 @@ public class LogHelperTest {
         assertEquals(length, obtainedLog.getBody().length());
         assertTrue(obtainedLog.getBody().trim().startsWith(logBegin));
         assertTrue(obtainedLog.getBody().trim().endsWith(erroringLogEnd));
-    }
+    }*/
 }

@@ -38,6 +38,12 @@ public class Repository extends Entity {
     @Expose
     private boolean starred;
 
+    @Expose
+    private Owner owner;
+
+    @Expose
+    private Branch defaultBranch;
+
     private Build currentBuild;
 
     private Build lastStartedBuild;
@@ -176,6 +182,22 @@ public class Repository extends Entity {
         this.lastAccess = new Date();
     }
 
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    public Branch getDefaultBranch() {
+        return defaultBranch;
+    }
+
+    public void setDefaultBranch(Branch defaultBranch) {
+        this.defaultBranch = defaultBranch;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -190,6 +212,8 @@ public class Repository extends Entity {
                 Objects.equals(slug, that.slug) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(githubLanguage, that.githubLanguage) &&
+                Objects.equals(owner, that.owner) &&
+                Objects.equals(defaultBranch, that.defaultBranch) &&
                 Objects.equals(currentBuild, that.currentBuild) &&
                 Objects.equals(lastStartedBuild, that.lastStartedBuild) &&
                 Objects.equals(lastBuild, that.lastBuild) &&
@@ -200,6 +224,6 @@ public class Repository extends Entity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id, name, slug, active, privateProperty, description, githubLanguage, starred, currentBuild, lastStartedBuild, lastBuild, lastBuildOnMaster, lastAccess);
+        return Objects.hash(super.hashCode(), id, name, slug, active, privateProperty, description, githubLanguage, starred, owner, defaultBranch, currentBuild, lastStartedBuild, lastBuild, lastBuildOnMaster, lastAccess);
     }
 }
