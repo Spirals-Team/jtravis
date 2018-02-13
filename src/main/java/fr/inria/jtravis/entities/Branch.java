@@ -78,4 +78,15 @@ public class Branch extends Entity {
 
         return Objects.hash(super.hashCode(), name, repository, defaultBranch, existsOnGithub, lastBuild);
     }
+
+    @Override
+    public String toString() {
+        return "Branch{" +
+                "name='" + name + '\'' +
+                ", repository=" + repository +
+                ", defaultBranch=" + defaultBranch +
+                ", existsOnGithub=" + existsOnGithub +
+                ", lastBuild=" + lastBuild +
+                '}';
+    }
 }

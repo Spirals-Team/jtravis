@@ -1,28 +1,21 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import fr.inria.jtravis.helpers.AbstractHelper;
-import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class TestBranch {
+public class TestBranch extends AbstractTest {
 
     @Test
-    public void testRetrieveBranchFromJsonAnswer() throws IOException {
+    public void testRetrieveBranchFromJsonAnswer() {
         String filePath = "./src/test/resources/response/branch_answer.json";
-        String fileContent = StringUtils.join(Files.readAllLines(new File(filePath).toPath()), "\n");
-
-        JsonParser parser = new JsonParser();
-        JsonObject branchObject = parser.parse(fileContent).getAsJsonObject();
+        JsonObject branchObject = this.getJsonObjectFromFilePath(filePath);
         Branch result = AbstractHelper.createGson().fromJson(branchObject, Branch.class);
 
         assertNotNull(result);
@@ -49,16 +42,8 @@ public class TestBranch {
         lastBuild.setDuration(69519);
         lastBuild.setEventType("push");
         lastBuild.setPreviousState("errored");
-
-        Calendar startedAt = Calendar.getInstance();
-        startedAt.setTimeInMillis(0);
-        startedAt.set(2018, Calendar.FEBRUARY, 12, 14, 9, 31);
-
-        lastBuild.setStartedAt(startedAt.getTime());
-
-        Calendar finishedAt = Calendar.getInstance();
-        finishedAt.setTimeInMillis(0);
-        finishedAt.set(2018, Calendar.FEBRUARY, 12, 14, 53, 31);
+        lastBuild.setStartedAt(this.getDateFor(2018, Calendar.FEBRUARY, 12, 14, 9, 31, 0));
+        lastBuild.setFinishedAt(this.getDateFor(2018, Calendar.FEBRUARY, 12, 14, 53, 31, 0));
 
         expectedBranch.setLastBuild(lastBuild);
 

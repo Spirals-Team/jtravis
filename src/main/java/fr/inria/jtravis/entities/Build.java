@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Business object to deal with Build of Travis CI API.
@@ -66,6 +67,9 @@ public class Build extends Entity implements Comparable<Build> {
 
     @Expose
     private String tag;
+
+    @Expose
+    private User createdBy;
 
     private PRInformation prInformation;
     private String completeLog;
@@ -156,12 +160,36 @@ public class Build extends Entity implements Comparable<Build> {
         this.finishedAt = finishedAt;
     }
 
-    public String getTag() {
-        return tag;
+    public Repository getRepository() {
+        return repository;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    public Commit getCommit() {
+        return commit;
+    }
+
+    public void setCommit(Commit commit) {
+        this.commit = commit;
+    }
+
+    public List<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
     }
 
     public Date getUpdatedAt() {
@@ -170,6 +198,46 @@ public class Build extends Entity implements Comparable<Build> {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public PRInformation getPrInformation() {
+        return prInformation;
+    }
+
+    public void setPrInformation(PRInformation prInformation) {
+        this.prInformation = prInformation;
+    }
+
+    public String getCompleteLog() {
+        return completeLog;
+    }
+
+    public void setCompleteLog(String completeLog) {
+        this.completeLog = completeLog;
+    }
+
+    public BuildTool getBuildTool() {
+        return buildTool;
+    }
+
+    public void setBuildTool(BuildTool buildTool) {
+        this.buildTool = buildTool;
     }
 
     public void refreshStatus() {
@@ -263,5 +331,65 @@ public class Build extends Entity implements Comparable<Build> {
     @Override
     public int compareTo(Build o) {
         return this.getId()-o.getId();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Build build = (Build) o;
+        return id == build.id &&
+                duration == build.duration &&
+                pullRequestNumber == build.pullRequestNumber &&
+                Objects.equals(number, build.number) &&
+                Objects.equals(state, build.state) &&
+                Objects.equals(eventType, build.eventType) &&
+                Objects.equals(previousState, build.previousState) &&
+                Objects.equals(pullRequestTitle, build.pullRequestTitle) &&
+                Objects.equals(startedAt, build.startedAt) &&
+                Objects.equals(finishedAt, build.finishedAt) &&
+                Objects.equals(repository, build.repository) &&
+                Objects.equals(branch, build.branch) &&
+                Objects.equals(commit, build.commit) &&
+                Objects.equals(jobs, build.jobs) &&
+                Objects.equals(updatedAt, build.updatedAt) &&
+                Objects.equals(tag, build.tag) &&
+                Objects.equals(createdBy, build.createdBy) &&
+                Objects.equals(prInformation, build.prInformation) &&
+                Objects.equals(completeLog, build.completeLog) &&
+                buildTool == build.buildTool;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), id, number, state, duration, eventType, previousState, pullRequestTitle, pullRequestNumber, startedAt, finishedAt, repository, branch, commit, jobs, updatedAt, tag, createdBy, prInformation, completeLog, buildTool);
+    }
+
+    @Override
+    public String toString() {
+        return "Build{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", state='" + state + '\'' +
+                ", duration=" + duration +
+                ", eventType='" + eventType + '\'' +
+                ", previousState='" + previousState + '\'' +
+                ", pullRequestTitle='" + pullRequestTitle + '\'' +
+                ", pullRequestNumber=" + pullRequestNumber +
+                ", startedAt=" + startedAt +
+                ", finishedAt=" + finishedAt +
+                ", repository=" + repository +
+                ", branch=" + branch +
+                ", commit=" + commit +
+                ", jobs=" + jobs +
+                ", updatedAt=" + updatedAt +
+                ", tag='" + tag + '\'' +
+                ", createdBy=" + createdBy +
+                ", prInformation=" + prInformation +
+                ", completeLog='" + completeLog + '\'' +
+                ", buildTool=" + buildTool +
+                '}';
     }
 }

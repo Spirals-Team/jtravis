@@ -1,27 +1,18 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import fr.inria.jtravis.helpers.AbstractHelper;
-import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class TestRepository {
+public class TestRepository extends AbstractTest {
 
     @Test
-    public void testRetrieveRepositoryFromJsonResponse() throws IOException {
+    public void testRetrieveRepositoryFromJsonResponse() {
         String filePath = "./src/test/resources/response/repo_answer.json";
-        String fileContent = StringUtils.join(Files.readAllLines(new File(filePath).toPath()), "\n");
-
-        JsonParser parser = new JsonParser();
-        JsonObject repoObject = parser.parse(fileContent).getAsJsonObject();
+        JsonObject repoObject = this.getJsonObjectFromFilePath(filePath);
         Repository result = AbstractHelper.createGson().fromJson(repoObject, Repository.class);
 
         assertNotNull(result);

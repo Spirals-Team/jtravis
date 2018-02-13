@@ -25,7 +25,7 @@ public class User extends Entity {
     private boolean isSyncing;
 
     @Expose
-    private Date syncingAt;
+    private Date syncedAt;
 
     public int getId() {
         return id;
@@ -75,12 +75,12 @@ public class User extends Entity {
         isSyncing = syncing;
     }
 
-    public Date getSyncingAt() {
-        return syncingAt;
+    public Date getSyncedAt() {
+        return syncedAt;
     }
 
-    public void setSyncingAt(Date syncingAt) {
-        this.syncingAt = syncingAt;
+    public void setSyncedAt(Date syncedAt) {
+        this.syncedAt = syncedAt;
     }
 
     @Override
@@ -95,12 +95,25 @@ public class User extends Entity {
                 Objects.equals(login, owner.login) &&
                 Objects.equals(name, owner.name) &&
                 Objects.equals(avatarUrl, owner.avatarUrl) &&
-                Objects.equals(syncingAt, owner.syncingAt);
+                Objects.equals(syncedAt, owner.syncedAt);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id, login, name, githubId, avatarUrl, isSyncing, syncingAt);
+        return Objects.hash(super.hashCode(), id, login, name, githubId, avatarUrl, isSyncing, syncedAt);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", name='" + name + '\'' +
+                ", githubId=" + githubId +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", isSyncing=" + isSyncing +
+                ", syncedAt=" + syncedAt +
+                '}';
     }
 }
