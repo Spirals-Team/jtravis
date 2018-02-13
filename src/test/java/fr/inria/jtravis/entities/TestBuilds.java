@@ -82,6 +82,43 @@ public class TestBuilds extends AbstractTest {
         firstCommit.setCommittedAt(this.getDateFor(2018, Calendar.FEBRUARY, 13, 9, 21, 55, 0));
         firstBuild.setCommit(firstCommit);
 
+        List<Job> jobList = new ArrayList<>();
+        Job firstJob = new Job();
+        firstJob.setUri("/job/340863045");
+        firstJob.setId(340863045);
+        jobList.add(firstJob);
+        firstBuild.setJobs(jobList);
 
+        Owner createdBy = new Owner();
+        createdBy.setType(OwnerType.USER);
+        createdBy.setUri("/user/95813");
+        createdBy.setId(95813);
+        createdBy.setLogin("surli");
+        firstBuild.setCreatedBy(createdBy);
+        firstBuild.setUpdatedAt(this.getDateFor(2018, Calendar.FEBRUARY, 13, 9, 27, 12, 379));
+        buildList.add(firstBuild);
+
+        Build secondBuild = new Build();
+        secondBuild.setUri("/build/340617742");
+        secondBuild.setId(340617742);
+        secondBuild.setNumber("648");
+        secondBuild.setState(StateType.FAILED);
+        secondBuild.setDuration(43);
+        secondBuild.setEventType(EventType.CRON);
+        secondBuild.setPreviousState(StateType.FAILED);
+        secondBuild.setStartedAt(this.getDateFor(2018, Calendar.FEBRUARY, 12, 18, 31, 30, 0));
+        secondBuild.setFinishedAt(this.getDateFor(2018, Calendar.FEBRUARY, 12, 18, 32, 13, 0));
+
+        Repository secondRepo = new Repository();
+        secondRepo.setUri("/repo/11594784");
+        secondRepo.setId(11594784);
+        secondRepo.setName("failingProject");
+        secondRepo.setSlug("surli/failingProject");
+        secondBuild.setRepository(secondRepo);
+
+        Branch secondBranch = new Branch();
+        secondBranch.setUri("/repo/11594784/branch/erroring-branch");
+        secondBranch.setName("erroring-branch");
+        secondBuild.setBranch(secondBranch);
     }
 }
