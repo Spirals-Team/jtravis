@@ -1,11 +1,16 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.Objects;
 
-public class User extends Entity {
+public class Owner extends Entity {
+    @Expose
+    @SerializedName("@type")
+    private OwnerType type;
+
     @Expose
     private int id;
 
@@ -83,15 +88,24 @@ public class User extends Entity {
         this.syncedAt = syncedAt;
     }
 
+    public OwnerType getType() {
+        return type;
+    }
+
+    public void setType(OwnerType type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        User owner = (User) o;
+        Owner owner = (Owner) o;
         return id == owner.id &&
                 githubId == owner.githubId &&
                 isSyncing == owner.isSyncing &&
+                type == owner.type &&
                 Objects.equals(login, owner.login) &&
                 Objects.equals(name, owner.name) &&
                 Objects.equals(avatarUrl, owner.avatarUrl) &&
@@ -101,13 +115,14 @@ public class User extends Entity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id, login, name, githubId, avatarUrl, isSyncing, syncedAt);
+        return Objects.hash(super.hashCode(), type, id, login, name, githubId, avatarUrl, isSyncing, syncedAt);
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
+        return "Owner{" +
+                "type=" + type +
+                ", id=" + id +
                 ", login='" + login + '\'' +
                 ", name='" + name + '\'' +
                 ", githubId=" + githubId +

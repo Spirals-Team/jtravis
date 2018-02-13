@@ -27,16 +27,16 @@ public class Build extends Entity implements Comparable<Build> {
     private String number;
 
     @Expose
-    private String state;
+    private StateType state;
 
     @Expose
     private int duration;
 
     @Expose
-    private String eventType;
+    private EventType eventType;
 
     @Expose
-    private String previousState;
+    private StateType previousState;
 
     @Expose
     private String pullRequestTitle;
@@ -69,7 +69,7 @@ public class Build extends Entity implements Comparable<Build> {
     private String tag;
 
     @Expose
-    private User createdBy;
+    private Owner createdBy;
 
     private PRInformation prInformation;
     private String completeLog;
@@ -96,12 +96,28 @@ public class Build extends Entity implements Comparable<Build> {
         this.number = number;
     }
 
-    public String getState() {
+    public StateType getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(StateType state) {
         this.state = state;
+    }
+
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
+    }
+
+    public StateType getPreviousState() {
+        return previousState;
+    }
+
+    public void setPreviousState(StateType previousState) {
+        this.previousState = previousState;
     }
 
     public int getDuration() {
@@ -112,21 +128,6 @@ public class Build extends Entity implements Comparable<Build> {
         this.duration = duration;
     }
 
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
-
-    public String getPreviousState() {
-        return previousState;
-    }
-
-    public void setPreviousState(String previousState) {
-        this.previousState = previousState;
-    }
 
     public String getPullRequestTitle() {
         return pullRequestTitle;
@@ -208,11 +209,11 @@ public class Build extends Entity implements Comparable<Build> {
         this.tag = tag;
     }
 
-    public User getCreatedBy() {
+    public Owner getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(User createdBy) {
+    public void setCreatedBy(Owner createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -254,14 +255,6 @@ public class Build extends Entity implements Comparable<Build> {
             this.setDuration(b.getDuration());
             this.setJobIds(b.getJobIds());
         }*/
-    }
-
-    public BuildStatus getBuildStatus() {
-        if (this.getState() != null) {
-            return BuildStatus.valueOf(this.getState().toUpperCase());
-        } else {
-            return null;
-        }
     }
 
     /*public boolean addJob(Job job) {

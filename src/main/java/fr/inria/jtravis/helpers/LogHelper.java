@@ -2,7 +2,7 @@ package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Log;
-import fr.inria.jtravis.entities.BuildStatus;
+import fr.inria.jtravis.entities.StateType;
 
 import java.io.IOException;
 
@@ -30,7 +30,7 @@ public class LogHelper extends AbstractHelper {
 
     public static Log getLogFromJob(Job job) {
         if (job.getId() != 0) {
-            if (job.getBuildStatus() == BuildStatus.FAILED || job.getBuildStatus() == BuildStatus.PASSED || job.getBuildStatus() == BuildStatus.ERRORED) {
+            if (job.getState() == StateType.FAILED || job.getState() == StateType.PASSED || job.getState() == StateType.ERRORED) {
                 String logJobUrl = getInstance().getEndpoint()+JobHelper.JOB_ENDPOINT+job.getId()+LOG_JOB_ENDPOINT;
                 try {
                     String body = getInstance().rawGet(logJobUrl);
@@ -39,7 +39,7 @@ public class LogHelper extends AbstractHelper {
                     getInstance().getLogger().warn("Error when getting log from job id "+job.getId()+" ",e);
                 }
             } else {
-                getInstance().getLogger().warn("Error when getting log from job id "+job.getId()+" : build status is neither failed or passed: "+job.getBuildStatus().name());
+                getInstance().getLogger().warn("Error when getting log from job id "+job.getId()+" : build status is neither failed or passed: "+job.getState().name());
             }
         }
         return null;

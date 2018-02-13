@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
-import fr.inria.jtravis.entities.BuildStatus;
+import fr.inria.jtravis.entities.StateType;
 import fr.inria.jtravis.entities.Job;
 
 import java.io.IOException;
@@ -69,7 +69,7 @@ public class JobHelper extends AbstractHelper {
      * @return A list of jobs with the given status
      */
     @Deprecated
-    public static List<Job> getJobListWithFilter(BuildStatus buildStatus) {
+    public static List<Job> getJobListWithFilter(StateType buildStatus) {
         String resourceUrl = getInstance().getEndpoint()+JOB_ENDPOINT;
 
         if (buildStatus != null) {

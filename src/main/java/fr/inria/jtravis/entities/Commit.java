@@ -32,10 +32,10 @@ public class Commit extends Entity {
     private Date committedAt;
 
     @Expose
-    private User committer;
+    private Owner committer;
 
     @Expose
-    private User author;
+    private Owner author;
 
     public int getId() {
         return id;
@@ -85,19 +85,19 @@ public class Commit extends Entity {
         this.committedAt = committedAt;
     }
 
-    public User getCommitter() {
+    public Owner getCommitter() {
         return committer;
     }
 
-    public void setCommitter(User committer) {
+    public void setCommitter(Owner committer) {
         this.committer = committer;
     }
 
-    public User getAuthor() {
+    public Owner getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(Owner author) {
         this.author = author;
     }
 

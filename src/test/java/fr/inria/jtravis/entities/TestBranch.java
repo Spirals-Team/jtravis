@@ -38,10 +38,10 @@ public class TestBranch extends AbstractTest {
         lastBuild.setUri("/build/340499707");
         lastBuild.setId(340499707);
         lastBuild.setNumber("50024");
-        lastBuild.setState("failed");
+        lastBuild.setState(StateType.FAILED);
         lastBuild.setDuration(69519);
-        lastBuild.setEventType("push");
-        lastBuild.setPreviousState("errored");
+        lastBuild.setEventType(EventType.PUSH);
+        lastBuild.setPreviousState(StateType.ERRORED);
         lastBuild.setStartedAt(this.getDateFor(2018, Calendar.FEBRUARY, 12, 14, 9, 31, 0));
         lastBuild.setFinishedAt(this.getDateFor(2018, Calendar.FEBRUARY, 12, 14, 53, 31, 0));
 

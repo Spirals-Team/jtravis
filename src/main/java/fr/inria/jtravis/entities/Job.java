@@ -22,7 +22,7 @@ public class Job extends Entity {
     private String number;
 
     @Expose
-    private String state;
+    private StateType state;
 
     @Expose
     private Date startedAt;
@@ -43,7 +43,7 @@ public class Job extends Entity {
     private Commit commit;
 
     @Expose
-    private User owner;
+    private Owner owner;
 
     @Expose
     private Date createdAt;
@@ -78,11 +78,11 @@ public class Job extends Entity {
         this.number = number;
     }
 
-    public String getState() {
+    public StateType getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(StateType state) {
         this.state = state;
     }
 
@@ -134,11 +134,11 @@ public class Job extends Entity {
         this.commit = commit;
     }
 
-    public User getOwner() {
+    public Owner getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(Owner owner) {
         this.owner = owner;
     }
 
@@ -156,14 +156,6 @@ public class Job extends Entity {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public BuildStatus getBuildStatus() {
-        if (this.getState() != null) {
-            return BuildStatus.valueOf(this.getState().toUpperCase());
-        } else {
-            return null;
-        }
     }
 
     public Log getLog() {

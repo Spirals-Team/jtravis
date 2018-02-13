@@ -25,10 +25,10 @@ public class TestBuild extends AbstractTest {
         expectedBuild.setUri("/build/86601346");
         expectedBuild.setId(86601346);
         expectedBuild.setNumber("28677");
-        expectedBuild.setState("passed");
+        expectedBuild.setState(StateType.PASSED);
         expectedBuild.setDuration(5241);
-        expectedBuild.setEventType("pull_request");
-        expectedBuild.setPreviousState("passed");
+        expectedBuild.setEventType(EventType.PULL_REQUEST);
+        expectedBuild.setPreviousState(StateType.PASSED);
         expectedBuild.setPullRequestTitle("Add SQL parameter sanitization to `.joins`");
         expectedBuild.setPullRequestNumber(21847);
         expectedBuild.setStartedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 11, 54, 1, 0));
@@ -149,7 +149,8 @@ public class TestBuild extends AbstractTest {
 
         expectedBuild.setJobs(jobs);
 
-        User createdBy = new User();
+        Owner createdBy = new Owner();
+        createdBy.setType(OwnerType.USER);
         createdBy.setUri("/user/610866");
         createdBy.setId(610866);
         createdBy.setLogin("esjee");

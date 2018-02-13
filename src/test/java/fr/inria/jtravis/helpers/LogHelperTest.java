@@ -2,6 +2,7 @@ package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Log;
+import fr.inria.jtravis.entities.StateType;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
@@ -21,7 +22,7 @@ public class LogHelperTest {
     public void testGetLogFromJobOtherThanPassingOrFailingReturnNull() {
         Job job = new Job();
         job.setId(185719844);
-        job.setState("started");
+        job.setState(StateType.STARTED);
 
         Log obtainedLog = LogHelper.getLogFromJob(job);
         assertTrue(obtainedLog == null);
@@ -31,7 +32,7 @@ public class LogHelperTest {
     public void testGetPassedLogFromId() {
         Job job = new Job();
         job.setId(185719844);
-        job.setState("passed");
+        job.setState(StateType.PASSED);
 
         int length = 1499916;
 
@@ -48,7 +49,7 @@ public class LogHelperTest {
         int jobId = 212676600;
         Job job = new Job();
         job.setId(jobId);
-        job.setState("failed");
+        job.setState(StateType.FAILED);
 
         int length = 163775;
 
@@ -65,7 +66,7 @@ public class LogHelperTest {
         int jobId = 210935305;
         Job job = new Job();
         job.setId(jobId);
-        job.setState("errored");
+        job.setState(StateType.ERRORED);
 
         int length = 91188;
 

@@ -15,11 +15,12 @@ public class TestUser extends AbstractTest {
     public void testRetrieveUserFromJsonAnswer() {
         String filePath = "./src/test/resources/response/user_answer.json";
         JsonObject userObject = this.getJsonObjectFromFilePath(filePath);
-        User result = AbstractHelper.createGson().fromJson(userObject, User.class);
+        Owner result = AbstractHelper.createGson().fromJson(userObject, Owner.class);
 
         assertNotNull(result);
 
-        User expectedUser = new User();
+        Owner expectedUser = new Owner();
+        expectedUser.setType(OwnerType.USER);
         expectedUser.setId(95813);
         expectedUser.setUri("/user/95813");
         expectedUser.setLogin("surli");
