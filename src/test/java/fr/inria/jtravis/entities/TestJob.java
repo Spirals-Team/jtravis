@@ -22,6 +22,7 @@ public class TestJob extends AbstractTest {
 
         Job expectedJob = new Job();
         expectedJob.setUri("/job/86601347");
+        expectedJob.setRepresentation(RepresentationType.STANDARD);
         expectedJob.setId(86601347);
         expectedJob.setNumber("28677.1");
         expectedJob.setState(StateType.PASSED);
@@ -33,6 +34,7 @@ public class TestJob extends AbstractTest {
 
         Build build = new Build();
         build.setUri("/build/86601346");
+        build.setRepresentation(RepresentationType.MINIMAL);
         build.setId(86601346);
         build.setNumber("28677");
         build.setState(StateType.PASSED);
@@ -47,12 +49,14 @@ public class TestJob extends AbstractTest {
 
         Repository repository = new Repository();
         repository.setUri("/repo/891");
+        repository.setRepresentation(RepresentationType.MINIMAL);
         repository.setId(891);
         repository.setName("rails");
         repository.setSlug("rails/rails");
         expectedJob.setRepository(repository);
 
         Commit commit = new Commit();
+        commit.setRepresentation(RepresentationType.MINIMAL);
         commit.setId(24633751);
         commit.setSha("c5019a4229539ea68c3e5df137219e6000ba16da");
         commit.setRef("refs/pull/21847/merge");
@@ -62,6 +66,7 @@ public class TestJob extends AbstractTest {
         expectedJob.setCommit(commit);
 
         Owner owner = new Owner();
+        owner.setRepresentation(RepresentationType.MINIMAL);
         owner.setType(OwnerType.ORGANIZATION);
         owner.setUri("/org/23");
         owner.setId(23);

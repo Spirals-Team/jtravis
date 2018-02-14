@@ -20,6 +20,7 @@ public class TestLog extends AbstractTest {
 
         Log expectedLog = new Log();
         expectedLog.setUri("/job/340617745/log");
+        expectedLog.setRepresentation(RepresentationType.STANDARD);
         expectedLog.setId(248551122);
         expectedLog.setContent("travis_fold:start:worker_info\r\u001b[0K\u001b[33;1mWorker information\u001b[0m\nhostname: 88255186-1dd4-4654-8979-a9de8297acc1@1.i-05992b1-production-2-worker-org-ec2.travisci.net\n[FULL LOG CUT]");
 

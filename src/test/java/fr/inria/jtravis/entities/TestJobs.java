@@ -23,9 +23,11 @@ public class TestJobs extends AbstractTest {
 
         Jobs expectedJobs = new Jobs();
         expectedJobs.setUri("/build/340663037/jobs");
+        expectedJobs.setRepresentation(RepresentationType.STANDARD);
         List<Job> jobList = new ArrayList<>();
         Job firstJob = new Job();
         firstJob.setUri("/job/340663038");
+        firstJob.setRepresentation(RepresentationType.STANDARD);
         firstJob.setId(340663038);
         firstJob.setNumber("4744.1");
         firstJob.setState(StateType.FAILED);
@@ -34,6 +36,7 @@ public class TestJobs extends AbstractTest {
 
         Build build = new Build();
         build.setUri("/build/340663037");
+        build.setRepresentation(RepresentationType.MINIMAL);
         build.setId(340663037);
         build.setNumber("4744");
         build.setState(StateType.FAILED);
@@ -49,12 +52,14 @@ public class TestJobs extends AbstractTest {
         firstJob.setQueue("builds.gce");
         Repository repository = new Repository();
         repository.setUri("/repo/2800492");
+        repository.setRepresentation(RepresentationType.MINIMAL);
         repository.setId(2800492);
         repository.setName("spoon");
         repository.setSlug("INRIA/spoon");
         firstJob.setRepository(repository);
 
         Commit commit = new Commit();
+        commit.setRepresentation(RepresentationType.MINIMAL);
         commit.setId(101294919);
         commit.setSha("c581397a4b1e627451fbb0a736cfc7a6e4e7aea0");
         commit.setRef("refs/pull/1686/merge");
@@ -64,6 +69,7 @@ public class TestJobs extends AbstractTest {
         firstJob.setCommit(commit);
 
         Owner owner = new Owner();
+        owner.setRepresentation(RepresentationType.MINIMAL);
         owner.setType(OwnerType.ORGANIZATION);
         owner.setUri("/org/83206");
         owner.setId(83206);
@@ -76,6 +82,7 @@ public class TestJobs extends AbstractTest {
 
         Job secondJob = new Job();
         secondJob.setUri("/job/340663039");
+        secondJob.setRepresentation(RepresentationType.STANDARD);
         secondJob.setId(340663039);
         secondJob.setNumber("4744.2");
         secondJob.setState(StateType.FAILED);
@@ -92,6 +99,7 @@ public class TestJobs extends AbstractTest {
 
         Job thirdJob = new Job();
         thirdJob.setUri("/job/340663040");
+        thirdJob.setRepresentation(RepresentationType.STANDARD);
         thirdJob.setId(340663040);
         thirdJob.setNumber("4744.3");
         thirdJob.setState(StateType.FAILED);
@@ -108,6 +116,7 @@ public class TestJobs extends AbstractTest {
 
         Job fourthJob = new Job();
         fourthJob.setUri("/job/340663041");
+        fourthJob.setRepresentation(RepresentationType.STANDARD);
         fourthJob.setId(340663041);
         fourthJob.setNumber("4744.4");
         fourthJob.setState(StateType.PASSED);
@@ -124,6 +133,7 @@ public class TestJobs extends AbstractTest {
 
         Job fifthJob = new Job();
         fifthJob.setUri("/job/340663042");
+        fifthJob.setRepresentation(RepresentationType.STANDARD);
         fifthJob.setId(340663042);
         fifthJob.setNumber("4744.5");
         fifthJob.setState(StateType.PASSED);

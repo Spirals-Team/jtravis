@@ -11,6 +11,10 @@ public abstract class Entity {
     @SerializedName("@href")
     private String uri;
 
+    @Expose
+    @SerializedName("@representation")
+    private RepresentationType representation;
+
     public String getUri() {
         return uri;
     }
@@ -19,17 +23,26 @@ public abstract class Entity {
         this.uri = uri;
     }
 
+    public RepresentationType getRepresentation() {
+        return representation;
+    }
+
+    public void setRepresentation(RepresentationType representation) {
+        this.representation = representation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Entity entity = (Entity) o;
-        return Objects.equals(uri, entity.uri);
+        return Objects.equals(uri, entity.uri) &&
+                representation == entity.representation;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(uri);
+        return Objects.hash(uri, representation);
     }
 }

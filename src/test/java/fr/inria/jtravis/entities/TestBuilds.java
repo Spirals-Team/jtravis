@@ -24,6 +24,7 @@ public class TestBuilds extends AbstractTest {
 
         Builds expectedBuilds = new Builds();
         expectedBuilds.setUri("/builds?limit=2&offset=2");
+        expectedBuilds.setRepresentation(RepresentationType.STANDARD);
 
         Pagination pagination = new Pagination();
         pagination.setLimit(2);
@@ -53,6 +54,7 @@ public class TestBuilds extends AbstractTest {
         List<Build> buildList = new ArrayList<>();
         Build firstBuild = new Build();
         firstBuild.setUri("/build/340863044");
+        firstBuild.setRepresentation(RepresentationType.STANDARD);
         firstBuild.setId(340863044);
         firstBuild.setNumber("25");
         firstBuild.setState(StateType.ERRORED);
@@ -64,6 +66,7 @@ public class TestBuilds extends AbstractTest {
 
         Repository firstRepo = new Repository();
         firstRepo.setUri("/repo/17328693");
+        firstRepo.setRepresentation(RepresentationType.MINIMAL);
         firstRepo.setId(17328693);
         firstRepo.setName("jtravis");
         firstRepo.setSlug("Spirals-Team/jtravis");
@@ -71,10 +74,12 @@ public class TestBuilds extends AbstractTest {
 
         Branch firstBranch = new Branch();
         firstBranch.setUri("/repo/17328693/branch/travisV3");
+        firstBranch.setRepresentation(RepresentationType.MINIMAL);
         firstBranch.setName("travisV3");
         firstBuild.setBranch(firstBranch);
 
         Commit firstCommit = new Commit();
+        firstCommit.setRepresentation(RepresentationType.MINIMAL);
         firstCommit.setId(101354863);
         firstCommit.setSha("199b38150c969a5f00fe74af40eca20f8005a9c5");
         firstCommit.setRef("refs/heads/travisV3");
@@ -86,6 +91,7 @@ public class TestBuilds extends AbstractTest {
         List<Job> jobList = new ArrayList<>();
         Job firstJob = new Job();
         firstJob.setUri("/job/340863045");
+        firstJob.setRepresentation(RepresentationType.MINIMAL);
         firstJob.setId(340863045);
         jobList.add(firstJob);
         firstBuild.setJobs(jobList);
@@ -93,6 +99,7 @@ public class TestBuilds extends AbstractTest {
         Owner createdBy = new Owner();
         createdBy.setType(OwnerType.USER);
         createdBy.setUri("/user/95813");
+        createdBy.setRepresentation(RepresentationType.MINIMAL);
         createdBy.setId(95813);
         createdBy.setLogin("surli");
         firstBuild.setCreatedBy(createdBy);
@@ -101,6 +108,7 @@ public class TestBuilds extends AbstractTest {
 
         Build secondBuild = new Build();
         secondBuild.setUri("/build/340617742");
+        secondBuild.setRepresentation(RepresentationType.STANDARD);
         secondBuild.setId(340617742);
         secondBuild.setNumber("648");
         secondBuild.setState(StateType.FAILED);
@@ -112,6 +120,7 @@ public class TestBuilds extends AbstractTest {
 
         Repository secondRepo = new Repository();
         secondRepo.setUri("/repo/11594784");
+        secondRepo.setRepresentation(RepresentationType.MINIMAL);
         secondRepo.setId(11594784);
         secondRepo.setName("failingProject");
         secondRepo.setSlug("surli/failingProject");
@@ -119,10 +128,12 @@ public class TestBuilds extends AbstractTest {
 
         Branch secondBranch = new Branch();
         secondBranch.setUri("/repo/11594784/branch/erroring-branch");
+        secondBranch.setRepresentation(RepresentationType.MINIMAL);
         secondBranch.setName("erroring-branch");
         secondBuild.setBranch(secondBranch);
 
         Commit secondCommit = new Commit();
+        secondCommit.setRepresentation(RepresentationType.MINIMAL);
         secondCommit.setId(101281499);
         secondCommit.setSha("349626e0c9138dbea032dc9cec92794e97401d48");
         secondCommit.setMessage("Remove tests in fail");
@@ -132,6 +143,7 @@ public class TestBuilds extends AbstractTest {
 
         List<Job> jobList1 = new ArrayList<>();
         Job job = new Job();
+        job.setRepresentation(RepresentationType.MINIMAL);
         job.setUri("/job/340617745");
         job.setId(340617745);
         jobList1.add(job);

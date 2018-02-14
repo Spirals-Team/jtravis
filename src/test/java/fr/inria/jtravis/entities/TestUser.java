@@ -20,6 +20,7 @@ public class TestUser extends AbstractTest {
         assertNotNull(result);
 
         Owner expectedUser = new Owner();
+        expectedUser.setRepresentation(RepresentationType.STANDARD);
         expectedUser.setType(OwnerType.USER);
         expectedUser.setId(95813);
         expectedUser.setUri("/user/95813");

@@ -18,6 +18,7 @@ public class TestRepository extends AbstractTest {
         assertNotNull(result);
 
         Repository expectedRepository = new Repository();
+        expectedRepository.setRepresentation(RepresentationType.STANDARD);
         expectedRepository.setId(2800492);
         expectedRepository.setName("spoon");
         expectedRepository.setSlug("INRIA/spoon");
@@ -37,6 +38,7 @@ public class TestRepository extends AbstractTest {
 
         Branch defaultBranch = new Branch();
         defaultBranch.setUri("/repo/2800492/branch/master");
+        defaultBranch.setRepresentation(RepresentationType.MINIMAL);
         defaultBranch.setName("master");
         expectedRepository.setDefaultBranch(defaultBranch);
 

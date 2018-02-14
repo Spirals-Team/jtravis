@@ -22,6 +22,7 @@ public class TestRepositories extends AbstractTest {
 
         Repositories expectedRepositories = new Repositories();
         expectedRepositories.setUri("/owner/surli/repos?limit=2");
+        expectedRepositories.setRepresentation(RepresentationType.STANDARD);
 
         Pagination pagination = new Pagination();
         pagination.setLimit(2);
@@ -50,6 +51,7 @@ public class TestRepositories extends AbstractTest {
         List<Repository> repositoryList = new ArrayList<>();
         Repository firstRepo = new Repository();
         firstRepo.setUri("/repo/11594784");
+        firstRepo.setRepresentation(RepresentationType.STANDARD);
         firstRepo.setId(11594784);
         firstRepo.setName("failingProject");
         firstRepo.setSlug("surli/failingProject");
@@ -64,12 +66,14 @@ public class TestRepositories extends AbstractTest {
 
         Branch firstRepoDefaultBranch = new Branch();
         firstRepoDefaultBranch.setUri("/repo/11594784/branch/master");
+        firstRepoDefaultBranch.setRepresentation(RepresentationType.MINIMAL);
         firstRepoDefaultBranch.setName("master");
         firstRepo.setDefaultBranch(firstRepoDefaultBranch);
         repositoryList.add(firstRepo);
 
         Repository secondRepo = new Repository();
         secondRepo.setUri("/repo/17103452");
+        secondRepo.setRepresentation(RepresentationType.STANDARD);
         secondRepo.setId(17103452);
         secondRepo.setName("astor");
         secondRepo.setSlug("surli/astor");
@@ -78,6 +82,7 @@ public class TestRepositories extends AbstractTest {
 
         Branch secondRepoDefaultBranch = new Branch();
         secondRepoDefaultBranch.setUri("/repo/17103452/branch/master");
+        secondRepoDefaultBranch.setRepresentation(RepresentationType.MINIMAL);
         secondRepoDefaultBranch.setName("master");
         secondRepo.setDefaultBranch(secondRepoDefaultBranch);
 

@@ -22,12 +22,14 @@ public class TestBranch extends AbstractTest {
 
         Branch expectedBranch = new Branch();
         expectedBranch.setUri("/repo/891/branch/master");
+        expectedBranch.setRepresentation(RepresentationType.STANDARD);
         expectedBranch.setName("master");
         expectedBranch.setDefaultBranch(true);
         expectedBranch.setExistsOnGithub(true);
 
         Repository repository = new Repository();
         repository.setUri("/repo/891");
+        repository.setRepresentation(RepresentationType.MINIMAL);
         repository.setId(891);
         repository.setName("rails");
         repository.setSlug("rails/rails");
@@ -36,6 +38,7 @@ public class TestBranch extends AbstractTest {
 
         Build lastBuild = new Build();
         lastBuild.setUri("/build/340499707");
+        lastBuild.setRepresentation(RepresentationType.MINIMAL);
         lastBuild.setId(340499707);
         lastBuild.setNumber("50024");
         lastBuild.setState(StateType.FAILED);
