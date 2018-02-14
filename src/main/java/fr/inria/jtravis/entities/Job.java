@@ -211,4 +211,24 @@ public final class Job extends EntityUnary {
 
         return Objects.hash(super.hashCode(), allowFailure, number, state, startedAt, finishedAt, build, queue, repository, commit, owner, createdAt, updatedAt, log, buildTool);
     }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "allowFailure=" + allowFailure +
+                ", number='" + number + '\'' +
+                ", state=" + state +
+                ", startedAt=" + startedAt +
+                ", finishedAt=" + finishedAt +
+                ", build=" + build +
+                ", queue='" + queue + '\'' +
+                ", repository=" + repository +
+                ", commit=" + commit +
+                ", owner=" + owner +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", log=" + log +
+                ", buildTool=" + buildTool +
+                '}';
+    }
 }

@@ -2,8 +2,10 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.squareup.okhttp.mockwebserver.MockWebServer;
 import fr.inria.jtravis.helpers.AbstractHelper;
 import org.apache.commons.lang.StringUtils;
+import org.junit.After;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +15,20 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class AbstractTest {
-    private String getFileContent(String filePath) {
+
+    MockWebServer server;
+
+    @After
+    public void tearDown() {
+        if (server != null) {
+            try {
+                server.shutdown();
+            } catch (IOException e) {
+            }
+        }
+    }
+
+    protected String getFileContent(String filePath) {
         try {
             return StringUtils.join(Files.readAllLines(new File(filePath).toPath()), "\n");
         } catch (IOException e) {

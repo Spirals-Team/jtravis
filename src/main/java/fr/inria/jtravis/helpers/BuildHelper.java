@@ -27,43 +27,26 @@ public class BuildHelper extends AbstractHelper {
         super();
     }
 
-    protected static BuildHelper getInstance() {
+    public static BuildHelper getInstance() {
         if (instance == null) {
             instance = new BuildHelper();
         }
         return instance;
     }
 
-    public static boolean refreshBuild(Build build) {
-        if (build.getRepresentation() == RepresentationType.STANDARD || build.getUri() == null) {
-            return false;
-        } else {
-            try {
-                String jsonContent = this.get(build.getUri());
-                JsonObject jsonBuild = getJsonFromStringContent(jsonContent);
-                if (jsonBuild != null) {
-                    Build build1 = createGson().fromJson(jsonBuild, Build.class);
+    public Build getBuildFromUri(String uri) {
+    	try {
+			String jsonContent = getInstance().get(uri);
+			JsonObject jsonBuild = getJsonFromStringContent(jsonContent);
+			if (jsonBuild != null) {
+				return createGson().fromJson(jsonBuild, Build.class);
+			}
+		} catch (IOException e) {
+			getInstance().getLogger().error("Error while getting JSON at URL: "+uri);
+		}
 
-                    for (Field field : Build.class.getFields()) {
-                        Expose[] annotations = field.getAnnotationsByType(Expose.class);
-                        if (annotations != null && annotations.length >= 1) {
-                            try {
-                                Object value = field.get(build1);
-                                field.set(build, value);
-                            } catch (IllegalAccessException e) {
-                                this.getLogger().error("Error while setting field: "+field.getName());
-                                return false;
-                            }
-                        }
-                    }
-                    return true;
-                }
-            } catch (IOException e) {
-                this.getLogger().error("Error while getting JSON at URL: "+build.getUri());
-            }
-            return false;
-        }
-    }
+		return null;
+	}
 
 //    public static Build getBuildFromId(int id, Repository parentRepo) {
 //        String resourceUrl = getInstance().getEndpoint()+BUILD_ENDPOINT+id;

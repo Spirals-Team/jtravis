@@ -1,26 +1,25 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
+import com.squareup.okhttp.HttpUrl;
+import com.squareup.okhttp.mockwebserver.MockResponse;
+import com.squareup.okhttp.mockwebserver.MockWebServer;
 import fr.inria.jtravis.helpers.AbstractHelper;
+import fr.inria.jtravis.helpers.BuildHelper;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class TestBuild extends AbstractTest {
 
-    @Test
-    public void testRetrieveBuildFromJsonAnswer() {
-        String filePath = "./src/test/resources/response/build_answer.json";
-        JsonObject buildObject = this.getJsonObjectFromFilePath(filePath);
-        Build result = AbstractHelper.createGson().fromJson(buildObject, Build.class);
-
-        assertNotNull(result);
-
+    private Build getExpectedBuild() {
         Build expectedBuild = new Build();
         expectedBuild.setUri("/build/86601346");
         expectedBuild.setRepresentation(RepresentationType.STANDARD);
@@ -179,6 +178,55 @@ public class TestBuild extends AbstractTest {
         createdBy.setLogin("esjee");
         expectedBuild.setCreatedBy(createdBy);
 
-        assertEquals(expectedBuild, result);
+        return expectedBuild;
+    }
+
+    @Test
+    public void testRetrieveBuildFromJsonAnswer() {
+        String filePath = "./src/test/resources/response/build_answer.json";
+        JsonObject buildObject = this.getJsonObjectFromFilePath(filePath);
+        Build result = AbstractHelper.createGson().fromJson(buildObject, Build.class);
+
+        assertNotNull(result);
+
+        assertEquals(getExpectedBuild(), result);
+    }
+
+    @Test
+    public void testRefreshBuildAfterGettingInFromJob() throws IOException {
+        String filePath = "./src/test/resources/response/job_answer.json";
+        JsonObject jobObject = this.getJsonObjectFromFilePath(filePath);
+
+        assertNotNull(jobObject);
+        Job jobResult = AbstractHelper.createGson().fromJson(jobObject, Job.class);
+        Build minimalBuild = jobResult.getBuild();
+
+        Build minimalExpectedBuild = new Build();
+        minimalExpectedBuild.setUri("/build/86601346");
+        minimalExpectedBuild.setRepresentation(RepresentationType.MINIMAL);
+        minimalExpectedBuild.setId(86601346);
+        minimalExpectedBuild.setNumber("28677");
+        minimalExpectedBuild.setState(StateType.PASSED);
+        minimalExpectedBuild.setDuration(5241);
+        minimalExpectedBuild.setEventType(EventType.PULL_REQUEST);
+        minimalExpectedBuild.setPreviousState(StateType.PASSED);
+        minimalExpectedBuild.setPullRequestTitle("Add SQL parameter sanitization to `.joins`");
+        minimalExpectedBuild.setPullRequestNumber(21847);
+        minimalExpectedBuild.setStartedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 11, 54, 1, 0));
+        minimalExpectedBuild.setFinishedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 12, 13, 12, 0));
+        assertEquals(minimalExpectedBuild, minimalBuild);
+
+        MockWebServer server = new MockWebServer();
+        filePath = "./src/test/resources/response/build_answer.json";
+        String buildContent = this.getFileContent(filePath);
+
+        server.enqueue(new MockResponse().setBody(buildContent));
+
+        server.start();
+        HttpUrl baseUrl = server.url("");
+        BuildHelper.getInstance().setEndpoint(baseUrl.toString());
+
+        assertTrue(minimalBuild.refresh());
+        assertEquals(this.getExpectedBuild(), minimalBuild);
     }
 }

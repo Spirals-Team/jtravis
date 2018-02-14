@@ -2,9 +2,11 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
 import fr.inria.jtravis.helpers.BuildHelper;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -239,7 +241,29 @@ public final class Build extends EntityUnary implements Comparable<Build> {
     }
 
     public boolean refresh() {
-        return BuildHelper
+        if (this.getRepresentation() == RepresentationType.MINIMAL && this.getUri() != null) {
+            Build build1 = BuildHelper.getInstance().getBuildFromUri(this.getUri());
+
+            if (build1 != null) {
+                for (Field field : Build.class.getDeclaredFields()) {
+                    Expose[] annotations = field.getAnnotationsByType(Expose.class);
+                    if (annotations != null && annotations.length >= 1) {
+                        try {
+                            field.setAccessible(true);
+                            Object value = field.get(build1);
+                            field.set(this, value);
+                            field.setAccessible(false);
+                        } catch (IllegalAccessException e) {
+                            LOGGER.error("Error while setting field: "+field.getName(), e);
+                            return false;
+                        }
+                    }
+                }
+                this.setRepresentation(RepresentationType.STANDARD);
+                return true;
+            }
+        }
+        return false;
     }
 
     public void refreshStatus() {
@@ -375,7 +399,7 @@ public final class Build extends EntityUnary implements Comparable<Build> {
                 ", repository=" + repository +
                 ", branch=" + branch +
                 ", commit=" + commit +
-                ", jobs=" + jobs +
+                ", jobs=" + StringUtils.join(jobs, ",") +
                 ", updatedAt=" + updatedAt +
                 ", tag='" + tag + '\'' +
                 ", createdBy=" + createdBy +

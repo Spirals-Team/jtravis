@@ -57,7 +57,7 @@ public abstract class AbstractHelper {
                 .header("User-Agent",USER_AGENT)
                 .header("Travis-API-Version", "3")
                 .header("Authorization", token)
-                .url(url);
+                .url(getEndpoint()+url);
     }
 
     private void checkResponse(Response response) throws IOException {

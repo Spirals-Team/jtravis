@@ -176,4 +176,19 @@ public final class Repository extends EntityUnary {
 
         return Objects.hash(super.hashCode(), name, slug, active, privateProperty, description, githubLanguage, starred, owner, defaultBranch);
     }
+
+    @Override
+    public String toString() {
+        return "Repository{" +
+                "name='" + name + '\'' +
+                ", slug='" + slug + '\'' +
+                ", active=" + active +
+                ", privateProperty=" + privateProperty +
+                ", description='" + description + '\'' +
+                ", githubLanguage='" + githubLanguage + '\'' +
+                ", starred=" + starred +
+                ", owner=" + owner +
+                ", defaultBranch=" + defaultBranch +
+                '}';
+    }
 }
