@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class TestBuilds extends AbstractTest {
@@ -120,5 +121,27 @@ public class TestBuilds extends AbstractTest {
         secondBranch.setUri("/repo/11594784/branch/erroring-branch");
         secondBranch.setName("erroring-branch");
         secondBuild.setBranch(secondBranch);
+
+        Commit secondCommit = new Commit();
+        secondCommit.setId(101281499);
+        secondCommit.setSha("349626e0c9138dbea032dc9cec92794e97401d48");
+        secondCommit.setMessage("Remove tests in fail");
+        secondCommit.setCompareUrl("https://github.com/surli/failingProject/compare/28e6430ececcb3b511292ca4f85b66fd5b606b3a...349626e0c9138dbea032dc9cec92794e97401d48");
+        secondCommit.setCommittedAt(this.getDateFor(2017, Calendar.MARCH, 2, 15, 35, 36, 0));
+        secondBuild.setCommit(secondCommit);
+
+        List<Job> jobList1 = new ArrayList<>();
+        Job job = new Job();
+        job.setUri("/job/340617745");
+        job.setId(340617745);
+        jobList1.add(job);
+        secondBuild.setJobs(jobList1);
+        secondBuild.setCreatedBy(createdBy);
+        secondBuild.setUpdatedAt(this.getDateFor(2018, Calendar.FEBRUARY, 12, 18, 32, 13, 797));
+        buildList.add(secondBuild);
+
+        expectedBuilds.setBuilds(buildList);
+
+        assertEquals(expectedBuilds, result);
     }
 }
