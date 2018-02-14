@@ -3,7 +3,7 @@ package fr.inria.jtravis.entities;
 /**
  * Created by urli on 04/01/2017.
  */
-public class PRInformation {
+public final class PRInformation {
 
     private Commit head;
     private Commit base;

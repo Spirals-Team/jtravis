@@ -12,10 +12,7 @@ import java.util.Objects;
  *
  * @author Simon Urli
  */
-public class Repository extends Entity {
-    @Expose
-    private int id;
-
+public final class Repository extends EntityUnary {
     @Expose
     private String name;
 
@@ -44,14 +41,81 @@ public class Repository extends Entity {
     @Expose
     private Branch defaultBranch;
 
-    private Build currentBuild;
+    // GETTER
 
-    private Build lastStartedBuild;
+    public String getName() {
+        return name;
+    }
 
+    public String getSlug() {
+        return slug;
+    }
 
-    private Build lastBuild;
-    private Build lastBuildOnMaster;
-    private Date lastAccess;
+    public boolean isActive() {
+        return active;
+    }
+
+    public boolean isPrivateProperty() {
+        return privateProperty;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getGithubLanguage() {
+        return githubLanguage;
+    }
+
+    public boolean isStarred() {
+        return starred;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public Branch getDefaultBranch() {
+        return defaultBranch;
+    }
+
+    // SETTER
+
+    protected void setName(String name) {
+        this.name = name;
+    }
+
+    protected void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    protected void setActive(boolean active) {
+        this.active = active;
+    }
+
+    protected void setPrivateProperty(boolean privateProperty) {
+        this.privateProperty = privateProperty;
+    }
+
+    protected void setDescription(String description) {
+        this.description = description;
+    }
+
+    protected void setGithubLanguage(String githubLanguage) {
+        this.githubLanguage = githubLanguage;
+    }
+
+    protected void setStarred(boolean starred) {
+        this.starred = starred;
+    }
+
+    protected void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    protected void setDefaultBranch(Branch defaultBranch) {
+        this.defaultBranch = defaultBranch;
+    }
 
     /**
      * Get the last build of the current repository. If onMaster is specified it will only look for builds created by push on master or cron.
@@ -90,122 +154,13 @@ public class Repository extends Entity {
         }*/
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public boolean isPrivateProperty() {
-        return privateProperty;
-    }
-
-    public void setPrivateProperty(boolean privateProperty) {
-        this.privateProperty = privateProperty;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getGithubLanguage() {
-        return githubLanguage;
-    }
-
-    public void setGithubLanguage(String githubLanguage) {
-        this.githubLanguage = githubLanguage;
-    }
-
-    public boolean isStarred() {
-        return starred;
-    }
-
-    public void setStarred(boolean starred) {
-        this.starred = starred;
-    }
-
-    public Build getLastBuild() {
-        return lastBuild;
-    }
-
-    public void setLastBuild(Build lastBuild) {
-        this.lastBuild = lastBuild;
-    }
-
-    public Build getLastBuildOnMaster() {
-        return lastBuildOnMaster;
-    }
-
-    public void setLastBuildOnMaster(Build lastBuildOnMaster) {
-        this.lastBuildOnMaster = lastBuildOnMaster;
-    }
-
-    public void setLastAccess(Date lastAccess) {
-        this.lastAccess = lastAccess;
-    }
-
-    public Date getLastAccess() {
-        return lastAccess;
-    }
-
-    public void updateLastAccess() {
-        this.lastAccess = new Date();
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-    }
-
-    public Branch getDefaultBranch() {
-        return defaultBranch;
-    }
-
-    public void setDefaultBranch(Branch defaultBranch) {
-        this.defaultBranch = defaultBranch;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        Repository that = (Repository) o;
-        return id == that.id &&
-                active == that.active &&
+        final Repository that = (Repository) o;
+        return active == that.active &&
                 privateProperty == that.privateProperty &&
                 starred == that.starred &&
                 Objects.equals(name, that.name) &&
@@ -213,17 +168,12 @@ public class Repository extends Entity {
                 Objects.equals(description, that.description) &&
                 Objects.equals(githubLanguage, that.githubLanguage) &&
                 Objects.equals(owner, that.owner) &&
-                Objects.equals(defaultBranch, that.defaultBranch) &&
-                Objects.equals(currentBuild, that.currentBuild) &&
-                Objects.equals(lastStartedBuild, that.lastStartedBuild) &&
-                Objects.equals(lastBuild, that.lastBuild) &&
-                Objects.equals(lastBuildOnMaster, that.lastBuildOnMaster) &&
-                Objects.equals(lastAccess, that.lastAccess);
+                Objects.equals(defaultBranch, that.defaultBranch);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id, name, slug, active, privateProperty, description, githubLanguage, starred, owner, defaultBranch, currentBuild, lastStartedBuild, lastBuild, lastBuildOnMaster, lastAccess);
+        return Objects.hash(super.hashCode(), name, slug, active, privateProperty, description, githubLanguage, starred, owner, defaultBranch);
     }
 }

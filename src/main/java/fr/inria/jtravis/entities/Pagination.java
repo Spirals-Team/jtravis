@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 
 import java.util.Objects;
 
-public class Pagination {
+public final class Pagination {
     @Expose
     private int limit;
 
@@ -32,75 +32,79 @@ public class Pagination {
     @Expose
     private PaginationEntity last;
 
+    // GETTERS
+
     public int getLimit() {
         return limit;
-    }
-
-    public void setLimit(int limit) {
-        this.limit = limit;
     }
 
     public int getOffset() {
         return offset;
     }
 
-    public void setOffset(int offset) {
-        this.offset = offset;
-    }
-
     public int getCount() {
         return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 
     public boolean isFirst() {
         return isFirst;
     }
 
-    public void setFirst(boolean first) {
-        isFirst = first;
-    }
-
     public boolean isLast() {
         return isLast;
-    }
-
-    public void setLast(boolean last) {
-        isLast = last;
     }
 
     public PaginationEntity getNext() {
         return next;
     }
 
-    public void setNext(PaginationEntity next) {
-        this.next = next;
-    }
-
     public PaginationEntity getPrev() {
         return prev;
-    }
-
-    public void setPrev(PaginationEntity prev) {
-        this.prev = prev;
     }
 
     public PaginationEntity getFirst() {
         return first;
     }
 
-    public void setFirst(PaginationEntity first) {
-        this.first = first;
-    }
-
     public PaginationEntity getLast() {
         return last;
     }
 
-    public void setLast(PaginationEntity last) {
+    // SETTERS
+
+    protected void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    protected void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    protected void setCount(int count) {
+        this.count = count;
+    }
+
+    protected void setFirst(boolean first) {
+        isFirst = first;
+    }
+
+    protected void setLast(boolean last) {
+        isLast = last;
+    }
+
+    protected void setNext(PaginationEntity next) {
+        this.next = next;
+    }
+
+    protected void setPrev(PaginationEntity prev) {
+        this.prev = prev;
+    }
+
+    protected void setFirst(PaginationEntity first) {
+        this.first = first;
+    }
+
+    protected void setLast(PaginationEntity last) {
         this.last = last;
     }
 

@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose;
 import java.util.List;
 import java.util.Objects;
 
-public class Jobs extends EntityCollection {
+public final class Jobs extends EntityCollection {
     @Expose
     private List<Job> jobs;
 
@@ -13,7 +13,7 @@ public class Jobs extends EntityCollection {
         return jobs;
     }
 
-    public void setJobs(List<Job> jobs) {
+    protected void setJobs(List<Job> jobs) {
         this.jobs = jobs;
     }
 

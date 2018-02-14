@@ -14,7 +14,7 @@ public abstract class EntityCollection extends Entity {
         return pagination;
     }
 
-    public void setPagination(Pagination pagination) {
+    protected void setPagination(Pagination pagination) {
         this.pagination = pagination;
     }
 

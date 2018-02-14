@@ -6,13 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.Objects;
 
-public class Owner extends Entity {
+public final class Owner extends EntityUnary {
     @Expose
     @SerializedName("@type")
     private OwnerType type;
-
-    @Expose
-    private int id;
 
     @Expose
     private String login;
@@ -32,68 +29,64 @@ public class Owner extends Entity {
     @Expose
     private Date syncedAt;
 
-    public int getId() {
-        return id;
-    }
+    // GETTER
 
-    public void setId(int id) {
-        this.id = id;
+    public OwnerType getType() {
+        return type;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getGithubId() {
         return githubId;
     }
 
-    public void setGithubId(int githubId) {
-        this.githubId = githubId;
-    }
-
     public String getAvatarUrl() {
         return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
     }
 
     public boolean isSyncing() {
         return isSyncing;
     }
 
-    public void setSyncing(boolean syncing) {
-        isSyncing = syncing;
-    }
-
     public Date getSyncedAt() {
         return syncedAt;
     }
 
-    public void setSyncedAt(Date syncedAt) {
-        this.syncedAt = syncedAt;
-    }
+    // SETTER
 
-    public OwnerType getType() {
-        return type;
-    }
-
-    public void setType(OwnerType type) {
+    protected void setType(OwnerType type) {
         this.type = type;
+    }
+
+    protected void setLogin(String login) {
+        this.login = login;
+    }
+
+    protected void setName(String name) {
+        this.name = name;
+    }
+
+    protected void setGithubId(int githubId) {
+        this.githubId = githubId;
+    }
+
+    protected void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    protected void setSyncing(boolean syncing) {
+        isSyncing = syncing;
+    }
+
+    protected void setSyncedAt(Date syncedAt) {
+        this.syncedAt = syncedAt;
     }
 
     @Override
@@ -102,8 +95,7 @@ public class Owner extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Owner owner = (Owner) o;
-        return id == owner.id &&
-                githubId == owner.githubId &&
+        return githubId == owner.githubId &&
                 isSyncing == owner.isSyncing &&
                 type == owner.type &&
                 Objects.equals(login, owner.login) &&
@@ -115,14 +107,13 @@ public class Owner extends Entity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), type, id, login, name, githubId, avatarUrl, isSyncing, syncedAt);
+        return Objects.hash(super.hashCode(), type, login, name, githubId, avatarUrl, isSyncing, syncedAt);
     }
 
     @Override
     public String toString() {
         return "Owner{" +
                 "type=" + type +
-                ", id=" + id +
                 ", login='" + login + '\'' +
                 ", name='" + name + '\'' +
                 ", githubId=" + githubId +

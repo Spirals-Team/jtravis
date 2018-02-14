@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 
 import java.util.Objects;
 
-public class Branch extends Entity {
+public final class Branch extends Entity {
     @Expose
     private String name;
 
@@ -24,39 +24,39 @@ public class Branch extends Entity {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Repository getRepository() {
         return repository;
-    }
-
-    public void setRepository(Repository repository) {
-        this.repository = repository;
     }
 
     public boolean isDefaultBranch() {
         return defaultBranch;
     }
 
-    public void setDefaultBranch(boolean defaultBranch) {
-        this.defaultBranch = defaultBranch;
-    }
-
     public boolean isExistsOnGithub() {
         return existsOnGithub;
-    }
-
-    public void setExistsOnGithub(boolean existsOnGithub) {
-        this.existsOnGithub = existsOnGithub;
     }
 
     public Build getLastBuild() {
         return lastBuild;
     }
 
-    public void setLastBuild(Build lastBuild) {
+    protected void setName(String name) {
+        this.name = name;
+    }
+
+    protected void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    protected void setDefaultBranch(boolean defaultBranch) {
+        this.defaultBranch = defaultBranch;
+    }
+
+    protected void setExistsOnGithub(boolean existsOnGithub) {
+        this.existsOnGithub = existsOnGithub;
+    }
+
+    protected void setLastBuild(Build lastBuild) {
         this.lastBuild = lastBuild;
     }
 

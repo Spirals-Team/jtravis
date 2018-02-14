@@ -11,10 +11,7 @@ import java.util.Objects;
  * @see <a href="https://docs.travis-ci.com/api#logs">https://docs.travis-ci.com/api#logs</a>
  * @author Simon Urli
  */
-public class Log extends Entity {
-
-    @Expose
-    private int id;
+public final class Log extends EntityUnary {
 
     @Expose
     private String content;
@@ -24,19 +21,11 @@ public class Log extends Entity {
     private BuildTool buildTool;
 
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    protected void setContent(String content) {
         this.content = content;
     }
 
@@ -46,8 +35,7 @@ public class Log extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Log log = (Log) o;
-        return id == log.id &&
-                Objects.equals(content, log.content) &&
+        return Objects.equals(content, log.content) &&
                 Objects.equals(testsInformation, log.testsInformation) &&
                 buildTool == log.buildTool;
     }
@@ -55,7 +43,7 @@ public class Log extends Entity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id, content, testsInformation, buildTool);
+        return Objects.hash(super.hashCode(), content, testsInformation, buildTool);
     }
 
     public TestsInformation getTestsInformation() {

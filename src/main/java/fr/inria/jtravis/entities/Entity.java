@@ -19,7 +19,7 @@ public abstract class Entity {
         return uri;
     }
 
-    public void setUri(String uri) {
+    protected void setUri(String uri) {
         this.uri = uri;
     }
 
@@ -27,7 +27,7 @@ public abstract class Entity {
         return representation;
     }
 
-    public void setRepresentation(RepresentationType representation) {
+    protected void setRepresentation(RepresentationType representation) {
         this.representation = representation;
     }
 

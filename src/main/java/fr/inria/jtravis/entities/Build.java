@@ -17,11 +17,8 @@ import java.util.Objects;
  *
  * @author Simon Urli
  */
-public class Build extends Entity implements Comparable<Build> {
+public final class Build extends EntityUnary implements Comparable<Build> {
     private static final Logger LOGGER = LoggerFactory.getLogger(Build.class);
-
-    @Expose
-    private int id;
 
     @Expose
     private String number;
@@ -80,164 +77,163 @@ public class Build extends Entity implements Comparable<Build> {
         this.jobs = new ArrayList<Job>();
     }
 
-    public int getId() {
-        return id;
-    }
+    // GETTERS
 
-    public void setId(int id) {
-        this.id = id;
+    public static Logger getLOGGER() {
+        return LOGGER;
     }
 
     public String getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public StateType getState() {
         return state;
-    }
-
-    public void setState(StateType state) {
-        this.state = state;
-    }
-
-    public EventType getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(EventType eventType) {
-        this.eventType = eventType;
-    }
-
-    public StateType getPreviousState() {
-        return previousState;
-    }
-
-    public void setPreviousState(StateType previousState) {
-        this.previousState = previousState;
     }
 
     public int getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public EventType getEventType() {
+        return eventType;
     }
 
+    public StateType getPreviousState() {
+        return previousState;
+    }
 
     public String getPullRequestTitle() {
         return pullRequestTitle;
-    }
-
-    public void setPullRequestTitle(String pullRequestTitle) {
-        this.pullRequestTitle = pullRequestTitle;
     }
 
     public int getPullRequestNumber() {
         return pullRequestNumber;
     }
 
-    public void setPullRequestNumber(int pullRequestNumber) {
-        this.pullRequestNumber = pullRequestNumber;
-    }
-
     public Date getStartedAt() {
         return startedAt;
-    }
-
-    public void setStartedAt(Date startedAt) {
-        this.startedAt = startedAt;
     }
 
     public Date getFinishedAt() {
         return finishedAt;
     }
 
-    public void setFinishedAt(Date finishedAt) {
-        this.finishedAt = finishedAt;
-    }
-
     public Repository getRepository() {
         return repository;
-    }
-
-    public void setRepository(Repository repository) {
-        this.repository = repository;
     }
 
     public Branch getBranch() {
         return branch;
     }
 
-    public void setBranch(Branch branch) {
-        this.branch = branch;
-    }
-
     public Commit getCommit() {
         return commit;
-    }
-
-    public void setCommit(Commit commit) {
-        this.commit = commit;
     }
 
     public List<Job> getJobs() {
         return jobs;
     }
 
-    public void setJobs(List<Job> jobs) {
-        this.jobs = jobs;
-    }
-
     public Date getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public String getTag() {
         return tag;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
     public Owner getCreatedBy() {
         return createdBy;
-    }
-
-    public void setCreatedBy(Owner createdBy) {
-        this.createdBy = createdBy;
     }
 
     public PRInformation getPrInformation() {
         return prInformation;
     }
 
-    public void setPrInformation(PRInformation prInformation) {
-        this.prInformation = prInformation;
-    }
-
     public String getCompleteLog() {
         return completeLog;
-    }
-
-    public void setCompleteLog(String completeLog) {
-        this.completeLog = completeLog;
     }
 
     public BuildTool getBuildTool() {
         return buildTool;
     }
 
-    public void setBuildTool(BuildTool buildTool) {
+    // SETTERS
+
+    protected void setNumber(String number) {
+        this.number = number;
+    }
+
+    protected void setState(StateType state) {
+        this.state = state;
+    }
+
+    protected void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    protected void setEventType(EventType eventType) {
+        this.eventType = eventType;
+    }
+
+    protected void setPreviousState(StateType previousState) {
+        this.previousState = previousState;
+    }
+
+    protected void setPullRequestTitle(String pullRequestTitle) {
+        this.pullRequestTitle = pullRequestTitle;
+    }
+
+    protected void setPullRequestNumber(int pullRequestNumber) {
+        this.pullRequestNumber = pullRequestNumber;
+    }
+
+    protected void setStartedAt(Date startedAt) {
+        this.startedAt = startedAt;
+    }
+
+    protected void setFinishedAt(Date finishedAt) {
+        this.finishedAt = finishedAt;
+    }
+
+    protected void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    protected void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    protected void setCommit(Commit commit) {
+        this.commit = commit;
+    }
+
+    protected void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
+
+    protected void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    protected void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    protected void setCreatedBy(Owner createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    protected void setPrInformation(PRInformation prInformation) {
+        this.prInformation = prInformation;
+    }
+
+    protected void setCompleteLog(String completeLog) {
+        this.completeLog = completeLog;
+    }
+
+    protected void setBuildTool(BuildTool buildTool) {
         this.buildTool = buildTool;
     }
 
@@ -332,8 +328,7 @@ public class Build extends Entity implements Comparable<Build> {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Build build = (Build) o;
-        return id == build.id &&
-                duration == build.duration &&
+        return duration == build.duration &&
                 pullRequestNumber == build.pullRequestNumber &&
                 Objects.equals(number, build.number) &&
                 Objects.equals(state, build.state) &&
@@ -357,14 +352,13 @@ public class Build extends Entity implements Comparable<Build> {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id, number, state, duration, eventType, previousState, pullRequestTitle, pullRequestNumber, startedAt, finishedAt, repository, branch, commit, jobs, updatedAt, tag, createdBy, prInformation, completeLog, buildTool);
+        return Objects.hash(super.hashCode(), number, state, duration, eventType, previousState, pullRequestTitle, pullRequestNumber, startedAt, finishedAt, repository, branch, commit, jobs, updatedAt, tag, createdBy, prInformation, completeLog, buildTool);
     }
 
     @Override
     public String toString() {
         return "Build{" +
-                "id=" + id +
-                ", number='" + number + '\'' +
+                "number='" + number + '\'' +
                 ", state='" + state + '\'' +
                 ", duration=" + duration +
                 ", eventType='" + eventType + '\'' +

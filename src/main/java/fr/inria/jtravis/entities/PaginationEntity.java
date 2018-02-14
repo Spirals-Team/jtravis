@@ -4,27 +4,31 @@ import com.google.gson.annotations.Expose;
 
 import java.util.Objects;
 
-public class PaginationEntity extends Entity {
+public final class PaginationEntity extends Entity {
     @Expose
     private int limit;
 
     @Expose
     private int offset;
 
+    // GETTERS
+
     public int getLimit() {
         return limit;
-    }
-
-    public void setLimit(int limit) {
-        this.limit = limit;
     }
 
     public int getOffset() {
         return offset;
     }
 
-    public void setOffset(int offset) {
+    // SETTERS
+
+    protected void setOffset(int offset) {
         this.offset = offset;
+    }
+
+    protected void setLimit(int limit) {
+        this.limit = limit;
     }
 
     @Override

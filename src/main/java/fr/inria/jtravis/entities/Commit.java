@@ -12,10 +12,7 @@ import java.util.Objects;
  *
  * @author Simon Urli
  */
-public class Commit extends Entity {
-    @Expose
-    private int id;
-
+public final class Commit extends EntityUnary {
     @Expose
     private String sha;
 
@@ -37,68 +34,74 @@ public class Commit extends Entity {
     @Expose
     private Owner author;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    // GETTERS
 
     public String getSha() {
         return sha;
-    }
-
-    public void setSha(String sha) {
-        this.sha = sha;
     }
 
     public String getRef() {
         return ref;
     }
 
-    public void setRef(String ref) {
-        this.ref = ref;
-    }
-
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public String getCompareUrl() {
         return compareUrl;
     }
 
-    public void setCompareUrl(String compareUrl) {
-        this.compareUrl = compareUrl;
-    }
-
     public Date getCommittedAt() {
         return committedAt;
-    }
-
-    public void setCommittedAt(Date committedAt) {
-        this.committedAt = committedAt;
     }
 
     public Owner getCommitter() {
         return committer;
     }
 
-    public void setCommitter(Owner committer) {
-        this.committer = committer;
-    }
-
     public Owner getAuthor() {
         return author;
     }
 
-    public void setAuthor(Owner author) {
+    // SETTERS
+
+    protected void setSha(String sha) {
+        this.sha = sha;
+    }
+
+    protected void setRef(String ref) {
+        this.ref = ref;
+    }
+
+    protected void setMessage(String message) {
+        this.message = message;
+    }
+
+    protected void setCompareUrl(String compareUrl) {
+        this.compareUrl = compareUrl;
+    }
+
+    protected void setCommittedAt(Date committedAt) {
+        this.committedAt = committedAt;
+    }
+
+    protected void setCommitter(Owner committer) {
+        this.committer = committer;
+    }
+
+    protected void setAuthor(Owner author) {
         this.author = author;
+    }
+
+    /**
+     * There is not dedicated endpoint to get commits in TravisCI API.
+     * Then this method will ALWAYS return a null value.
+     * @return null
+     */
+    @Override
+    public String getUri() {
+        return null;
     }
 
     @Override
@@ -107,8 +110,7 @@ public class Commit extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Commit commit = (Commit) o;
-        return id == commit.id &&
-                Objects.equals(sha, commit.sha) &&
+        return Objects.equals(sha, commit.sha) &&
                 Objects.equals(ref, commit.ref) &&
                 Objects.equals(message, commit.message) &&
                 Objects.equals(compareUrl, commit.compareUrl) &&
@@ -120,6 +122,19 @@ public class Commit extends Entity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id, sha, ref, message, compareUrl, committedAt, committer, author);
+        return Objects.hash(super.hashCode(), sha, ref, message, compareUrl, committedAt, committer, author);
+    }
+
+    @Override
+    public String toString() {
+        return "Commit{" +
+               "sha='" + sha + '\'' +
+                ", ref='" + ref + '\'' +
+                ", message='" + message + '\'' +
+                ", compareUrl='" + compareUrl + '\'' +
+                ", committedAt=" + committedAt +
+                ", committer=" + committer +
+                ", author=" + author +
+                '}';
     }
 }

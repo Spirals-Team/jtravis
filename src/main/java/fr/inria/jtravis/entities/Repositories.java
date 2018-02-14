@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose;
 import java.util.List;
 import java.util.Objects;
 
-public class Repositories extends EntityCollection {
+public final class Repositories extends EntityCollection {
     @Expose
     private List<Repository> repositories;
 
@@ -13,7 +13,7 @@ public class Repositories extends EntityCollection {
         return repositories;
     }
 
-    public void setRepositories(List<Repository> repositories) {
+    protected void setRepositories(List<Repository> repositories) {
         this.repositories = repositories;
     }
 

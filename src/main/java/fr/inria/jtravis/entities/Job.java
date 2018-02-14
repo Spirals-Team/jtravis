@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import fr.inria.jtravis.helpers.LogHelper;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Business object to deal with job in Travis CI API
@@ -11,10 +12,7 @@ import java.util.Date;
  *
  * @author Simon Urli
  */
-public class Job extends Entity {
-    @Expose
-    private int id;
-
+public final class Job extends EntityUnary {
     @Expose
     private boolean allowFailure;
 
@@ -54,107 +52,103 @@ public class Job extends Entity {
     private Log log;
     private BuildTool buildTool;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    // GETTER
 
     public boolean isAllowFailure() {
         return allowFailure;
-    }
-
-    public void setAllowFailure(boolean allowFailure) {
-        this.allowFailure = allowFailure;
     }
 
     public String getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public StateType getState() {
         return state;
-    }
-
-    public void setState(StateType state) {
-        this.state = state;
     }
 
     public Date getStartedAt() {
         return startedAt;
     }
 
-    public void setStartedAt(Date startedAt) {
-        this.startedAt = startedAt;
-    }
-
     public Date getFinishedAt() {
         return finishedAt;
-    }
-
-    public void setFinishedAt(Date finishedAt) {
-        this.finishedAt = finishedAt;
     }
 
     public Build getBuild() {
         return build;
     }
 
-    public void setBuild(Build build) {
-        this.build = build;
-    }
-
     public String getQueue() {
         return queue;
-    }
-
-    public void setQueue(String queue) {
-        this.queue = queue;
     }
 
     public Repository getRepository() {
         return repository;
     }
 
-    public void setRepository(Repository repository) {
-        this.repository = repository;
-    }
-
     public Commit getCommit() {
         return commit;
-    }
-
-    public void setCommit(Commit commit) {
-        this.commit = commit;
     }
 
     public Owner getOwner() {
         return owner;
     }
 
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
     }
 
     public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    // SETTER
+
+    protected void setAllowFailure(boolean allowFailure) {
+        this.allowFailure = allowFailure;
+    }
+
+    protected void setNumber(String number) {
+        this.number = number;
+    }
+
+    protected void setState(StateType state) {
+        this.state = state;
+    }
+
+    protected void setStartedAt(Date startedAt) {
+        this.startedAt = startedAt;
+    }
+
+    protected void setFinishedAt(Date finishedAt) {
+        this.finishedAt = finishedAt;
+    }
+
+    protected void setBuild(Build build) {
+        this.build = build;
+    }
+
+    protected void setQueue(String queue) {
+        this.queue = queue;
+    }
+
+    protected void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    protected void setCommit(Commit commit) {
+        this.commit = commit;
+    }
+
+    protected void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    protected void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    protected void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -188,5 +182,33 @@ public class Job extends Entity {
         }
 
         return Integer.parseInt(numbers[1]);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        final Job job = (Job) o;
+        return allowFailure == job.allowFailure &&
+                Objects.equals(number, job.number) &&
+                state == job.state &&
+                Objects.equals(startedAt, job.startedAt) &&
+                Objects.equals(finishedAt, job.finishedAt) &&
+                Objects.equals(build, job.build) &&
+                Objects.equals(queue, job.queue) &&
+                Objects.equals(repository, job.repository) &&
+                Objects.equals(commit, job.commit) &&
+                Objects.equals(owner, job.owner) &&
+                Objects.equals(createdAt, job.createdAt) &&
+                Objects.equals(updatedAt, job.updatedAt) &&
+                Objects.equals(log, job.log) &&
+                buildTool == job.buildTool;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), allowFailure, number, state, startedAt, finishedAt, build, queue, repository, commit, owner, createdAt, updatedAt, log, buildTool);
     }
 }

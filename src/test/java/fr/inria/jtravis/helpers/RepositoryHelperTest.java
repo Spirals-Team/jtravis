@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class RepositoryHelperTest {
 
-    MockWebServer server;
+    /*MockWebServer server;
 
     @After
     public void tearDown() {
@@ -60,5 +60,5 @@ public class RepositoryHelperTest {
     public void testGetUnknownRepoThrowsException() {
         Repository unknownRepo = RepositoryHelper.getRepositoryFromSlug("surli/unknown");
         assertTrue(unknownRepo == null);
-    }
+    }*/
 }
