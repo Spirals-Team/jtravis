@@ -2,6 +2,7 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import fr.inria.jtravis.helpers.AbstractHelper;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
@@ -21,17 +22,12 @@ public class AbstractTest {
         return null;
     }
 
-    private JsonObject getJsonFromContent(String content) {
-        JsonParser parser = new JsonParser();
-        return parser.parse(content).getAsJsonObject();
-    }
-
     protected JsonObject getJsonObjectFromFilePath(String filePath) {
         String content = this.getFileContent(filePath);
         if (content == null) {
             return null;
         } else {
-            return getJsonFromContent(content);
+            return AbstractHelper.getJsonFromStringContent(content);
         }
     }
 

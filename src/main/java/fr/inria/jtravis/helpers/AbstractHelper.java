@@ -1,5 +1,7 @@
 package fr.inria.jtravis.helpers;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import fr.inria.jtravis.auth.TokenReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,6 +114,11 @@ public abstract class AbstractHelper {
         String result = responseBody.string();
         response.close();
         return result;
+    }
+
+    public static JsonObject getJsonFromStringContent(String content) {
+        JsonParser parser = new JsonParser();
+        return parser.parse(content).getAsJsonObject();
     }
 
     public static Gson createGson() {

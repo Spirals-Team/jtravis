@@ -1,5 +1,12 @@
 package fr.inria.jtravis.helpers;
 
+import com.google.gson.JsonObject;
+import com.google.gson.annotations.Expose;
+import fr.inria.jtravis.entities.Build;
+import fr.inria.jtravis.entities.RepresentationType;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,17 +27,42 @@ public class BuildHelper extends AbstractHelper {
         super();
     }
 
-    private static List<String> getEventTypes() {
-        List<String> result = new ArrayList<String>();
-        result.addAll(Arrays.asList(new String[]{ "cron", "push", "pull_request"}));
-        return result;
-    }
-
     protected static BuildHelper getInstance() {
         if (instance == null) {
             instance = new BuildHelper();
         }
         return instance;
+    }
+
+    public static boolean refreshBuild(Build build) {
+        if (build.getRepresentation() == RepresentationType.STANDARD || build.getUri() == null) {
+            return false;
+        } else {
+            try {
+                String jsonContent = this.get(build.getUri());
+                JsonObject jsonBuild = getJsonFromStringContent(jsonContent);
+                if (jsonBuild != null) {
+                    Build build1 = createGson().fromJson(jsonBuild, Build.class);
+
+                    for (Field field : Build.class.getFields()) {
+                        Expose[] annotations = field.getAnnotationsByType(Expose.class);
+                        if (annotations != null && annotations.length >= 1) {
+                            try {
+                                Object value = field.get(build1);
+                                field.set(build, value);
+                            } catch (IllegalAccessException e) {
+                                this.getLogger().error("Error while setting field: "+field.getName());
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                }
+            } catch (IOException e) {
+                this.getLogger().error("Error while getting JSON at URL: "+build.getUri());
+            }
+            return false;
+        }
     }
 
 //    public static Build getBuildFromId(int id, Repository parentRepo) {

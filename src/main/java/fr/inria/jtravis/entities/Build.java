@@ -1,6 +1,7 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
+import fr.inria.jtravis.helpers.BuildHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -235,6 +236,10 @@ public final class Build extends EntityUnary implements Comparable<Build> {
 
     protected void setBuildTool(BuildTool buildTool) {
         this.buildTool = buildTool;
+    }
+
+    public boolean refresh() {
+        return BuildHelper
     }
 
     public void refreshStatus() {
