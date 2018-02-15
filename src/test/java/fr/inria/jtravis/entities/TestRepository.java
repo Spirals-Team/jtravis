@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
+import com.squareup.okhttp.mockwebserver.RecordedRequest;
+import fr.inria.jtravis.AbstractTest;
 import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.helpers.GenericHelper;
 import org.junit.Test;
@@ -17,10 +19,10 @@ import static org.junit.Assert.assertTrue;
 
 public class TestRepository extends AbstractTest {
 
-    private static final String PATH_REPO_STANDARD = "./src/test/resources/response/repository/repo_answer_standard.json";
+    public static final String PATH_REPO_STANDARD = "./src/test/resources/response/repository/repo_answer_standard.json";
     private static final String PATH_REPO_MINIMAL = "./src/test/resources/response/repository/repo_answer_minimal.json";
 
-    public Repository getExpectedRepo() {
+    public static Repository getStandardExpectedRepo() {
         Repository expectedRepository = new Repository();
         expectedRepository.setRepresentation(RepresentationType.STANDARD);
         expectedRepository.setId(2800492);
@@ -56,11 +58,11 @@ public class TestRepository extends AbstractTest {
 
         assertNotNull(result);
 
-        assertEquals(getExpectedRepo(), result);
+        assertEquals(getStandardExpectedRepo(), result);
     }
 
     @Test
-    public void testRefreshRepository() throws IOException {
+    public void testRefreshRepository() throws IOException, InterruptedException {
         JsonObject repoObject = this.getJsonObjectFromFilePath(PATH_REPO_MINIMAL);
         Repository minimalRepo = GenericHelper.createGson().fromJson(repoObject, Repository.class);
 
@@ -80,11 +82,15 @@ public class TestRepository extends AbstractTest {
         server.enqueue(new MockResponse().setBody(buildContent));
 
         server.start();
-        HttpUrl baseUrl = server.url("");
+        HttpUrl baseUrl = server.url("fake");
         JTravis.getInstance().setTravisEndpoint(baseUrl.toString());
 
         assertTrue(minimalRepo.refresh());
-        assertEquals(getExpectedRepo(), minimalRepo);
+        assertEquals(getStandardExpectedRepo(), minimalRepo);
+
+        RecordedRequest request1 = server.takeRequest();
+        assertEquals("/fake"+expectedMinimalRepo.getUri(), request1.getPath());
+
         assertFalse(minimalRepo.refresh());
     }
 }

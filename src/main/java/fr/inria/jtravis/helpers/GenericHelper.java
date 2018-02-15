@@ -29,7 +29,7 @@ import java.util.Date;
  * @author Simon Urli
  */
 public class GenericHelper {
-    public static final String TRAVIS_API_ENDPOINT="https://api.travis-ci.org/";
+    public static final String TRAVIS_API_ENDPOINT="https://api.travis-ci.org";
     private static final String USER_AGENT = "MyClient/1.0.0";
 
     private static GenericHelper instance;

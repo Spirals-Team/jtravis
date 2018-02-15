@@ -3,19 +3,77 @@ package fr.inria.jtravis.helpers;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
+import com.squareup.okhttp.mockwebserver.RecordedRequest;
+import fr.inria.jtravis.AbstractTest;
+import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.entities.Repository;
-import org.junit.After;
+import fr.inria.jtravis.entities.TestRepository;
 import org.junit.Test;
 
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
 
 /**
  * Created by urli on 21/12/2016.
  */
-public class RepositoryHelperTest {
+public class RepositoryHelperTest extends AbstractTest {
+
+    @Test
+    public void testFromSlugMocked() throws IOException, InterruptedException {
+        String slug = "INRIA/spoon";
+        MockWebServer server = new MockWebServer();
+        String buildContent = this.getFileContent(TestRepository.PATH_REPO_STANDARD);
+
+        server.enqueue(new MockResponse().setBody(buildContent));
+
+        server.start();
+        HttpUrl baseUrl = server.url("fake");
+        JTravis.getInstance().setTravisEndpoint(baseUrl.toString());
+        Repository repository = JTravis.getInstance().repository().fromSlug(slug);
+
+        assertEquals(TestRepository.getStandardExpectedRepo(), repository);
+        RecordedRequest request1 = server.takeRequest();
+        assertEquals("/fake"+RepositoryHelper.REPO_ENDPOINT+slug, request1.getPath());
+    }
+
+    @Test
+    public void testFromIdStrMocked() throws IOException, InterruptedException {
+        String id = "2800492";
+        MockWebServer server = new MockWebServer();
+        String buildContent = this.getFileContent(TestRepository.PATH_REPO_STANDARD);
+
+        server.enqueue(new MockResponse().setBody(buildContent));
+
+        server.start();
+        HttpUrl baseUrl = server.url("fake");
+        JTravis.getInstance().setTravisEndpoint(baseUrl.toString());
+        Repository repository = JTravis.getInstance().repository().fromId(id);
+
+        assertEquals(TestRepository.getStandardExpectedRepo(), repository);
+        RecordedRequest request1 = server.takeRequest();
+        assertEquals("/fake"+RepositoryHelper.REPO_ENDPOINT+id, request1.getPath());
+    }
+
+    @Test
+    public void testFromIdIntMocked() throws IOException, InterruptedException {
+        int id = 2800492;
+        MockWebServer server = new MockWebServer();
+        String buildContent = this.getFileContent(TestRepository.PATH_REPO_STANDARD);
+
+        server.enqueue(new MockResponse().setBody(buildContent));
+
+        server.start();
+        HttpUrl baseUrl = server.url("fake");
+        JTravis.getInstance().setTravisEndpoint(baseUrl.toString());
+        Repository repository = JTravis.getInstance().repository().fromId(id);
+
+        assertEquals(TestRepository.getStandardExpectedRepo(), repository);
+        RecordedRequest request1 = server.takeRequest();
+        assertEquals("/fake"+RepositoryHelper.REPO_ENDPOINT+id, request1.getPath());
+    }
+
 
     /*MockWebServer server;
 

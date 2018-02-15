@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
+import fr.inria.jtravis.AbstractTest;
 import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.helpers.GenericHelper;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package fr.inria.jtravis.entities;
+package fr.inria.jtravis;
 
 import com.google.gson.JsonObject;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
@@ -45,7 +45,7 @@ public class AbstractTest {
         }
     }
 
-    protected Date getDateFor(int year, int month, int day, int hourOfDay, int minutes, int seconds, int milliseconds) {
+    protected static Date getDateFor(int year, int month, int day, int hourOfDay, int minutes, int seconds, int milliseconds) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
         calendar.setTimeInMillis(milliseconds);

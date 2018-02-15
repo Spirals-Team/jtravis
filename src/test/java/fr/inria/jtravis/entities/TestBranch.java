@@ -1,6 +1,7 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
+import fr.inria.jtravis.AbstractTest;
 import fr.inria.jtravis.helpers.GenericHelper;
 import org.junit.Test;
 

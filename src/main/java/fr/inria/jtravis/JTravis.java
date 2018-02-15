@@ -1,6 +1,7 @@
 package fr.inria.jtravis;
 
 import fr.inria.jtravis.helpers.GenericHelper;
+import fr.inria.jtravis.helpers.RepositoryHelper;
 
 public class JTravis {
 
@@ -24,5 +25,9 @@ public class JTravis {
 
     public void setTravisEndpoint(String travisEndpoint) {
         this.travisEndpoint = travisEndpoint;
+    }
+
+    public RepositoryHelper repository() {
+        return RepositoryHelper.getInstance();
     }
 }
