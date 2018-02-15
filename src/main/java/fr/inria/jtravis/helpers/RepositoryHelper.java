@@ -1,22 +1,11 @@
 package fr.inria.jtravis.helpers;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import fr.inria.jtravis.entities.Repository;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * The helper to deal with repository objects.
  *
  * @author Simon Urli
  */
-public class RepositoryHelper extends AbstractHelper {
+public class RepositoryHelper extends GenericHelper {
     public static final String REPO_ENDPOINT = "repo/";
 
     /*private static final int NB_REPO_BEFORE_CLEANING_CACHE = 10000;

@@ -1,7 +1,7 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
-import fr.inria.jtravis.helpers.AbstractHelper;
+import fr.inria.jtravis.helpers.GenericHelper;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -13,7 +13,7 @@ public class TestRepository extends AbstractTest {
     public void testRetrieveRepositoryFromJsonResponse() {
         String filePath = "./src/test/resources/response/repo_answer.json";
         JsonObject repoObject = this.getJsonObjectFromFilePath(filePath);
-        Repository result = AbstractHelper.createGson().fromJson(repoObject, Repository.class);
+        Repository result = GenericHelper.createGson().fromJson(repoObject, Repository.class);
 
         assertNotNull(result);
 

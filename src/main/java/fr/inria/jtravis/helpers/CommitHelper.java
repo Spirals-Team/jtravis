@@ -8,7 +8,7 @@ import fr.inria.jtravis.entities.Commit;
  *
  * @author Simon Urli
  */
-public class CommitHelper extends AbstractHelper {
+public class CommitHelper extends GenericHelper {
 
     public static Commit getCommitFromJsonElement(JsonElement element) {
         return createGson().fromJson(element, Commit.class);

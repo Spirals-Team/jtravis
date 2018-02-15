@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class DateHelperTest {
 
-    private class Helper extends AbstractHelper {
+    private class Helper extends GenericHelper {
         public Helper() {
             super();
         }

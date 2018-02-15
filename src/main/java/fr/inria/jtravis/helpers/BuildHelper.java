@@ -1,22 +1,16 @@
 package fr.inria.jtravis.helpers;
 
 import com.google.gson.JsonObject;
-import com.google.gson.annotations.Expose;
 import fr.inria.jtravis.entities.Build;
-import fr.inria.jtravis.entities.RepresentationType;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * The helper to deal with Build objects
  *
  * @author Simon Urli
  */
-public class BuildHelper extends AbstractHelper {
+public class BuildHelper extends GenericHelper {
 
     public static final String BUILD_NAME = "builds";
     public static final String BUILD_ENDPOINT = BUILD_NAME+"/";

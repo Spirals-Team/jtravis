@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.entities.StateType;
 import fr.inria.jtravis.entities.Job;
 
@@ -17,7 +18,7 @@ import java.util.List;
  *
  * @author Simon Urli
  */
-public class JobHelper extends AbstractHelper {
+public class JobHelper extends GenericHelper {
     public static final String JOB_ENDPOINT = "jobs/";
 
     private static JobHelper instance;
@@ -48,7 +49,7 @@ public class JobHelper extends AbstractHelper {
     }
 
     public static Job getJobFromId(int jobId) {
-        String resourceUrl = getInstance().getEndpoint()+JOB_ENDPOINT+jobId;
+        String resourceUrl = JTravis.getInstance().getTravisEndpoint()+JOB_ENDPOINT+jobId;
 
         try {
             String response = getInstance().get(resourceUrl);
@@ -70,7 +71,7 @@ public class JobHelper extends AbstractHelper {
      */
     @Deprecated
     public static List<Job> getJobListWithFilter(StateType buildStatus) {
-        String resourceUrl = getInstance().getEndpoint()+JOB_ENDPOINT;
+        String resourceUrl = JTravis.getInstance().getTravisEndpoint()+JOB_ENDPOINT;
 
         if (buildStatus != null) {
             resourceUrl += "?state="+buildStatus.name().toLowerCase();

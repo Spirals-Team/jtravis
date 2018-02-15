@@ -1,11 +1,10 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
-import fr.inria.jtravis.helpers.AbstractHelper;
+import fr.inria.jtravis.helpers.GenericHelper;
 import org.junit.Test;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -16,7 +15,7 @@ public class TestBranch extends AbstractTest {
     public void testRetrieveBranchFromJsonAnswer() {
         String filePath = "./src/test/resources/response/branch_answer.json";
         JsonObject branchObject = this.getJsonObjectFromFilePath(filePath);
-        Branch result = AbstractHelper.createGson().fromJson(branchObject, Branch.class);
+        Branch result = GenericHelper.createGson().fromJson(branchObject, Branch.class);
 
         assertNotNull(result);
 

@@ -1,9 +1,8 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
-import fr.inria.jtravis.helpers.AbstractHelper;
+import fr.inria.jtravis.helpers.GenericHelper;
 import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 
@@ -42,7 +41,7 @@ public class AbstractTest {
         if (content == null) {
             return null;
         } else {
-            return AbstractHelper.getJsonFromStringContent(content);
+            return GenericHelper.getJsonFromStringContent(content);
         }
     }
 

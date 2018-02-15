@@ -1,7 +1,7 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
-import fr.inria.jtravis.helpers.AbstractHelper;
+import fr.inria.jtravis.helpers.GenericHelper;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -15,7 +15,7 @@ public class TestUser extends AbstractTest {
     public void testRetrieveUserFromJsonAnswer() {
         String filePath = "./src/test/resources/response/user_answer.json";
         JsonObject userObject = this.getJsonObjectFromFilePath(filePath);
-        Owner result = AbstractHelper.createGson().fromJson(userObject, Owner.class);
+        Owner result = GenericHelper.createGson().fromJson(userObject, Owner.class);
 
         assertNotNull(result);
 

@@ -1,7 +1,7 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
-import fr.inria.jtravis.helpers.AbstractHelper;
+import fr.inria.jtravis.helpers.GenericHelper;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class TestLog extends AbstractTest {
         JsonObject logJson = this.getJsonObjectFromFilePath(filePath);
 
         assertNotNull(logJson);
-        Log result = AbstractHelper.createGson().fromJson(logJson, Log.class);
+        Log result = GenericHelper.createGson().fromJson(logJson, Log.class);
         assertNotNull(result);
 
         Log expectedLog = new Log();

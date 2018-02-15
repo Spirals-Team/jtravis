@@ -21,8 +21,6 @@ import java.util.Objects;
  * @author Simon Urli
  */
 public final class Build extends EntityUnary implements Comparable<Build> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Build.class);
-
     @Expose
     private String number;
 
@@ -81,10 +79,6 @@ public final class Build extends EntityUnary implements Comparable<Build> {
     }
 
     // GETTERS
-
-    public static Logger getLOGGER() {
-        return LOGGER;
-    }
 
     public String getNumber() {
         return number;
@@ -238,32 +232,6 @@ public final class Build extends EntityUnary implements Comparable<Build> {
 
     protected void setBuildTool(BuildTool buildTool) {
         this.buildTool = buildTool;
-    }
-
-    public boolean refresh() {
-        if (this.getRepresentation() == RepresentationType.MINIMAL && this.getUri() != null) {
-            Build build1 = BuildHelper.getInstance().getBuildFromUri(this.getUri());
-
-            if (build1 != null) {
-                for (Field field : Build.class.getDeclaredFields()) {
-                    Expose[] annotations = field.getAnnotationsByType(Expose.class);
-                    if (annotations != null && annotations.length >= 1) {
-                        try {
-                            field.setAccessible(true);
-                            Object value = field.get(build1);
-                            field.set(this, value);
-                            field.setAccessible(false);
-                        } catch (IllegalAccessException e) {
-                            LOGGER.error("Error while setting field: "+field.getName(), e);
-                            return false;
-                        }
-                    }
-                }
-                this.setRepresentation(RepresentationType.STANDARD);
-                return true;
-            }
-        }
-        return false;
     }
 
     public void refreshStatus() {

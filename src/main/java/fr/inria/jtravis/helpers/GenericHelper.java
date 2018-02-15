@@ -2,7 +2,10 @@ package fr.inria.jtravis.helpers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.auth.TokenReader;
+import fr.inria.jtravis.entities.Build;
+import fr.inria.jtravis.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.google.gson.FieldNamingPolicy;
@@ -25,27 +28,25 @@ import java.util.Date;
  *
  * @author Simon Urli
  */
-public abstract class AbstractHelper {
+public class GenericHelper {
     public static final String TRAVIS_API_ENDPOINT="https://api.travis-ci.org/";
-
     private static final String USER_AGENT = "MyClient/1.0.0";
 
-    private String endpoint;
+    private static GenericHelper instance;
     private OkHttpClient client;
     private GitHub github;
 
-    public AbstractHelper() {
+    GenericHelper() {
         client = new OkHttpClient();
-        setEndpoint(TRAVIS_API_ENDPOINT);
     }
 
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
+    protected static GenericHelper getInstance() {
+        if (instance == null) {
+            instance = new GenericHelper();
+        }
+        return instance;
     }
 
-    protected String getEndpoint() {
-        return endpoint;
-    }
 
     protected Logger getLogger() {
         return LoggerFactory.getLogger(this.getClass());
@@ -57,7 +58,7 @@ public abstract class AbstractHelper {
                 .header("User-Agent",USER_AGENT)
                 .header("Travis-API-Version", "3")
                 .header("Authorization", token)
-                .url(getEndpoint()+url);
+                .url(JTravis.getInstance().getTravisEndpoint()+url);
     }
 
     private void checkResponse(Response response) throws IOException {
@@ -124,6 +125,20 @@ public abstract class AbstractHelper {
     public static Gson createGson() {
         return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+    }
+
+    public static <T extends Entity> T getEntityFromUri(Class<T> zeClass, String uri) {
+        try {
+            String jsonContent = getInstance().get(uri);
+            JsonObject jsonObj = getJsonFromStringContent(jsonContent);
+            if (jsonObj != null) {
+                return createGson().fromJson(jsonObj, zeClass);
+            }
+        } catch (IOException e) {
+            getInstance().getLogger().error("Error while getting JSON at URL: "+uri);
+        }
+
+        return null;
     }
 
 }

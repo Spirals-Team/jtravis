@@ -1,23 +1,12 @@
 package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.entities.PRInformation;
-import fr.inria.jtravis.entities.Repository;
 import fr.inria.jtravis.entities.Build;
-import fr.inria.jtravis.entities.Commit;
-import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHPullRequest;
-import org.kohsuke.github.GHRateLimit;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 /**
  * Created by urli on 04/01/2017.
  */
-public class PRInformationHelper extends AbstractHelper {
+public class PRInformationHelper extends GenericHelper {
 
     private static PRInformationHelper instance;
 

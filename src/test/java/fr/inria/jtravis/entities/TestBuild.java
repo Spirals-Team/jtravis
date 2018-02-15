@@ -4,7 +4,8 @@ import com.google.gson.JsonObject;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
-import fr.inria.jtravis.helpers.AbstractHelper;
+import fr.inria.jtravis.JTravis;
+import fr.inria.jtravis.helpers.GenericHelper;
 import fr.inria.jtravis.helpers.BuildHelper;
 import org.junit.Test;
 
@@ -185,7 +186,7 @@ public class TestBuild extends AbstractTest {
     public void testRetrieveBuildFromJsonAnswer() {
         String filePath = "./src/test/resources/response/build_answer.json";
         JsonObject buildObject = this.getJsonObjectFromFilePath(filePath);
-        Build result = AbstractHelper.createGson().fromJson(buildObject, Build.class);
+        Build result = GenericHelper.createGson().fromJson(buildObject, Build.class);
 
         assertNotNull(result);
 
@@ -198,7 +199,7 @@ public class TestBuild extends AbstractTest {
         JsonObject jobObject = this.getJsonObjectFromFilePath(filePath);
 
         assertNotNull(jobObject);
-        Job jobResult = AbstractHelper.createGson().fromJson(jobObject, Job.class);
+        Job jobResult = GenericHelper.createGson().fromJson(jobObject, Job.class);
         Build minimalBuild = jobResult.getBuild();
 
         Build minimalExpectedBuild = new Build();
@@ -224,7 +225,7 @@ public class TestBuild extends AbstractTest {
 
         server.start();
         HttpUrl baseUrl = server.url("");
-        BuildHelper.getInstance().setEndpoint(baseUrl.toString());
+        JTravis.getInstance().setTravisEndpoint(baseUrl.toString());
 
         assertTrue(minimalBuild.refresh());
         assertEquals(this.getExpectedBuild(), minimalBuild);

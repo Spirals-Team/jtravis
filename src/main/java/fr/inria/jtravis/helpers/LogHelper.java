@@ -2,16 +2,13 @@ package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Log;
-import fr.inria.jtravis.entities.StateType;
-
-import java.io.IOException;
 
 /**
  * The helper to deal with log objects
  *
  * @author Simon Urli
  */
-public class LogHelper extends AbstractHelper {
+public class LogHelper extends GenericHelper {
     public static final String LOG_ENDPOINT = "logs/";
     public static final String LOG_JOB_ENDPOINT = "/log";
 

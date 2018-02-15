@@ -1,7 +1,7 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
-import fr.inria.jtravis.helpers.AbstractHelper;
+import fr.inria.jtravis.helpers.GenericHelper;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class TestRepositories extends AbstractTest {
         JsonObject repoJson = this.getJsonObjectFromFilePath(filePath);
         assertNotNull(repoJson);
 
-        Repositories result = AbstractHelper.createGson().fromJson(repoJson, Repositories.class);
+        Repositories result = GenericHelper.createGson().fromJson(repoJson, Repositories.class);
         assertNotNull(result);
 
         Repositories expectedRepositories = new Repositories();
