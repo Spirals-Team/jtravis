@@ -6,7 +6,7 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 import fr.inria.jtravis.AbstractTest;
 import fr.inria.jtravis.JTravis;
-import fr.inria.jtravis.helpers.GenericHelper;
+import fr.inria.jtravis.helpers.EntityHelper;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -189,7 +189,7 @@ public class TestBuild extends AbstractTest {
     @Test
     public void testRetrieveBuildFromJsonAnswer() {
         JsonObject buildObject = this.getJsonObjectFromFilePath(BUILD_STANDARD_PATH);
-        Build result = GenericHelper.createGson().fromJson(buildObject, Build.class);
+        Build result = EntityHelper.createGson().fromJson(buildObject, Build.class);
 
         assertNotNull(result);
 
@@ -199,13 +199,13 @@ public class TestBuild extends AbstractTest {
     @Test
     public void testIsPullRequestGiveTheRightAnswer() {
         JsonObject buildObject = this.getJsonObjectFromFilePath(BUILD_STANDARD_PATH);
-        Build result = GenericHelper.createGson().fromJson(buildObject, Build.class);
+        Build result = EntityHelper.createGson().fromJson(buildObject, Build.class);
 
         assertNotNull(result);
         assertTrue(result.isPullRequest());
 
         buildObject = this.getJsonObjectFromFilePath(BUILD_STANDARD_NOPR_PATH);
-        result = GenericHelper.createGson().fromJson(buildObject, Build.class);
+        result = EntityHelper.createGson().fromJson(buildObject, Build.class);
         assertNotNull(result);
         assertFalse(result.isPullRequest());
     }
@@ -215,7 +215,7 @@ public class TestBuild extends AbstractTest {
         JsonObject buildObject = this.getJsonObjectFromFilePath(BUILD_MINIMAL_PATH);
 
         assertNotNull(buildObject);
-        Build minimalBuild = GenericHelper.createGson().fromJson(buildObject, Build.class);
+        Build minimalBuild = EntityHelper.createGson().fromJson(buildObject, Build.class);
 
         Build minimalExpectedBuild = new Build();
         minimalExpectedBuild.setUri("/build/86601346");
@@ -232,17 +232,13 @@ public class TestBuild extends AbstractTest {
         minimalExpectedBuild.setFinishedAt(getDateFor(2015, Calendar.OCTOBER, 21, 12, 13, 12, 0));
         assertEquals(minimalExpectedBuild, minimalBuild);
 
-        MockWebServer server = new MockWebServer();
         String buildContent = this.getFileContent(BUILD_STANDARD_PATH);
 
-        server.enqueue(new MockResponse().setBody(buildContent));
+        this.enqueueContentMockServer(buildContent);
 
-        server.start();
-        HttpUrl baseUrl = server.url("");
-        JTravis.getInstance().setTravisEndpoint(baseUrl.toString());
 
-        assertTrue(minimalBuild.refresh());
+        assertTrue(getJTravis().refresh(minimalBuild));
         assertEquals(this.getExpectedBuild(), minimalBuild);
-        assertFalse(minimalBuild.refresh());
+        assertFalse(getJTravis().refresh(minimalBuild));
     }
 }

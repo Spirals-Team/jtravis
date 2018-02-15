@@ -1,11 +1,7 @@
 package fr.inria.jtravis.helpers;
 
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
 import com.squareup.okhttp.mockwebserver.RecordedRequest;
 import fr.inria.jtravis.AbstractTest;
-import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.UnitTest;
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.TestJob;
@@ -24,18 +20,13 @@ public class JobHelperTest extends AbstractTest {
     @Test
     public void testFromIdStrMocked() throws IOException, InterruptedException {
         String id = "340663038";
-        MockWebServer server = new MockWebServer();
         String buildContent = this.getFileContent(TestJob.JOB_STANDARD_PATH);
 
-        server.enqueue(new MockResponse().setBody(buildContent));
-
-        server.start();
-        HttpUrl baseUrl = server.url("fake");
-        JTravis.getInstance().setTravisEndpoint(baseUrl.toString());
-        Job job = JTravis.getInstance().job().fromId(id);
+        this.enqueueContentMockServer(buildContent);
+        Job job = getJTravis().job().fromId(id);
 
         assertEquals(TestJob.standardExpectedJob(), job);
-        RecordedRequest request1 = server.takeRequest();
+        RecordedRequest request1 = getMockServer().takeRequest();
         assertEquals("/fake"+JobHelper.JOB_ENDPOINT+id, request1.getPath());
     }
 
@@ -43,18 +34,14 @@ public class JobHelperTest extends AbstractTest {
     @Test
     public void testFromIdIntegerMocked() throws IOException, InterruptedException {
         int id = 340663038;
-        MockWebServer server = new MockWebServer();
         String buildContent = this.getFileContent(TestJob.JOB_STANDARD_PATH);
 
-        server.enqueue(new MockResponse().setBody(buildContent));
+        this.enqueueContentMockServer(buildContent);
 
-        server.start();
-        HttpUrl baseUrl = server.url("fake");
-        JTravis.getInstance().setTravisEndpoint(baseUrl.toString());
-        Job job = JTravis.getInstance().job().fromId(id);
+        Job job = getJTravis().job().fromId(id);
 
         assertEquals(TestJob.standardExpectedJob(), job);
-        RecordedRequest request1 = server.takeRequest();
+        RecordedRequest request1 = getMockServer().takeRequest();
         assertEquals("/fake"+JobHelper.JOB_ENDPOINT+id, request1.getPath());
     }
 }

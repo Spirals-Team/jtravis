@@ -1,8 +1,10 @@
 package fr.inria.jtravis;
 
 import com.google.gson.JsonObject;
+import com.squareup.okhttp.HttpUrl;
+import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
-import fr.inria.jtravis.helpers.GenericHelper;
+import fr.inria.jtravis.helpers.EntityHelper;
 import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 
@@ -15,7 +17,7 @@ import java.util.TimeZone;
 
 public class AbstractTest {
 
-    MockWebServer server;
+    private MockWebServer server;
 
     @After
     public void tearDown() {
@@ -25,6 +27,32 @@ public class AbstractTest {
             } catch (IOException e) {
             }
         }
+    }
+
+    public MockWebServer getMockServer() {
+        if (this.server == null) {
+            this.server = new MockWebServer();
+        }
+        return this.server;
+    }
+
+    public void enqueueContentMockServer(String content) {
+        getMockServer().enqueue(new MockResponse().setBody(content));
+    }
+
+    public JTravis getJTravis() {
+        try {
+            if (server != null) {
+                server.start();
+                HttpUrl baseUrl = server.url("fake");
+                return JTravis.builder().setEndpoint(baseUrl.toString()).build();
+            } else {
+                return JTravis.builder().build();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     protected String getFileContent(String filePath) {
@@ -41,7 +69,7 @@ public class AbstractTest {
         if (content == null) {
             return null;
         } else {
-            return GenericHelper.getJsonFromStringContent(content);
+            return EntityHelper.getJsonFromStringContent(content);
         }
     }
 

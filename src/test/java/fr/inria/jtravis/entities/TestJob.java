@@ -2,7 +2,7 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
 import fr.inria.jtravis.AbstractTest;
-import fr.inria.jtravis.helpers.GenericHelper;
+import fr.inria.jtravis.helpers.EntityHelper;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -75,7 +75,7 @@ public class TestJob extends AbstractTest {
         JsonObject jobObject = this.getJsonObjectFromFilePath(JOB_STANDARD_PATH);
 
         assertNotNull(jobObject);
-        Job result = GenericHelper.createGson().fromJson(jobObject, Job.class);
+        Job result = EntityHelper.createGson().fromJson(jobObject, Job.class);
         assertNotNull(result);
 
         assertEquals(standardExpectedJob(), result);

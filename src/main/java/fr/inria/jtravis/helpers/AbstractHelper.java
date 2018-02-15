@@ -1,15 +1,11 @@
 package fr.inria.jtravis.helpers;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import fr.inria.jtravis.JTravis;
-import fr.inria.jtravis.auth.TokenReader;
-import fr.inria.jtravis.entities.Entity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import fr.inria.jtravis.TravisConfig;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -17,47 +13,34 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Date;
 
-/**
- * This abstract helper is the base helper for all the others.
- * It defines constants for Travis CI API and methods to do requests and to parse them.
- *
- * @author Simon Urli
- */
-public class GenericHelper {
-    public static final String TRAVIS_API_ENDPOINT="https://api.travis-ci.org";
+public abstract class AbstractHelper {
     private static final String USER_AGENT = "MyClient/1.0.0";
 
-    private static GenericHelper instance;
+    private TravisConfig config;
     private OkHttpClient client;
     private GitHub github;
 
-    GenericHelper() {
-        client = new OkHttpClient();
+    AbstractHelper(TravisConfig config, OkHttpClient client) {
+        this.config = config;
+        this.client = client;
     }
-
-    protected static GenericHelper getInstance() {
-        if (instance == null) {
-            instance = new GenericHelper();
-        }
-        return instance;
-    }
-
 
     protected Logger getLogger() {
         return LoggerFactory.getLogger(this.getClass());
     }
 
     private Request.Builder requestBuilder(String url) {
-        String token = "token " + TokenReader.fromEnvironment();
         return new Request.Builder()
                 .header("User-Agent",USER_AGENT)
                 .header("Travis-API-Version", "3")
-                .header("Authorization", token)
-                .url(JTravis.getInstance().getTravisEndpoint()+url);
+                .header("Authorization", this.config.getTravisToken())
+                .url(this.config.getTravisEndpoint()+url);
     }
 
     private void checkResponse(Response response) throws IOException {
@@ -125,19 +108,4 @@ public class GenericHelper {
         return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
     }
-
-    public static <T extends Entity> T getEntityFromUri(Class<T> zeClass, String uri) {
-        try {
-            String jsonContent = getInstance().get(uri);
-            JsonObject jsonObj = getJsonFromStringContent(jsonContent);
-            if (jsonObj != null) {
-                return createGson().fromJson(jsonObj, zeClass);
-            }
-        } catch (IOException e) {
-            getInstance().getLogger().error("Error while getting JSON at URL: "+uri);
-        }
-
-        return null;
-    }
-
 }

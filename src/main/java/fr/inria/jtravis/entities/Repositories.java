@@ -33,17 +33,6 @@ public final class Repositories extends EntityCollection {
     }
 
     @Override
-    public boolean fillWithNextValues() {
-        Repositories nextRepositories = this.getNextCollectionAndUpdatePagination();
-        if (nextRepositories != null) {
-            this.repositories.addAll(nextRepositories.getRepositories());
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
     public String toString() {
         return "Repositories{" +
                 "pagination=" + this.getPagination() +

@@ -19,7 +19,7 @@ public class JobHelperIntegrationTest extends AbstractTest {
     @Test
     public void testFromId() {
         int id = 340663038;
-        Job job = JTravis.getInstance().job().fromId(id);
+        Job job = getJTravis().job().fromId(id);
 
         assertNotNull(job);
         assertEquals(id, job.getId());
@@ -34,7 +34,7 @@ public class JobHelperIntegrationTest extends AbstractTest {
     @Test
     public void testFromIdStr() {
         String id = "340663038";
-        Job job = JTravis.getInstance().job().fromId(id);
+        Job job = getJTravis().job().fromId(id);
 
         assertNotNull(job);
         assertEquals(340663038, job.getId());

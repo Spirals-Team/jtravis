@@ -1,42 +1,38 @@
 package fr.inria.jtravis.helpers;
 
+import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Log;
+import okhttp3.OkHttpClient;
 
 /**
  * The helper to deal with log objects
  *
  * @author Simon Urli
  */
-public class LogHelper extends GenericHelper {
+public class LogHelper extends EntityHelper {
     public static final String LOG_ENDPOINT = "logs/";
     public static final String LOG_JOB_ENDPOINT = "/log";
 
     private static LogHelper instance;
 
-    private LogHelper() {
-        super();
+    public LogHelper(TravisConfig config, OkHttpClient client) {
+        super(config, client);
     }
 
-    protected static LogHelper getInstance() {
-        if (instance == null) {
-            instance = new LogHelper();
-        }
-        return instance;
-    }
 
     public static Log getLogFromJob(Job job) {
         /*if (job.getId() != 0) {
             if (job.getState() == StateType.FAILED || job.getState() == StateType.PASSED || job.getState() == StateType.ERRORED) {
-                String logJobUrl = getInstance().getEndpoint()+JobHelper.JOB_ENDPOINT+job.getId()+LOG_JOB_ENDPOINT;
+                String logJobUrl = build().getEndpoint()+JobHelper.JOB_ENDPOINT+job.getId()+LOG_JOB_ENDPOINT;
                 try {
-                    String body = getInstance().rawGet(logJobUrl);
+                    String body = build().rawGet(logJobUrl);
                     return new Log(job.getId(), body);
                 } catch (IOException e) {
-                    getInstance().getLogger().warn("Error when getting log from job id "+job.getId()+" ",e);
+                    build().getLogger().warn("Error when getting log from job id "+job.getId()+" ",e);
                 }
             } else {
-                getInstance().getLogger().warn("Error when getting log from job id "+job.getId()+" : build status is neither failed or passed: "+job.getState().name());
+                build().getLogger().warn("Error when getting log from job id "+job.getId()+" : build status is neither failed or passed: "+job.getState().name());
             }
         }*/
         return null;

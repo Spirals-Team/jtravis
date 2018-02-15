@@ -2,7 +2,7 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
 import fr.inria.jtravis.AbstractTest;
-import fr.inria.jtravis.helpers.GenericHelper;
+import fr.inria.jtravis.helpers.EntityHelper;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class TestJobs extends AbstractTest {
         String filePath = "./src/test/resources/response/jobs_answer.json";
         JsonObject jobsJson = this.getJsonObjectFromFilePath(filePath);
         assertNotNull(jobsJson);
-        Jobs result = GenericHelper.createGson().fromJson(jobsJson, Jobs.class);
+        Jobs result = EntityHelper.createGson().fromJson(jobsJson, Jobs.class);
         assertNotNull(result);
 
         Jobs expectedJobs = new Jobs();

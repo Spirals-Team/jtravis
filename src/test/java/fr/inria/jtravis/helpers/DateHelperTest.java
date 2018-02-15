@@ -2,6 +2,7 @@ package fr.inria.jtravis.helpers;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import org.junit.Test;
 
@@ -13,27 +14,14 @@ import static org.junit.Assert.assertEquals;
  * Created by urli on 22/12/2016.
  */
 public class DateHelperTest {
-
-    private class Helper extends GenericHelper {
-        public Helper() {
-            super();
-        }
-
-        public Date parseDate(JsonElement element) {
-            Gson gson = createGson();
-            return gson.fromJson(element, Date.class);
-        }
-    }
-
     @Test
     public void shouldReturnTheRightDateWhenCorrectlyFormatted() {
         String dateStr = "2016-12-21T09:48:50Z";
         Gson gson = new Gson();
         JsonElement jsonElement = gson.toJsonTree(dateStr);
 
-        Helper helper = new Helper();
         Date expectedDate = TestUtils.getDate(2016, 12, 21, 9, 48, 50);
-        Date obtainedDate = helper.parseDate(jsonElement);
+        Date obtainedDate = EntityHelper.createGson().fromJson(jsonElement, Date.class);
         assertEquals(expectedDate, obtainedDate);
     }
 
@@ -43,7 +31,6 @@ public class DateHelperTest {
         Gson gson = new Gson();
         JsonElement jsonElement = gson.toJsonTree(dateStr);
 
-        Helper helper = new Helper();
-        Date obtainedDate = helper.parseDate(jsonElement);
+        Date obtainedDate = EntityHelper.createGson().fromJson(jsonElement, Date.class);
     }
 }

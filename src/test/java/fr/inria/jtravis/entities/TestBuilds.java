@@ -2,7 +2,7 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
 import fr.inria.jtravis.AbstractTest;
-import fr.inria.jtravis.helpers.GenericHelper;
+import fr.inria.jtravis.helpers.EntityHelper;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class TestBuilds extends AbstractTest {
         JsonObject buildsJson = this.getJsonObjectFromFilePath(filePath);
 
         assertNotNull(buildsJson);
-        Builds result = GenericHelper.createGson().fromJson(buildsJson, Builds.class);
+        Builds result = EntityHelper.createGson().fromJson(buildsJson, Builds.class);
         assertNotNull(result);
 
         Builds expectedBuilds = new Builds();

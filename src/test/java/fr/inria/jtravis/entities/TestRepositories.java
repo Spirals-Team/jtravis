@@ -6,7 +6,7 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 import fr.inria.jtravis.AbstractTest;
 import fr.inria.jtravis.JTravis;
-import fr.inria.jtravis.helpers.GenericHelper;
+import fr.inria.jtravis.helpers.EntityHelper;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -107,7 +107,7 @@ public class TestRepositories extends AbstractTest {
         JsonObject repoJson = this.getJsonObjectFromFilePath(PATH_REPOSITORIES_LIMIT_2_OFFSET_0);
         assertNotNull(repoJson);
 
-        Repositories result = GenericHelper.createGson().fromJson(repoJson, Repositories.class);
+        Repositories result = EntityHelper.createGson().fromJson(repoJson, Repositories.class);
         assertNotNull(result);
 
         Repositories expectedRepositories = new Repositories();
@@ -139,61 +139,5 @@ public class TestRepositories extends AbstractTest {
         repositoryList.add(this.expectedSecondRepository());
         expectedRepositories.setRepositories(repositoryList);
         assertEquals(expectedRepositories, result);
-    }
-
-    @Test
-    public void testRepositoriesFillWithNextData() throws IOException {
-        JsonObject repoJson = this.getJsonObjectFromFilePath(PATH_REPOSITORIES_LIMIT_2_OFFSET_0);
-        assertNotNull(repoJson);
-        Repositories repositories = GenericHelper.createGson().fromJson(repoJson, Repositories.class);
-        assertNotNull(repositories);
-        assertNotNull(repositories.getRepositories());
-        assertEquals(2, repositories.getRepositories().size());
-
-        MockWebServer server = new MockWebServer();
-        String buildContent = this.getFileContent(PATH_REPOSITORIES_LIMIT_2_OFFSET_2);
-
-        server.enqueue(new MockResponse().setBody(buildContent));
-
-        server.start();
-        HttpUrl baseUrl = server.url("");
-        JTravis.getInstance().setTravisEndpoint(baseUrl.toString());
-
-        assertTrue(repositories.fillWithNextValues());
-
-        Repositories expectedRepositories = new Repositories();
-        expectedRepositories.setUri("/owner/surli/repos?limit=2");
-        expectedRepositories.setRepresentation(RepresentationType.STANDARD);
-
-        Pagination pagination = new Pagination();
-        pagination.setLimit(2);
-        pagination.setCount(4);
-        pagination.setOffset(2);
-        pagination.setFirst(true);
-        pagination.setLast(true);
-
-        PaginationEntity first = new PaginationEntity();
-        first.setUri("/owner/surli/repos?limit=2");
-        first.setLimit(2);
-        pagination.setFirst(first);
-
-        PaginationEntity last = new PaginationEntity();
-        last.setUri("/owner/surli/repos?limit=2&offset=2");
-        last.setOffset(2);
-        last.setLimit(2);
-        pagination.setLast(last);
-
-        expectedRepositories.setPagination(pagination);
-        List<Repository> repositoryList = new ArrayList<>();
-
-        repositoryList.add(this.expectedFirstRepository());
-        repositoryList.add(this.expectedSecondRepository());
-        repositoryList.add(this.expectedThidRepository());
-        repositoryList.add(this.expectedFourthRepository());
-        expectedRepositories.setRepositories(repositoryList);
-
-        assertEquals(expectedRepositories, repositories);
-
-        assertFalse(repositories.fillWithNextValues());
     }
 }

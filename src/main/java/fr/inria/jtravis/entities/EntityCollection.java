@@ -2,7 +2,7 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import fr.inria.jtravis.helpers.GenericHelper;
+import fr.inria.jtravis.helpers.EntityHelper;
 
 import java.util.Objects;
 
@@ -31,27 +31,5 @@ public abstract class EntityCollection extends Entity {
     public int hashCode() {
 
         return Objects.hash(pagination);
-    }
-
-    public abstract boolean fillWithNextValues();
-
-    <T extends EntityCollection> T getNextCollectionAndUpdatePagination() {
-        Pagination currentPagination = this.getPagination();
-        if (currentPagination != null && currentPagination.getNext() != null) {
-            T result = (T) GenericHelper.getEntityFromUri(this.getClass(), this.getPagination().getNext().getUri());
-
-            Pagination nextPagination = result.getPagination();
-            currentPagination.setNext(nextPagination.getNext());
-            currentPagination.setLast(nextPagination.getLast());
-            currentPagination.setOffset(nextPagination.getOffset());
-            boolean isFirst = currentPagination.isFirst() || nextPagination.isFirst();
-            boolean isLast = currentPagination.isLast() || nextPagination.isLast();
-
-            currentPagination.setFirst(isFirst);
-            currentPagination.setLast(isLast);
-            return result;
-        }
-
-        return null;
     }
 }

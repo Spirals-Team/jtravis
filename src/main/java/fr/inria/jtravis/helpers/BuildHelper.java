@@ -1,52 +1,30 @@
 package fr.inria.jtravis.helpers;
 
-import com.google.gson.JsonObject;
-import fr.inria.jtravis.entities.Build;
-
-import java.io.IOException;
+import fr.inria.jtravis.TravisConfig;
+import okhttp3.OkHttpClient;
 
 /**
  * The helper to deal with Build objects
  *
  * @author Simon Urli
  */
-public class BuildHelper extends GenericHelper {
+public class BuildHelper extends EntityHelper {
 
     public static final String BUILD_NAME = "builds";
     public static final String BUILD_ENDPOINT = BUILD_NAME+"/";
 
     private static BuildHelper instance;
 
-    private BuildHelper() {
-        super();
+    public BuildHelper(TravisConfig config, OkHttpClient client) {
+        super(config, client);
     }
 
-    public static BuildHelper getInstance() {
-        if (instance == null) {
-            instance = new BuildHelper();
-        }
-        return instance;
-    }
-
-    public Build getBuildFromUri(String uri) {
-        try {
-            String jsonContent = getInstance().get(uri);
-            JsonObject jsonBuild = getJsonFromStringContent(jsonContent);
-            if (jsonBuild != null) {
-                return createGson().fromJson(jsonBuild, Build.class);
-            }
-        } catch (IOException e) {
-            getInstance().getLogger().error("Error while getting JSON at URL: "+uri);
-        }
-
-        return null;
-    }
 
 //    public static Build getBuildFromId(int id, Repository parentRepo) {
-//        String resourceUrl = getInstance().getEndpoint()+BUILD_ENDPOINT+id;
+//        String resourceUrl = build().getEndpoint()+BUILD_ENDPOINT+id;
 //
 //        try {
-//            String response = getInstance().get(resourceUrl);
+//            String response = build().get(resourceUrl);
 //            JsonParser parser = new JsonParser();
 //            JsonObject allAnswer = parser.parse(response).getAsJsonObject();
 //
@@ -76,7 +54,7 @@ public class BuildHelper extends GenericHelper {
 //
 //            return build;
 //        } catch (IOException e) {
-//            getInstance().getLogger().warn("Error when getting build id "+id+" : "+e.getMessage());
+//            build().getLogger().warn("Error when getting build id "+id+" : "+e.getMessage());
 //            return null;
 //        }
 //    }
@@ -95,7 +73,7 @@ public class BuildHelper extends GenericHelper {
 //    }
 //
 //    private static String getResourceUrl(String slug, String eventType, int after_number) {
-//        String resourceUrl = getInstance().getEndpoint()+RepositoryHelper.REPO_ENDPOINT+slug+"/"+BUILD_NAME;
+//        String resourceUrl = build().getEndpoint()+RepositoryHelper.REPO_ENDPOINT+slug+"/"+BUILD_NAME;
 //
 //        if (eventType != null) {
 //            resourceUrl += "?event_type=" + eventType;
@@ -136,7 +114,7 @@ public class BuildHelper extends GenericHelper {
 //
 //    private static JsonArray getBuildsAndCommits(String resourceUrl, Map<Integer, Commit> commits, boolean sortBuilds) {
 //        try {
-//            String response = getInstance().get(resourceUrl);
+//            String response = build().get(resourceUrl);
 //            JsonParser parser = new JsonParser();
 //            JsonObject allAnswer = parser.parse(response).getAsJsonObject();
 //
@@ -155,9 +133,9 @@ public class BuildHelper extends GenericHelper {
 //
 //            return buildArray;
 //        } catch (IOException e) {
-//            getInstance().getLogger().warn("Error when trying to get builds and commits from "+resourceUrl+" : "+e.getMessage());
+//            build().getLogger().warn("Error when trying to get builds and commits from "+resourceUrl+" : "+e.getMessage());
 //            if (e.getMessage().equals("timeout")) {
-//                getInstance().getLogger().warn("Timeout reached. Try to sleep 2 seconds and execute again the request.");
+//                build().getLogger().warn("Timeout reached. Try to sleep 2 seconds and execute again the request.");
 //                try {
 //                    Thread.sleep(2000);
 //                } catch (InterruptedException e1) {
@@ -256,7 +234,7 @@ public class BuildHelper extends GenericHelper {
 //
 //            if (dateEnd != -1) {
 //                if (new Date().getTime() > dateEnd) {
-//                    getInstance().getLogger().warn("The delay of "+delayTimeout+" minutes has been exceeded while inspecting the repo: "+slug);
+//                    build().getLogger().warn("The delay of "+delayTimeout+" minutes has been exceeded while inspecting the repo: "+slug);
 //                    return result;
 //                }
 //            }
@@ -486,7 +464,7 @@ public class BuildHelper extends GenericHelper {
 //
 //        Date limitDate = null;
 //        if (!skipDateLimit) {
-//            Calendar calendar = Calendar.getInstance();
+//            Calendar calendar = Calendar.build();
 //            calendar.add(Calendar.YEAR, -2);
 //            limitDate = calendar.getTime();
 //        }
@@ -495,7 +473,7 @@ public class BuildHelper extends GenericHelper {
 //        try {
 //            after_number = Integer.parseInt(build.getNumber());
 //        } catch (NumberFormatException e) {
-//            getInstance().getLogger().error("Error while parsing build number for build id: "+build.getId(),e);
+//            build().getLogger().error("Error while parsing build number for build id: "+build.getId(),e);
 //            return null;
 //        }
 //
@@ -533,7 +511,7 @@ public class BuildHelper extends GenericHelper {
 //        try {
 //            after_number = Integer.parseInt(build.getNumber());
 //        } catch (NumberFormatException e) {
-//            getInstance().getLogger().error("Error while parsing build number for build id: "+build.getId(),e);
+//            build().getLogger().error("Error while parsing build number for build id: "+build.getId(),e);
 //            return null;
 //        }
 //
@@ -575,7 +553,7 @@ public class BuildHelper extends GenericHelper {
 //    public static Build getLastSuccessfulBuildFromMaster(Repository repository, boolean withCron, int delayTimeout) {
 //        String slug = repository.getSlug();
 //
-//        Calendar calendar = Calendar.getInstance();
+//        Calendar calendar = Calendar.build();
 //        calendar.add(Calendar.YEAR, -10);
 //        Date limitDate = calendar.getTime();
 //
@@ -599,7 +577,7 @@ public class BuildHelper extends GenericHelper {
 //    public static Build getLastBuildFromMaster(Repository repository) {
 //        String slug = repository.getSlug();
 //
-//        Calendar calendar = Calendar.getInstance();
+//        Calendar calendar = Calendar.build();
 //        calendar.add(Calendar.YEAR, -10);
 //        Date limitDate = calendar.getTime();
 //

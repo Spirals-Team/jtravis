@@ -1,33 +1,29 @@
 package fr.inria.jtravis.helpers;
 
+import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.entities.PRInformation;
 import fr.inria.jtravis.entities.Build;
+import okhttp3.OkHttpClient;
 
 /**
  * Created by urli on 04/01/2017.
  */
-public class PRInformationHelper extends GenericHelper {
+public class PRInformationHelper extends EntityHelper {
 
     private static PRInformationHelper instance;
 
-    private PRInformationHelper() {
-        super();
+    public PRInformationHelper(TravisConfig config, OkHttpClient client) {
+        super(config, client);
     }
 
-    protected static PRInformationHelper getInstance() {
-        if (instance == null) {
-            instance = new PRInformationHelper();
-        }
-        return instance;
-    }
 
     public static PRInformation getPRInformationFromBuild(Build build) {
 //        try {
 //            if (build.isPullRequest()) {
-//                GitHub github = getInstance().getGithub();
+//                GitHub github = build().getGithub();
 //                GHRateLimit rateLimit = github.getRateLimit();
 //                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-//                getInstance().getLogger().debug("GitHub ratelimit: Limit: " + rateLimit.limit + " Remaining: " + rateLimit.remaining + " Reset hour: " + dateFormat.format(rateLimit.reset));
+//                build().getLogger().debug("GitHub ratelimit: Limit: " + rateLimit.limit + " Remaining: " + rateLimit.remaining + " Reset hour: " + dateFormat.format(rateLimit.reset));
 //
 //                if (rateLimit.remaining > 2) {
 //                    GHRepository ghRepo = github.getRepository(build.getRepository().getSlug());
@@ -37,7 +33,7 @@ public class PRInformationHelper extends GenericHelper {
 //                    GHRepository headRepo = pullRequest.getHead().getRepository();
 //
 //                    if (headRepo == null) {
-//                        getInstance().getLogger().warn("The head repository is null: maybe it has been deleted from GitHub");
+//                        build().getLogger().warn("The head repository is null: maybe it has been deleted from GitHub");
 //                        return null;
 //                    }
 //
@@ -47,7 +43,7 @@ public class PRInformationHelper extends GenericHelper {
 //                        base = commitMerge.getParents().get(0);
 //                        head = commitMerge.getParents().get(1);
 //                    } catch (FileNotFoundException e) {
-//                        getInstance().getLogger().error("The merge commit was deleted from Github: it means the previous commit information can't be get.");
+//                        build().getLogger().error("The merge commit was deleted from Github: it means the previous commit information can't be get.");
 //                        return null;
 //                    }
 //
@@ -88,13 +84,13 @@ public class PRInformationHelper extends GenericHelper {
 //
 //                    return prInformation;
 //                } else {
-//                    getInstance().getLogger().warn("You reach your rate limit for github, you have to wait " + rateLimit.reset + " to get datas. PRInformation will be null for build "+build.getId());
+//                    build().getLogger().warn("You reach your rate limit for github, you have to wait " + rateLimit.reset + " to get datas. PRInformation will be null for build "+build.getId());
 //                }
 //            } else {
-//                getInstance().getLogger().info("Getting PRInformation return null for build id "+build.getId()+" as it does not come from a PR.");
+//                build().getLogger().info("Getting PRInformation return null for build id "+build.getId()+" as it does not come from a PR.");
 //            }
 //        } catch (IOException e) {
-//            getInstance().getLogger().warn("Error when getting PRInformation for build id "+build.getId()+" : "+e.getMessage());
+//            build().getLogger().warn("Error when getting PRInformation for build id "+build.getId()+" : "+e.getMessage());
 //        }
         return null;
     }
