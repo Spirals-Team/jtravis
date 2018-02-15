@@ -6,7 +6,6 @@ import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.helpers.GenericHelper;
-import fr.inria.jtravis.helpers.BuildHelper;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -15,6 +14,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -184,7 +184,7 @@ public class TestBuild extends AbstractTest {
 
     @Test
     public void testRetrieveBuildFromJsonAnswer() {
-        String filePath = "./src/test/resources/response/build_answer.json";
+        String filePath = "./src/test/resources/response/build/build_answer_standard.json";
         JsonObject buildObject = this.getJsonObjectFromFilePath(filePath);
         Build result = GenericHelper.createGson().fromJson(buildObject, Build.class);
 
@@ -195,12 +195,11 @@ public class TestBuild extends AbstractTest {
 
     @Test
     public void testRefreshBuildAfterGettingInFromJob() throws IOException {
-        String filePath = "./src/test/resources/response/job_answer.json";
-        JsonObject jobObject = this.getJsonObjectFromFilePath(filePath);
+        String filePath = "./src/test/resources/response/build/build_answer_minimal.json";
+        JsonObject buildObject = this.getJsonObjectFromFilePath(filePath);
 
-        assertNotNull(jobObject);
-        Job jobResult = GenericHelper.createGson().fromJson(jobObject, Job.class);
-        Build minimalBuild = jobResult.getBuild();
+        assertNotNull(buildObject);
+        Build minimalBuild = GenericHelper.createGson().fromJson(buildObject, Build.class);
 
         Build minimalExpectedBuild = new Build();
         minimalExpectedBuild.setUri("/build/86601346");
@@ -218,7 +217,7 @@ public class TestBuild extends AbstractTest {
         assertEquals(minimalExpectedBuild, minimalBuild);
 
         MockWebServer server = new MockWebServer();
-        filePath = "./src/test/resources/response/build_answer.json";
+        filePath = "./src/test/resources/response/build/build_answer_standard.json";
         String buildContent = this.getFileContent(filePath);
 
         server.enqueue(new MockResponse().setBody(buildContent));
@@ -229,5 +228,6 @@ public class TestBuild extends AbstractTest {
 
         assertTrue(minimalBuild.refresh());
         assertEquals(this.getExpectedBuild(), minimalBuild);
+        assertFalse(minimalBuild.refresh());
     }
 }

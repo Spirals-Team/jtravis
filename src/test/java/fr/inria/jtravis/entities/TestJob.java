@@ -13,7 +13,7 @@ public class TestJob extends AbstractTest {
 
     @Test
     public void testRetrieveJobFromJsonAnswer() {
-        String filePath = "./src/test/resources/response/job_answer.json";
+        String filePath = "./src/test/resources/response/job/job_answer_rails.json";
         JsonObject jobObject = this.getJsonObjectFromFilePath(filePath);
 
         assertNotNull(jobObject);
