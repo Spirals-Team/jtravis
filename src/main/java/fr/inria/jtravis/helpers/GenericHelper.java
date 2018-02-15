@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.auth.TokenReader;
-import fr.inria.jtravis.entities.Build;
 import fr.inria.jtravis.entities.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

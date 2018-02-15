@@ -2,7 +2,6 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import fr.inria.jtravis.helpers.BuildHelper;
 import fr.inria.jtravis.helpers.GenericHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

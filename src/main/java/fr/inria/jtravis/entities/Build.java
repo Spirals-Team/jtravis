@@ -1,12 +1,8 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
-import fr.inria.jtravis.helpers.BuildHelper;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -76,84 +72,6 @@ public final class Build extends EntityUnary implements Comparable<Build> {
     public Build() {
         super();
         this.jobs = new ArrayList<Job>();
-    }
-
-    // GETTERS
-
-    public String getNumber() {
-        return number;
-    }
-
-    public StateType getState() {
-        return state;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public EventType getEventType() {
-        return eventType;
-    }
-
-    public StateType getPreviousState() {
-        return previousState;
-    }
-
-    public String getPullRequestTitle() {
-        return pullRequestTitle;
-    }
-
-    public int getPullRequestNumber() {
-        return pullRequestNumber;
-    }
-
-    public Date getStartedAt() {
-        return startedAt;
-    }
-
-    public Date getFinishedAt() {
-        return finishedAt;
-    }
-
-    public Repository getRepository() {
-        return repository;
-    }
-
-    public Branch getBranch() {
-        return branch;
-    }
-
-    public Commit getCommit() {
-        return commit;
-    }
-
-    public List<Job> getJobs() {
-        return jobs;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public Owner getCreatedBy() {
-        return createdBy;
-    }
-
-    public PRInformation getPrInformation() {
-        return prInformation;
-    }
-
-    public String getCompleteLog() {
-        return completeLog;
-    }
-
-    public BuildTool getBuildTool() {
-        return buildTool;
     }
 
     // SETTERS
@@ -234,43 +152,86 @@ public final class Build extends EntityUnary implements Comparable<Build> {
         this.buildTool = buildTool;
     }
 
-    public void refreshStatus() {
-        /*Build b = BuildHelper.getBuildFromId(this.getId(), null);
-        if (b != null && (this.getState() == null || !this.getState().equals(b.getState()))) {
-            this.jobs.clear();
-            this.completeLog = null;
-            this.buildTool = null;
-            this.setState(b.getState());
-            LOGGER.warn("New status for build id: "+this.getId()+" : "+this.getBuildStatus());
+    // GETTERS
 
-            this.setStartedAt(b.getStartedAt());
-            this.setFinishedAt(b.getFinishedAt());
-            this.setDuration(b.getDuration());
-            this.setJobIds(b.getJobIds());
-        }*/
+    public String getNumber() {
+        return number;
     }
 
-    /*public boolean addJob(Job job) {
-        if (this.getJobIds().contains(job.getId()) && !jobs.contains(job)) {
-            return this.jobs.add(job);
-        }
-        return false;
+    public StateType getState() {
+        return state;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public StateType getPreviousState() {
+        return previousState;
+    }
+
+    public String getPullRequestTitle() {
+        return pullRequestTitle;
+    }
+
+    public int getPullRequestNumber() {
+        return pullRequestNumber;
+    }
+
+    public Date getStartedAt() {
+        return startedAt;
+    }
+
+    public Date getFinishedAt() {
+        return finishedAt;
+    }
+
+    public Repository getRepository() {
+        return repository;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public Commit getCommit() {
+        return commit;
     }
 
     public List<Job> getJobs() {
-        if (this.jobs.isEmpty() && !this.getJobIds().isEmpty()) {
-            for (int jobId : this.getJobIds()) {
-                Job job = JobHelper.getJobFromId(jobId);
-                if (job != null) {
-                    this.jobs.add(job);
-                }
-            }
-        }
         return jobs;
-    }*/
+    }
 
-    public void clearJobs() {
-        this.jobs.clear();
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public Owner getCreatedBy() {
+        return createdBy;
+    }
+
+    public PRInformation getPrInformation() {
+        return prInformation;
+    }
+
+    public String getCompleteLog() {
+        return completeLog;
+    }
+
+    public BuildTool getBuildTool() {
+        return buildTool;
+    }
+
+    public boolean isPullRequest() {
+        return this.getPullRequestNumber() > 0;
     }
 
     /*public String getCompleteLog() {
@@ -284,14 +245,6 @@ public final class Build extends EntityUnary implements Comparable<Build> {
             }
         }
         return this.completeLog;
-    }
-
-    public Config getConfig() {
-        return config;
-    }
-
-    public void setConfig(Config config) {
-        this.config = config;
     }
 
     public PRInformation getPRInformation() {

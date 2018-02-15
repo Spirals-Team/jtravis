@@ -1,87 +1,78 @@
 package fr.inria.jtravis.helpers;
 
+import com.squareup.okhttp.HttpUrl;
+import com.squareup.okhttp.mockwebserver.MockResponse;
+import com.squareup.okhttp.mockwebserver.MockWebServer;
+import com.squareup.okhttp.mockwebserver.RecordedRequest;
+import fr.inria.jtravis.AbstractTest;
+import fr.inria.jtravis.IntegrationTest;
+import fr.inria.jtravis.JTravis;
+import fr.inria.jtravis.UnitTest;
+import fr.inria.jtravis.entities.Job;
+import fr.inria.jtravis.entities.StateType;
+import fr.inria.jtravis.entities.TestJob;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 /**
  * Created by urli on 22/12/2016.
  */
-public class JobHelperTest {
+public class JobHelperTest extends AbstractTest {
+    @Category(UnitTest.class)
+    @Test
+    public void testFromIdStrMocked() throws IOException, InterruptedException {
+        String id = "340663038";
+        MockWebServer server = new MockWebServer();
+        String buildContent = this.getFileContent(TestJob.JOB_STANDARD_PATH);
 
-//    @Test
-//    public void testGetJobFromId() {
-//        Job expectedJob = new Job();
-//        expectedJob.setId(185719844);
-//        expectedJob.setCommitId(53036982);
-//        expectedJob.setRepositoryId(2800492);
-//        expectedJob.setAllowFailure(false);
-//        expectedJob.setBuildId(185719843);
-//        expectedJob.setFinishedAt(TestUtils.getDate(2016,12,21,9,56,41));
-//        expectedJob.setNumber("2373.1");
-//        expectedJob.setQueue("builds.gce");
-//        expectedJob.setState("passed");
-//        expectedJob.setStartedAt(TestUtils.getDate(2016,12,21,9,49,46));
-//
-//        Config expectedConfig = new Config();
-//        expectedConfig.setLanguage("java");
-//
-//        expectedJob.setConfig(expectedConfig);
-//
-//        Job obtainedJob = JobHelper.getJobFromId(185719844);
-//        assertEquals(expectedJob, obtainedJob);
-//    }
-//
-//    @Test
-//    public void testGetJobList() {
-//        int minId = 329043061;
-//
-//        List<Job> jobs = JobHelper.getJobList();
-//        assertTrue(jobs.size() > 1);
-//        assertTrue(jobs.get(0).getId() > minId);
-//    }
-//
-//    @Ignore
-//    @Test
-//    public void testGetFilteredJobList() {
-//        Instant threeDaysAgo = new Date().toInstant().minus(3, ChronoUnit.DAYS);
-//        List<Job> jobs = JobHelper.getJobListWithFilter(BuildStatus.FAILED);
-//        assertTrue(jobs.size() > 2);
-//
-//        for (int i = 0; i < jobs.size()-1; i=i+2) {
-//            Job job1 = jobs.get(i);
-//            Job job2 = jobs.get(i+1);
-//
-//            assertTrue("J1 finished at: "+job1.getStartedAt()+"\nJ2 finished at: "+job2.getFinishedAt(), job1.getFinishedAt().after(job2.getFinishedAt()));
-//        }
-//
-//        /*for (Job job : jobs) {
-//            if (job.getBuildStatus() != BuildStatus.FAILED || job.getFinishedAt().toInstant().isBefore(threeDaysAgo)) {
-//                System.out.println("Job status should be failed but obtained: "+job.getBuildStatus()+" finished at: "+job.getFinishedAt());
-//            } else {
-//                System.out.println("OK");
-//            }
-//        }*/
-//    }
+        server.enqueue(new MockResponse().setBody(buildContent));
 
-//    @Ignore
-//    @Test
-//	// Flaky test
-//	public void testJobListIsOrdered() {
-//		List<Job> jobs = JobHelper.getJobList();
-//
-//		Job firstJob = jobs.get(0);
-//		Job lastJob = jobs.get(jobs.size()-1);
-//
-//		if (firstJob.getBuildId() != lastJob.getBuildId()) {
-//			Build firstBuild = BuildHelper.getBuildFromId(firstJob.getBuildId(), null);
-//			Build lastBuild = BuildHelper.getBuildFromId(lastJob.getBuildId(), null);
-//
-//			if (firstBuild.getStartedAt() != null && lastBuild.getStartedAt() != null) {
-//				assertTrue(firstBuild.getStartedAt().after(lastBuild.getStartedAt()));
-//			} else {
-//				assertTrue(firstBuild.getCommit().getCommittedAt().getTime() >= lastBuild.getCommit().getCommittedAt().getTime());
-//			}
-//
-//		} else {
-//			assertTrue(firstJob.getJobNumber() > lastJob.getJobNumber());
-//		}
-//
-//	}
+        server.start();
+        HttpUrl baseUrl = server.url("fake");
+        JTravis.getInstance().setTravisEndpoint(baseUrl.toString());
+        Job job = JTravis.getInstance().job().fromId(id);
+
+        assertEquals(TestJob.standardExpectedJob(), job);
+        RecordedRequest request1 = server.takeRequest();
+        assertEquals("/fake"+JobHelper.JOB_ENDPOINT+id, request1.getPath());
+    }
+
+    @Category(UnitTest.class)
+    @Test
+    public void testFromIdIntegerMocked() throws IOException, InterruptedException {
+        int id = 340663038;
+        MockWebServer server = new MockWebServer();
+        String buildContent = this.getFileContent(TestJob.JOB_STANDARD_PATH);
+
+        server.enqueue(new MockResponse().setBody(buildContent));
+
+        server.start();
+        HttpUrl baseUrl = server.url("fake");
+        JTravis.getInstance().setTravisEndpoint(baseUrl.toString());
+        Job job = JTravis.getInstance().job().fromId(id);
+
+        assertEquals(TestJob.standardExpectedJob(), job);
+        RecordedRequest request1 = server.takeRequest();
+        assertEquals("/fake"+JobHelper.JOB_ENDPOINT+id, request1.getPath());
+    }
+
+    @Category(IntegrationTest.class)
+    @Test
+    public void testFromId() {
+        int id = 340663038;
+        Job job = JTravis.getInstance().job().fromId(id);
+
+        assertNotNull(job);
+        assertEquals(id, job.getId());
+        assertEquals(StateType.FAILED, job.getState());
+        assertEquals(340663037, job.getBuild().getId());
+        assertEquals(2800492, job.getRepository().getId());
+        assertEquals(101294919, job.getCommit().getId());
+        assertEquals(83206, job.getOwner().getId());
+    }
 }

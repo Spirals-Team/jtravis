@@ -20,6 +20,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class TestBuild extends AbstractTest {
+    private static String BUILD_STANDARD_PATH = "./src/test/resources/response/build/build_answer_standard.json";
+    private static String BUILD_MINIMAL_PATH = "./src/test/resources/response/build/build_answer_minimal.json";
+    private static String BUILD_STANDARD_NOPR_PATH = "./src/test/resources/response/build/build_answer_standard_nopr.json";
 
     private Build getExpectedBuild() {
         Build expectedBuild = new Build();
@@ -33,9 +36,9 @@ public class TestBuild extends AbstractTest {
         expectedBuild.setPreviousState(StateType.PASSED);
         expectedBuild.setPullRequestTitle("Add SQL parameter sanitization to `.joins`");
         expectedBuild.setPullRequestNumber(21847);
-        expectedBuild.setStartedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 11, 54, 1, 0));
-        expectedBuild.setFinishedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 12, 13, 12, 0));
-        expectedBuild.setUpdatedAt(this.getDateFor(2017, Calendar.APRIL, 17, 11, 53, 42, 240));
+        expectedBuild.setStartedAt(getDateFor(2015, Calendar.OCTOBER, 21, 11, 54, 1, 0));
+        expectedBuild.setFinishedAt(getDateFor(2015, Calendar.OCTOBER, 21, 12, 13, 12, 0));
+        expectedBuild.setUpdatedAt(getDateFor(2017, Calendar.APRIL, 17, 11, 53, 42, 240));
 
         Repository repository = new Repository();
         repository.setUri("/repo/891");
@@ -58,7 +61,7 @@ public class TestBuild extends AbstractTest {
         commit.setRef("refs/pull/21847/merge");
         commit.setMessage("move build_join to private methods");
         commit.setCompareUrl("https://github.com/rails/rails/pull/21847");
-        commit.setCommittedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 11, 53, 32, 0));
+        commit.setCommittedAt(getDateFor(2015, Calendar.OCTOBER, 21, 11, 53, 32, 0));
         expectedBuild.setCommit(commit);
 
         List<Job> jobs = new ArrayList<>();
@@ -185,8 +188,7 @@ public class TestBuild extends AbstractTest {
 
     @Test
     public void testRetrieveBuildFromJsonAnswer() {
-        String filePath = "./src/test/resources/response/build/build_answer_standard.json";
-        JsonObject buildObject = this.getJsonObjectFromFilePath(filePath);
+        JsonObject buildObject = this.getJsonObjectFromFilePath(BUILD_STANDARD_PATH);
         Build result = GenericHelper.createGson().fromJson(buildObject, Build.class);
 
         assertNotNull(result);
@@ -195,9 +197,22 @@ public class TestBuild extends AbstractTest {
     }
 
     @Test
+    public void testIsPullRequestGiveTheRightAnswer() {
+        JsonObject buildObject = this.getJsonObjectFromFilePath(BUILD_STANDARD_PATH);
+        Build result = GenericHelper.createGson().fromJson(buildObject, Build.class);
+
+        assertNotNull(result);
+        assertTrue(result.isPullRequest());
+
+        buildObject = this.getJsonObjectFromFilePath(BUILD_STANDARD_NOPR_PATH);
+        result = GenericHelper.createGson().fromJson(buildObject, Build.class);
+        assertNotNull(result);
+        assertFalse(result.isPullRequest());
+    }
+
+    @Test
     public void testRefreshBuildAfterGettingInFromJob() throws IOException {
-        String filePath = "./src/test/resources/response/build/build_answer_minimal.json";
-        JsonObject buildObject = this.getJsonObjectFromFilePath(filePath);
+        JsonObject buildObject = this.getJsonObjectFromFilePath(BUILD_MINIMAL_PATH);
 
         assertNotNull(buildObject);
         Build minimalBuild = GenericHelper.createGson().fromJson(buildObject, Build.class);
@@ -213,13 +228,12 @@ public class TestBuild extends AbstractTest {
         minimalExpectedBuild.setPreviousState(StateType.PASSED);
         minimalExpectedBuild.setPullRequestTitle("Add SQL parameter sanitization to `.joins`");
         minimalExpectedBuild.setPullRequestNumber(21847);
-        minimalExpectedBuild.setStartedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 11, 54, 1, 0));
-        minimalExpectedBuild.setFinishedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 12, 13, 12, 0));
+        minimalExpectedBuild.setStartedAt(getDateFor(2015, Calendar.OCTOBER, 21, 11, 54, 1, 0));
+        minimalExpectedBuild.setFinishedAt(getDateFor(2015, Calendar.OCTOBER, 21, 12, 13, 12, 0));
         assertEquals(minimalExpectedBuild, minimalBuild);
 
         MockWebServer server = new MockWebServer();
-        filePath = "./src/test/resources/response/build/build_answer_standard.json";
-        String buildContent = this.getFileContent(filePath);
+        String buildContent = this.getFileContent(BUILD_STANDARD_PATH);
 
         server.enqueue(new MockResponse().setBody(buildContent));
 

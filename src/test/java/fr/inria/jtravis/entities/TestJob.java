@@ -11,27 +11,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class TestJob extends AbstractTest {
+    public static String JOB_STANDARD_PATH = "./src/test/resources/response/job/job_answer_rails.json";
 
-    @Test
-    public void testRetrieveJobFromJsonAnswer() {
-        String filePath = "./src/test/resources/response/job/job_answer_rails.json";
-        JsonObject jobObject = this.getJsonObjectFromFilePath(filePath);
-
-        assertNotNull(jobObject);
-        Job result = GenericHelper.createGson().fromJson(jobObject, Job.class);
-        assertNotNull(result);
-
+    public static Job standardExpectedJob() {
         Job expectedJob = new Job();
         expectedJob.setUri("/job/86601347");
         expectedJob.setRepresentation(RepresentationType.STANDARD);
         expectedJob.setId(86601347);
         expectedJob.setNumber("28677.1");
         expectedJob.setState(StateType.PASSED);
-        expectedJob.setStartedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 11, 54, 1, 0));
-        expectedJob.setFinishedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 12, 12, 27, 0));
+        expectedJob.setStartedAt(getDateFor(2015, Calendar.OCTOBER, 21, 11, 54, 1, 0));
+        expectedJob.setFinishedAt(getDateFor(2015, Calendar.OCTOBER, 21, 12, 12, 27, 0));
         expectedJob.setQueue("builds.docker");
-        expectedJob.setCreatedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 11, 53, 49, 382));
-        expectedJob.setUpdatedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 12, 12, 27, 213));
+        expectedJob.setCreatedAt(getDateFor(2015, Calendar.OCTOBER, 21, 11, 53, 49, 382));
+        expectedJob.setUpdatedAt(getDateFor(2015, Calendar.OCTOBER, 21, 12, 12, 27, 213));
 
         Build build = new Build();
         build.setUri("/build/86601346");
@@ -44,8 +37,8 @@ public class TestJob extends AbstractTest {
         build.setPreviousState(StateType.PASSED);
         build.setPullRequestTitle("Add SQL parameter sanitization to `.joins`");
         build.setPullRequestNumber(21847);
-        build.setStartedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 11, 54, 1, 0));
-        build.setFinishedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 12, 13, 12, 0));
+        build.setStartedAt(getDateFor(2015, Calendar.OCTOBER, 21, 11, 54, 1, 0));
+        build.setFinishedAt(getDateFor(2015, Calendar.OCTOBER, 21, 12, 13, 12, 0));
         expectedJob.setBuild(build);
 
         Repository repository = new Repository();
@@ -63,7 +56,7 @@ public class TestJob extends AbstractTest {
         commit.setRef("refs/pull/21847/merge");
         commit.setMessage("move build_join to private methods");
         commit.setCompareUrl("https://github.com/rails/rails/pull/21847");
-        commit.setCommittedAt(this.getDateFor(2015, Calendar.OCTOBER, 21, 11, 53, 32, 0));
+        commit.setCommittedAt(getDateFor(2015, Calendar.OCTOBER, 21, 11, 53, 32, 0));
         expectedJob.setCommit(commit);
 
         Owner owner = new Owner();
@@ -74,6 +67,17 @@ public class TestJob extends AbstractTest {
         owner.setLogin("rails");
         expectedJob.setOwner(owner);
 
-        assertEquals(expectedJob, result);
+        return expectedJob;
+    }
+
+    @Test
+    public void testRetrieveJobFromJsonAnswer() {
+        JsonObject jobObject = this.getJsonObjectFromFilePath(JOB_STANDARD_PATH);
+
+        assertNotNull(jobObject);
+        Job result = GenericHelper.createGson().fromJson(jobObject, Job.class);
+        assertNotNull(result);
+
+        assertEquals(standardExpectedJob(), result);
     }
 }

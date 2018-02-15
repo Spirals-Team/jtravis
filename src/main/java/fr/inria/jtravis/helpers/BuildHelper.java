@@ -29,18 +29,18 @@ public class BuildHelper extends GenericHelper {
     }
 
     public Build getBuildFromUri(String uri) {
-    	try {
-			String jsonContent = getInstance().get(uri);
-			JsonObject jsonBuild = getJsonFromStringContent(jsonContent);
-			if (jsonBuild != null) {
-				return createGson().fromJson(jsonBuild, Build.class);
-			}
-		} catch (IOException e) {
-			getInstance().getLogger().error("Error while getting JSON at URL: "+uri);
-		}
+        try {
+            String jsonContent = getInstance().get(uri);
+            JsonObject jsonBuild = getJsonFromStringContent(jsonContent);
+            if (jsonBuild != null) {
+                return createGson().fromJson(jsonBuild, Build.class);
+            }
+        } catch (IOException e) {
+            getInstance().getLogger().error("Error while getting JSON at URL: "+uri);
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 //    public static Build getBuildFromId(int id, Repository parentRepo) {
 //        String resourceUrl = getInstance().getEndpoint()+BUILD_ENDPOINT+id;

@@ -1,6 +1,7 @@
 package fr.inria.jtravis;
 
 import fr.inria.jtravis.helpers.GenericHelper;
+import fr.inria.jtravis.helpers.JobHelper;
 import fr.inria.jtravis.helpers.RepositoryHelper;
 
 public class JTravis {
@@ -29,5 +30,9 @@ public class JTravis {
 
     public RepositoryHelper repository() {
         return RepositoryHelper.getInstance();
+    }
+
+    public JobHelper job() {
+        return JobHelper.getInstance();
     }
 }
