@@ -2,42 +2,74 @@ package fr.inria.jtravis;
 
 import fr.inria.jtravis.entities.Entity;
 import fr.inria.jtravis.entities.EntityCollection;
+import fr.inria.jtravis.helpers.BuildHelper;
 import fr.inria.jtravis.helpers.EntityHelper;
 import fr.inria.jtravis.helpers.JobHelper;
+import fr.inria.jtravis.helpers.PullRequestHelper;
 import fr.inria.jtravis.helpers.RepositoryHelper;
 import okhttp3.OkHttpClient;
 
 public class JTravis {
     private TravisConfig travisConfig;
     private OkHttpClient client;
+
     private RepositoryHelper repositoryHelper;
     private EntityHelper entityHelper;
     private JobHelper jobHelper;
+    private PullRequestHelper pullRequestHelper;
+    private BuildHelper buildHelper;
 
     public static class Builder {
-        private String token;
+        private String travisToken;
         private String endpoint;
+        private String githubLogin;
+        private String githubToken;
 
         public Builder() {
             this.endpoint = TravisConstants.TRAVIS_API_ENDPOINT;
-            this.token = System.getenv(TravisConstants.TOKEN_ENV_PROPERTY);
-            if (this.token == null) {
-                this.token = "";
-            }
+            this.setTravisToken(System.getenv(TravisConstants.TRAVIS_TOKEN_ENV_PROPERTY));
+            this.setGithubLogin(System.getenv(TravisConstants.GITHUB_LOGIN_ENV_PROPERTY));
+            this.setGithubToken(System.getenv(TravisConstants.GITHUB_TOKEN_ENV_PROPERTY));
         }
 
-        public Builder setToken(String token) {
-            this.token = token;
+        public Builder setTravisToken(String travisToken) {
+            if (travisToken != null) {
+                this.travisToken = travisToken;
+            } else {
+                this.travisToken = "";
+            }
             return this;
         }
 
         public Builder setEndpoint(String endpoint) {
-            this.endpoint = endpoint;
+            if (endpoint != null) {
+                this.endpoint = endpoint;
+            } else {
+                this.endpoint = "";
+            }
+            return this;
+        }
+
+        public Builder setGithubLogin(String githubLogin) {
+            if (githubLogin != null) {
+                this.githubLogin = githubLogin;
+            } else {
+                this.githubLogin = "";
+            }
+            return this;
+        }
+
+        public Builder setGithubToken(String githubToken) {
+            if (githubToken != null) {
+                this.githubToken = githubToken;
+            } else {
+                this.githubToken = "";
+            }
             return this;
         }
 
         public JTravis build() {
-            TravisConfig travisConfig = new TravisConfig(this.endpoint, this.token);
+            TravisConfig travisConfig = new TravisConfig(this.endpoint, this.travisToken, this.githubLogin, this.githubToken);
             return new JTravis(travisConfig);
         }
     }
@@ -69,6 +101,20 @@ public class JTravis {
         }
 
         return this.jobHelper;
+    }
+
+    public PullRequestHelper pullRequest() {
+        if (this.pullRequestHelper == null) {
+            this.pullRequestHelper = new PullRequestHelper(this.travisConfig, this.client, repository());
+        }
+        return pullRequestHelper;
+    }
+
+    public BuildHelper build() {
+        if (this.buildHelper == null) {
+            this.buildHelper = new BuildHelper(this.travisConfig, this.client);
+        }
+        return buildHelper;
     }
 
     public static Builder builder() {

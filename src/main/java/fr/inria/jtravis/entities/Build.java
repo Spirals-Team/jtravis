@@ -65,7 +65,6 @@ public final class Build extends EntityUnary implements Comparable<Build> {
     @Expose
     private Owner createdBy;
 
-    private PRInformation prInformation;
     private String completeLog;
     private BuildTool buildTool;
 
@@ -138,10 +137,6 @@ public final class Build extends EntityUnary implements Comparable<Build> {
 
     protected void setCreatedBy(Owner createdBy) {
         this.createdBy = createdBy;
-    }
-
-    protected void setPrInformation(PRInformation prInformation) {
-        this.prInformation = prInformation;
     }
 
     protected void setCompleteLog(String completeLog) {
@@ -218,10 +213,6 @@ public final class Build extends EntityUnary implements Comparable<Build> {
         return createdBy;
     }
 
-    public PRInformation getPrInformation() {
-        return prInformation;
-    }
-
     public String getCompleteLog() {
         return completeLog;
     }
@@ -245,13 +236,6 @@ public final class Build extends EntityUnary implements Comparable<Build> {
             }
         }
         return this.completeLog;
-    }
-
-    public PRInformation getPRInformation() {
-        if (isPullRequest() && prInformation == null) {
-            prInformation = PRInformationHelper.getPRInformationFromBuild(this);
-        }
-        return prInformation;
     }
 
     public BuildTool getBuildTool() {
@@ -294,7 +278,6 @@ public final class Build extends EntityUnary implements Comparable<Build> {
                 Objects.equals(updatedAt, build.updatedAt) &&
                 Objects.equals(tag, build.tag) &&
                 Objects.equals(createdBy, build.createdBy) &&
-                Objects.equals(prInformation, build.prInformation) &&
                 Objects.equals(completeLog, build.completeLog) &&
                 buildTool == build.buildTool;
     }
@@ -302,7 +285,7 @@ public final class Build extends EntityUnary implements Comparable<Build> {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), number, state, duration, eventType, previousState, pullRequestTitle, pullRequestNumber, startedAt, finishedAt, repository, branch, commit, jobs, updatedAt, tag, createdBy, prInformation, completeLog, buildTool);
+        return Objects.hash(super.hashCode(), number, state, duration, eventType, previousState, pullRequestTitle, pullRequestNumber, startedAt, finishedAt, repository, branch, commit, jobs, updatedAt, tag, createdBy, completeLog, buildTool);
     }
 
     @Override
@@ -324,7 +307,6 @@ public final class Build extends EntityUnary implements Comparable<Build> {
                 ", updatedAt=" + updatedAt +
                 ", tag='" + tag + '\'' +
                 ", createdBy=" + createdBy +
-                ", prInformation=" + prInformation +
                 ", completeLog='" + completeLog + '\'' +
                 ", buildTool=" + buildTool +
                 '}';

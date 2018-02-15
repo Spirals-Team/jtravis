@@ -1,38 +1,65 @@
 package fr.inria.jtravis.entities;
 
+import org.kohsuke.github.GHCommit;
+import org.kohsuke.github.GHCommitPointer;
+import org.kohsuke.github.GHRepository;
+
 /**
  * Created by urli on 04/01/2017.
  */
-public final class PRInformation {
+public final class PullRequest {
 
-    private Commit head;
-    private Commit base;
-    private Repository otherRepo;
+    private GHCommitPointer headRef;
+    private GHCommitPointer baseRef;
+    private GHCommit head;
+    private GHCommit base;
+    private GHRepository otherRepo;
 
-    public PRInformation() {}
+    public PullRequest() {}
 
-    public Commit getHead() {
+    public GHCommitPointer getHeadRef() {
+        return headRef;
+    }
+
+    public PullRequest setHeadRef(GHCommitPointer headRef) {
+        this.headRef = headRef;
+        return this;
+    }
+
+    public GHCommitPointer getBaseRef() {
+        return baseRef;
+    }
+
+    public PullRequest setBaseRef(GHCommitPointer baseRef) {
+        this.baseRef = baseRef;
+        return this;
+    }
+
+    public GHCommit getHead() {
         return head;
     }
 
-    public void setHead(Commit head) {
+    public PullRequest setHead(GHCommit head) {
         this.head = head;
+        return this;
     }
 
-    public Commit getBase() {
+    public GHCommit getBase() {
         return base;
     }
 
-    public void setBase(Commit base) {
+    public PullRequest setBase(GHCommit base) {
         this.base = base;
+        return this;
     }
 
-    public Repository getOtherRepo() {
+    public GHRepository getOtherRepo() {
         return otherRepo;
     }
 
-    public void setOtherRepo(Repository otherRepo) {
+    public PullRequest setOtherRepo(GHRepository otherRepo) {
         this.otherRepo = otherRepo;
+        return this;
     }
 
     @Override
@@ -40,7 +67,7 @@ public final class PRInformation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PRInformation that = (PRInformation) o;
+        PullRequest that = (PullRequest) o;
 
         if (head != null ? !head.equals(that.head) : that.head != null) return false;
         if (base != null ? !base.equals(that.base) : that.base != null) return false;
