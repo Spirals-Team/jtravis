@@ -1,16 +1,5 @@
 package fr.inria.jtravis.parsers;
 
-import fr.inria.jtravis.TestUtils;
-import fr.inria.jtravis.entities.Build;
-import fr.inria.jtravis.entities.BuildTool;
-import fr.inria.jtravis.entities.Job;
-import fr.inria.jtravis.entities.Log;
-import fr.inria.jtravis.helpers.BuildHelper;
-import org.junit.Test;
-
-import java.io.File;
-import java.io.IOException;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;

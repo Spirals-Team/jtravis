@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.apache.commons.lang.StringUtils;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public abstract class AbstractHelper {
                 .header("User-Agent",USER_AGENT)
                 .header("Travis-API-Version", "3")
                 .header("Authorization", this.config.getTravisToken())
-                .url(this.config.getTravisEndpoint()+url);
+                .url(url);
     }
 
     private void checkResponse(Response response) throws IOException {
@@ -107,5 +108,17 @@ public abstract class AbstractHelper {
     public static Gson createGson() {
         return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+    }
+
+    public String buildUrl(String... uriComponent) {
+
+        String result;
+        if (uriComponent.length > 1) {
+            result = StringUtils.join(uriComponent, "/");
+        } else {
+            result = uriComponent[0];
+        }
+
+        return this.config.getTravisEndpoint()+"/"+result;
     }
 }

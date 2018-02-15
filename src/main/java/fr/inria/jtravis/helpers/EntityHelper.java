@@ -23,15 +23,16 @@ public class EntityHelper extends AbstractHelper {
         super(config, client);
     }
 
-    public <T extends Entity> T getEntityFromUri(Class<T> zeClass, String uri) {
+    public <T extends Entity> T getEntityFromUri(Class<T> zeClass, String... uriComponent) {
+        String url = this.buildUrl(uriComponent);
         try {
-            String jsonContent = this.get(uri);
+            String jsonContent = this.get(url);
             JsonObject jsonObj = getJsonFromStringContent(jsonContent);
             if (jsonObj != null) {
                 return createGson().fromJson(jsonObj, zeClass);
             }
         } catch (IOException e) {
-            this.getLogger().error("Error while getting JSON at URL: "+uri);
+            this.getLogger().error("Error while getting JSON at URL: "+url);
         }
 
         return null;

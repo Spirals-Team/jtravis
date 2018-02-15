@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class AbstractTest {
-
+    private static final String PREFIX_FAKE_URL = "fake";
     private MockWebServer server;
 
     @After
@@ -44,7 +44,7 @@ public class AbstractTest {
         try {
             if (server != null) {
                 server.start();
-                HttpUrl baseUrl = server.url("fake");
+                HttpUrl baseUrl = server.url(PREFIX_FAKE_URL);
                 return JTravis.builder().setEndpoint(baseUrl.toString()).build();
             } else {
                 return JTravis.builder().build();
@@ -53,6 +53,17 @@ public class AbstractTest {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String expectedUrl(String... uriComponent) {
+        String result;
+        if (uriComponent.length > 1) {
+            result = StringUtils.join(uriComponent, "/");
+        } else {
+            result = uriComponent[0];
+        }
+
+        return "/"+PREFIX_FAKE_URL+"/"+result;
     }
 
     protected String getFileContent(String filePath) {

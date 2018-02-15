@@ -2,6 +2,7 @@ package fr.inria.jtravis.helpers;
 
 import com.squareup.okhttp.mockwebserver.RecordedRequest;
 import fr.inria.jtravis.AbstractTest;
+import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.UnitTest;
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.TestJob;
@@ -27,7 +28,7 @@ public class JobHelperTest extends AbstractTest {
 
         assertEquals(TestJob.standardExpectedJob(), job);
         RecordedRequest request1 = getMockServer().takeRequest();
-        assertEquals("/fake"+JobHelper.JOB_ENDPOINT+id, request1.getPath());
+        assertEquals(this.expectedUrl(TravisConstants.JOB_ENDPOINT, id), request1.getPath());
     }
 
     @Category(UnitTest.class)
@@ -42,6 +43,6 @@ public class JobHelperTest extends AbstractTest {
 
         assertEquals(TestJob.standardExpectedJob(), job);
         RecordedRequest request1 = getMockServer().takeRequest();
-        assertEquals("/fake"+JobHelper.JOB_ENDPOINT+id, request1.getPath());
+        assertEquals(this.expectedUrl(TravisConstants.JOB_ENDPOINT, String.valueOf(id)), request1.getPath());
     }
 }

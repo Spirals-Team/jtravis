@@ -1,6 +1,5 @@
 package fr.inria.jtravis.parsers;
 
-import fr.inria.jtravis.TestUtils;
 import fr.inria.jtravis.entities.TestsInformation;
 import org.junit.Test;
 

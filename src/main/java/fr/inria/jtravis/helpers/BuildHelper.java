@@ -1,6 +1,11 @@
 package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.TravisConfig;
+import fr.inria.jtravis.TravisConstants;
+import fr.inria.jtravis.entities.Build;
+import fr.inria.jtravis.entities.Builds;
+import fr.inria.jtravis.entities.Job;
+import fr.inria.jtravis.entities.Repository;
 import okhttp3.OkHttpClient;
 
 /**
@@ -10,55 +15,47 @@ import okhttp3.OkHttpClient;
  */
 public class BuildHelper extends EntityHelper {
 
-    public static final String BUILD_NAME = "builds";
-    public static final String BUILD_ENDPOINT = BUILD_NAME+"/";
-
-    private static BuildHelper instance;
-
     public BuildHelper(TravisConfig config, OkHttpClient client) {
         super(config, client);
     }
 
+    public Builds fromRepository(Repository repository) {
+        return getEntityFromUri(Builds.class, TravisConstants.REPO_ENDPOINT, String.valueOf(repository.getId()), TravisConstants.BUILDS_ENDPOINT);
+    }
 
-//    public static Build getBuildFromId(int id, Repository parentRepo) {
-//        String resourceUrl = build().getEndpoint()+BUILD_ENDPOINT+id;
-//
-//        try {
-//            String response = build().get(resourceUrl);
-//            JsonParser parser = new JsonParser();
-//            JsonObject allAnswer = parser.parse(response).getAsJsonObject();
-//
-//            JsonObject buildJSON = allAnswer.getAsJsonObject("build");
-//            Build build = createGson().fromJson(buildJSON, Build.class);
-//
-//            JsonObject commitJSON = allAnswer.getAsJsonObject("commit");
-//            Commit commit = CommitHelper.getCommitFromJsonElement(commitJSON);
-//            build.setCommit(commit);
-//
-//            if (parentRepo != null) {
-//                build.setRepository(parentRepo);
-//            }
-//
-//            JsonObject configJSON = buildJSON.getAsJsonObject("config");
-//            Config config = ConfigHelper.getConfigFromJsonElement(configJSON);
-//            build.setConfig(config);
-//
-//            JsonArray arrayJobs = allAnswer.getAsJsonArray("jobs");
-//
-//            for (JsonElement jobJSONElement : arrayJobs) {
-//                Job job = JobHelper.createJobFromJsonElement((JsonObject)jobJSONElement);
-//                build.addJob(job);
-//            }
-//
-//
-//
-//            return build;
-//        } catch (IOException e) {
-//            build().getLogger().warn("Error when getting build id "+id+" : "+e.getMessage());
-//            return null;
-//        }
-//    }
-//
+    public Builds fromRepository(Repository repository, int limit) {
+        if (limit <= 0) {
+            throw new IllegalArgumentException("The limit should be > 0. Current value: "+limit);
+        }
+        return getEntityFromUri(Builds.class, TravisConstants.REPO_ENDPOINT, String.valueOf(repository.getId()), TravisConstants.BUILDS_ENDPOINT, "?limit=", String.valueOf(limit));
+    }
+
+    public Builds next(Builds builds) {
+        return this.getNextCollection(builds);
+    }
+
+    public Build fromId(int id) {
+        return getEntityFromUri(Build.class, TravisConstants.BUILD_ENDPOINT, String.valueOf(id));
+    }
+
+    public Build lastBuildFromMasterBranch(Repository repository) {
+        Builds builds = getEntityFromUri(Builds.class,
+                TravisConstants.REPO_ENDPOINT,
+                String.valueOf(repository.getId()),
+                TravisConstants.BUILDS_ENDPOINT,
+                "?branch.name=",
+                repository.getDefaultBranch().getName(),
+                "&limit=1",
+                "&sorted_by=",
+                new BuildsSorting().byFinishedAtDesc().build());
+
+        if (builds.getBuilds() == null || builds.getBuilds().size() == 0) {
+            return null;
+        } else {
+            return builds.getBuilds().get(0);
+        }
+    }
+
 //    private static boolean isAcceptedBuild(Build build, int prNumber, BuildStatus status, String previousBranch) {
 //        if (prNumber != -1 && build.getPullRequestNumber() != prNumber) {
 //            return false;
@@ -443,9 +440,6 @@ public class BuildHelper extends EntityHelper {
 //        return result;
 //    }
 //
-//    public static List<Build> getBuildsFromRepository(Repository repository) {
-//        return getBuildsFromRepositoryWithLimitDate(repository, null);
-//    }
 //
 //    public static Build getLastBuildOfSameBranchOfStatusBeforeBuild(Build build, BuildStatus status) {
 //        return BuildHelper.getLastBuildOfSameBranchOfStatusBeforeBuild(build, status, false);
