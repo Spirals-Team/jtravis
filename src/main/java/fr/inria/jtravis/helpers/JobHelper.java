@@ -8,7 +8,7 @@ import fr.inria.jtravis.entities.Job;
  * @author Simon Urli
  */
 public class JobHelper extends GenericHelper {
-    protected static final String JOB_ENDPOINT = "job/";
+    protected static final String JOB_ENDPOINT = "/job/";
 
     private static JobHelper instance;
 
