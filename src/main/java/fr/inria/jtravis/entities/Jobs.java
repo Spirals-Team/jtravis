@@ -33,6 +33,17 @@ public final class Jobs extends EntityCollection {
     }
 
     @Override
+    public boolean fillWithNextValues() {
+        Jobs nextJobs = this.getNextCollectionAndUpdatePagination();
+        if (nextJobs != null) {
+            this.jobs.addAll(nextJobs.getJobs());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public String toString() {
         return "Jobs{" +
                 "jobs=" + jobs +

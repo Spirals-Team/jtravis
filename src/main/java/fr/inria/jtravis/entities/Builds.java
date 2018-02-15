@@ -33,6 +33,17 @@ public final class Builds extends EntityCollection {
     }
 
     @Override
+    public boolean fillWithNextValues() {
+        Builds nextBuilds = this.getNextCollectionAndUpdatePagination();
+        if (nextBuilds != null) {
+            this.builds.addAll(nextBuilds.getBuilds());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public String toString() {
         return "Builds{" +
                 "builds=" + builds +
