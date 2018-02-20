@@ -1,5 +1,6 @@
 package fr.inria.jtravis.helpers;
 
+import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Repository;
@@ -13,8 +14,8 @@ import java.util.Optional;
  * @author Simon Urli
  */
 public class RepositoryHelper extends EntityHelper {
-    public RepositoryHelper(TravisConfig config, OkHttpClient client) {
-        super(config, client);
+    public RepositoryHelper(JTravis jTravis, TravisConfig config, OkHttpClient client) {
+        super(jTravis, config, client);
     }
 
     public Optional<Repository> fromSlug(String slug) {

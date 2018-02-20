@@ -1,5 +1,11 @@
 package fr.inria.jtravis.parsers;
 
+import fr.inria.jtravis.entities.BuildTool;
+import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -9,7 +15,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class LogParserTest {
 
-    /*@Test
+    @Test
     public void testLogParserRecognizeEE7LogAsMavenLog() throws IOException {
         String path = "./src/test/resources/maven-logs/javaee7log.txt";
 
@@ -131,7 +137,7 @@ public class LogParserTest {
         assertEquals(BuildTool.MAVEN, parser.getBuildTool());
     }*/
 
-    /*@Test
+    @Test
     public void testLogParserRecognizeSuccessLog3AsMavenLog() throws IOException {
         String path = "./src/test/resources/UnkownBuildTool/Maven/BUILD-SUCCESS/maven-log.txt";
 
@@ -456,12 +462,12 @@ public class LogParserTest {
                         String fileContent = TestUtils.readFile(file2.getPath());
                         LogParser parser = new LogParser(fileContent);
                         System.err.println("file : "+file2.getPath());
-                        assertEquals("Failed file path: "+ file2.getPath(),BuildTool.UNKNOWN, parser.getBuildTool());
+                        assertEquals("Failed file path: "+ file2.getPath(), BuildTool.UNKNOWN, parser.getBuildTool());
                     }
                 }
             }
         }
-    }*/
+    }
 
 
 

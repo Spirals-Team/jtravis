@@ -7,8 +7,6 @@ import fr.inria.jtravis.entities.Repository;
 import fr.inria.jtravis.entities.TestRepository;
 import org.junit.Test;
 
-import javax.swing.text.html.Option;
-
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -65,24 +63,4 @@ public class RepositoryHelperTest extends AbstractTest {
         RecordedRequest request1 = getMockServer().takeRequest();
         assertEquals(this.expectedUrl(TravisConstants.REPO_ENDPOINT, String.valueOf(id)), request1.getPath());
     }
-
-
-    /*MockWebServer server;
-
-    @After
-    public void tearDown() {
-        if (server != null) {
-            try {
-                server.shutdown();
-            } catch (IOException e) {
-            }
-        }
-        RepositoryHelper.build().setEndpoint(AbstractHelper.TRAVIS_API_ENDPOINT);
-    }
-
-    @Test
-    public void testGetUnknownRepoThrowsException() {
-        Repository unknownRepo = RepositoryHelper.getRepositoryFromSlug("surli/unknown");
-        assertTrue(unknownRepo == null);
-    }*/
 }

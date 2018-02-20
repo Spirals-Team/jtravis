@@ -1,12 +1,16 @@
 package fr.inria.jtravis;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 import fr.inria.jtravis.helpers.EntityHelper;
 import org.apache.commons.lang.StringUtils;
 import org.junit.After;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +18,8 @@ import java.nio.file.Files;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+
+import static org.junit.Assert.assertEquals;
 
 public class AbstractTest {
     private static final String PREFIX_FAKE_URL = "fake";
@@ -68,6 +74,10 @@ public class AbstractTest {
             result = StringUtils.join(uriComponent, "/");
         } else {
             result = uriComponent[0];
+        }
+
+        if (!result.startsWith("/")) {
+            result = "/"+result;
         }
 
         return "/"+PREFIX_FAKE_URL+result;

@@ -2,7 +2,6 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import fr.inria.jtravis.helpers.EntityHelper;
 
 import java.util.Objects;
 

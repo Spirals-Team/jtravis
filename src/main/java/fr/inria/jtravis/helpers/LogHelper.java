@@ -1,9 +1,13 @@
 package fr.inria.jtravis.helpers;
 
+import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.TravisConfig;
+import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Log;
 import okhttp3.OkHttpClient;
+
+import java.util.Optional;
 
 /**
  * The helper to deal with log objects
@@ -11,28 +15,12 @@ import okhttp3.OkHttpClient;
  * @author Simon Urli
  */
 public class LogHelper extends EntityHelper {
-    public static final String LOG_ENDPOINT = "logs/";
-    public static final String LOG_JOB_ENDPOINT = "/log";
 
-    public LogHelper(TravisConfig config, OkHttpClient client) {
-        super(config, client);
+    public LogHelper(JTravis jTravis, TravisConfig config, OkHttpClient client) {
+        super(jTravis, config, client);
     }
 
-
-    public static Log getLogFromJob(Job job) {
-        /*if (job.getId() != 0) {
-            if (job.getState() == StateType.FAILED || job.getState() == StateType.PASSED || job.getState() == StateType.ERRORED) {
-                String logJobUrl = build().getEndpoint()+JobHelper.JOB_ENDPOINT+job.getId()+LOG_JOB_ENDPOINT;
-                try {
-                    String body = build().rawGet(logJobUrl);
-                    return new Log(job.getId(), body);
-                } catch (IOException e) {
-                    build().getLogger().warn("Error when getting log from job id "+job.getId()+" ",e);
-                }
-            } else {
-                build().getLogger().warn("Error when getting log from job id "+job.getId()+" : build status is neither failed or passed: "+job.getState().name());
-            }
-        }*/
-        return null;
+    public Optional<Log> from(Job job) {
+        return this.getEntityFromUri(Log.class, TravisConstants.JOB_ENDPOINT, job.getId()+"", TravisConstants.LOG_ENDPOINT);
     }
 }

@@ -5,6 +5,7 @@ import fr.inria.jtravis.entities.EntityCollection;
 import fr.inria.jtravis.helpers.BuildHelper;
 import fr.inria.jtravis.helpers.EntityHelper;
 import fr.inria.jtravis.helpers.JobHelper;
+import fr.inria.jtravis.helpers.LogHelper;
 import fr.inria.jtravis.helpers.PullRequestHelper;
 import fr.inria.jtravis.helpers.RepositoryHelper;
 import okhttp3.OkHttpClient;
@@ -20,6 +21,7 @@ public class JTravis {
     private JobHelper jobHelper;
     private PullRequestHelper pullRequestHelper;
     private BuildHelper buildHelper;
+    private LogHelper logHelper;
 
     public static class Builder {
         private String travisToken;
@@ -83,7 +85,7 @@ public class JTravis {
 
     private EntityHelper entityHelper() {
         if (this.entityHelper == null) {
-            this.entityHelper = new EntityHelper(this.travisConfig, this.client);
+            this.entityHelper = new EntityHelper(this, this.travisConfig, this.client);
         }
 
         return this.entityHelper;
@@ -91,7 +93,7 @@ public class JTravis {
 
     public RepositoryHelper repository() {
         if (repositoryHelper == null) {
-            this.repositoryHelper = new RepositoryHelper(this.travisConfig, this.client);
+            this.repositoryHelper = new RepositoryHelper(this, this.travisConfig, this.client);
         }
 
         return this.repositoryHelper;
@@ -99,7 +101,7 @@ public class JTravis {
 
     public JobHelper job() {
         if (this.jobHelper == null) {
-            this.jobHelper = new JobHelper(this.travisConfig, this.client);
+            this.jobHelper = new JobHelper(this, this.travisConfig, this.client);
         }
 
         return this.jobHelper;
@@ -107,16 +109,23 @@ public class JTravis {
 
     public PullRequestHelper pullRequest() {
         if (this.pullRequestHelper == null) {
-            this.pullRequestHelper = new PullRequestHelper(this.travisConfig, this.client, repository());
+            this.pullRequestHelper = new PullRequestHelper(this, this.travisConfig, this.client);
         }
         return pullRequestHelper;
     }
 
     public BuildHelper build() {
         if (this.buildHelper == null) {
-            this.buildHelper = new BuildHelper(this.travisConfig, this.client);
+            this.buildHelper = new BuildHelper(this, this.travisConfig, this.client);
         }
         return buildHelper;
+    }
+
+    public LogHelper log() {
+        if (this.logHelper == null) {
+            this.logHelper = new LogHelper(this, this.travisConfig, this.client);
+        }
+        return this.logHelper;
     }
 
     public static Builder builder() {

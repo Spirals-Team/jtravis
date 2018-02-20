@@ -1,9 +1,9 @@
 package fr.inria.jtravis.helpers;
 
+import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.entities.PullRequest;
 import fr.inria.jtravis.entities.Build;
-import fr.inria.jtravis.entities.Repository;
 import okhttp3.OkHttpClient;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHPullRequest;
@@ -23,9 +23,9 @@ public class PullRequestHelper extends EntityHelper {
 
     private RepositoryHelper repositoryHelper;
 
-    public PullRequestHelper(TravisConfig config, OkHttpClient client, RepositoryHelper repositoryHelper) {
-        super(config, client);
-        this.repositoryHelper = repositoryHelper;
+    public PullRequestHelper(JTravis jTravis, TravisConfig config, OkHttpClient client) {
+        super(jTravis, config, client);
+        this.repositoryHelper = jTravis.repository();
     }
 
 

@@ -1,10 +1,10 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
-import fr.inria.jtravis.helpers.LogHelper;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Business object to deal with job in Travis CI API
@@ -49,8 +49,8 @@ public final class Job extends EntityUnary {
     @Expose
     private Date updatedAt;
 
-    private Log log;
-    private BuildTool buildTool;
+    private transient Log log;
+    private transient BuildTool buildTool;
 
     // GETTER
 
@@ -152,23 +152,35 @@ public final class Job extends EntityUnary {
         this.updatedAt = updatedAt;
     }
 
-    public Log getLog() {
-        if (log == null) {
-            this.log = LogHelper.getLogFromJob(this);
+    public boolean fetchLog() {
+        if (this.getJtravis() != null) {
+            Optional<Log> log = this.getJtravis().log().from(this);
+            if (log.isPresent()) {
+                this.log = log.get();
+                return true;
+            }
         }
-        return this.log;
+        return false;
     }
 
-    public BuildTool getBuildTool() {
+    public Optional<Log> getLog() {
+        if (this.log == null) {
+            if (this.fetchLog()) {
+                return Optional.of(this.log);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Optional<BuildTool> getBuildTool() {
         if (buildTool == null) {
-            if (this.getLog() != null) {
-                buildTool = this.getLog().getBuildTool();
-            } else {
-                buildTool = BuildTool.UNKNOWN;
+            if (this.getLog().isPresent()) {
+                buildTool = this.getLog().get().getBuildTool();
+                return Optional.of(buildTool);
             }
         }
 
-        return buildTool;
+        return Optional.empty();
     }
 
     public int getJobNumber() {

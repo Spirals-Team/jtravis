@@ -20,7 +20,6 @@ public final class Log extends EntityUnary {
     private TestsInformation testsInformation;
     private BuildTool buildTool;
 
-
     public String getContent() {
         return content;
     }

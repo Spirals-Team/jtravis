@@ -13,4 +13,5 @@ public class TravisConstants {
     public static final String REPO_ENDPOINT = "repo";
     public static final String REPOS_ENDPOINT = "repos";
     public static final String JOB_ENDPOINT = "job";
+    public static final String LOG_ENDPOINT = "log";
 }

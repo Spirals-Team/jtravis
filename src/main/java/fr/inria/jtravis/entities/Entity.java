@@ -2,12 +2,15 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import fr.inria.jtravis.JTravis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
 public abstract class Entity {
+    private transient JTravis jtravis;
+
     @Expose
     @SerializedName("@href")
     private String uri;
@@ -30,6 +33,14 @@ public abstract class Entity {
 
     protected void setRepresentation(RepresentationType representation) {
         this.representation = representation;
+    }
+
+    protected JTravis getJtravis() {
+        return jtravis;
+    }
+
+    protected void setJtravis(JTravis jtravis) {
+        this.jtravis = jtravis;
     }
 
     @Override

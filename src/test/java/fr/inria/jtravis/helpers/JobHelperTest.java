@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 public class JobHelperTest extends AbstractTest {
     @Category(UnitTest.class)
     @Test
-    public void testFromIdStrMocked() throws IOException, InterruptedException {
+    public void testFromIdStrMocked() throws InterruptedException {
         String id = "340663038";
         String buildContent = this.getFileContent(TestJob.JOB_STANDARD_PATH);
 
@@ -37,7 +37,7 @@ public class JobHelperTest extends AbstractTest {
 
     @Category(UnitTest.class)
     @Test
-    public void testFromIdIntegerMocked() throws IOException, InterruptedException {
+    public void testFromIdIntegerMocked() throws InterruptedException {
         int id = 340663038;
         String buildContent = this.getFileContent(TestJob.JOB_STANDARD_PATH);
 

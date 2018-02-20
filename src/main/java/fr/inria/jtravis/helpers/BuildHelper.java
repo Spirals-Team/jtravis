@@ -1,10 +1,10 @@
 package fr.inria.jtravis.helpers;
 
+import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Build;
 import fr.inria.jtravis.entities.Builds;
-import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Repository;
 import okhttp3.OkHttpClient;
 
@@ -17,8 +17,8 @@ import java.util.Optional;
  */
 public class BuildHelper extends EntityHelper {
 
-    public BuildHelper(TravisConfig config, OkHttpClient client) {
-        super(config, client);
+    public BuildHelper(JTravis jTravis, TravisConfig config, OkHttpClient client) {
+        super(jTravis, config, client);
     }
 
     public Optional<Builds> fromRepository(Repository repository) {

@@ -13,7 +13,7 @@
     <version>2.0-SNAPSHOT</version>
 
     <name>jtravis</name>
-    <description>jTravis is a Java API for accessing TravisCI API</description>
+    <description>jtravis is a Java API for accessing TravisCI API</description>
     <url>https://github.com/Spirals-Team/jtravis</url>
     <inceptionYear>2017</inceptionYear>
 

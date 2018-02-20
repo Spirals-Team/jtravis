@@ -2,6 +2,7 @@ package fr.inria.jtravis.helpers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
+import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.entities.Entity;
 import fr.inria.jtravis.entities.EntityCollection;
@@ -20,8 +21,11 @@ import java.util.Optional;
  * @author Simon Urli
  */
 public class EntityHelper extends AbstractHelper {
-    public EntityHelper(TravisConfig config, OkHttpClient client) {
+    private JTravis jTravis;
+
+    public EntityHelper(JTravis jTravis, TravisConfig config, OkHttpClient client) {
         super(config, client);
+        this.jTravis = jTravis;
     }
 
     public <T extends Entity> Optional<T> getEntityFromUri(Class<T> zeClass, String... uriComponent) {
@@ -30,10 +34,19 @@ public class EntityHelper extends AbstractHelper {
             String jsonContent = this.get(url);
             JsonObject jsonObj = getJsonFromStringContent(jsonContent);
             if (jsonObj != null) {
-                return Optional.of(createGson().fromJson(jsonObj, zeClass));
+                T result = createGson().fromJson(jsonObj, zeClass);
+                try {
+                    Field jTravisField = Entity.class.getDeclaredField("jtravis");
+                    jTravisField.setAccessible(true);
+                    jTravisField.set(result, this.jTravis);
+                    jTravisField.setAccessible(false);
+                } catch (NoSuchFieldException|IllegalAccessException e) {
+                    this.getLogger().error("Error while setting jtravis field", e);
+                }
+                return Optional.of(result);
             }
         } catch (IOException e) {
-            this.getLogger().error("Error while getting JSON at URL: "+url);
+            this.getLogger().error("Error while getting JSON at URL: "+url, e);
         }
 
         return Optional.empty();
