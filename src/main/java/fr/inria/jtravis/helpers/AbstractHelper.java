@@ -119,6 +119,10 @@ public abstract class AbstractHelper {
             result = uriComponent[0];
         }
 
-        return this.config.getTravisEndpoint()+"/"+result;
+        if (!result.startsWith("/")) {
+            result = "/"+result;
+        }
+
+        return this.config.getTravisEndpoint()+result;
     }
 }

@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Optional;
 
 /**
  * This abstract helper is the base helper for all the others.
@@ -23,26 +24,27 @@ public class EntityHelper extends AbstractHelper {
         super(config, client);
     }
 
-    public <T extends Entity> T getEntityFromUri(Class<T> zeClass, String... uriComponent) {
+    public <T extends Entity> Optional<T> getEntityFromUri(Class<T> zeClass, String... uriComponent) {
         String url = this.buildUrl(uriComponent);
         try {
             String jsonContent = this.get(url);
             JsonObject jsonObj = getJsonFromStringContent(jsonContent);
             if (jsonObj != null) {
-                return createGson().fromJson(jsonObj, zeClass);
+                return Optional.of(createGson().fromJson(jsonObj, zeClass));
             }
         } catch (IOException e) {
             this.getLogger().error("Error while getting JSON at URL: "+url);
         }
 
-        return null;
+        return Optional.empty();
     }
 
-    public boolean refresh(Entity entity) {
+    public <T extends Entity> boolean refresh(T entity) {
         if (entity.getRepresentation() == RepresentationType.MINIMAL && entity.getUri() != null) {
-            Object instance1 = this.getEntityFromUri(entity.getClass(), entity.getUri());
+            Optional<T> instance1Opt = (Optional<T>) this.getEntityFromUri(entity.getClass(), entity.getUri());
 
-            if (instance1 != null) {
+            if (instance1Opt.isPresent()) {
+                T instance1 = instance1Opt.get();
                 for (Field field : entity.getClass().getDeclaredFields()) {
                     Expose[] annotations = field.getAnnotationsByType(Expose.class);
                     if (annotations != null && annotations.length >= 1) {
@@ -56,32 +58,33 @@ public class EntityHelper extends AbstractHelper {
                             return false;
                         }
                     }
-
-                    try {
-                        Field representationField = entity.getClass().getField("representation");
-                        if (representationField != null) {
-                            representationField.setAccessible(true);
-                            representationField.set(entity, RepresentationType.STANDARD);
-                            representationField.setAccessible(false);
-                        }
-                    } catch (NoSuchFieldException|IllegalAccessException e) {
-                        this.getLogger().error("Error while setting representation field: "+field.getName(), e);
-                        return false;
-                    }
                 }
+                try {
+                    Field representationField = Entity.class.getDeclaredField("representation");
+                    if (representationField != null) {
+                        representationField.setAccessible(true);
+                        representationField.set(entity, RepresentationType.STANDARD);
+                        representationField.setAccessible(false);
+                    }
+                } catch (NoSuchFieldException|IllegalAccessException e) {
+                    this.getLogger().error("Error while setting representation field: "+entity.getClass().getName(), e);
+                    return false;
+                }
+
                 return true;
             }
         }
         return false;
     }
 
-    public <T extends EntityCollection> T getNextCollection(EntityCollection entityCollection) {
+    public <T extends EntityCollection> Optional<T> getNextCollection(T entityCollection) {
         Pagination currentPagination = entityCollection.getPagination();
         if (currentPagination != null && currentPagination.getNext() != null) {
-            return (T) this.getEntityFromUri(entityCollection.getClass(), entityCollection.getPagination().getNext().getUri());
+            String nextUri = entityCollection.getPagination().getNext().getUri();
+            return (Optional<T>) this.getEntityFromUri(entityCollection.getClass(), nextUri);
         }
 
-        return null;
+        return Optional.empty();
     }
 
 }

@@ -3,12 +3,12 @@ package fr.inria.jtravis.helpers;
 import fr.inria.jtravis.AbstractTest;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 
 public class RepositoryHelperIntegrationTest extends AbstractTest {
 
     @Test
     public void testGetUnknowRepositoryReturnNull() {
-        assertNull(getJTravis().repository().fromSlug("surli/unknown"));
+        assertFalse(getJTravis().repository().fromSlug("surli/unknown").isPresent());
     }
 }

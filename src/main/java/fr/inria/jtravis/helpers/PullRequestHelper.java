@@ -14,6 +14,7 @@ import org.kohsuke.github.GitHub;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Optional;
 
 /**
  * Created by urli on 04/01/2017.
@@ -28,7 +29,7 @@ public class PullRequestHelper extends EntityHelper {
     }
 
 
-    public PullRequest fromBuild(Build build) {
+    public Optional<PullRequest> fromBuild(Build build) {
         try {
             if (build.isPullRequest()) {
                 GitHub github = this.getGithub();
@@ -45,7 +46,7 @@ public class PullRequestHelper extends EntityHelper {
 
                     if (headRepo == null) {
                         this.getLogger().warn("The head repository is null: maybe it has been deleted from GitHub");
-                        return null;
+                        return Optional.empty();
                     }
 
                     GHCommit base, head;
@@ -55,10 +56,14 @@ public class PullRequestHelper extends EntityHelper {
                         head = commitMerge.getParents().get(1);
                     } catch (FileNotFoundException e) {
                         this.getLogger().error("The merge commit was deleted from Github: it means the previous commit information can't be get.");
-                        return null;
+                        return Optional.empty();
                     }
 
-                    return prInformation.setOtherRepo(headRepo).setBase(base).setHead(head).setBaseRef(pullRequest.getBase()).setHeadRef(pullRequest.getHead());
+                    PullRequest result = prInformation.setOtherRepo(headRepo)
+                                                        .setBase(base).setHead(head)
+                                                        .setBaseRef(pullRequest.getBase())
+                                                        .setHeadRef(pullRequest.getHead());
+                    return Optional.of(result);
                 } else {
                     this.getLogger().warn("You reach your rate limit for github, you have to wait " + rateLimit.reset + " to get datas. PRInformation will be null for build "+build.getId());
                 }
@@ -68,6 +73,6 @@ public class PullRequestHelper extends EntityHelper {
         } catch (IOException e) {
             this.getLogger().warn("Error when getting PRInformation for build id "+build.getId()+" : "+e.getMessage());
         }
-        return null;
+        return Optional.empty();
     }
 }

@@ -14,8 +14,6 @@ public class LogHelper extends EntityHelper {
     public static final String LOG_ENDPOINT = "logs/";
     public static final String LOG_JOB_ENDPOINT = "/log";
 
-    private static LogHelper instance;
-
     public LogHelper(TravisConfig config, OkHttpClient client) {
         super(config, client);
     }

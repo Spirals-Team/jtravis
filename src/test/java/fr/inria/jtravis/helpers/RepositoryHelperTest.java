@@ -7,7 +7,12 @@ import fr.inria.jtravis.entities.Repository;
 import fr.inria.jtravis.entities.TestRepository;
 import org.junit.Test;
 
+import javax.swing.text.html.Option;
+
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -22,7 +27,9 @@ public class RepositoryHelperTest extends AbstractTest {
 
         this.enqueueContentMockServer(buildContent);
 
-        Repository repository = getJTravis().repository().fromSlug(slug);
+        Optional<Repository> repositoryOpt = getJTravis().repository().fromSlug(slug);
+        assertTrue(repositoryOpt.isPresent());
+        Repository repository = repositoryOpt.get();
 
         assertEquals(TestRepository.getStandardExpectedRepo(), repository);
         RecordedRequest request1 = getMockServer().takeRequest();
@@ -35,7 +42,9 @@ public class RepositoryHelperTest extends AbstractTest {
         String buildContent = this.getFileContent(TestRepository.PATH_REPO_STANDARD);
 
         this.enqueueContentMockServer(buildContent);
-        Repository repository = getJTravis().repository().fromId(id);
+        Optional<Repository> repositoryOpt = getJTravis().repository().fromId(id);
+        assertTrue(repositoryOpt.isPresent());
+        Repository repository = repositoryOpt.get();
 
         assertEquals(TestRepository.getStandardExpectedRepo(), repository);
         RecordedRequest request1 = getMockServer().takeRequest();
@@ -48,7 +57,9 @@ public class RepositoryHelperTest extends AbstractTest {
         String buildContent = this.getFileContent(TestRepository.PATH_REPO_STANDARD);
 
         this.enqueueContentMockServer(buildContent);
-        Repository repository = getJTravis().repository().fromId(id);
+        Optional<Repository> repositoryOpt = getJTravis().repository().fromId(id);
+        assertTrue(repositoryOpt.isPresent());
+        Repository repository = repositoryOpt.get();
 
         assertEquals(TestRepository.getStandardExpectedRepo(), repository);
         RecordedRequest request1 = getMockServer().takeRequest();

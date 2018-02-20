@@ -5,6 +5,8 @@ import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Job;
 import okhttp3.OkHttpClient;
 
+import java.util.Optional;
+
 /**
  * The helper to deal with job objects
  *
@@ -15,11 +17,11 @@ public class JobHelper extends EntityHelper {
         super(config, client);
     }
 
-    public Job fromId(int id) {
+    public Optional<Job> fromId(int id) {
         return getEntityFromUri(Job.class, TravisConstants.JOB_ENDPOINT, String.valueOf(id));
     }
 
-    public Job fromId(String id) {
+    public Optional<Job> fromId(String id) {
         return getEntityFromUri(Job.class,TravisConstants.JOB_ENDPOINT, id);
     }
 }

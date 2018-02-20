@@ -5,9 +5,11 @@ import fr.inria.jtravis.entities.Build;
 import fr.inria.jtravis.entities.PullRequest;
 import org.junit.Test;
 
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by urli on 04/01/2017.
@@ -15,19 +17,22 @@ import static org.junit.Assert.assertNull;
 public class PullRequestHelperIntegrationTest extends AbstractTest {
     @Test
     public void testGetBuildWithPRWhenMergeCommitDeleted() {
-        Build originBuild = getJTravis().build().fromId(187029370);
-        PullRequest obtainedPRInfo = getJTravis().pullRequest().fromBuild(originBuild);
-
-        assertNull(obtainedPRInfo);
+        int id = 187029370;
+        Optional<Build> originBuild = getJTravis().build().fromId(id);
+        assertTrue(originBuild.isPresent());
+        Optional<PullRequest> obtainedPRInfo = getJTravis().pullRequest().fromBuild(originBuild.get());
+        assertFalse(obtainedPRInfo.isPresent());
     }
 
     @Test
     public void testGetCommitInformationFromPR() {
-        Build originBuild = getJTravis().build().fromId(186814810);
+        int id = 186814810;
+        Optional<Build> originBuild = getJTravis().build().fromId(id);
+        assertTrue(originBuild.isPresent());
+        Optional<PullRequest> obtainedPRInfoOpt = getJTravis().pullRequest().fromBuild(originBuild.get());
+        assertTrue(obtainedPRInfoOpt.isPresent());
 
-        PullRequest prInformation = getJTravis().pullRequest().fromBuild(originBuild);
-
-        assertNotNull(prInformation);
+        PullRequest prInformation = obtainedPRInfoOpt.get();
         assertEquals("pvojtechovsky/spoon", prInformation.getOtherRepo().getFullName());
         assertEquals("master", prInformation.getBaseRef().getRef());
         assertEquals("lazyQueries", prInformation.getHeadRef().getRef());

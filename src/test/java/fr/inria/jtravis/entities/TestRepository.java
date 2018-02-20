@@ -62,7 +62,7 @@ public class TestRepository extends AbstractTest {
     }
 
     @Test
-    public void testRefreshRepository() throws IOException, InterruptedException {
+    public void testRefreshRepository() throws InterruptedException {
         JsonObject repoObject = this.getJsonObjectFromFilePath(PATH_REPO_MINIMAL);
         Repository minimalRepo = EntityHelper.createGson().fromJson(repoObject, Repository.class);
 

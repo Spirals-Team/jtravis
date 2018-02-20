@@ -18,6 +18,7 @@ import java.util.TimeZone;
 public class AbstractTest {
     private static final String PREFIX_FAKE_URL = "fake";
     private MockWebServer server;
+    private JTravis jTravis;
 
     @After
     public void tearDown() {
@@ -42,12 +43,18 @@ public class AbstractTest {
 
     public JTravis getJTravis() {
         try {
+            if (jTravis != null) {
+                return jTravis;
+            }
             if (server != null) {
                 server.start();
                 HttpUrl baseUrl = server.url(PREFIX_FAKE_URL);
-                return JTravis.builder().setEndpoint(baseUrl.toString()).build();
+                String baseUrlStr = baseUrl.toString();
+                jTravis = JTravis.builder().setEndpoint(baseUrlStr).build();
+                return jTravis;
             } else {
-                return JTravis.builder().build();
+                jTravis = JTravis.builder().build();
+                return jTravis;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,7 +70,7 @@ public class AbstractTest {
             result = uriComponent[0];
         }
 
-        return "/"+PREFIX_FAKE_URL+"/"+result;
+        return "/"+PREFIX_FAKE_URL+result;
     }
 
     protected String getFileContent(String filePath) {

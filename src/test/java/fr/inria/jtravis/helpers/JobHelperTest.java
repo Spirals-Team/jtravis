@@ -10,8 +10,10 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by urli on 22/12/2016.
@@ -24,7 +26,9 @@ public class JobHelperTest extends AbstractTest {
         String buildContent = this.getFileContent(TestJob.JOB_STANDARD_PATH);
 
         this.enqueueContentMockServer(buildContent);
-        Job job = getJTravis().job().fromId(id);
+        Optional<Job> jobOpt = getJTravis().job().fromId(id);
+        assertTrue(jobOpt.isPresent());
+        Job job = jobOpt.get();
 
         assertEquals(TestJob.standardExpectedJob(), job);
         RecordedRequest request1 = getMockServer().takeRequest();
@@ -39,7 +43,9 @@ public class JobHelperTest extends AbstractTest {
 
         this.enqueueContentMockServer(buildContent);
 
-        Job job = getJTravis().job().fromId(id);
+        Optional<Job> jobOpt = getJTravis().job().fromId(id);
+        assertTrue(jobOpt.isPresent());
+        Job job = jobOpt.get();
 
         assertEquals(TestJob.standardExpectedJob(), job);
         RecordedRequest request1 = getMockServer().takeRequest();

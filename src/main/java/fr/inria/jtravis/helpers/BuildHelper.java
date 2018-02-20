@@ -8,6 +8,8 @@ import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Repository;
 import okhttp3.OkHttpClient;
 
+import java.util.Optional;
+
 /**
  * The helper to deal with Build objects
  *
@@ -19,27 +21,27 @@ public class BuildHelper extends EntityHelper {
         super(config, client);
     }
 
-    public Builds fromRepository(Repository repository) {
+    public Optional<Builds> fromRepository(Repository repository) {
         return getEntityFromUri(Builds.class, TravisConstants.REPO_ENDPOINT, String.valueOf(repository.getId()), TravisConstants.BUILDS_ENDPOINT);
     }
 
-    public Builds fromRepository(Repository repository, int limit) {
+    public Optional<Builds> fromRepository(Repository repository, int limit) {
         if (limit <= 0) {
             throw new IllegalArgumentException("The limit should be > 0. Current value: "+limit);
         }
         return getEntityFromUri(Builds.class, TravisConstants.REPO_ENDPOINT, String.valueOf(repository.getId()), TravisConstants.BUILDS_ENDPOINT, "?limit=", String.valueOf(limit));
     }
 
-    public Builds next(Builds builds) {
+    public Optional<Builds> next(Builds builds) {
         return this.getNextCollection(builds);
     }
 
-    public Build fromId(int id) {
+    public Optional<Build> fromId(int id) {
         return getEntityFromUri(Build.class, TravisConstants.BUILD_ENDPOINT, String.valueOf(id));
     }
 
-    public Build lastBuildFromMasterBranch(Repository repository) {
-        Builds builds = getEntityFromUri(Builds.class,
+    public Optional<Build> lastBuildFromMasterBranch(Repository repository) {
+        Optional<Builds> builds = getEntityFromUri(Builds.class,
                 TravisConstants.REPO_ENDPOINT,
                 String.valueOf(repository.getId()),
                 TravisConstants.BUILDS_ENDPOINT,
@@ -49,11 +51,12 @@ public class BuildHelper extends EntityHelper {
                 "&sorted_by=",
                 new BuildsSorting().byFinishedAtDesc().build());
 
-        if (builds.getBuilds() == null || builds.getBuilds().size() == 0) {
-            return null;
-        } else {
-            return builds.getBuilds().get(0);
+        if (builds.isPresent()) {
+            if (builds.get().getBuilds().size() > 0) {
+                return Optional.of(builds.get().getBuilds().get(0));
+            }
         }
+        return Optional.empty();
     }
 
 //    private static boolean isAcceptedBuild(Build build, int prNumber, BuildStatus status, String previousBranch) {

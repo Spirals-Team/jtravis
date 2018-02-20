@@ -8,8 +8,13 @@ import fr.inria.jtravis.entities.StateType;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import javax.swing.text.html.Option;
+
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by urli on 22/12/2016.
@@ -19,9 +24,11 @@ public class JobHelperIntegrationTest extends AbstractTest {
     @Test
     public void testFromId() {
         int id = 340663038;
-        Job job = getJTravis().job().fromId(id);
+        Optional<Job> jobOptional = getJTravis().job().fromId(id);
 
-        assertNotNull(job);
+        assertTrue(jobOptional.isPresent());
+        Job job = jobOptional.get();
+
         assertEquals(id, job.getId());
         assertEquals(StateType.FAILED, job.getState());
         assertEquals(340663037, job.getBuild().getId());
@@ -34,9 +41,10 @@ public class JobHelperIntegrationTest extends AbstractTest {
     @Test
     public void testFromIdStr() {
         String id = "340663038";
-        Job job = getJTravis().job().fromId(id);
+        Optional<Job> jobOptional = getJTravis().job().fromId(id);
 
-        assertNotNull(job);
+        assertTrue(jobOptional.isPresent());
+        Job job = jobOptional.get();
         assertEquals(340663038, job.getId());
         assertEquals(StateType.FAILED, job.getState());
         assertEquals(340663037, job.getBuild().getId());

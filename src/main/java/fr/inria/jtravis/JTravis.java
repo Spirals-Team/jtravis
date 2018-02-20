@@ -9,6 +9,8 @@ import fr.inria.jtravis.helpers.PullRequestHelper;
 import fr.inria.jtravis.helpers.RepositoryHelper;
 import okhttp3.OkHttpClient;
 
+import java.util.Optional;
+
 public class JTravis {
     private TravisConfig travisConfig;
     private OkHttpClient client;
@@ -125,7 +127,7 @@ public class JTravis {
         return this.entityHelper().refresh(entity);
     }
 
-    public <T extends EntityCollection> T getNextCollection(T entityCollection) {
+    public <T extends EntityCollection> Optional<T> getNextCollection(T entityCollection) {
         return entityHelper().getNextCollection(entityCollection);
     }
 }

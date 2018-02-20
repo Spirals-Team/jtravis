@@ -5,6 +5,8 @@ import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Repository;
 import okhttp3.OkHttpClient;
 
+import java.util.Optional;
+
 /**
  * The helper to deal with repository objects.
  *
@@ -15,15 +17,15 @@ public class RepositoryHelper extends EntityHelper {
         super(config, client);
     }
 
-    public Repository fromSlug(String slug) {
+    public Optional<Repository> fromSlug(String slug) {
         return getEntityFromUri(Repository.class, TravisConstants.REPO_ENDPOINT, slug);
     }
 
-    public Repository fromId(int id) {
+    public Optional<Repository> fromId(int id) {
         return getEntityFromUri(Repository.class,TravisConstants.REPO_ENDPOINT, String.valueOf(id));
     }
 
-    public Repository fromId(String id) {
+    public Optional<Repository> fromId(String id) {
         return getEntityFromUri(Repository.class,TravisConstants.REPO_ENDPOINT, id);
     }
 }
