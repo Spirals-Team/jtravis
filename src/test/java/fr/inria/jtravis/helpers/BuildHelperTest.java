@@ -8,27 +8,11 @@ public class BuildHelperTest {
 
 
 //
-//    @Test
-//    public void testGetBuildToolFromBuildRecognizeTool() {
-//        int buildId = 185719843;
-//        Build obtainedBuild = BuildHelper.getBuildFromId(buildId, null);
-//
-//        assertEquals(BuildTool.MAVEN, obtainedBuild.getBuildTool());
-//    }
+
 //
 //
 //
-//    @Test
-//    public void testGetLastFailingBuildBeforeGivenBuild() {
-//        int buildId = 197104485;
-//        Build passingBuild = BuildHelper.getBuildFromId(buildId, null);
-//
-//        int expectedBuildId = 197067445;
-//        Build obtainedBuild = BuildHelper.getLastBuildOfSameBranchOfStatusBeforeBuild(passingBuild, BuildStatus.FAILED);
-//
-//        assertTrue(obtainedBuild != null);
-//        assertEquals(expectedBuildId, obtainedBuild.getId());
-//    }
+
 //
 //    @Test
 //    public void testGetNextPassingBuildAfterGivenFailingBuild() {

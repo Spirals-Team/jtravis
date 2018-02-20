@@ -7,6 +7,7 @@ import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Log;
 import okhttp3.OkHttpClient;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -21,6 +22,9 @@ public class LogHelper extends EntityHelper {
     }
 
     public Optional<Log> from(Job job) {
-        return this.getEntityFromUri(Log.class, TravisConstants.JOB_ENDPOINT, job.getId()+"", TravisConstants.LOG_ENDPOINT);
+        return this.getEntityFromUri(Log.class, Arrays.asList(
+                TravisConstants.JOB_ENDPOINT,
+                String.valueOf(job.getId()),
+                TravisConstants.LOG_ENDPOINT), null);
     }
 }

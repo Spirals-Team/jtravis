@@ -6,6 +6,7 @@ import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Repository;
 import okhttp3.OkHttpClient;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -19,14 +20,20 @@ public class RepositoryHelper extends EntityHelper {
     }
 
     public Optional<Repository> fromSlug(String slug) {
-        return getEntityFromUri(Repository.class, TravisConstants.REPO_ENDPOINT, slug);
+        return getEntityFromUri(Repository.class, Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                slug), null);
     }
 
     public Optional<Repository> fromId(int id) {
-        return getEntityFromUri(Repository.class,TravisConstants.REPO_ENDPOINT, String.valueOf(id));
+        return getEntityFromUri(Repository.class, Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                String.valueOf(id)), null);
     }
 
     public Optional<Repository> fromId(String id) {
-        return getEntityFromUri(Repository.class,TravisConstants.REPO_ENDPOINT, id);
+        return getEntityFromUri(Repository.class, Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                id), null);
     }
 }

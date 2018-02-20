@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Business object to deal with Build of Travis CI API.
@@ -64,9 +65,6 @@ public final class Build extends EntityUnary implements Comparable<Build> {
 
     @Expose
     private Owner createdBy;
-
-    private String completeLog;
-    private BuildTool buildTool;
 
     public Build() {
         super();
@@ -139,14 +137,6 @@ public final class Build extends EntityUnary implements Comparable<Build> {
         this.createdBy = createdBy;
     }
 
-    protected void setCompleteLog(String completeLog) {
-        this.completeLog = completeLog;
-    }
-
-    protected void setBuildTool(BuildTool buildTool) {
-        this.buildTool = buildTool;
-    }
-
     // GETTERS
 
     public String getNumber() {
@@ -213,43 +203,21 @@ public final class Build extends EntityUnary implements Comparable<Build> {
         return createdBy;
     }
 
-    public String getCompleteLog() {
-        return completeLog;
-    }
-
-    public BuildTool getBuildTool() {
-        return buildTool;
-    }
-
     public boolean isPullRequest() {
         return this.getPullRequestNumber() > 0;
     }
 
-    /*public String getCompleteLog() {
-        if (!this.getJobs().isEmpty() && (this.completeLog == null || this.completeLog.equals(""))) {
-            this.completeLog = "";
-            for (Job job : this.getJobs()) {
-                Log log = job.getLog();
-                if (log != null) {
-                    this.completeLog.concat(log.getBody());
-                }
+    public Optional<BuildTool> getBuildTool() {
+        if (!this.getJobs().isEmpty()) {
+            Job firstJob = this.getJobs().get(0);
+            if (this.getJtravis() != null) {
+                firstJob.setJtravis(this.getJtravis());
             }
+            return firstJob.getBuildTool();
         }
-        return this.completeLog;
+
+        return Optional.empty();
     }
-
-    public BuildTool getBuildTool() {
-        if (buildTool == null) {
-            if (!this.getJobs().isEmpty()) {
-                Job firstJob = this.getJobs().get(0);
-                buildTool = firstJob.getBuildTool();
-            } else {
-                buildTool = BuildTool.UNKNOWN;
-            }
-        }
-
-        return buildTool;
-    }*/
 
     @Override
     public int compareTo(Build o) {
@@ -277,15 +245,13 @@ public final class Build extends EntityUnary implements Comparable<Build> {
                 Objects.equals(jobs, build.jobs) &&
                 Objects.equals(updatedAt, build.updatedAt) &&
                 Objects.equals(tag, build.tag) &&
-                Objects.equals(createdBy, build.createdBy) &&
-                Objects.equals(completeLog, build.completeLog) &&
-                buildTool == build.buildTool;
+                Objects.equals(createdBy, build.createdBy);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), number, state, duration, eventType, previousState, pullRequestTitle, pullRequestNumber, startedAt, finishedAt, repository, branch, commit, jobs, updatedAt, tag, createdBy, completeLog, buildTool);
+        return Objects.hash(super.hashCode(), number, state, duration, eventType, previousState, pullRequestTitle, pullRequestNumber, startedAt, finishedAt, repository, branch, commit, jobs, updatedAt, tag, createdBy);
     }
 
     @Override
@@ -307,8 +273,6 @@ public final class Build extends EntityUnary implements Comparable<Build> {
                 ", updatedAt=" + updatedAt +
                 ", tag='" + tag + '\'' +
                 ", createdBy=" + createdBy +
-                ", completeLog='" + completeLog + '\'' +
-                ", buildTool=" + buildTool +
                 '}';
     }
 }

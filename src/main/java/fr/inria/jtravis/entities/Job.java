@@ -165,22 +165,23 @@ public final class Job extends EntityUnary {
 
     public Optional<Log> getLog() {
         if (this.log == null) {
-            if (this.fetchLog()) {
-                return Optional.of(this.log);
+            if (!this.fetchLog()) {
+                return Optional.empty();
             }
         }
-        return Optional.empty();
+        return Optional.of(this.log);
     }
 
     public Optional<BuildTool> getBuildTool() {
-        if (buildTool == null) {
+        if (this.buildTool == null) {
             if (this.getLog().isPresent()) {
-                buildTool = this.getLog().get().getBuildTool();
-                return Optional.of(buildTool);
+                this.buildTool = this.getLog().get().getBuildTool();
+            } else {
+                return Optional.empty();
             }
         }
 
-        return Optional.empty();
+        return Optional.of(buildTool);
     }
 
     public int getJobNumber() {

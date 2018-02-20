@@ -6,6 +6,7 @@ import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Job;
 import okhttp3.OkHttpClient;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -19,10 +20,14 @@ public class JobHelper extends EntityHelper {
     }
 
     public Optional<Job> fromId(int id) {
-        return getEntityFromUri(Job.class, TravisConstants.JOB_ENDPOINT, String.valueOf(id));
+        return getEntityFromUri(Job.class, Arrays.asList(
+                TravisConstants.JOB_ENDPOINT,
+                String.valueOf(id)), null);
     }
 
     public Optional<Job> fromId(String id) {
-        return getEntityFromUri(Job.class,TravisConstants.JOB_ENDPOINT, id);
+        return getEntityFromUri(Job.class, Arrays.asList(
+                TravisConstants.JOB_ENDPOINT,
+                id), null);
     }
 }

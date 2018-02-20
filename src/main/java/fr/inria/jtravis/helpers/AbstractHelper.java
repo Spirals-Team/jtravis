@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.TravisConfig;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -20,6 +19,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 public abstract class AbstractHelper {
     private static final String USER_AGENT = "MyClient/1.0.0";
@@ -111,15 +113,25 @@ public abstract class AbstractHelper {
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
     }
 
-    public String buildUrl(String... uriComponent) {
+    public String buildUrl(List<String> pathComponent, Properties queryParameters) {
 
-        String result;
-        if (uriComponent.length > 1) {
-            result = StringUtils.join(uriComponent, "/");
-        } else {
-            result = uriComponent[0];
+        StringBuilder stringBuilder = new StringBuilder(StringUtils.join(pathComponent, "/"));
+
+        if (queryParameters != null && !queryParameters.isEmpty()) {
+            stringBuilder.append("?");
+            int size = queryParameters.size();
+            int i = 0;
+            for (Map.Entry<Object, Object> queryParameter : queryParameters.entrySet()) {
+                stringBuilder.append(queryParameter.getKey());
+                stringBuilder.append("=");
+                stringBuilder.append(queryParameter.getValue());
+                if (++i < size) {
+                    stringBuilder.append("&");
+                }
+            }
         }
 
+        String result = stringBuilder.toString();
         if (!result.startsWith("/")) {
             result = "/"+result;
         }

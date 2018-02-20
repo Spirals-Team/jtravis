@@ -12,7 +12,10 @@ import okhttp3.OkHttpClient;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 /**
  * This abstract helper is the base helper for all the others.
@@ -28,8 +31,12 @@ public class EntityHelper extends AbstractHelper {
         this.jTravis = jTravis;
     }
 
-    public <T extends Entity> Optional<T> getEntityFromUri(Class<T> zeClass, String... uriComponent) {
-        String url = this.buildUrl(uriComponent);
+    public <T extends Entity> Optional<T> getEntityFromUri(Class<T> zeClass, String uri) {
+        return this.getEntityFromUri(zeClass, Collections.singletonList(uri), null);
+    }
+
+    public <T extends Entity> Optional<T> getEntityFromUri(Class<T> zeClass, List<String> pathComponent, Properties queryParameters) {
+        String url = this.buildUrl(pathComponent, queryParameters);
         try {
             String jsonContent = this.get(url);
             JsonObject jsonObj = getJsonFromStringContent(jsonContent);

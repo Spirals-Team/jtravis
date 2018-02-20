@@ -6,9 +6,14 @@ import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Build;
 import fr.inria.jtravis.entities.Builds;
 import fr.inria.jtravis.entities.Repository;
+import fr.inria.jtravis.entities.StateType;
 import okhttp3.OkHttpClient;
 
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 /**
  * The helper to deal with Build objects
@@ -22,14 +27,25 @@ public class BuildHelper extends EntityHelper {
     }
 
     public Optional<Builds> fromRepository(Repository repository) {
-        return getEntityFromUri(Builds.class, TravisConstants.REPO_ENDPOINT, String.valueOf(repository.getId()), TravisConstants.BUILDS_ENDPOINT);
+        return getEntityFromUri(Builds.class, Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                String.valueOf(repository.getId()),
+                TravisConstants.BUILDS_ENDPOINT), null);
     }
 
     public Optional<Builds> fromRepository(Repository repository, int limit) {
         if (limit <= 0) {
             throw new IllegalArgumentException("The limit should be > 0. Current value: "+limit);
         }
-        return getEntityFromUri(Builds.class, TravisConstants.REPO_ENDPOINT, String.valueOf(repository.getId()), TravisConstants.BUILDS_ENDPOINT, "?limit=", String.valueOf(limit));
+
+        Properties properties = new Properties();
+        properties.put("limit", limit);
+
+        return getEntityFromUri(Builds.class, Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                String.valueOf(repository.getId()),
+                TravisConstants.BUILDS_ENDPOINT),
+                properties);
     }
 
     public Optional<Builds> next(Builds builds) {
@@ -37,25 +53,79 @@ public class BuildHelper extends EntityHelper {
     }
 
     public Optional<Build> fromId(int id) {
-        return getEntityFromUri(Build.class, TravisConstants.BUILD_ENDPOINT, String.valueOf(id));
+        return getEntityFromUri(Build.class, Arrays.asList(TravisConstants.BUILD_ENDPOINT, String.valueOf(id)), null);
     }
 
     public Optional<Build> lastBuildFromMasterBranch(Repository repository) {
-        Optional<Builds> builds = getEntityFromUri(Builds.class,
+        Properties properties = new Properties();
+        properties.put("branch.name", repository.getDefaultBranch().getName());
+        properties.put("limit", 1);
+        properties.put("sorted_by", new BuildsSorting().byFinishedAtDesc().build());
+        Optional<Builds> builds = getEntityFromUri(Builds.class, Arrays.asList(
                 TravisConstants.REPO_ENDPOINT,
                 String.valueOf(repository.getId()),
-                TravisConstants.BUILDS_ENDPOINT,
-                "?branch.name=",
-                repository.getDefaultBranch().getName(),
-                "&limit=1",
-                "&sorted_by=",
-                new BuildsSorting().byFinishedAtDesc().build());
+                TravisConstants.BUILDS_ENDPOINT),
+                properties);
 
         if (builds.isPresent()) {
             if (builds.get().getBuilds().size() > 0) {
                 return Optional.of(builds.get().getBuilds().get(0));
             }
         }
+        return Optional.empty();
+    }
+
+    // In order to improve performance, maybe we can use offset in conjonction with build number.
+    public Optional<Build> getBefore(Build originalBuild, boolean sameBranch, StateType stateFilter) {
+        int repositoryId = originalBuild.getRepository().getId();
+
+        List<String> pathParameter = Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                String.valueOf(repositoryId),
+                TravisConstants.BUILDS_ENDPOINT);
+
+
+        Properties properties = new Properties();
+        properties.put("state", stateFilter.name().toLowerCase());
+        properties.put("sorted_by", new BuildsSorting().byFinishedAtDesc().build());
+
+        if (sameBranch) {
+            properties.put("branch.name", originalBuild.getBranch().getName());
+        }
+
+        if (originalBuild.isPullRequest()) {
+            properties.put("event_type", originalBuild.getEventType().name().toLowerCase());
+        }
+
+        Instant finishedDateOriginalBuild = originalBuild.getFinishedAt().toInstant();
+
+        Optional<Builds> buildsOptional = getEntityFromUri(Builds.class, pathParameter, properties);
+
+        boolean isFinished = false;
+        while (buildsOptional.isPresent() && !isFinished) {
+            Builds builds = buildsOptional.get();
+            isFinished = (builds.getPagination().isLast());
+
+            for (Build build : buildsOptional.get().getBuilds()) {
+                if (build.getId() == originalBuild.getId()) {
+                    continue;
+                }
+                if (originalBuild.isPullRequest()) {
+                    if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
+                        continue;
+                    }
+                }
+
+                if (build.getBranch().equals(originalBuild.getBranch()) && build.getFinishedAt().toInstant().isBefore(finishedDateOriginalBuild)) {
+                    return Optional.of(build);
+                }
+            }
+
+            if (!isFinished) {
+                buildsOptional = this.next(builds);
+            }
+        }
+
         return Optional.empty();
     }
 
