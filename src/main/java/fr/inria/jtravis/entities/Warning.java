@@ -2,6 +2,8 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.Objects;
+
 public class Warning {
     @Expose
     private String message;
@@ -50,5 +52,21 @@ public class Warning {
         }
 
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Warning warning = (Warning) o;
+        return Objects.equals(message, warning.message) &&
+                Objects.equals(warningType, warning.warningType) &&
+                Objects.equals(parameter, warning.parameter);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(message, warningType, parameter);
     }
 }

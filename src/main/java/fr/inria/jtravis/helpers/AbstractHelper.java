@@ -121,9 +121,9 @@ public abstract class AbstractHelper {
             int size = queryParameters.size();
             int i = 0;
             for (Map.Entry<Object, Object> queryParameter : queryParameters.entrySet()) {
-                stringBuilder.append(queryParameter.getKey());
+                stringBuilder.append(queryParameter.getKey().toString().toLowerCase());
                 stringBuilder.append("=");
-                stringBuilder.append(queryParameter.getValue());
+                stringBuilder.append(queryParameter.getValue().toString().toLowerCase());
                 if (++i < size) {
                     stringBuilder.append("&");
                 }

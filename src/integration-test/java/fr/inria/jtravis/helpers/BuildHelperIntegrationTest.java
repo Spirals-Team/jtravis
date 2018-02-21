@@ -1,15 +1,22 @@
 package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.AbstractTest;
+import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Build;
 import fr.inria.jtravis.entities.BuildStub;
 import fr.inria.jtravis.entities.BuildTool;
+import fr.inria.jtravis.entities.Builds;
+import fr.inria.jtravis.entities.EventType;
 import fr.inria.jtravis.entities.StateType;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class BuildHelperIntegrationTest extends AbstractTest {
@@ -61,5 +68,79 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
         assertTrue(obtainedBuildOpt.isPresent());
         assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
+    }
+
+    @Test
+    public void testBuildOrderDescIsWorkingAsExpected() {
+        int repositoryId = 2800492; // spoon
+
+        List<String> pathParameter = Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                String.valueOf(repositoryId),
+                TravisConstants.BUILDS_ENDPOINT);
+
+
+        Properties properties = new Properties();
+        properties.put("state", StateType.FAILED);
+        properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
+
+        properties.put("branch.name", "master");
+        properties.put("event_type", EventType.PULL_REQUEST);
+
+        Optional<Builds> buildsOptional = getJTravis().build().getEntityFromUri(Builds.class, pathParameter, properties);
+        assertTrue(buildsOptional.isPresent());
+
+        List<Build> builds = buildsOptional.get().getBuilds();
+        assertFalse(builds.isEmpty());
+
+        for (int i = 0; i < builds.size() - 2; i++) {
+            Build build1 = builds.get(i);
+            Build build2 = builds.get(i+1);
+
+            assertTrue("Wrong comparison for first call with b1.id = "+build1.getId()+" and b2.id = "+build2.getId(), build1.getFinishedAt().toInstant().isAfter(build2.getFinishedAt().toInstant()));
+        }
+
+        buildsOptional = getJTravis().getNextCollection(buildsOptional.get());
+        assertTrue(buildsOptional.isPresent());
+        builds = buildsOptional.get().getBuilds();
+        assertFalse(builds.isEmpty());
+
+        for (int i = 0; i < builds.size() - 2; i++) {
+            Build build1 = builds.get(i);
+            Build build2 = builds.get(i+1);
+
+            assertTrue("Wrong comparison for second call with b1.id = "+build1.getId()+" and b2.id = "+build2.getId(), build1.getFinishedAt().toInstant().isAfter(build2.getFinishedAt().toInstant()));
+        }
+    }
+
+    @Test
+    public void testBuildOrderIsWorkingAsExpected() {
+        int repositoryId = 2800492; // spoon
+
+        List<String> pathParameter = Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                String.valueOf(repositoryId),
+                TravisConstants.BUILDS_ENDPOINT);
+
+
+        Properties properties = new Properties();
+        properties.put("state", StateType.FAILED);
+        properties.put("sort_by", new BuildsSorting().byFinishedAt().build());
+
+        properties.put("branch.name", "master");
+        properties.put("event_type", EventType.PULL_REQUEST);
+
+        Optional<Builds> buildsOptional = getJTravis().build().getEntityFromUri(Builds.class, pathParameter, properties);
+        assertTrue(buildsOptional.isPresent());
+
+        List<Build> builds = buildsOptional.get().getBuilds();
+        assertFalse(builds.isEmpty());
+
+        for (int i = 0; i < builds.size() - 2; i++) {
+            Build build1 = builds.get(i);
+            Build build2 = builds.get(i + 1);
+
+            assertTrue("Wrong comparison for first call with b1.id = " + build1.getId() + " and b2.id = " + build2.getId(), build1.getFinishedAt().toInstant().isBefore(build2.getFinishedAt().toInstant()));
+        }
     }
 }

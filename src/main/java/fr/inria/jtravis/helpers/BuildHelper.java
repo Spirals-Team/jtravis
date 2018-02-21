@@ -86,6 +86,7 @@ public class BuildHelper extends EntityHelper {
 
 
         Properties properties = new Properties();
+        properties.put("limit", 100);
         properties.put("state", stateFilter.name().toLowerCase());
         properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
 
@@ -105,18 +106,23 @@ public class BuildHelper extends EntityHelper {
             Builds builds = buildsOptional.get();
             isFinished = (builds.getPagination().isLast());
 
-            for (Build build : buildsOptional.get().getBuilds()) {
-                if (build.getId() == originalBuild.getId()) {
-                    continue;
-                }
-                if (sameBranch && originalBuild.isPullRequest()) {
-                    if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
+            List<Build> buildList = builds.getBuilds();
+            Build lastBuild = buildList.get(buildList.size()-1);
+
+            if (lastBuild.getId() < originalBuild.getId()) {
+                for (Build build : buildList) {
+                    if (build.getId() == originalBuild.getId()) {
                         continue;
                     }
-                }
+                    if (sameBranch && originalBuild.isPullRequest()) {
+                        if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
+                            continue;
+                        }
+                    }
 
-                if (build.getBranch().equals(originalBuild.getBranch()) && build.getFinishedAt().toInstant().isBefore(finishedDateOriginalBuild)) {
-                    return Optional.of(build);
+                    if (build.getBranch().equals(originalBuild.getBranch()) && build.getFinishedAt().toInstant().isBefore(finishedDateOriginalBuild)) {
+                        return Optional.of(build);
+                    }
                 }
             }
 
@@ -138,8 +144,9 @@ public class BuildHelper extends EntityHelper {
 
 
         Properties properties = new Properties();
+        properties.put("limit", 100);
         properties.put("state", stateFilter.name().toLowerCase());
-        properties.put("sorted_by", new BuildsSorting().byFinishedAt().build());
+        properties.put("sort_by", new BuildsSorting().byFinishedAt().build());
 
         if (sameBranch) {
             properties.put("branch.name", originalBuild.getBranch().getName());
@@ -157,18 +164,23 @@ public class BuildHelper extends EntityHelper {
             Builds builds = buildsOptional.get();
             isFinished = (builds.getPagination().isLast());
 
-            for (Build build : buildsOptional.get().getBuilds()) {
-                if (build.getId() <= originalBuild.getId()) {
-                    continue;
-                }
-                if (sameBranch && originalBuild.isPullRequest()) {
-                    if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
+            List<Build> buildList = builds.getBuilds();
+            Build lastBuild = buildList.get(buildList.size()-1);
+
+            if (lastBuild.getId() >= originalBuild.getId()) {
+                for (Build build : buildList) {
+                    if (build.getId() <= originalBuild.getId()) {
                         continue;
                     }
-                }
+                    if (sameBranch && originalBuild.isPullRequest()) {
+                        if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
+                            continue;
+                        }
+                    }
 
-                if (build.getBranch().equals(originalBuild.getBranch()) && build.getFinishedAt().toInstant().isBefore(finishedDateOriginalBuild)) {
-                    return Optional.of(build);
+                    if (build.getBranch().equals(originalBuild.getBranch()) && build.getFinishedAt().toInstant().isAfter(finishedDateOriginalBuild)) {
+                        return Optional.of(build);
+                    }
                 }
             }
 

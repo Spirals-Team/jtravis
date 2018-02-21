@@ -11,12 +11,13 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class TestBuilds extends AbstractTest {
 
     @Test
     public void testRetrieveBuildsFromJsonAnswer() {
-        String filePath = "./src/test/resources/response/builds_answer.json";
+        String filePath = "./src/test/resources/response/builds/builds_answer.json";
         JsonObject buildsJson = this.getJsonObjectFromFilePath(filePath);
 
         assertNotNull(buildsJson);
@@ -156,5 +157,28 @@ public class TestBuilds extends AbstractTest {
         expectedBuilds.setBuilds(buildList);
 
         assertEquals(expectedBuilds, result);
+        assertNotNull(result.getWarnings());
+        assertTrue(result.getWarnings().isEmpty());
+    }
+
+    @Test
+    public void testRetrieveBuildsWithWarning() {
+        String filePath = "./src/test/resources/response/builds/builds_answer_with_warnings.json";
+        JsonObject buildsJson = this.getJsonObjectFromFilePath(filePath);
+
+        assertNotNull(buildsJson);
+        Builds result = EntityHelper.createGson().fromJson(buildsJson, Builds.class);
+        assertNotNull(result);
+
+        List<Warning> warningList = result.getWarnings();
+        assertEquals(1, warningList.size());
+
+        Warning warning = new Warning();
+        warning.setMessage("query parameter sorted_by not safelisted, ignored");
+        warning.setWarningType("ignored_parameter");
+        warning.setParameter("sorted_by");
+        assertEquals(warning, warningList.get(0));
+
+        assertEquals(25, result.getBuilds().size());
     }
 }
