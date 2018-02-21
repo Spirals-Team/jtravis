@@ -167,7 +167,7 @@ public class BuildHelper extends EntityHelper {
             List<Build> buildList = builds.getBuilds();
             Build lastBuild = buildList.get(buildList.size()-1);
 
-            if (lastBuild.getId() >= originalBuild.getId()) {
+            if (lastBuild.getFinishedAt().toInstant().isAfter(finishedDateOriginalBuild)) {
                 for (Build build : buildList) {
                     if (build.getId() <= originalBuild.getId()) {
                         continue;

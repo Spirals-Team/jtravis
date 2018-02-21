@@ -113,6 +113,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         }
     }
 
+    // WARNING: This test MIGHT be flaky
     @Test
     public void testBuildOrderIsWorkingAsExpected() {
         int repositoryId = 2800492; // spoon
