@@ -48,4 +48,18 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         assertTrue(obtainedBuildOpt.isPresent());
         assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
     }
+
+    @Test
+    public void testGetNextPassingBuildAfterGivenFailingBuild() {
+        int buildId = 197067445;
+        Optional<Build> failingBuildOpt = getJTravis().build().fromId(buildId);
+        assertTrue(failingBuildOpt.isPresent());
+        Build failingBuild = failingBuildOpt.get();
+
+        int expectedBuildId = 197104485;
+        Optional<Build> obtainedBuildOpt = getJTravis().build().getAfter(failingBuild, false, StateType.PASSED);
+
+        assertTrue(obtainedBuildOpt.isPresent());
+        assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
+    }
 }

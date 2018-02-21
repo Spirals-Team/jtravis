@@ -1,0 +1,2098 @@
+{
+  "@warnings": [
+    {
+      "@type": "warning",
+      "message": "query parameter sorted_by not safelisted, ignored",
+      "warning_type": "ignored_parameter",
+      "parameter": "sorted_by"
+    }
+  ],
+  "@type": "builds",
+  "@href": "/repo/2800492/builds?limit=25&offset=150&sorted_by=finished_at&state=passed",
+  "@representation": "standard",
+  "@pagination": {
+    "limit": 25,
+    "offset": 150,
+    "count": 3556,
+    "is_first": false,
+    "is_last": false,
+    "next": {
+      "@href": "/repo/2800492/builds?limit=25&offset=175&sorted_by=finished_at&state=passed",
+      "offset": 175,
+      "limit": 25
+    },
+    "prev": {
+      "@href": "/repo/2800492/builds?limit=25&offset=125&sorted_by=finished_at&state=passed",
+      "offset": 125,
+      "limit": 25
+    },
+    "first": {
+      "@href": "/repo/2800492/builds?limit=25&offset=0&sorted_by=finished_at&state=passed",
+      "offset": 0,
+      "limit": 25
+    },
+    "last": {
+      "@href": "/repo/2800492/builds?limit=25&offset=3550&sorted_by=finished_at&state=passed",
+      "offset": 3550,
+      "limit": 25
+    }
+  },
+  "builds": [
+    {
+      "@type": "build",
+      "@href": "/build/323753523",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 323753523,
+      "number": "4610",
+      "state": "passed",
+      "duration": 1503,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "fix: TypeFactory type arguments of constants",
+      "pull_request_number": 1792,
+      "started_at": "2018-01-01T11:32:19Z",
+      "finished_at": "2018-01-01T12:00:28Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 96208668,
+        "sha": "e767d4d08b7a8b819caeebda9f42ce337090458c",
+        "ref": "refs/pull/1792/merge",
+        "message": "fix TypeFactory type arguments of constants",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1792",
+        "committed_at": "2018-01-01T11:12:15Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/323753524",
+          "@representation": "minimal",
+          "id": 323753524
+        },
+        {
+          "@type": "job",
+          "@href": "/job/323753525",
+          "@representation": "minimal",
+          "id": 323753525
+        },
+        {
+          "@type": "job",
+          "@href": "/job/323753526",
+          "@representation": "minimal",
+          "id": 323753526
+        },
+        {
+          "@type": "job",
+          "@href": "/job/323753527",
+          "@representation": "minimal",
+          "id": 323753527
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/563609",
+        "@representation": "minimal",
+        "id": 563609,
+        "login": "pvojtechovsky"
+      },
+      "updated_at": "2018-01-01T12:00:28.754Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/322898910",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 322898910,
+      "number": "4608",
+      "state": "passed",
+      "duration": 1491,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "WiP: feature: Pattern = more abstract Template",
+      "pull_request_number": 1686,
+      "started_at": "2017-12-29T14:04:52Z",
+      "finished_at": "2017-12-29T14:12:07Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 96012149,
+        "sha": "3cb8ebfa997112cab1ceeb329e505d3fbd9ccb8b",
+        "ref": "refs/pull/1686/merge",
+        "message": "avoid usage of invalid template imports in generated code",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1686",
+        "committed_at": "2017-12-29T14:02:38Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/322898911",
+          "@representation": "minimal",
+          "id": 322898911
+        },
+        {
+          "@type": "job",
+          "@href": "/job/322898912",
+          "@representation": "minimal",
+          "id": 322898912
+        },
+        {
+          "@type": "job",
+          "@href": "/job/322898913",
+          "@representation": "minimal",
+          "id": 322898913
+        },
+        {
+          "@type": "job",
+          "@href": "/job/322898914",
+          "@representation": "minimal",
+          "id": 322898914
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/563609",
+        "@representation": "minimal",
+        "id": 563609,
+        "login": "pvojtechovsky"
+      },
+      "updated_at": "2017-12-29T14:12:08.097Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/320094007",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 320094007,
+      "number": "4605",
+      "state": "passed",
+      "duration": 1460,
+      "event_type": "push",
+      "previous_state": "passed",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2017-12-22T07:20:47Z",
+      "finished_at": "2017-12-22T07:28:09Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 95181935,
+        "sha": "5f1cda00b396420fe10d4d3e031688f2ebb7429a",
+        "ref": "refs/heads/master",
+        "message": "doc: Bump Spoon number in doc (#1790)",
+        "compare_url": "https://github.com/INRIA/spoon/compare/827e85c5f0cf...5f1cda00b396",
+        "committed_at": "2017-12-22T07:20:03Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/320094008",
+          "@representation": "minimal",
+          "id": 320094008
+        },
+        {
+          "@type": "job",
+          "@href": "/job/320094009",
+          "@representation": "minimal",
+          "id": 320094009
+        },
+        {
+          "@type": "job",
+          "@href": "/job/320094010",
+          "@representation": "minimal",
+          "id": 320094010
+        },
+        {
+          "@type": "job",
+          "@href": "/job/320094011",
+          "@representation": "minimal",
+          "id": 320094011
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/90405",
+        "@representation": "minimal",
+        "id": 90405,
+        "login": "monperrus"
+      },
+      "updated_at": "2017-12-22T07:28:09.896Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/319837967",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 319837967,
+      "number": "4604",
+      "state": "passed",
+      "duration": 1458,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "Bump Spoon number in doc",
+      "pull_request_number": 1790,
+      "started_at": "2017-12-21T18:06:31Z",
+      "finished_at": "2017-12-21T18:13:50Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 95101378,
+        "sha": "b18e40b5d1b4c773b3ba425e69bef4430921c147",
+        "ref": "refs/pull/1790/merge",
+        "message": "Bump Spoon number in doc",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1790",
+        "committed_at": "2017-12-21T18:04:57Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/319837968",
+          "@representation": "minimal",
+          "id": 319837968
+        },
+        {
+          "@type": "job",
+          "@href": "/job/319837969",
+          "@representation": "minimal",
+          "id": 319837969
+        },
+        {
+          "@type": "job",
+          "@href": "/job/319837970",
+          "@representation": "minimal",
+          "id": 319837970
+        },
+        {
+          "@type": "job",
+          "@href": "/job/319837971",
+          "@representation": "minimal",
+          "id": 319837971
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2017-12-21T18:13:50.313Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/319253124",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 319253124,
+      "number": "4603",
+      "state": "passed",
+      "duration": 1491,
+      "event_type": "push",
+      "previous_state": "passed",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2017-12-20T16:16:54Z",
+      "finished_at": "2017-12-20T16:31:06Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 94920521,
+        "sha": "827e85c5f0cf5f0d83700ee6a02f6e1490040383",
+        "ref": "refs/heads/master",
+        "message": "[maven-release-plugin] prepare for next development iteration",
+        "compare_url": "https://github.com/INRIA/spoon/compare/9b77e4620c66...827e85c5f0cf",
+        "committed_at": "2017-12-20T16:03:59Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/319253125",
+          "@representation": "minimal",
+          "id": 319253125
+        },
+        {
+          "@type": "job",
+          "@href": "/job/319253127",
+          "@representation": "minimal",
+          "id": 319253127
+        },
+        {
+          "@type": "job",
+          "@href": "/job/319253128",
+          "@representation": "minimal",
+          "id": 319253128
+        },
+        {
+          "@type": "job",
+          "@href": "/job/319253130",
+          "@representation": "minimal",
+          "id": 319253130
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2017-12-20T16:31:06.796Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/319252906",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 319252906,
+      "number": "4602",
+      "state": "passed",
+      "duration": 1448,
+      "event_type": "push",
+      "previous_state": null,
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2017-12-20T16:24:11Z",
+      "finished_at": "2017-12-20T16:32:08Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/spoon-core-6.1.0",
+        "@representation": "minimal",
+        "name": "spoon-core-6.1.0"
+      },
+      "tag": {
+        "@type": "tag",
+        "@representation": "minimal",
+        "repository_id": 2800492,
+        "name": "spoon-core-6.1.0",
+        "last_build_id": null
+      },
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 94920460,
+        "sha": "a2791df6ab20831045312aa12d13045629805182",
+        "ref": "refs/tags/spoon-core-6.1.0",
+        "message": "[maven-release-plugin] prepare release spoon-core-6.1.0",
+        "compare_url": "https://github.com/INRIA/spoon/commit/a2791df6ab20",
+        "committed_at": "2017-12-20T16:03:54Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/319252907",
+          "@representation": "minimal",
+          "id": 319252907
+        },
+        {
+          "@type": "job",
+          "@href": "/job/319252908",
+          "@representation": "minimal",
+          "id": 319252908
+        },
+        {
+          "@type": "job",
+          "@href": "/job/319252909",
+          "@representation": "minimal",
+          "id": 319252909
+        },
+        {
+          "@type": "job",
+          "@href": "/job/319252910",
+          "@representation": "minimal",
+          "id": 319252910
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2017-12-20T16:32:08.481Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/319089971",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 319089971,
+      "number": "4598",
+      "state": "passed",
+      "duration": 1398,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "WIP: feat: be able to change the destination of each created file",
+      "pull_request_number": 1610,
+      "started_at": "2017-12-20T10:01:00Z",
+      "finished_at": "2017-12-20T10:07:57Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 94868192,
+        "sha": "8e2094f6a49ae92305bf9d8d8d873786635a8534",
+        "ref": "refs/pull/1610/merge",
+        "message": "fix module destination",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1610",
+        "committed_at": "2017-12-20T09:59:57Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/319089972",
+          "@representation": "minimal",
+          "id": 319089972
+        },
+        {
+          "@type": "job",
+          "@href": "/job/319089973",
+          "@representation": "minimal",
+          "id": 319089973
+        },
+        {
+          "@type": "job",
+          "@href": "/job/319089976",
+          "@representation": "minimal",
+          "id": 319089976
+        },
+        {
+          "@type": "job",
+          "@href": "/job/319089978",
+          "@representation": "minimal",
+          "id": 319089978
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/98585",
+        "@representation": "minimal",
+        "id": 98585,
+        "login": "tdurieux"
+      },
+      "updated_at": "2017-12-20T10:07:57.479Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/318528943",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 318528943,
+      "number": "4596",
+      "state": "passed",
+      "duration": 1333,
+      "event_type": "push",
+      "previous_state": "passed",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2017-12-19T09:44:31Z",
+      "finished_at": "2017-12-19T09:51:57Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 94688429,
+        "sha": "9b77e4620c668b23e8bdbbafa18aed03414cbbed",
+        "ref": "refs/heads/master",
+        "message": "chore: add pitest in pom.xml for future usage in CI (#1786)\n\n* chore: add pitest in pom.xml for future usage in CI\r\n\r\n* Update pom.xml",
+        "compare_url": "https://github.com/INRIA/spoon/compare/fd878bc71b73...9b77e4620c66",
+        "committed_at": "2017-12-19T09:43:47Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/318528944",
+          "@representation": "minimal",
+          "id": 318528944
+        },
+        {
+          "@type": "job",
+          "@href": "/job/318528945",
+          "@representation": "minimal",
+          "id": 318528945
+        },
+        {
+          "@type": "job",
+          "@href": "/job/318528946",
+          "@representation": "minimal",
+          "id": 318528946
+        },
+        {
+          "@type": "job",
+          "@href": "/job/318528947",
+          "@representation": "minimal",
+          "id": 318528947
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2017-12-19T09:51:57.800Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/318255328",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 318255328,
+      "number": "4592",
+      "state": "passed",
+      "duration": 1637,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "WiP: feature: Pattern = more abstract Template",
+      "pull_request_number": 1686,
+      "started_at": "2017-12-18T19:43:58Z",
+      "finished_at": "2017-12-18T19:53:00Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 94600144,
+        "sha": "8f9f367a42769d5c7481a1e9643758118e5af98e",
+        "ref": "refs/pull/1686/merge",
+        "message": "workaround of #1787",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1686",
+        "committed_at": "2017-12-18T19:42:54Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/318255329",
+          "@representation": "minimal",
+          "id": 318255329
+        },
+        {
+          "@type": "job",
+          "@href": "/job/318255330",
+          "@representation": "minimal",
+          "id": 318255330
+        },
+        {
+          "@type": "job",
+          "@href": "/job/318255331",
+          "@representation": "minimal",
+          "id": 318255331
+        },
+        {
+          "@type": "job",
+          "@href": "/job/318255332",
+          "@representation": "minimal",
+          "id": 318255332
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/563609",
+        "@representation": "minimal",
+        "id": 563609,
+        "login": "pvojtechovsky"
+      },
+      "updated_at": "2017-12-18T19:53:01.100Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/318138328",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 318138328,
+      "number": "4590",
+      "state": "passed",
+      "duration": 1441,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "chore: add pitest in pom.xml for future usage in CI",
+      "pull_request_number": 1786,
+      "started_at": "2017-12-18T15:29:45Z",
+      "finished_at": "2017-12-18T15:37:20Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 94562384,
+        "sha": "3705075083d66160956382025d105dc4db467402",
+        "ref": "refs/pull/1786/merge",
+        "message": "Update pom.xml",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1786",
+        "committed_at": "2017-12-18T15:29:04Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/318138333",
+          "@representation": "minimal",
+          "id": 318138333
+        },
+        {
+          "@type": "job",
+          "@href": "/job/318138336",
+          "@representation": "minimal",
+          "id": 318138336
+        },
+        {
+          "@type": "job",
+          "@href": "/job/318138339",
+          "@representation": "minimal",
+          "id": 318138339
+        },
+        {
+          "@type": "job",
+          "@href": "/job/318138340",
+          "@representation": "minimal",
+          "id": 318138340
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/90405",
+        "@representation": "minimal",
+        "id": 90405,
+        "login": "monperrus"
+      },
+      "updated_at": "2017-12-18T15:37:20.360Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/317664819",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 317664819,
+      "number": "4584",
+      "state": "passed",
+      "duration": 1542,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "WiP: feature: Pattern = more abstract Template",
+      "pull_request_number": 1686,
+      "started_at": "2017-12-17T12:27:42Z",
+      "finished_at": "2017-12-17T12:35:16Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 94400789,
+        "sha": "cda4ded64fff5884d707f54fdb30d17d48657e7e",
+        "ref": "refs/pull/1686/merge",
+        "message": "convert List to CtStatement",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1686",
+        "committed_at": "2017-12-17T11:26:35Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/317664820",
+          "@representation": "minimal",
+          "id": 317664820
+        },
+        {
+          "@type": "job",
+          "@href": "/job/317664821",
+          "@representation": "minimal",
+          "id": 317664821
+        },
+        {
+          "@type": "job",
+          "@href": "/job/317664822",
+          "@representation": "minimal",
+          "id": 317664822
+        },
+        {
+          "@type": "job",
+          "@href": "/job/317664823",
+          "@representation": "minimal",
+          "id": 317664823
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/563609",
+        "@representation": "minimal",
+        "id": 563609,
+        "login": "pvojtechovsky"
+      },
+      "updated_at": "2017-12-17T12:35:16.638Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/316494755",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 316494755,
+      "number": "4582",
+      "state": "passed",
+      "duration": 1543,
+      "event_type": "push",
+      "previous_state": "passed",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2017-12-14T16:05:33Z",
+      "finished_at": "2017-12-14T16:13:20Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 94006009,
+        "sha": "fd878bc71b73fc1da82356eaa6578f760c70f0de",
+        "ref": "refs/heads/master",
+        "message": "fix: CompilationUnits are created on demand (#1782)",
+        "compare_url": "https://github.com/INRIA/spoon/compare/5ed2197f3bec...fd878bc71b73",
+        "committed_at": "2017-12-14T16:04:49Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/316494757",
+          "@representation": "minimal",
+          "id": 316494757
+        },
+        {
+          "@type": "job",
+          "@href": "/job/316494759",
+          "@representation": "minimal",
+          "id": 316494759
+        },
+        {
+          "@type": "job",
+          "@href": "/job/316494761",
+          "@representation": "minimal",
+          "id": 316494761
+        },
+        {
+          "@type": "job",
+          "@href": "/job/316494763",
+          "@representation": "minimal",
+          "id": 316494763
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/563609",
+        "@representation": "minimal",
+        "id": 563609,
+        "login": "pvojtechovsky"
+      },
+      "updated_at": "2017-12-14T16:13:20.915Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/316479164",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 316479164,
+      "number": "4581",
+      "state": "passed",
+      "duration": 1502,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "chore: add pitest in pom.xml for future usage in CI",
+      "pull_request_number": 1786,
+      "started_at": "2017-12-14T15:32:40Z",
+      "finished_at": "2017-12-14T15:40:21Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 94000730,
+        "sha": "a6434abfc9306c796ed16a59fc24bd43c438d287",
+        "ref": "refs/pull/1786/merge",
+        "message": "chore: add pitest in pom.xml for future usage in CI",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1786",
+        "committed_at": "2017-12-14T15:31:30Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/316479165",
+          "@representation": "minimal",
+          "id": 316479165
+        },
+        {
+          "@type": "job",
+          "@href": "/job/316479166",
+          "@representation": "minimal",
+          "id": 316479166
+        },
+        {
+          "@type": "job",
+          "@href": "/job/316479167",
+          "@representation": "minimal",
+          "id": 316479167
+        },
+        {
+          "@type": "job",
+          "@href": "/job/316479168",
+          "@representation": "minimal",
+          "id": 316479168
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/90405",
+        "@representation": "minimal",
+        "id": 90405,
+        "login": "monperrus"
+      },
+      "updated_at": "2017-12-14T15:40:21.268Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/316332917",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 316332917,
+      "number": "4580",
+      "state": "passed",
+      "duration": 1498,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "review fix: CompilationUnits are created on demand",
+      "pull_request_number": 1782,
+      "started_at": "2017-12-14T09:53:07Z",
+      "finished_at": "2017-12-14T10:00:44Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 93952727,
+        "sha": "e5b4f35ac8c50e76b0fa1614526e1042d7ef6eae",
+        "ref": "refs/pull/1782/merge",
+        "message": "Fix after Pavel's review",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1782",
+        "committed_at": "2017-12-14T09:52:19Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/316332918",
+          "@representation": "minimal",
+          "id": 316332918
+        },
+        {
+          "@type": "job",
+          "@href": "/job/316332919",
+          "@representation": "minimal",
+          "id": 316332919
+        },
+        {
+          "@type": "job",
+          "@href": "/job/316332920",
+          "@representation": "minimal",
+          "id": 316332920
+        },
+        {
+          "@type": "job",
+          "@href": "/job/316332921",
+          "@representation": "minimal",
+          "id": 316332921
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2017-12-14T10:00:44.985Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/315894133",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 315894133,
+      "number": "4576",
+      "state": "passed",
+      "duration": 1526,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "review fix: CompilationUnits are created on demand",
+      "pull_request_number": 1782,
+      "started_at": "2017-12-13T13:49:28Z",
+      "finished_at": "2017-12-13T14:01:43Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 93804111,
+        "sha": "c2bc6f3e918d5e38bbbc2a1446301d51293f5a1f",
+        "ref": "refs/pull/1782/merge",
+        "message": "Add some missing value in CU",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1782",
+        "committed_at": "2017-12-13T13:48:37Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/315894134",
+          "@representation": "minimal",
+          "id": 315894134
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315894135",
+          "@representation": "minimal",
+          "id": 315894135
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315894136",
+          "@representation": "minimal",
+          "id": 315894136
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315894137",
+          "@representation": "minimal",
+          "id": 315894137
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2017-12-13T14:01:43.785Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/315892824",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 315892824,
+      "number": "4575",
+      "state": "passed",
+      "duration": 1525,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "WiP fix: CompilationUnits are created on demand",
+      "pull_request_number": 1782,
+      "started_at": "2017-12-13T13:46:36Z",
+      "finished_at": "2017-12-13T13:54:02Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 93803628,
+        "sha": "01abd2fa330ba81b9ce964a29351dc3f103b31c6",
+        "ref": "refs/pull/1782/merge",
+        "message": "Fix checkstyle",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1782",
+        "committed_at": "2017-12-13T13:45:47Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/315892825",
+          "@representation": "minimal",
+          "id": 315892825
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315892826",
+          "@representation": "minimal",
+          "id": 315892826
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315892827",
+          "@representation": "minimal",
+          "id": 315892827
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315892828",
+          "@representation": "minimal",
+          "id": 315892828
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2017-12-13T13:54:02.478Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/315815035",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 315815035,
+      "number": "4573",
+      "state": "passed",
+      "duration": 1654,
+      "event_type": "push",
+      "previous_state": "passed",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2017-12-13T10:36:30Z",
+      "finished_at": "2017-12-13T10:49:18Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 93777342,
+        "sha": "5ed2197f3becc1c723462e478f0b6ce15778a227",
+        "ref": "refs/heads/master",
+        "message": "refactor: OutputType is available in Environment (#1784)",
+        "compare_url": "https://github.com/INRIA/spoon/compare/bbe2e73e84ae...5ed2197f3bec",
+        "committed_at": "2017-12-13T10:35:55Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/315815036",
+          "@representation": "minimal",
+          "id": 315815036
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315815037",
+          "@representation": "minimal",
+          "id": 315815037
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315815038",
+          "@representation": "minimal",
+          "id": 315815038
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315815039",
+          "@representation": "minimal",
+          "id": 315815039
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/90405",
+        "@representation": "minimal",
+        "id": 90405,
+        "login": "monperrus"
+      },
+      "updated_at": "2017-12-13T10:49:18.315Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/315813709",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 315813709,
+      "number": "4572",
+      "state": "passed",
+      "duration": 1432,
+      "event_type": "push",
+      "previous_state": "passed",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2017-12-13T10:32:57Z",
+      "finished_at": "2017-12-13T10:40:21Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 93776905,
+        "sha": "bbe2e73e84ae491ef9c3f67e6f7595219418f0b1",
+        "ref": "refs/heads/master",
+        "message": "refactor: CompilationUnit returns an unmodifiable collection (#1781)",
+        "compare_url": "https://github.com/INRIA/spoon/compare/4a87644b220e...bbe2e73e84ae",
+        "committed_at": "2017-12-13T10:32:26Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/315813710",
+          "@representation": "minimal",
+          "id": 315813710
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315813711",
+          "@representation": "minimal",
+          "id": 315813711
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315813712",
+          "@representation": "minimal",
+          "id": 315813712
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315813713",
+          "@representation": "minimal",
+          "id": 315813713
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/90405",
+        "@representation": "minimal",
+        "id": 90405,
+        "login": "monperrus"
+      },
+      "updated_at": "2017-12-13T10:40:21.951Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/315331475",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 315331475,
+      "number": "4571",
+      "state": "passed",
+      "duration": 1405,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "refactor(api): OutputType available in Environment",
+      "pull_request_number": 1784,
+      "started_at": "2017-12-12T12:23:55Z",
+      "finished_at": "2017-12-12T12:30:50Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 93616396,
+        "sha": "b3eb5b32656e914e3fc75cb126236c43c79d10f3",
+        "ref": "refs/pull/1784/merge",
+        "message": "Fix checkstyle",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1784",
+        "committed_at": "2017-12-12T12:22:53Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/315331476",
+          "@representation": "minimal",
+          "id": 315331476
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315331477",
+          "@representation": "minimal",
+          "id": 315331477
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315331478",
+          "@representation": "minimal",
+          "id": 315331478
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315331487",
+          "@representation": "minimal",
+          "id": 315331487
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2017-12-12T12:30:50.466Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/315260806",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 315260806,
+      "number": "4569",
+      "state": "passed",
+      "duration": 1477,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "review refactor: CompilationUnit should return unmodifiable collection ",
+      "pull_request_number": 1781,
+      "started_at": "2017-12-12T09:23:12Z",
+      "finished_at": "2017-12-12T09:30:34Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 93592834,
+        "sha": "e6f57e9b8cb1fd3b619d3fcc5880f31440ff3227",
+        "ref": "refs/pull/1781/merge",
+        "message": "Add some tests",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1781",
+        "committed_at": "2017-12-12T09:22:31Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/315260807",
+          "@representation": "minimal",
+          "id": 315260807
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315260808",
+          "@representation": "minimal",
+          "id": 315260808
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315260809",
+          "@representation": "minimal",
+          "id": 315260809
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315260810",
+          "@representation": "minimal",
+          "id": 315260810
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2017-12-12T09:30:34.401Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/315252249",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 315252249,
+      "number": "4568",
+      "state": "passed",
+      "duration": 1382,
+      "event_type": "push",
+      "previous_state": "passed",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2017-12-12T08:59:24Z",
+      "finished_at": "2017-12-12T09:06:06Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 93589835,
+        "sha": "4a87644b220e3964214fb2a7b2828302ad5afe1c",
+        "ref": "refs/heads/master",
+        "message": "fix(annotation): bug when using an annotation targeting declaration and types (#1774)",
+        "compare_url": "https://github.com/INRIA/spoon/compare/a3a96502f079...4a87644b220e",
+        "committed_at": "2017-12-12T08:58:53Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/315252250",
+          "@representation": "minimal",
+          "id": 315252250
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315252251",
+          "@representation": "minimal",
+          "id": 315252251
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315252252",
+          "@representation": "minimal",
+          "id": 315252252
+        },
+        {
+          "@type": "job",
+          "@href": "/job/315252253",
+          "@representation": "minimal",
+          "id": 315252253
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/90405",
+        "@representation": "minimal",
+        "id": 90405,
+        "login": "monperrus"
+      },
+      "updated_at": "2017-12-12T09:06:06.223Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/314986086",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 314986086,
+      "number": "4567",
+      "state": "passed",
+      "duration": 1454,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "WiP: feature: Pattern = more abstract Template",
+      "pull_request_number": 1686,
+      "started_at": "2017-12-11T20:20:17Z",
+      "finished_at": "2017-12-11T20:27:28Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 93497381,
+        "sha": "4c1d19e3fc4d9799286200b22d602b3085ad6f69",
+        "ref": "refs/pull/1686/merge",
+        "message": "refactoring and fixing of pattern matching process",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1686",
+        "committed_at": "2017-12-11T20:18:33Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/314986087",
+          "@representation": "minimal",
+          "id": 314986087
+        },
+        {
+          "@type": "job",
+          "@href": "/job/314986088",
+          "@representation": "minimal",
+          "id": 314986088
+        },
+        {
+          "@type": "job",
+          "@href": "/job/314986091",
+          "@representation": "minimal",
+          "id": 314986091
+        },
+        {
+          "@type": "job",
+          "@href": "/job/314986094",
+          "@representation": "minimal",
+          "id": 314986094
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/563609",
+        "@representation": "minimal",
+        "id": 563609,
+        "login": "pvojtechovsky"
+      },
+      "updated_at": "2017-12-11T20:27:28.272Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/314885823",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 314885823,
+      "number": "4566",
+      "state": "passed",
+      "duration": 1468,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "fix(template): Generated type are included in a compilation unit",
+      "pull_request_number": 1782,
+      "started_at": "2017-12-11T17:08:21Z",
+      "finished_at": "2017-12-11T17:19:57Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 93464672,
+        "sha": "5ffb9cde00e29b452478e1d461a76e9f17f5f44e",
+        "ref": "refs/pull/1782/merge",
+        "message": "Fix checkstyle",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1782",
+        "committed_at": "2017-12-11T17:07:16Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/314885824",
+          "@representation": "minimal",
+          "id": 314885824
+        },
+        {
+          "@type": "job",
+          "@href": "/job/314885825",
+          "@representation": "minimal",
+          "id": 314885825
+        },
+        {
+          "@type": "job",
+          "@href": "/job/314885826",
+          "@representation": "minimal",
+          "id": 314885826
+        },
+        {
+          "@type": "job",
+          "@href": "/job/314885827",
+          "@representation": "minimal",
+          "id": 314885827
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2017-12-11T17:19:57.193Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/314884184",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 314884184,
+      "number": "4565",
+      "state": "passed",
+      "duration": 1505,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "refactor: CompilationUnit should return unmodifiable collection ",
+      "pull_request_number": 1781,
+      "started_at": "2017-12-11T17:05:27Z",
+      "finished_at": "2017-12-11T17:13:36Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 93464102,
+        "sha": "213054cc238fac68a5b13ef901a51128c9ddd6e7",
+        "ref": "refs/pull/1781/merge",
+        "message": "Fix error with ParentExiter",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1781",
+        "committed_at": "2017-12-11T17:04:36Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/314884185",
+          "@representation": "minimal",
+          "id": 314884185
+        },
+        {
+          "@type": "job",
+          "@href": "/job/314884186",
+          "@representation": "minimal",
+          "id": 314884186
+        },
+        {
+          "@type": "job",
+          "@href": "/job/314884187",
+          "@representation": "minimal",
+          "id": 314884187
+        },
+        {
+          "@type": "job",
+          "@href": "/job/314884188",
+          "@representation": "minimal",
+          "id": 314884188
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2017-12-11T17:13:37.118Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/314660072",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": false,
+        "restart": false
+      },
+      "id": 314660072,
+      "number": "4557",
+      "state": "passed",
+      "duration": 1515,
+      "event_type": "pull_request",
+      "previous_state": "passed",
+      "pull_request_title": "review fix(annotation): bug when using an annotation targeting declaration and types",
+      "pull_request_number": 1774,
+      "started_at": "2017-12-11T08:58:53Z",
+      "finished_at": "2017-12-11T09:06:24Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/2800492",
+        "@representation": "minimal",
+        "id": 2800492,
+        "name": "spoon",
+        "slug": "INRIA/spoon"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/2800492/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 93387271,
+        "sha": "01b9aa6ec73ca20c8121c318c9e34fc474701589",
+        "ref": "refs/pull/1774/merge",
+        "message": "Fix comments",
+        "compare_url": "https://github.com/INRIA/spoon/pull/1774",
+        "committed_at": "2017-12-11T08:58:05Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/314660073",
+          "@representation": "minimal",
+          "id": 314660073
+        },
+        {
+          "@type": "job",
+          "@href": "/job/314660074",
+          "@representation": "minimal",
+          "id": 314660074
+        },
+        {
+          "@type": "job",
+          "@href": "/job/314660075",
+          "@representation": "minimal",
+          "id": 314660075
+        },
+        {
+          "@type": "job",
+          "@href": "/job/314660076",
+          "@representation": "minimal",
+          "id": 314660076
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2017-12-11T09:06:24.464Z"
+    }
+  ]
+}

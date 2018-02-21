@@ -21,6 +21,7 @@ public class RepositoryHelperTest extends AbstractTest {
     @Test
     public void testFromSlugMocked() throws InterruptedException {
         String slug = "INRIA/spoon";
+        String encodedSlug = "INRIA%2Fspoon";
         String buildContent = this.getFileContent(TestRepository.PATH_REPO_STANDARD);
 
         this.enqueueContentMockServer(buildContent);
@@ -31,7 +32,7 @@ public class RepositoryHelperTest extends AbstractTest {
 
         assertEquals(TestRepository.getStandardExpectedRepo(), repository);
         RecordedRequest request1 = getMockServer().takeRequest();
-        assertEquals(this.expectedUrl(TravisConstants.REPO_ENDPOINT, slug), request1.getPath());
+        assertEquals(this.expectedUrl(TravisConstants.REPO_ENDPOINT, encodedSlug), request1.getPath());
     }
 
     @Test

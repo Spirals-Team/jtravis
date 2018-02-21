@@ -6,10 +6,16 @@ import fr.inria.jtravis.JTravis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Entity {
     private transient JTravis jtravis;
+
+    @Expose
+    @SerializedName("@warnings")
+    private List<Warning> warnings;
 
     @Expose
     @SerializedName("@href")
@@ -43,19 +49,31 @@ public abstract class Entity {
         this.jtravis = jtravis;
     }
 
+    public List<Warning> getWarnings() {
+        if (warnings == null) {
+            return Collections.emptyList();
+        }
+        return warnings;
+    }
+
+    protected void setWarnings(List<Warning> warnings) {
+        this.warnings = warnings;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Entity entity = (Entity) o;
-        return Objects.equals(uri, entity.uri) &&
+        final Entity entity = (Entity) o;
+        return Objects.equals(warnings, entity.warnings) &&
+                Objects.equals(uri, entity.uri) &&
                 representation == entity.representation;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(uri, representation);
+        return Objects.hash(warnings, uri, representation);
     }
 
     protected Logger getLogger() {

@@ -92,7 +92,6 @@ public abstract class AbstractHelper {
         Request request = this.requestBuilder(url).get().build();
         Call call = this.client.newCall(request);
         long dateBegin = new Date().getTime();
-        this.getLogger().debug("Execute get request to the following URL: "+url);
         Response response = call.execute();
         long dateEnd = new Date().getTime();
         this.getLogger().debug("Get request to :"+url+" done after "+(dateEnd-dateBegin)+" ms");

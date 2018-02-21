@@ -14,17 +14,7 @@ public class BuildHelperTest {
 //
 
 //
-//    @Test
-//    public void testGetNextPassingBuildAfterGivenFailingBuild() {
-//        int buildId = 197067445;
-//        Build failingBuild = BuildHelper.getBuildFromId(buildId, null);
-//
-//        int expectedBuildId = 197104485;
-//        Build obtainedBuild = BuildHelper.getNextBuildOfSameBranchOfStatusAfterBuild(failingBuild, BuildStatus.PASSED);
-//
-//        assertTrue(obtainedBuild != null);
-//        assertEquals(expectedBuildId, obtainedBuild.getId());
-//    }
+
 //
 //    @Test
 //    public void testGetLastErroredBuildBeforeGivenBuild() {

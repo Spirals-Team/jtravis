@@ -20,9 +20,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class TestBuild extends AbstractTest {
-    private static String BUILD_STANDARD_PATH = "./src/test/resources/response/build/build_answer_standard.json";
-    private static String BUILD_MINIMAL_PATH = "./src/test/resources/response/build/build_answer_minimal.json";
-    private static String BUILD_STANDARD_NOPR_PATH = "./src/test/resources/response/build/build_answer_standard_nopr.json";
+    private static final String BUILD_STANDARD_PATH = "./src/test/resources/response/build/build_answer_standard.json";
+    private static final String BUILD_MINIMAL_PATH = "./src/test/resources/response/build/build_answer_minimal.json";
+    private static final String BUILD_STANDARD_NOPR_PATH = "./src/test/resources/response/build/build_answer_standard_nopr.json";
+    private static final String BUILD_WITH_TAG_PATH = "./src/test/resources/response/build/build_with_tag.json";
 
     private Build getExpectedBuild() {
         Build expectedBuild = new Build();
@@ -240,5 +241,21 @@ public class TestBuild extends AbstractTest {
         assertTrue(getJTravis().refresh(minimalBuild));
         assertEquals(this.getExpectedBuild(), minimalBuild);
         assertFalse(getJTravis().refresh(minimalBuild));
+    }
+
+    @Test
+    public void testBuildWithTagAreCorrectlyParsed() throws IOException {
+        JsonObject buildObject = this.getJsonObjectFromFilePath(BUILD_WITH_TAG_PATH);
+        assertNotNull(buildObject);
+        Build buildWithTag = EntityHelper.createGson().fromJson(buildObject, Build.class);
+        assertNotNull(buildWithTag);
+
+        assertEquals(319252906, buildWithTag.getId());
+        Tag expectedTagField = new Tag();
+        expectedTagField.setName("spoon-core-6.1.0");
+        expectedTagField.setRepositoryId(2800492);
+        expectedTagField.setRepresentation(RepresentationType.MINIMAL);
+
+        assertEquals(expectedTagField, buildWithTag.getTag());
     }
 }

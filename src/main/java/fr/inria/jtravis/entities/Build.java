@@ -61,7 +61,7 @@ public final class Build extends EntityUnary implements Comparable<Build> {
     private Date updatedAt;
 
     @Expose
-    private String tag;
+    private Tag tag;
 
     @Expose
     private Owner createdBy;
@@ -129,7 +129,7 @@ public final class Build extends EntityUnary implements Comparable<Build> {
         this.updatedAt = updatedAt;
     }
 
-    protected void setTag(String tag) {
+    protected void setTag(Tag tag) {
         this.tag = tag;
     }
 
@@ -195,7 +195,7 @@ public final class Build extends EntityUnary implements Comparable<Build> {
         return updatedAt;
     }
 
-    public String getTag() {
+    public Tag getTag() {
         return tag;
     }
 

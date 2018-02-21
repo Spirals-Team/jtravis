@@ -8,6 +8,7 @@ import fr.inria.jtravis.entities.Entity;
 import fr.inria.jtravis.entities.EntityCollection;
 import fr.inria.jtravis.entities.Pagination;
 import fr.inria.jtravis.entities.RepresentationType;
+import fr.inria.jtravis.entities.Warning;
 import okhttp3.OkHttpClient;
 
 import java.io.IOException;
@@ -49,6 +50,9 @@ public class EntityHelper extends AbstractHelper {
                     jTravisField.setAccessible(false);
                 } catch (NoSuchFieldException|IllegalAccessException e) {
                     this.getLogger().error("Error while setting jtravis field", e);
+                }
+                for (Warning warning : result.getWarnings()) {
+                    getLogger().warn(warning.toString());
                 }
                 return Optional.of(result);
             }

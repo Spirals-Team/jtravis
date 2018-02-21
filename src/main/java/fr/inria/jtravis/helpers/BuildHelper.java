@@ -60,7 +60,7 @@ public class BuildHelper extends EntityHelper {
         Properties properties = new Properties();
         properties.put("branch.name", repository.getDefaultBranch().getName());
         properties.put("limit", 1);
-        properties.put("sorted_by", new BuildsSorting().byFinishedAtDesc().build());
+        properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
         Optional<Builds> builds = getEntityFromUri(Builds.class, Arrays.asList(
                 TravisConstants.REPO_ENDPOINT,
                 String.valueOf(repository.getId()),
@@ -87,14 +87,13 @@ public class BuildHelper extends EntityHelper {
 
         Properties properties = new Properties();
         properties.put("state", stateFilter.name().toLowerCase());
-        properties.put("sorted_by", new BuildsSorting().byFinishedAtDesc().build());
+        properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
 
         if (sameBranch) {
             properties.put("branch.name", originalBuild.getBranch().getName());
-        }
-
-        if (originalBuild.isPullRequest()) {
-            properties.put("event_type", originalBuild.getEventType().name().toLowerCase());
+            if (originalBuild.isPullRequest()) {
+                properties.put("event_type", originalBuild.getEventType().name().toLowerCase());
+            }
         }
 
         Instant finishedDateOriginalBuild = originalBuild.getFinishedAt().toInstant();
@@ -110,7 +109,59 @@ public class BuildHelper extends EntityHelper {
                 if (build.getId() == originalBuild.getId()) {
                     continue;
                 }
-                if (originalBuild.isPullRequest()) {
+                if (sameBranch && originalBuild.isPullRequest()) {
+                    if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
+                        continue;
+                    }
+                }
+
+                if (build.getBranch().equals(originalBuild.getBranch()) && build.getFinishedAt().toInstant().isBefore(finishedDateOriginalBuild)) {
+                    return Optional.of(build);
+                }
+            }
+
+            if (!isFinished) {
+                buildsOptional = this.next(builds);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    public Optional<Build> getAfter(Build originalBuild, boolean sameBranch, StateType stateFilter) {
+        int repositoryId = originalBuild.getRepository().getId();
+
+        List<String> pathParameter = Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                String.valueOf(repositoryId),
+                TravisConstants.BUILDS_ENDPOINT);
+
+
+        Properties properties = new Properties();
+        properties.put("state", stateFilter.name().toLowerCase());
+        properties.put("sorted_by", new BuildsSorting().byFinishedAt().build());
+
+        if (sameBranch) {
+            properties.put("branch.name", originalBuild.getBranch().getName());
+            if (originalBuild.isPullRequest()) {
+                properties.put("event_type", originalBuild.getEventType().name().toLowerCase());
+            }
+        }
+
+        Instant finishedDateOriginalBuild = originalBuild.getFinishedAt().toInstant();
+
+        Optional<Builds> buildsOptional = getEntityFromUri(Builds.class, pathParameter, properties);
+
+        boolean isFinished = false;
+        while (buildsOptional.isPresent() && !isFinished) {
+            Builds builds = buildsOptional.get();
+            isFinished = (builds.getPagination().isLast());
+
+            for (Build build : buildsOptional.get().getBuilds()) {
+                if (build.getId() <= originalBuild.getId()) {
+                    continue;
+                }
+                if (sameBranch && originalBuild.isPullRequest()) {
                     if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
                         continue;
                     }

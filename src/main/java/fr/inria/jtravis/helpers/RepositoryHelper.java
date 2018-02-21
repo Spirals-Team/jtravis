@@ -6,6 +6,8 @@ import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Repository;
 import okhttp3.OkHttpClient;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -20,9 +22,16 @@ public class RepositoryHelper extends EntityHelper {
     }
 
     public Optional<Repository> fromSlug(String slug) {
+        String encodedSlug;
+        try {
+            encodedSlug = URLEncoder.encode(slug, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            getLogger().error("Error while encoding given repository slug: "+slug, e);
+            return Optional.empty();
+        }
         return getEntityFromUri(Repository.class, Arrays.asList(
                 TravisConstants.REPO_ENDPOINT,
-                slug), null);
+                encodedSlug), null);
     }
 
     public Optional<Repository> fromId(int id) {
