@@ -24,7 +24,15 @@ public class BuildsSorting {
         }
     }
 
-    private TreeSet<SortOptions> queryBuilder = new TreeSet<>();
+    private TreeSet<SortOptions> queryBuilder;
+
+    public BuildsSorting() {
+        this.queryBuilder = new TreeSet<>();
+
+        for (SortOptions sortOptions : SortOptions.values()) {
+            sortOptions.setDesc(false);
+        }
+    }
 
     public BuildsSorting byId() {
         this.queryBuilder.add(SortOptions.ID);
