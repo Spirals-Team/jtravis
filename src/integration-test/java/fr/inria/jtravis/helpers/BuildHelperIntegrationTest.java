@@ -31,46 +31,6 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
-    public void testGetBuildToolFromBuildRecognizeTool() {
-        int buildId = 185719843;
-        Optional<Build> obtainedBuildOpt = getJTravis().build().fromId(buildId);
-        assertTrue(obtainedBuildOpt.isPresent());
-        Build obtainedBuild = obtainedBuildOpt.get();
-
-        Optional<BuildTool> buildToolOpt = obtainedBuild.getBuildTool();
-        assertTrue(buildToolOpt.isPresent());
-        assertEquals(BuildTool.MAVEN, buildToolOpt.get());
-    }
-
-    @Test
-    public void testGetLastFailingBuildBeforeGivenBuild() {
-        int buildId = 197104485;
-        Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
-        assertTrue(passingBuildOpt.isPresent());
-        Build passingBuild = passingBuildOpt.get();
-
-        int expectedBuildId = 197067445;
-        Optional<Build> obtainedBuildOpt = getJTravis().build().getBefore(passingBuild, true, StateType.FAILED);
-
-        assertTrue(obtainedBuildOpt.isPresent());
-        assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
-    }
-
-    @Test
-    public void testGetNextPassingBuildAfterGivenFailingBuild() {
-        int buildId = 197067445;
-        Optional<Build> failingBuildOpt = getJTravis().build().fromId(buildId);
-        assertTrue(failingBuildOpt.isPresent());
-        Build failingBuild = failingBuildOpt.get();
-
-        int expectedBuildId = 197104485;
-        Optional<Build> obtainedBuildOpt = getJTravis().build().getAfter(failingBuild, false, StateType.PASSED);
-
-        assertTrue(obtainedBuildOpt.isPresent());
-        assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
-    }
-
-    @Test
     public void testBuildOrderDescIsWorkingAsExpected() {
         int repositoryId = 2800492; // spoon
 
@@ -144,4 +104,85 @@ public class BuildHelperIntegrationTest extends AbstractTest {
             assertTrue("Wrong comparison for first call with b1.id = " + build1.getId() + " and b2.id = " + build2.getId(), build1.getFinishedAt().toInstant().isBefore(build2.getFinishedAt().toInstant()));
         }
     }
+
+    @Test
+    public void testGetBuildToolFromBuildRecognizeTool() {
+        int buildId = 185719843;
+        Optional<Build> obtainedBuildOpt = getJTravis().build().fromId(buildId);
+        assertTrue(obtainedBuildOpt.isPresent());
+        Build obtainedBuild = obtainedBuildOpt.get();
+
+        Optional<BuildTool> buildToolOpt = obtainedBuild.getBuildTool();
+        assertTrue(buildToolOpt.isPresent());
+        assertEquals(BuildTool.MAVEN, buildToolOpt.get());
+    }
+
+    @Test
+    public void testGetLastFailingBuildBeforeGivenBuild() {
+        int buildId = 197104485;
+        Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
+        assertTrue(passingBuildOpt.isPresent());
+        Build passingBuild = passingBuildOpt.get();
+
+        int expectedBuildId = 197067445;
+        Optional<Build> obtainedBuildOpt = getJTravis().build().getBefore(passingBuild, true, StateType.FAILED);
+
+        assertTrue(obtainedBuildOpt.isPresent());
+        assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
+    }
+
+    @Test
+    public void testGetNextPassingBuildAfterGivenFailingBuild() {
+        int buildId = 197067445;
+        Optional<Build> failingBuildOpt = getJTravis().build().fromId(buildId);
+        assertTrue(failingBuildOpt.isPresent());
+        Build failingBuild = failingBuildOpt.get();
+
+        int expectedBuildId = 197104485;
+        Optional<Build> obtainedBuildOpt = getJTravis().build().getAfter(failingBuild, false, StateType.PASSED);
+
+        assertTrue(obtainedBuildOpt.isPresent());
+        assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
+    }
+
+    @Test
+    public void testGetLastErroredBuildBeforeGivenBuild() {
+        int buildId = 197233494;
+        Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
+        assertTrue(passingBuildOpt.isPresent());
+        Build passingBuild = passingBuildOpt.get();
+
+        int expectedBuildId = 193970329;
+        Optional<Build> obtainedBuildOpt = getJTravis().build().getBefore(passingBuild, true, StateType.ERRORED);
+
+        assertTrue(obtainedBuildOpt.isPresent());
+        assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
+    }
+
+    @Test
+    public void testGetNextPassingBuildAfterGivenErroredBuildOnSameBranch() {
+        int buildId = 193970329;
+        Optional<Build> erroredBuildOpt = getJTravis().build().fromId(buildId);
+        assertTrue(erroredBuildOpt.isPresent());
+        Build erroredBuild = erroredBuildOpt.get();
+
+        int expectedBuildId = 193992095;
+        Optional<Build> obtainedBuildOpt = getJTravis().build().getAfter(erroredBuild, true, StateType.PASSED);
+
+        assertTrue(obtainedBuildOpt.isPresent());
+        assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
+    }
+
+    //    @Test
+//    public void testGetNextPassingBuildAfterGivenErroredBuild() {
+//        int  buildId = 193970329;
+//        Build erroredBuild = BuildHelper.getBuildFromId(buildId, null);
+//
+//        int expectedBuildId = 193992095;
+//        Build obtainedBuild = BuildHelper.getNextBuildOfSameBranchOfStatusAfterBuild(erroredBuild, BuildStatus.PASSED);
+//
+//        assertTrue(obtainedBuild != null);
+//        assertEquals(expectedBuildId, obtainedBuild.getId());
+//    }
+
 }
