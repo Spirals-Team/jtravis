@@ -9,7 +9,6 @@ import fr.inria.jtravis.entities.Repository;
 import fr.inria.jtravis.entities.StateType;
 import okhttp3.OkHttpClient;
 
-import java.time.Instant;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
