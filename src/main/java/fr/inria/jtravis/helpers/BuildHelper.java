@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient;
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
@@ -76,15 +77,37 @@ public class BuildHelper extends EntityHelper {
     }
 
     public Optional<Build> getBefore(Build originalBuild, boolean sameBranch) {
-        return this.getBefore(originalBuild, sameBranch, Optional.empty());
+        return this.getBeforeOrAfter(true, originalBuild, sameBranch, Optional.empty());
     }
 
     public Optional<Build> getBefore(Build originalBuild, boolean sameBranch, StateType stateFilter) {
-        return this.getBefore(originalBuild, sameBranch, Optional.of(stateFilter));
+        return this.getBeforeOrAfter(true, originalBuild, sameBranch, Optional.of(stateFilter));
     }
 
-    // In order to improve performance, maybe we can use offset in conjonction with build number.
-    public Optional<Build> getBefore(Build originalBuild, boolean sameBranch, Optional<StateType> stateFilter) {
+    // TODO: In order to improve performance, maybe we can use offset in conjonction with build number.
+    /**
+     * This methods intends to retrieve a build just before or a just after a given build. The `finishedAt` field is used to assess the date.
+     * The targeted build is on the same repository, possibly on the same branch. If the optional stateFilter is given, it must also be on the specified filter.
+     * This method works by calling the pagination until a matching build is found or all occurences are passed.
+     *
+     * @param before If true, the matching build is finished BEFORE the originalBuild. Else it's after.
+     * @param originalBuild The build before or after which the targeted build should be retrieved.
+     * @param sameBranch If true, the retrieved build should be from the same branch, or the same pull request.
+     * @param stateFilter If given, the retrieved build should have the given status.
+     * @return The closest build before or after given build matching the given criteria.
+     */
+    private Optional<Build> getBeforeOrAfter(boolean before, Build originalBuild, boolean sameBranch, Optional<StateType> stateFilter) {
+        Comparator<Build> buildComparator;
+        if (before) {
+            buildComparator = (o1, o2) -> {
+                return Math.round(o2.getFinishedAt().getTime() - o1.getFinishedAt().getTime()); // > 0 means o1 finished before o2
+            };
+        } else {
+            buildComparator = (o1, o2) -> {
+                return Math.round(o1.getFinishedAt().getTime() - o2.getFinishedAt().getTime()); // > 0 means o1 finished after o2
+            };
+        }
+
         int repositoryId = originalBuild.getRepository().getId();
 
         List<String> pathParameter = Arrays.asList(
@@ -95,11 +118,13 @@ public class BuildHelper extends EntityHelper {
 
         Properties properties = new Properties();
         properties.put("limit", 100);
-        if (stateFilter.isPresent()) {
-            properties.put("state", stateFilter.get().name().toLowerCase());
-        }
+        stateFilter.ifPresent(stateType -> properties.put("state", stateType.name().toLowerCase()));
 
-        properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
+        if (before) {
+            properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
+        } else {
+            properties.put("sort_by", new BuildsSorting().byFinishedAt().build()); // easier to request, but it might be less performant
+        }
 
         if (sameBranch) {
             properties.put("branch.name", originalBuild.getBranch().getName());
@@ -108,32 +133,41 @@ public class BuildHelper extends EntityHelper {
             }
         }
 
-        Instant finishedDateOriginalBuild = originalBuild.getFinishedAt().toInstant();
-
         Optional<Builds> buildsOptional = getEntityFromUri(Builds.class, pathParameter, properties);
 
         boolean isFinished = false;
         while (buildsOptional.isPresent() && !isFinished) {
             Builds builds = buildsOptional.get();
+
+            // lastPage -> we should interrupt the loop after it.
             isFinished = (builds.getPagination().isLast());
 
             List<Build> buildList = builds.getBuilds();
             Build lastBuild = buildList.get(buildList.size()-1);
 
-            if (lastBuild.getId() < originalBuild.getId()) {
+            // we ensure that the build we target is in the current page
+            if (buildComparator.compare(lastBuild, originalBuild) > 0) {
                 for (Build build : buildList) {
-                    if (build.getId() == originalBuild.getId()) {
-                        continue;
-                    }
-                    if (sameBranch && originalBuild.isPullRequest()) {
-                        if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
-                            continue;
-                        }
-                    } else if (sameBranch && !originalBuild.isPullRequest() && build.isPullRequest()) {
+
+                    // we do not want to get the originalBuild and if it does not respect the time criteria we don't want it either
+                    if (build.getId() == originalBuild.getId() ||  buildComparator.compare(build, originalBuild) <= 0) {
                         continue;
                     }
 
-                    if (build.getBranch().equals(originalBuild.getBranch()) && build.getFinishedAt().toInstant().isBefore(finishedDateOriginalBuild)) {
+                    if (sameBranch) {
+                        if (originalBuild.isPullRequest()) {
+
+                            // if we want the same branch as a pull request we have to check the PR number
+                            if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
+                                continue;
+                            }
+                        } else if (build.isPullRequest()) {
+                            continue;
+                        }
+                        if (build.getBranch().equals(originalBuild.getBranch())) {
+                            return Optional.of(build);
+                        }
+                    } else {
                         return Optional.of(build);
                     }
                 }
@@ -148,74 +182,11 @@ public class BuildHelper extends EntityHelper {
     }
 
     public Optional<Build> getAfter(Build originalBuild, boolean sameBranch) {
-        return getAfter(originalBuild, sameBranch, Optional.empty());
+        return getBeforeOrAfter(false, originalBuild, sameBranch, Optional.empty());
     }
 
     public Optional<Build> getAfter(Build originalBuild, boolean sameBranch, StateType stateFilter) {
-        return getAfter(originalBuild, sameBranch, Optional.of(stateFilter));
-    }
-
-    public Optional<Build> getAfter(Build originalBuild, boolean sameBranch, Optional<StateType> stateFilter) {
-        int repositoryId = originalBuild.getRepository().getId();
-
-        List<String> pathParameter = Arrays.asList(
-                TravisConstants.REPO_ENDPOINT,
-                String.valueOf(repositoryId),
-                TravisConstants.BUILDS_ENDPOINT);
-
-
-        Properties properties = new Properties();
-        properties.put("limit", 100);
-        if (stateFilter.isPresent()) {
-            properties.put("state", stateFilter.get().name().toLowerCase());
-        }
-
-        properties.put("sort_by", new BuildsSorting().byFinishedAt().build());
-
-        if (sameBranch) {
-            properties.put("branch.name", originalBuild.getBranch().getName());
-            if (originalBuild.isPullRequest()) {
-                properties.put("event_type", originalBuild.getEventType().name().toLowerCase());
-            }
-        }
-
-        Instant finishedDateOriginalBuild = originalBuild.getFinishedAt().toInstant();
-
-        Optional<Builds> buildsOptional = getEntityFromUri(Builds.class, pathParameter, properties);
-
-        boolean isFinished = false;
-        while (buildsOptional.isPresent() && !isFinished) {
-            Builds builds = buildsOptional.get();
-            isFinished = (builds.getPagination().isLast());
-
-            List<Build> buildList = builds.getBuilds();
-            Build lastBuild = buildList.get(buildList.size()-1);
-
-            if (lastBuild.getFinishedAt().toInstant().isAfter(finishedDateOriginalBuild)) {
-                for (Build build : buildList) {
-                    if (build.getId() <= originalBuild.getId()) {
-                        continue;
-                    }
-                    if (sameBranch && originalBuild.isPullRequest()) {
-                        if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
-                            continue;
-                        }
-                    } else if (sameBranch && !originalBuild.isPullRequest() && build.isPullRequest()) {
-                        continue;
-                    }
-
-                    if (build.getBranch().equals(originalBuild.getBranch()) && build.getFinishedAt().toInstant().isAfter(finishedDateOriginalBuild)) {
-                        return Optional.of(build);
-                    }
-                }
-            }
-
-            if (!isFinished) {
-                buildsOptional = this.next(builds);
-            }
-        }
-
-        return Optional.empty();
+        return getBeforeOrAfter(false, originalBuild, sameBranch, Optional.of(stateFilter));
     }
 
 //    private static boolean isAcceptedBuild(Build build, int prNumber, BuildStatus status, String previousBranch) {
