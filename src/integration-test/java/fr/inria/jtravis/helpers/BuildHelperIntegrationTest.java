@@ -188,15 +188,74 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
     }
 
-    //    @Test
-//    public void testGetLastBuildJustBeforeGivenBuild() {
-//        int buildId = 191511078;
-//        Build passingBuild = BuildHelper.getBuildFromId(buildId, null);
-//
-//        int expectedBuildId = 191412122;
-//        Build obtainedBuild = BuildHelper.getLastBuildOfSameBranchOfStatusBeforeBuild(passingBuild, null);
-//
-//        assertTrue(obtainedBuild != null);
-//        assertEquals(expectedBuildId, obtainedBuild.getId());
-//    }
+    @Test
+    public void testGetNextBuildJustAfterGivenBuild() {
+        int buildId = 191412122;
+        Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
+        assertTrue(passingBuildOpt.isPresent());
+        Build passingBuild = passingBuildOpt.get();
+
+        int expectedBuildId = 191511078;
+        Optional<Build> obtainedBuildOpt = getJTravis().build().getAfter(passingBuild, true);
+
+        assertTrue(obtainedBuildOpt.isPresent());
+        assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
+    }
+
+    @Test
+    public void testGetLastBuildJustBeforeGivenBuildOnMaster() {
+        int buildId = 207455891;
+        Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
+        assertTrue(passingBuildOpt.isPresent());
+        Build passingBuild = passingBuildOpt.get();
+
+        int expectedBuildId = 207113449;
+        Optional<Build> obtainedBuildOpt = getJTravis().build().getBefore(passingBuild, true);
+
+        assertTrue(obtainedBuildOpt.isPresent());
+        assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
+    }
+
+    @Test
+    public void testGetNextBuildJustAfterGivenBuildOnMaster() {
+        int buildId = 207113449;
+        Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
+        assertTrue(passingBuildOpt.isPresent());
+        Build passingBuild = passingBuildOpt.get();
+
+        int expectedBuildId = 207455891;
+        Optional<Build> obtainedBuildOpt = getJTravis().build().getAfter(passingBuild, true);
+
+        assertTrue(obtainedBuildOpt.isPresent());
+        assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
+    }
+
+    @Test
+    public void testGetLastBuildJustBeforeGivenBuildOnTheSameBranch() {
+        int buildId = 208181440;
+        Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
+        assertTrue(passingBuildOpt.isPresent());
+        Build passingBuild = passingBuildOpt.get();
+
+        int expectedBuildId = 208116073;
+        Optional<Build> obtainedBuildOpt = getJTravis().build().getBefore(passingBuild, true);
+
+        assertTrue(obtainedBuildOpt.isPresent());
+        assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
+    }
+
+    @Test
+    public void testGetNextBuildJustAfterGivenBuildOnTheSameBranch() {
+        int buildId = 208116073;
+        Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
+        assertTrue(passingBuildOpt.isPresent());
+        Build passingBuild = passingBuildOpt.get();
+
+        int expectedBuildId = 208181440;
+        Optional<Build> obtainedBuildOpt = getJTravis().build().getAfter(passingBuild, true);
+
+        assertTrue(obtainedBuildOpt.isPresent());
+        assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
+    }
+
 }
