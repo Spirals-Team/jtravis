@@ -75,8 +75,16 @@ public class BuildHelper extends EntityHelper {
         return Optional.empty();
     }
 
-    // In order to improve performance, maybe we can use offset in conjonction with build number.
+    public Optional<Build> getBefore(Build originalBuild, boolean sameBranch) {
+        return this.getBefore(originalBuild, sameBranch, Optional.empty());
+    }
+
     public Optional<Build> getBefore(Build originalBuild, boolean sameBranch, StateType stateFilter) {
+        return this.getBefore(originalBuild, sameBranch, Optional.of(stateFilter));
+    }
+
+    // In order to improve performance, maybe we can use offset in conjonction with build number.
+    public Optional<Build> getBefore(Build originalBuild, boolean sameBranch, Optional<StateType> stateFilter) {
         int repositoryId = originalBuild.getRepository().getId();
 
         List<String> pathParameter = Arrays.asList(
@@ -87,7 +95,10 @@ public class BuildHelper extends EntityHelper {
 
         Properties properties = new Properties();
         properties.put("limit", 100);
-        properties.put("state", stateFilter.name().toLowerCase());
+        if (stateFilter.isPresent()) {
+            properties.put("state", stateFilter.get().name().toLowerCase());
+        }
+
         properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
 
         if (sameBranch) {
@@ -118,6 +129,8 @@ public class BuildHelper extends EntityHelper {
                         if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
                             continue;
                         }
+                    } else if (sameBranch && !originalBuild.isPullRequest() && build.isPullRequest()) {
+                        continue;
                     }
 
                     if (build.getBranch().equals(originalBuild.getBranch()) && build.getFinishedAt().toInstant().isBefore(finishedDateOriginalBuild)) {
@@ -134,7 +147,15 @@ public class BuildHelper extends EntityHelper {
         return Optional.empty();
     }
 
+    public Optional<Build> getAfter(Build originalBuild, boolean sameBranch) {
+        return getAfter(originalBuild, sameBranch, Optional.empty());
+    }
+
     public Optional<Build> getAfter(Build originalBuild, boolean sameBranch, StateType stateFilter) {
+        return getAfter(originalBuild, sameBranch, Optional.of(stateFilter));
+    }
+
+    public Optional<Build> getAfter(Build originalBuild, boolean sameBranch, Optional<StateType> stateFilter) {
         int repositoryId = originalBuild.getRepository().getId();
 
         List<String> pathParameter = Arrays.asList(
@@ -145,7 +166,10 @@ public class BuildHelper extends EntityHelper {
 
         Properties properties = new Properties();
         properties.put("limit", 100);
-        properties.put("state", stateFilter.name().toLowerCase());
+        if (stateFilter.isPresent()) {
+            properties.put("state", stateFilter.get().name().toLowerCase());
+        }
+
         properties.put("sort_by", new BuildsSorting().byFinishedAt().build());
 
         if (sameBranch) {
@@ -176,6 +200,8 @@ public class BuildHelper extends EntityHelper {
                         if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
                             continue;
                         }
+                    } else if (sameBranch && !originalBuild.isPullRequest() && build.isPullRequest()) {
+                        continue;
                     }
 
                     if (build.getBranch().equals(originalBuild.getBranch()) && build.getFinishedAt().toInstant().isAfter(finishedDateOriginalBuild)) {

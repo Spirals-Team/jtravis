@@ -170,19 +170,33 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         Optional<Build> obtainedBuildOpt = getJTravis().build().getAfter(erroredBuild, true, StateType.PASSED);
 
         assertTrue(obtainedBuildOpt.isPresent());
+        Build obtainedBuild = obtainedBuildOpt.get();
+        assertEquals(expectedBuildId, obtainedBuild.getId());
+    }
+
+    @Test
+    public void testGetLastBuildJustBeforeGivenBuild() {
+        int buildId = 191511078;
+        Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
+        assertTrue(passingBuildOpt.isPresent());
+        Build passingBuild = passingBuildOpt.get();
+
+        int expectedBuildId = 191412122;
+        Optional<Build> obtainedBuildOpt = getJTravis().build().getBefore(passingBuild, true);
+
+        assertTrue(obtainedBuildOpt.isPresent());
         assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
     }
 
     //    @Test
-//    public void testGetNextPassingBuildAfterGivenErroredBuild() {
-//        int  buildId = 193970329;
-//        Build erroredBuild = BuildHelper.getBuildFromId(buildId, null);
+//    public void testGetLastBuildJustBeforeGivenBuild() {
+//        int buildId = 191511078;
+//        Build passingBuild = BuildHelper.getBuildFromId(buildId, null);
 //
-//        int expectedBuildId = 193992095;
-//        Build obtainedBuild = BuildHelper.getNextBuildOfSameBranchOfStatusAfterBuild(erroredBuild, BuildStatus.PASSED);
+//        int expectedBuildId = 191412122;
+//        Build obtainedBuild = BuildHelper.getLastBuildOfSameBranchOfStatusBeforeBuild(passingBuild, null);
 //
 //        assertTrue(obtainedBuild != null);
 //        assertEquals(expectedBuildId, obtainedBuild.getId());
 //    }
-
 }
