@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -263,17 +264,60 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
     @Test
     public void testGetTheLastBuildNumberOfADate() {
-        Date date = getDateFor(2017, 3, 16, 22, 59, 59, 0);
-
+        Date date = getDateFor(2017, Calendar.MARCH, 16, 22, 59, 59, 0);
         String slug = "Spirals-Team/repairnator";
 
-        int expectedBuildNumber = 215;
+        String expectedBuildNumber = "215"; // FIXME: should be changed to a build id
+        Optional<Build> optionalBuild = getJTravis().build().forDate(slug, date, 1, ChronoUnit.DAYS);
+        assertTrue(optionalBuild.isPresent());
+        assertEquals(expectedBuildNumber, optionalBuild.get().getNumber());
+    }
+
+    @Test
+    public void testGetTheLastBuildNumberOfADate2() {
+        Date date = getDateFor(2017, Calendar.MARCH, 14, 22, 59, 59, 0);
+        String slug = "Spirals-Team/repairnator";
+
+        String expectedBuildNumber = "189";
 
         Optional<Build> optionalBuild = getJTravis().build().forDate(slug, date, 1, ChronoUnit.DAYS);
+        assertTrue(optionalBuild.isPresent());
+        assertEquals(expectedBuildNumber, optionalBuild.get().getNumber());
+    }
+
+    @Test
+    public void testGetBuildsFromRepositoryInTimeInterval() {
+        String slug = "Spirals-Team/repairnator";
+        Date initialDate = getDateFor(2017, Calendar.MARCH, 13, 23, 0, 0, 0);
+
+        Optional<List<Build>> optionalBuild = getJTravis().build().allForDate(slug, initialDate, 3, ChronoUnit.DAYS);
 
         assertTrue(optionalBuild.isPresent());
 
-        assertEquals(expectedBuildNumber, optionalBuild.get().getNumber());
+        List<Build> buildList = optionalBuild.get();
+
+        assertEquals(60, buildList.size());
+        assertEquals("156", buildList.get(0).getNumber());
+        assertEquals("215", buildList.get(buildList.size()-1).getNumber());
+    }
+
+    @Test
+    public void testGetBuildsFromRepositoryInTimeIntervalAlsoTakePR() {
+        String slug = "Spirals-Team/repairnator";
+        Date initialDate = getDateFor(2017, 6, 26, 20, 0, 0, 0);
+        Optional<List<Build>> optionalBuild = getJTravis().build().allForDate(slug, initialDate, 1, ChronoUnit.HOURS);
+
+        assertTrue(optionalBuild.isPresent());
+
+        List<Build> buidList = optionalBuild.get();
+
+        assertEquals(3, buidList.size());
+        assertEquals("3424", buidList.get(0).getNumber());
+        for (Build build : buidList) {
+            assertTrue(build.isPullRequest());
+        }
+        
+        assertEquals(1428, buidList.get(0).getPullRequestNumber());
     }
 
 }

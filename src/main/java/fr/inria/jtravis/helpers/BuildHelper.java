@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
@@ -196,6 +197,15 @@ public class BuildHelper extends EntityHelper {
     }
 
     public Optional<Build> forDate(String slug, Date date, int durationRange, ChronoUnit timeUnit) {
+        Optional<List<Build>> results = this.allForDate(slug, date, durationRange, timeUnit, true);
+        return results.map(builds -> builds.get(0));
+    }
+
+    public Optional<List<Build>> allForDate(String slug, Date date, int durationRange, ChronoUnit timeUnit) {
+        return allForDate(slug, date, durationRange, timeUnit, false);
+    }
+
+    private Optional<List<Build>> allForDate(String slug, Date date, int durationRange, ChronoUnit timeUnit, boolean stopAfterFirstOne) {
         List<String> pathParameter = Arrays.asList(
                 TravisConstants.REPO_ENDPOINT,
                 slug,
@@ -207,11 +217,14 @@ public class BuildHelper extends EntityHelper {
         Properties properties = new Properties();
         properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
 
+        List<Build> resultList = new ArrayList<>();
+        boolean isFinished = false;
+
         Optional<Builds> optionalBuilds = this.getEntityFromUri(Builds.class, pathParameter, properties);
         if (!optionalBuilds.isPresent()) {
             return Optional.empty();
         } else {
-            while (optionalBuilds.isPresent()) {
+            while (optionalBuilds.isPresent() && !isFinished) {
                 Builds builds = optionalBuilds.get();
                 List<Build> buildList = builds.getBuilds();
                 Build firstBuild = buildList.get(0);
@@ -224,12 +237,19 @@ public class BuildHelper extends EntityHelper {
                 } else {
                     for (Build build : buildList) {
                         if (isBetween(build.getFinishedAt().toInstant(), limitDateBeginOfTheRange, limitDateEndOfTheRange)) {
-                            return Optional.of(build);
+                            resultList.add(build);
+                            if (stopAfterFirstOne) {
+                                isFinished = true;
+                            }
                         }
                     }
                 }
             }
-            return Optional.empty();
+            if (resultList.isEmpty()) {
+                return Optional.empty();
+            } else {
+                return Optional.of(resultList);
+            }
         }
     }
 

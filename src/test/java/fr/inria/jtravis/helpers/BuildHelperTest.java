@@ -34,65 +34,7 @@ public class BuildHelperTest {
 //
 
 //
-//    @Test
-//    public void testGetTheLastBuildNumberOfADate2() {
-//        Date date = TestUtils.getDate(2017, 3, 14, 22, 59, 59);
 //
-//        String slug = "Spirals-Team/repairnator";
-//
-//        int expectedBuildNumber = 189;
-//
-//        int obtainedBuildNumber = BuildHelper.getTheLastBuildNumberOfADate(slug, date, 0,false);
-//
-//        assertEquals(expectedBuildNumber, obtainedBuildNumber);
-//    }
-//
-//    @Test
-//    public void testGetBuildsFromRepositoryInTimeInterval() {
-//        Repository repo = new Repository();
-//        repo.setSlug("Spirals-Team/repairnator");
-//
-//        Date initialDate = TestUtils.getDate(2017, 3, 13, 23, 0, 0);
-//
-//        Date finalDate = TestUtils.getDate(2017, 3, 16, 22, 59, 59);
-//        List<Build> builds = BuildHelper.getBuildsFromRepositoryInTimeInterval(repo, initialDate, finalDate);
-//
-//        assertTrue(builds != null);
-//
-//        if (builds.size() > 1) {
-//            Collections.sort(builds);
-//        }
-//
-//        assertEquals(60, builds.size());
-//        assertEquals(156, Integer.parseInt(builds.get(0).getNumber()));
-//        assertEquals(215, Integer.parseInt(builds.get(builds.size()-1).getNumber()));
-//    }
-//
-//    @Test
-//    public void testGetBuildsFromRepositoryInTimeIntervalAlsoTakePR() {
-//        Repository repo = new Repository();
-//        repo.setSlug("INRIA/spoon");
-//
-//        Date initialDate = TestUtils.getDate(2017, 6, 26, 20, 0, 0);
-//
-//        Date finalDate = TestUtils.getDate(2017, 6, 26, 21, 0, 0);
-//        List<Build> builds = BuildHelper.getBuildsFromRepositoryInTimeInterval(repo, initialDate, finalDate);
-//
-//        assertTrue(builds != null);
-//
-//        if (builds.size() > 1) {
-//            Collections.sort(builds);
-//        }
-//
-//        assertEquals(3, builds.size());
-//        assertEquals(3424, Integer.parseInt(builds.get(0).getNumber()));
-//        for (Build build : builds) {
-//            assertTrue(build.isPullRequest());
-//        }
-//
-//
-//        assertEquals(1428, builds.get(0).getPullRequestNumber());
-//    }
 //
 //    @Test
 //    public void testGetLastBuildFromMasterIgnoreNumberNullBuilds() {
