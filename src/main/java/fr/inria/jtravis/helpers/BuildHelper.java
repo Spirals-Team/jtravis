@@ -9,8 +9,11 @@ import fr.inria.jtravis.entities.Repository;
 import fr.inria.jtravis.entities.StateType;
 import okhttp3.OkHttpClient;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
@@ -186,6 +189,74 @@ public class BuildHelper extends EntityHelper {
 
     public Optional<Build> getAfter(Build originalBuild, boolean sameBranch, StateType stateFilter) {
         return getBeforeOrAfter(false, originalBuild, sameBranch, Optional.of(stateFilter));
+    }
+
+    private static boolean isBetween(Instant instant, Instant timeRangeBegin, Instant timeRangeEnd) {
+        return (instant.isAfter(timeRangeBegin) && instant.isBefore(timeRangeEnd));
+    }
+
+    public Optional<Build> forDate(String slug, Date date, int durationRange, ChronoUnit timeUnit) {
+        List<String> pathParameter = Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                slug,
+                TravisConstants.BUILDS_ENDPOINT);
+
+        Instant limitDateBeginOfTheRange = date.toInstant();
+        Instant limitDateEndOfTheRange = limitDateBeginOfTheRange.plus(durationRange, timeUnit);
+
+        Properties properties = new Properties();
+        properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
+
+        Optional<Builds> optionalBuilds = this.getEntityFromUri(Builds.class, pathParameter, properties);
+        if (!optionalBuilds.isPresent()) {
+            return Optional.empty();
+        } else {
+            while (optionalBuilds.isPresent()) {
+                Builds builds = optionalBuilds.get();
+                List<Build> buildList = builds.getBuilds();
+                Build firstBuild = buildList.get(0);
+                Build lastBuild = buildList.get(buildList.size()-1);
+
+                if (firstBuild.getFinishedAt().toInstant().isBefore(limitDateBeginOfTheRange)) {
+                    return Optional.empty();
+                } else if (lastBuild.getFinishedAt().toInstant().isAfter(limitDateEndOfTheRange)) {
+                    optionalBuilds = this.next(builds);
+                } else {
+                    for (Build build : buildList) {
+                        if (isBetween(build.getFinishedAt().toInstant(), limitDateBeginOfTheRange, limitDateEndOfTheRange)) {
+                            return Optional.of(build);
+                        }
+                    }
+                }
+            }
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Build> first(String slug) {
+        List<String> pathParameter = Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                slug,
+                TravisConstants.BUILDS_ENDPOINT);
+
+        Properties properties = new Properties();
+        properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
+
+        Optional<Builds> optionalBuilds = this.getEntityFromUri(Builds.class, pathParameter, properties);
+        return optionalBuilds.map(builds -> builds.getBuilds().get(0));
+    }
+
+    public Optional<Build> last(String slug) {
+        List<String> pathParameter = Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                slug,
+                TravisConstants.BUILDS_ENDPOINT);
+
+        Properties properties = new Properties();
+        properties.put("sort_by", new BuildsSorting().byFinishedAt().build());
+
+        Optional<Builds> optionalBuilds = this.getEntityFromUri(Builds.class, pathParameter, properties);
+        return optionalBuilds.map(builds -> builds.getBuilds().get(0));
     }
 
 //    private static boolean isAcceptedBuild(Build build, int prNumber, BuildStatus status, String previousBranch) {

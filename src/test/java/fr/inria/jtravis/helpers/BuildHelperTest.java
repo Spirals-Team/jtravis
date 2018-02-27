@@ -32,18 +32,7 @@ public class BuildHelperTest {
 //
 
 //
-//    @Test
-//    public void testGetTheLastBuildNumberOfADate() {
-//        Date date = TestUtils.getDate(2017, 3, 16, 22, 59, 59);
-//
-//        String slug = "Spirals-Team/repairnator";
-//
-//        int expectedBuildNumber = 215;
-//
-//        int obtainedBuildNumber = BuildHelper.getTheLastBuildNumberOfADate(slug, date, 0,false);
-//
-//        assertEquals(expectedBuildNumber, obtainedBuildNumber);
-//    }
+
 //
 //    @Test
 //    public void testGetTheLastBuildNumberOfADate2() {

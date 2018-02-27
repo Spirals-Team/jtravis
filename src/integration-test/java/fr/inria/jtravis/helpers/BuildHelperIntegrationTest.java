@@ -8,9 +8,12 @@ import fr.inria.jtravis.entities.BuildTool;
 import fr.inria.jtravis.entities.Builds;
 import fr.inria.jtravis.entities.EventType;
 import fr.inria.jtravis.entities.StateType;
+import fr.inria.jtravis.parsers.TestUtils;
 import org.junit.Test;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
@@ -256,6 +259,21 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
         assertTrue(obtainedBuildOpt.isPresent());
         assertEquals(expectedBuildId, obtainedBuildOpt.get().getId());
+    }
+
+    @Test
+    public void testGetTheLastBuildNumberOfADate() {
+        Date date = getDateFor(2017, 3, 16, 22, 59, 59, 0);
+
+        String slug = "Spirals-Team/repairnator";
+
+        int expectedBuildNumber = 215;
+
+        Optional<Build> optionalBuild = getJTravis().build().forDate(slug, date, 1, ChronoUnit.DAYS);
+
+        assertTrue(optionalBuild.isPresent());
+
+        assertEquals(expectedBuildNumber, optionalBuild.get().getNumber());
     }
 
 }
