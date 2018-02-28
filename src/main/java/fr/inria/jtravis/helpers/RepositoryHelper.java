@@ -6,8 +6,6 @@ import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Repository;
 import okhttp3.OkHttpClient;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Optional;
 
