@@ -22,16 +22,14 @@ public class RepositoryHelper extends EntityHelper {
     }
 
     public Optional<Repository> fromSlug(String slug) {
-        String encodedSlug;
-        try {
-            encodedSlug = URLEncoder.encode(slug, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            getLogger().error("Error while encoding given repository slug: "+slug, e);
+        Optional<String> optionalS = this.getEncodedSlug(slug);
+        if (optionalS.isPresent()) {
+            return getEntityFromUri(Repository.class, Arrays.asList(
+                    TravisConstants.REPO_ENDPOINT,
+                    optionalS.get()), null);
+        } else {
             return Optional.empty();
         }
-        return getEntityFromUri(Repository.class, Arrays.asList(
-                TravisConstants.REPO_ENDPOINT,
-                encodedSlug), null);
     }
 
     public Optional<Repository> fromId(int id) {

@@ -193,7 +193,7 @@ public class BuildHelper extends EntityHelper {
     }
 
     private static boolean isBetween(Instant instant, Instant timeRangeBegin, Instant timeRangeEnd) {
-        return (instant.isAfter(timeRangeBegin) && instant.isBefore(timeRangeEnd));
+        return (instant.isAfter(timeRangeBegin) && !instant.isBefore(timeRangeBegin) && instant.isBefore(timeRangeEnd) && !instant.isAfter(timeRangeEnd));
     }
 
     public Optional<Build> forDate(String slug, Date date, int durationRange, ChronoUnit timeUnit) {
@@ -206,15 +206,23 @@ public class BuildHelper extends EntityHelper {
     }
 
     private Optional<List<Build>> allForDate(String slug, Date date, int durationRange, ChronoUnit timeUnit, boolean stopAfterFirstOne) {
+
+        Optional<String> optionalS = this.getEncodedSlug(slug);
+
+        if (!optionalS.isPresent()) {
+            return Optional.empty();
+        }
+
         List<String> pathParameter = Arrays.asList(
                 TravisConstants.REPO_ENDPOINT,
-                slug,
+                optionalS.get(),
                 TravisConstants.BUILDS_ENDPOINT);
 
         Instant limitDateBeginOfTheRange = date.toInstant();
         Instant limitDateEndOfTheRange = limitDateBeginOfTheRange.plus(durationRange, timeUnit);
 
         Properties properties = new Properties();
+        properties.put("limit", 100);
         properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
 
         List<Build> resultList = new ArrayList<>();
@@ -239,11 +247,19 @@ public class BuildHelper extends EntityHelper {
                         if (isBetween(build.getFinishedAt().toInstant(), limitDateBeginOfTheRange, limitDateEndOfTheRange)) {
                             resultList.add(build);
                             if (stopAfterFirstOne) {
-                                isFinished = true;
+                                break;
                             }
                         }
                     }
+
+                    if (lastBuild.getFinishedAt().toInstant().isBefore(limitDateBeginOfTheRange)) {
+                        isFinished = true;
+                    } else {
+                        optionalBuilds = this.next(builds);
+                    }
                 }
+
+
             }
             if (resultList.isEmpty()) {
                 return Optional.empty();
@@ -254,9 +270,15 @@ public class BuildHelper extends EntityHelper {
     }
 
     public Optional<Build> first(String slug) {
+        Optional<String> optionalS = this.getEncodedSlug(slug);
+
+        if (!optionalS.isPresent()) {
+            return Optional.empty();
+        }
+
         List<String> pathParameter = Arrays.asList(
                 TravisConstants.REPO_ENDPOINT,
-                slug,
+                optionalS.get(),
                 TravisConstants.BUILDS_ENDPOINT);
 
         Properties properties = new Properties();
@@ -267,9 +289,15 @@ public class BuildHelper extends EntityHelper {
     }
 
     public Optional<Build> last(String slug) {
+        Optional<String> optionalS = this.getEncodedSlug(slug);
+
+        if (!optionalS.isPresent()) {
+            return Optional.empty();
+        }
+
         List<String> pathParameter = Arrays.asList(
                 TravisConstants.REPO_ENDPOINT,
-                slug,
+                optionalS.get(),
                 TravisConstants.BUILDS_ENDPOINT);
 
         Properties properties = new Properties();

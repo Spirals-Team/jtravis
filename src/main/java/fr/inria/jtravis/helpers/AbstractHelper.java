@@ -18,9 +18,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 
 public abstract class AbstractHelper {
@@ -136,5 +139,16 @@ public abstract class AbstractHelper {
         }
 
         return this.config.getTravisEndpoint()+result;
+    }
+
+    public Optional<String> getEncodedSlug(String slug) {
+        String encodedSlug;
+        try {
+            encodedSlug = URLEncoder.encode(slug, "UTF-8");
+            return Optional.of(encodedSlug);
+        } catch (UnsupportedEncodingException e) {
+            getLogger().error("Error while encoding given repository slug: "+slug, e);
+            return Optional.empty();
+        }
     }
 }

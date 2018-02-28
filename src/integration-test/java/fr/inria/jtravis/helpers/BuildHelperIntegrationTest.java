@@ -267,10 +267,12 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         Date date = getDateFor(2017, Calendar.MARCH, 16, 22, 59, 59, 0);
         String slug = "Spirals-Team/repairnator";
 
-        String expectedBuildNumber = "215"; // FIXME: should be changed to a build id
+        int buildId = 212115810;
+        String expectedBuildNumber = "226";
         Optional<Build> optionalBuild = getJTravis().build().forDate(slug, date, 1, ChronoUnit.DAYS);
         assertTrue(optionalBuild.isPresent());
         assertEquals(expectedBuildNumber, optionalBuild.get().getNumber());
+        assertEquals(buildId, optionalBuild.get().getId());
     }
 
     @Test
@@ -278,11 +280,13 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         Date date = getDateFor(2017, Calendar.MARCH, 14, 22, 59, 59, 0);
         String slug = "Spirals-Team/repairnator";
 
-        String expectedBuildNumber = "189";
+        int buildId = 211461651;
+        String expectedBuildNumber = "208";
 
         Optional<Build> optionalBuild = getJTravis().build().forDate(slug, date, 1, ChronoUnit.DAYS);
         assertTrue(optionalBuild.isPresent());
         assertEquals(expectedBuildNumber, optionalBuild.get().getNumber());
+        assertEquals(buildId, optionalBuild.get().getId());
     }
 
     @Test
@@ -297,14 +301,14 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         List<Build> buildList = optionalBuild.get();
 
         assertEquals(60, buildList.size());
-        assertEquals("156", buildList.get(0).getNumber());
-        assertEquals("215", buildList.get(buildList.size()-1).getNumber());
+        assertEquals("215", buildList.get(0).getNumber());
+        assertEquals("156", buildList.get(buildList.size()-1).getNumber());
     }
 
     @Test
     public void testGetBuildsFromRepositoryInTimeIntervalAlsoTakePR() {
-        String slug = "Spirals-Team/repairnator";
-        Date initialDate = getDateFor(2017, 6, 26, 20, 0, 0, 0);
+        String slug = "INRIA/spoon";
+        Date initialDate = getDateFor(2017, Calendar.JUNE, 26, 20, 0, 0, 0);
         Optional<List<Build>> optionalBuild = getJTravis().build().allForDate(slug, initialDate, 1, ChronoUnit.HOURS);
 
         assertTrue(optionalBuild.isPresent());
@@ -312,12 +316,12 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         List<Build> buidList = optionalBuild.get();
 
         assertEquals(3, buidList.size());
-        assertEquals("3424", buidList.get(0).getNumber());
+        assertEquals("3424", buidList.get(2).getNumber());
         for (Build build : buidList) {
             assertTrue(build.isPullRequest());
         }
-        
-        assertEquals(1428, buidList.get(0).getPullRequestNumber());
+
+        assertEquals(1428, buidList.get(2).getPullRequestNumber());
     }
 
 }
