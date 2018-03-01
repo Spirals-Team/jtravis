@@ -197,15 +197,21 @@ public class BuildHelper extends EntityHelper {
     }
 
     public Optional<Build> forDate(String slug, Date date, int durationRange, ChronoUnit timeUnit) {
-        Optional<List<Build>> results = this.allForDate(slug, date, durationRange, timeUnit, true);
+        Date endDate = new Date(date.toInstant().plus(durationRange, timeUnit).toEpochMilli());
+        Optional<List<Build>> results = this.allForDate(slug, date, endDate, true, false);
         return results.map(builds -> builds.get(0));
     }
 
     public Optional<List<Build>> allForDate(String slug, Date date, int durationRange, ChronoUnit timeUnit) {
-        return allForDate(slug, date, durationRange, timeUnit, false);
+        Date endDate = new Date(date.toInstant().plus(durationRange, timeUnit).toEpochMilli());
+        return allForDate(slug, date, endDate, false, false);
     }
 
-    private Optional<List<Build>> allForDate(String slug, Date date, int durationRange, ChronoUnit timeUnit, boolean stopAfterFirstOne) {
+    public Optional<List<Build>> afterDate(String slug, Date date) {
+        return allForDate(slug, date, new Date(), false, true);
+    }
+
+    private Optional<List<Build>> allForDate(String slug, Date date, Date endDate, boolean stopAfterFirstOne, boolean getRunning) {
 
         Optional<String> optionalS = this.getEncodedSlug(slug);
 
@@ -219,7 +225,7 @@ public class BuildHelper extends EntityHelper {
                 TravisConstants.BUILDS_ENDPOINT);
 
         Instant limitDateBeginOfTheRange = date.toInstant();
-        Instant limitDateEndOfTheRange = limitDateBeginOfTheRange.plus(durationRange, timeUnit);
+        Instant limitDateEndOfTheRange = endDate.toInstant();
 
         Properties properties = new Properties();
         properties.put("limit", 100);
@@ -238,13 +244,13 @@ public class BuildHelper extends EntityHelper {
                 Build firstBuild = buildList.get(0);
                 Build lastBuild = buildList.get(buildList.size()-1);
 
-                if (firstBuild.getFinishedAt().toInstant().isBefore(limitDateBeginOfTheRange)) {
+                if (firstBuild.getFinishedAt() != null && firstBuild.getFinishedAt().toInstant().isBefore(limitDateBeginOfTheRange)) {
                     return Optional.empty();
                 } else if (lastBuild.getFinishedAt().toInstant().isAfter(limitDateEndOfTheRange)) {
                     optionalBuilds = this.next(builds);
                 } else {
                     for (Build build : buildList) {
-                        if (isBetween(build.getFinishedAt().toInstant(), limitDateBeginOfTheRange, limitDateEndOfTheRange)) {
+                        if ((getRunning && build.getFinishedAt() == null) || (build.getFinishedAt() != null && isBetween(build.getFinishedAt().toInstant(), limitDateBeginOfTheRange, limitDateEndOfTheRange))) {
                             resultList.add(build);
                             if (stopAfterFirstOne) {
                                 break;

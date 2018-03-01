@@ -9,9 +9,12 @@ import fr.inria.jtravis.entities.Builds;
 import fr.inria.jtravis.entities.EventType;
 import fr.inria.jtravis.entities.StateType;
 import fr.inria.jtravis.parsers.TestUtils;
+import org.hamcrest.CoreMatchers;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,6 +24,8 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class BuildHelperIntegrationTest extends AbstractTest {
@@ -322,6 +327,119 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         }
 
         assertEquals(1428, buidList.get(2).getPullRequestNumber());
+    }
+
+    @Test
+    public void testGetLastBuildFromMasterIgnoreNumberNullBuilds() {
+        String slug = "Graylog2/graylog2-server";
+        Optional<Build> buildOptional = getJTravis().build().last(slug);
+
+        assertTrue(buildOptional.isPresent());
+        assertNotNull(buildOptional.get().getNumber());
+    }
+
+    @Test
+    public void testGetFutureBuildOfBranch() {
+        int buildId = 220970612;
+        Optional<Build> optionalBuild = getJTravis().build().fromId(buildId);
+        assertTrue(optionalBuild.isPresent());
+        Build b = optionalBuild.get();
+        assertEquals("21405", b.getNumber());
+
+        Optional<Build> nextBuild = getJTravis().build().getAfter(b, true);
+
+        assertTrue(nextBuild.isPresent());
+        assertEquals("21423", nextBuild.get().getNumber());
+    }
+
+    // This test is currently taking more than a minute to execute
+    // we MUST use some improvement in our algo
+    @Ignore
+    @Test
+    public void testGetFutureBuildOfBranch2() {
+        int buildId = 219250521;
+
+        Optional<Build> optionalBuild = getJTravis().build().fromId(buildId);
+        assertTrue(optionalBuild.isPresent());
+        Build b = optionalBuild.get();
+        assertEquals("21005", b.getNumber());
+
+        Optional<Build> nextBuild = getJTravis().build().getAfter(b, true);
+
+        assertTrue(nextBuild.isPresent());
+        assertEquals("21420", nextBuild.get().getNumber());
+    }
+
+    @Test
+    public void testGetBuildsFromSlugWithLimitDate() {
+        String slug = "surli/failingProject";
+        //Retrieve builds done after this date
+        Date limitDate = getDateFor(2017, Calendar.SEPTEMBER, 14, 0, 0, 1, 0);
+
+        Optional<List<Build>> optionalBuilds = getJTravis().build().afterDate(slug, limitDate);
+        assertTrue(optionalBuilds.isPresent());
+        List<String> obtainedIds = new ArrayList<String>();
+
+        //Unexpected build's numbers
+        List<String> unexpectedIds = Arrays.asList("273","274","275");
+
+        for (Build b: optionalBuilds.get()) {
+            obtainedIds.add(b.getNumber());
+            //Check that the retrieved build number is not among the unexpected
+            assertFalse(unexpectedIds.contains(b.getNumber()));
+        }
+
+        //Check that retrieved build's numbers are all in the expected build's numbers list
+        assertThat(obtainedIds, CoreMatchers.hasItems("373","374","375"));
+    }
+
+    @Test
+    public void testGetBuildsFromRepositoryWithLimitDate() {
+        String slug = "google/jsonnet";
+        //Retrieve builds done after this date
+        Date limitDate = getDateFor(2017, Calendar.SEPTEMBER, 14, 0, 0, 1, 0);
+
+        Optional<List<Build>> optionalBuilds = getJTravis().build().afterDate(slug, limitDate);
+        assertTrue(optionalBuilds.isPresent());
+        List<String> obtainedIds = new ArrayList<String>();
+
+        //Unexpected build's numbers
+        List<String> unexpectedIds = Arrays.asList("273","274","275");
+
+        for (Build b: optionalBuilds.get()) {
+            obtainedIds.add(b.getNumber());
+            //Check that the retrieved build number is not among the unexpected
+            assertFalse(unexpectedIds.contains(b.getNumber()));
+        }
+
+        //Check that retrieved build's numbers are all in the expected build's numbers list
+        assertThat(obtainedIds, CoreMatchers.hasItems("685","684","679"));
+    }
+
+    // This test can actually take up than 3 min 30
+    // IT MUST BE IMPROVED
+    @Ignore
+    @Test
+    public void testDifferentBuildIdsShouldNotGiveSameInFuture() {
+        int build1 = 210419994;
+        int build2 = 207796355;
+
+        Optional<Build> b1Opt = getJTravis().build().fromId(build1);
+        Optional<Build> b2Opt = getJTravis().build().fromId(build2);
+        assertTrue(b1Opt.isPresent());
+        assertTrue(b2Opt.isPresent());
+
+        Build b1 = b1Opt.get();
+        Build b2 = b2Opt.get();
+
+        assertTrue(b1.getRepository().equals(b2.getRepository()));
+
+        Optional<Build> nextB1Opt = getJTravis().build().getAfter(b1, true);
+        Optional<Build> nextB2Opt = getJTravis().build().getAfter(b2, true);
+        assertTrue(nextB1Opt.isPresent());
+        assertTrue(nextB2Opt.isPresent());
+
+        assertFalse(nextB1Opt.get().equals(nextB2Opt.get()));
     }
 
 }
