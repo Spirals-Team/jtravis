@@ -1,0 +1,15 @@
+{
+  "@type": "build",
+  "@href": "/build/86601346",
+  "@representation": "minimal",
+  "id": 86601346,
+  "number": "28677",
+  "state": "passed",
+  "duration": 5241,
+  "event_type": "pull_request",
+  "previous_state": "passed",
+  "pull_request_title": "Add SQL parameter sanitization to `.joins`",
+  "pull_request_number": 21847,
+  "started_at": "2015-10-21T11:54:01Z",
+  "finished_at": "2015-10-21T12:13:12Z"
+}

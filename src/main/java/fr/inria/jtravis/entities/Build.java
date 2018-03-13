@@ -1,15 +1,13 @@
 package fr.inria.jtravis.entities;
 
-import fr.inria.jtravis.helpers.BuildHelper;
-import fr.inria.jtravis.helpers.JobHelper;
-import fr.inria.jtravis.helpers.PRInformationHelper;
-import fr.inria.jtravis.helpers.RepositoryHelper;
-import fr.inria.jtravis.pojos.BuildPojo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Business object to deal with Build of Travis CI API.
@@ -19,129 +17,211 @@ import java.util.List;
  *
  * @author Simon Urli
  */
-public class Build extends BuildPojo implements Comparable<Build> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Build.class);
+public final class Build extends EntityUnary implements Comparable<Build> {
+    @Expose
+    private String number;
 
+    @Expose
+    private StateType state;
+
+    @Expose
+    private int duration;
+
+    @Expose
+    private EventType eventType;
+
+    @Expose
+    private StateType previousState;
+
+    @Expose
+    private String pullRequestTitle;
+
+    @Expose
+    private int pullRequestNumber;
+
+    @Expose
+    private Date startedAt;
+
+    @Expose
+    private Date finishedAt;
+
+    @Expose
     private Repository repository;
-    private PRInformation prInformation;
+
+    @Expose
+    private Branch branch;
+
+    @Expose
     private Commit commit;
-    private Config config;
+
+    @Expose
     private List<Job> jobs;
-    private String completeLog;
-    private BuildTool buildTool;
+
+    @Expose
+    private Date updatedAt;
+
+    @Expose
+    private Tag tag;
+
+    @Expose
+    private Owner createdBy;
 
     public Build() {
         super();
         this.jobs = new ArrayList<Job>();
     }
 
-    public void refreshStatus() {
-        Build b = BuildHelper.getBuildFromId(this.getId(), null);
-        if (b != null && (this.getState() == null || !this.getState().equals(b.getState()))) {
-            this.jobs.clear();
-            this.completeLog = null;
-            this.buildTool = null;
-            this.setState(b.getState());
-            LOGGER.warn("New status for build id: "+this.getId()+" : "+this.getBuildStatus());
+    // SETTERS
 
-            this.setStartedAt(b.getStartedAt());
-            this.setFinishedAt(b.getFinishedAt());
-            this.setDuration(b.getDuration());
-            this.setJobIds(b.getJobIds());
-        }
+    protected void setNumber(String number) {
+        this.number = number;
     }
 
-    public BuildStatus getBuildStatus() {
-        if (this.getState() != null) {
-            return BuildStatus.valueOf(this.getState().toUpperCase());
-        } else {
-            return null;
-        }
+    protected void setState(StateType state) {
+        this.state = state;
     }
 
-    public void setRepository(Repository repository) {
+    protected void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    protected void setEventType(EventType eventType) {
+        this.eventType = eventType;
+    }
+
+    protected void setPreviousState(StateType previousState) {
+        this.previousState = previousState;
+    }
+
+    protected void setPullRequestTitle(String pullRequestTitle) {
+        this.pullRequestTitle = pullRequestTitle;
+    }
+
+    protected void setPullRequestNumber(int pullRequestNumber) {
+        this.pullRequestNumber = pullRequestNumber;
+    }
+
+    protected void setStartedAt(Date startedAt) {
+        this.startedAt = startedAt;
+    }
+
+    protected void setFinishedAt(Date finishedAt) {
+        this.finishedAt = finishedAt;
+    }
+
+    protected void setRepository(Repository repository) {
         this.repository = repository;
     }
 
+    protected void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    protected void setCommit(Commit commit) {
+        this.commit = commit;
+    }
+
+    protected void setJobs(List<Job> jobs) {
+        this.jobs = jobs;
+    }
+
+    protected void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    protected void setTag(Tag tag) {
+        this.tag = tag;
+    }
+
+    protected void setCreatedBy(Owner createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    // GETTERS
+
+    public String getNumber() {
+        return number;
+    }
+
+    public StateType getState() {
+        return state;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public StateType getPreviousState() {
+        return previousState;
+    }
+
+    public String getPullRequestTitle() {
+        return pullRequestTitle;
+    }
+
+    public int getPullRequestNumber() {
+        return pullRequestNumber;
+    }
+
+    public Date getStartedAt() {
+        return startedAt;
+    }
+
+    public Date getFinishedAt() {
+        return finishedAt;
+    }
+
     public Repository getRepository() {
-        if (repository == null) {
-            if (this.getRepositoryId() != 0) {
-                this.repository = RepositoryHelper.getRepositoryFromId(this.getRepositoryId());
-            }
-        }
         return repository;
     }
 
-    public void setCommit(Commit commit) {
-        this.commit = commit;
+    public Branch getBranch() {
+        return branch;
     }
 
     public Commit getCommit() {
         return commit;
     }
 
-    public boolean addJob(Job job) {
-        if (this.getJobIds().contains(job.getId()) && !jobs.contains(job)) {
-            return this.jobs.add(job);
-        }
-        return false;
-    }
-
     public List<Job> getJobs() {
-        if (this.jobs.isEmpty() && !this.getJobIds().isEmpty()) {
-            for (int jobId : this.getJobIds()) {
-                Job job = JobHelper.getJobFromId(jobId);
-                if (job != null) {
-                    this.jobs.add(job);
-                }
-            }
-        }
         return jobs;
     }
 
-    public void clearJobs() {
-        this.jobs.clear();
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public String getCompleteLog() {
-        if (!this.getJobs().isEmpty() && (this.completeLog == null || this.completeLog.equals(""))) {
-            this.completeLog = "";
-            for (Job job : this.getJobs()) {
-                Log log = job.getLog();
-                if (log != null) {
-                    this.completeLog.concat(log.getBody());
-                }
+    public Tag getTag() {
+        return tag;
+    }
+
+    public Owner getCreatedBy() {
+        return createdBy;
+    }
+
+    public boolean isPullRequest() {
+        return this.getPullRequestNumber() > 0;
+    }
+
+    public Optional<BuildTool> getBuildTool() {
+        if (!this.getJobs().isEmpty()) {
+            Job firstJob = this.getJobs().get(0);
+            if (this.getJtravis() != null) {
+                firstJob.setJtravis(this.getJtravis());
             }
-        }
-        return this.completeLog;
-    }
-
-    public Config getConfig() {
-        return config;
-    }
-
-    public void setConfig(Config config) {
-        this.config = config;
-    }
-
-    public PRInformation getPRInformation() {
-        if (isPullRequest() && prInformation == null) {
-            prInformation = PRInformationHelper.getPRInformationFromBuild(this);
-        }
-        return prInformation;
-    }
-
-    public BuildTool getBuildTool() {
-        if (buildTool == null) {
-            if (!this.getJobs().isEmpty()) {
-                Job firstJob = this.getJobs().get(0);
-                buildTool = firstJob.getBuildTool();
-            } else {
-                buildTool = BuildTool.UNKNOWN;
-            }
+            return firstJob.getBuildTool();
         }
 
-        return buildTool;
+        return Optional.empty();
+    }
+
+    @Override
+    public int compareTo(Build o) {
+        return this.getId()-o.getId();
     }
 
     @Override
@@ -149,42 +229,50 @@ public class Build extends BuildPojo implements Comparable<Build> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-
         Build build = (Build) o;
-
-        if (repository != null ? !repository.equals(build.repository) : build.repository != null) return false;
-        if (commit != null ? !commit.equals(build.commit) : build.commit != null) return false;
-        if (config != null ? !config.equals(build.config) : build.config != null) return false;
-        if (jobs != null ? !jobs.equals(build.jobs) : build.jobs != null) return false;
-        return completeLog != null ? completeLog.equals(build.completeLog) : build.completeLog == null;
+        return duration == build.duration &&
+                pullRequestNumber == build.pullRequestNumber &&
+                Objects.equals(number, build.number) &&
+                Objects.equals(state, build.state) &&
+                Objects.equals(eventType, build.eventType) &&
+                Objects.equals(previousState, build.previousState) &&
+                Objects.equals(pullRequestTitle, build.pullRequestTitle) &&
+                Objects.equals(startedAt, build.startedAt) &&
+                Objects.equals(finishedAt, build.finishedAt) &&
+                Objects.equals(repository, build.repository) &&
+                Objects.equals(branch, build.branch) &&
+                Objects.equals(commit, build.commit) &&
+                Objects.equals(jobs, build.jobs) &&
+                Objects.equals(updatedAt, build.updatedAt) &&
+                Objects.equals(tag, build.tag) &&
+                Objects.equals(createdBy, build.createdBy);
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (repository != null ? repository.hashCode() : 0);
-        result = 31 * result + (commit != null ? commit.hashCode() : 0);
-        result = 31 * result + (config != null ? config.hashCode() : 0);
-        result = 31 * result + (jobs != null ? jobs.hashCode() : 0);
-        result = 31 * result + (completeLog != null ? completeLog.hashCode() : 0);
-        return result;
+
+        return Objects.hash(super.hashCode(), number, state, duration, eventType, previousState, pullRequestTitle, pullRequestNumber, startedAt, finishedAt, repository, branch, commit, jobs, updatedAt, tag, createdBy);
     }
 
     @Override
     public String toString() {
-        String repo = (repository == null) ? "" : repository.toString();
         return "Build{" +
-                super.toString() +
-                ", repository=" + repo +
+                "number='" + number + '\'' +
+                ", state='" + state + '\'' +
+                ", duration=" + duration +
+                ", eventType='" + eventType + '\'' +
+                ", previousState='" + previousState + '\'' +
+                ", pullRequestTitle='" + pullRequestTitle + '\'' +
+                ", pullRequestNumber=" + pullRequestNumber +
+                ", startedAt=" + startedAt +
+                ", finishedAt=" + finishedAt +
+                ", repository=" + repository +
+                ", branch=" + branch +
                 ", commit=" + commit +
-                ", config=" + config +
-                ", jobs=" + jobs +
-                ", completeLog='" + completeLog + '\'' +
+                ", jobs=" + StringUtils.join(jobs, ",") +
+                ", updatedAt=" + updatedAt +
+                ", tag='" + tag + '\'' +
+                ", createdBy=" + createdBy +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Build o) {
-        return this.getId()-o.getId();
     }
 }

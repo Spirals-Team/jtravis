@@ -1,9 +1,12 @@
-travis_fold:start:worker_info[0K[33;1mWorker information[0m
+travis_fold:start:worker_info
+[0K[33;1mWorker information[0m
 hostname: ec36ecb9-fc6e-4c37-9592-890008b66d75@1.production-2-worker-org-b-3-gce
 version: v3.0.2 https://github.com/travis-ci/worker/tree/f1c05caed79c66a9103f12a22e8a45ec66dbca64
 instance: testing-gce-c7f8a8ed-9270-4c01-8718-594b94b19d57:travis-ci-garnet-trusty-1505154324 (via amqp)
 startup: 22.684491697s
-travis_fold:end:worker_info[0Ktravis_fold:start:system_info[0K[33;1mBuild system information[0m
+travis_fold:end:worker_info
+[0Ktravis_fold:start:system_info
+[0K[33;1mBuild system information[0m
 Build language: java
 Build group: edge
 Build dist: trusty
@@ -408,60 +411,436 @@ Composer version 1.4.2 2017-05-17 08:17:52
 ruby-2.2.7
 ruby-2.3.4
 ruby-2.4.1
-travis_fold:end:system_info[0K
+travis_fold:end:system_info
+[0K
 W: http://dl.hhvm.com/ubuntu/dists/trusty/InRelease: Signature by key 36AEF64D0207E7EEE352D4875A16E7281BE7A449 uses weak digest algorithm (SHA1)
 W: http://ppa.launchpad.net/couchdb/stable/ubuntu/dists/trusty/Release.gpg: Signature by key 15866BAFD9BCC4F3C1E0DFC7D69548E1C17EAB57 uses weak digest algorithm (SHA1)
 $ jdk_switcher use oraclejdk8
 Switching to Oracle JDK8 (java-8-oracle), JAVA_HOME will be set to /usr/lib/jvm/java-8-oracle
-travis_fold:start:git.checkout[0Ktravis_time:start:0b703db0[0K$ git clone --depth=50 https://github.com/apache/cloudstack.git apache/cloudstack
+travis_fold:start:git.checkout
+[0Ktravis_time:start:0b703db0
+[0K$ git clone --depth=50 https://github.com/apache/cloudstack.git apache/cloudstack
 Cloning into 'apache/cloudstack'...
 remote: Counting objects: 38344, done.[K
-remote: Compressing objects:   0% (1/21068)   [Kremote: Compressing objects:   1% (211/21068)   [Kremote: Compressing objects:   2% (422/21068)   [Kremote: Compressing objects:   3% (633/21068)   [Kremote: Compressing objects:   4% (843/21068)   [Kremote: Compressing objects:   5% (1054/21068)   [Kremote: Compressing objects:   5% (1144/21068)   [Kremote: Compressing objects:   6% (1265/21068)   [Kremote: Compressing objects:   7% (1475/21068)   [Kremote: Compressing objects:   8% (1686/21068)   [Kremote: Compressing objects:   9% (1897/21068)   [Kremote: Compressing objects:  10% (2107/21068)   [Kremote: Compressing objects:  11% (2318/21068)   [Kremote: Compressing objects:  12% (2529/21068)   [Kremote: Compressing objects:  13% (2739/21068)   [Kremote: Compressing objects:  14% (2950/21068)   [Kremote: Compressing objects:  15% (3161/21068)   [Kremote: Compressing objects:  16% (3371/21068)   [Kremote: Compressing objects:  17% (3582/21068)   [Kremote: Compressing objects:  18% (3793/21068)   [Kremote: Compressing objects:  19% (4003/21068)   [Kremote: Compressing objects:  20% (4214/21068)   [Kremote: Compressing objects:  21% (4425/21068)   [Kremote: Compressing objects:  22% (4635/21068)   [Kremote: Compressing objects:  22% (4790/21068)   [Kremote: Compressing objects:  23% (4846/21068)   [Kremote: Compressing objects:  24% (5057/21068)   [Kremote: Compressing objects:  25% (5267/21068)   [Kremote: Compressing objects:  26% (5478/21068)   [Kremote: Compressing objects:  27% (5689/21068)   [Kremote: Compressing objects:  28% (5900/21068)   [Kremote: Compressing objects:  29% (6110/21068)   [Kremote: Compressing objects:  30% (6321/21068)   [Kremote: Compressing objects:  30% (6442/21068)   [Kremote: Compressing objects:  31% (6532/21068)   [Kremote: Compressing objects:  32% (6742/21068)   [Kremote: Compressing objects:  33% (6953/21068)   [Kremote: Compressing objects:  34% (7164/21068)   [Kremote: Compressing objects:  35% (7374/21068)   [Kremote: Compressing objects:  36% (7585/21068)   [Kremote: Compressing objects:  37% (7796/21068)   [Kremote: Compressing objects:  38% (8006/21068)   [Kremote: Compressing objects:  39% (8217/21068)   [Kremote: Compressing objects:  40% (8428/21068)   [Kremote: Compressing objects:  41% (8638/21068)   [Kremote: Compressing objects:  42% (8849/21068)   [Kremote: Compressing objects:  43% (9060/21068)   [Kremote: Compressing objects:  44% (9270/21068)   [Kremote: Compressing objects:  45% (9481/21068)   [Kremote: Compressing objects:  46% (9692/21068)   [Kremote: Compressing objects:  47% (9902/21068)   [Kremote: Compressing objects:  48% (10113/21068)   [Kremote: Compressing objects:  49% (10324/21068)   [Kremote: Compressing objects:  50% (10534/21068)   [Kremote: Compressing objects:  51% (10745/21068)   [Kremote: Compressing objects:  52% (10956/21068)   [Kremote: Compressing objects:  53% (11167/21068)   [Kremote: Compressing objects:  54% (11377/21068)   [Kremote: Compressing objects:  55% (11588/21068)   [Kremote: Compressing objects:  56% (11799/21068)   [Kremote: Compressing objects:  57% (12009/21068)   [Kremote: Compressing objects:  58% (12220/21068)   [Kremote: Compressing objects:  59% (12431/21068)   [Kremote: Compressing objects:  60% (12641/21068)   [Kremote: Compressing objects:  61% (12852/21068)   [Kremote: Compressing objects:  62% (13063/21068)   [Kremote: Compressing objects:  63% (13273/21068)   [Kremote: Compressing objects:  64% (13484/21068)   [Kremote: Compressing objects:  65% (13695/21068)   [Kremote: Compressing objects:  66% (13905/21068)   [Kremote: Compressing objects:  67% (14116/21068)   [Kremote: Compressing objects:  68% (14327/21068)   [Kremote: Compressing objects:  69% (14537/21068)   [Kremote: Compressing objects:  70% (14748/21068)   [Kremote: Compressing objects:  71% (14959/21068)   [Kremote: Compressing objects:  72% (15169/21068)   [Kremote: Compressing objects:  73% (15380/21068)   [Kremote: Compressing objects:  74% (15591/21068)   [Kremote: Compressing objects:  75% (15801/21068)   [Kremote: Compressing objects:  76% (16012/21068)   [Kremote: Compressing objects:  77% (16223/21068)   [Kremote: Compressing objects:  78% (16434/21068)   [Kremote: Compressing objects:  79% (16644/21068)   [Kremote: Compressing objects:  80% (16855/21068)   [Kremote: Compressing objects:  81% (17066/21068)   [Kremote: Compressing objects:  82% (17276/21068)   [Kremote: Compressing objects:  83% (17487/21068)   [Kremote: Compressing objects:  84% (17698/21068)   [Kremote: Compressing objects:  85% (17908/21068)   [Kremote: Compressing objects:  86% (18119/21068)   [Kremote: Compressing objects:  87% (18330/21068)   [Kremote: Compressing objects:  88% (18540/21068)   [Kremote: Compressing objects:  89% (18751/21068)   [Kremote: Compressing objects:  90% (18962/21068)   [Kremote: Compressing objects:  91% (19172/21068)   [Kremote: Compressing objects:  92% (19383/21068)   [Kremote: Compressing objects:  93% (19594/21068)   [Kremote: Compressing objects:  94% (19804/21068)   [Kremote: Compressing objects:  95% (20015/21068)   [Kremote: Compressing objects:  96% (20226/21068)   [Kremote: Compressing objects:  97% (20436/21068)   [Kremote: Compressing objects:  98% (20647/21068)   [Kremote: Compressing objects:  99% (20858/21068)   [Kremote: Compressing objects: 100% (21068/21068)   [Kremote: Compressing objects: 100% (21068/21068), done.[K
-Receiving objects:   0% (1/38344)   Receiving objects:   1% (384/38344)   Receiving objects:   2% (767/38344)   Receiving objects:   3% (1151/38344)   Receiving objects:   4% (1534/38344)   Receiving objects:   5% (1918/38344)   Receiving objects:   6% (2301/38344)   Receiving objects:   7% (2685/38344)   Receiving objects:   8% (3068/38344)   Receiving objects:   9% (3451/38344)   Receiving objects:  10% (3835/38344)   Receiving objects:  11% (4218/38344)   Receiving objects:  12% (4602/38344)   Receiving objects:  13% (4985/38344)   Receiving objects:  14% (5369/38344)   Receiving objects:  15% (5752/38344)   Receiving objects:  16% (6136/38344)   Receiving objects:  17% (6519/38344)   Receiving objects:  18% (6902/38344)   Receiving objects:  19% (7286/38344)   Receiving objects:  20% (7669/38344)   Receiving objects:  21% (8053/38344)   Receiving objects:  22% (8436/38344)   Receiving objects:  23% (8820/38344)   Receiving objects:  24% (9203/38344)   Receiving objects:  25% (9586/38344)   Receiving objects:  26% (9970/38344)   Receiving objects:  27% (10353/38344)   Receiving objects:  28% (10737/38344)   Receiving objects:  29% (11120/38344)   Receiving objects:  30% (11504/38344)   Receiving objects:  31% (11887/38344)   Receiving objects:  32% (12271/38344)   Receiving objects:  33% (12654/38344)   Receiving objects:  34% (13037/38344)   Receiving objects:  35% (13421/38344)   Receiving objects:  36% (13804/38344)   Receiving objects:  37% (14188/38344)   Receiving objects:  38% (14571/38344)   Receiving objects:  39% (14955/38344)   Receiving objects:  40% (15338/38344)   Receiving objects:  41% (15722/38344)   Receiving objects:  42% (16105/38344)   Receiving objects:  43% (16488/38344)   Receiving objects:  44% (16872/38344)   Receiving objects:  45% (17255/38344)   Receiving objects:  46% (17639/38344)   Receiving objects:  47% (18022/38344)   Receiving objects:  48% (18406/38344)   Receiving objects:  49% (18789/38344)   Receiving objects:  50% (19172/38344)   Receiving objects:  51% (19556/38344)   Receiving objects:  52% (19939/38344)   Receiving objects:  53% (20323/38344)   Receiving objects:  54% (20706/38344)   Receiving objects:  55% (21090/38344)   Receiving objects:  56% (21473/38344)   Receiving objects:  57% (21857/38344)   Receiving objects:  58% (22240/38344)   Receiving objects:  59% (22623/38344)   Receiving objects:  60% (23007/38344)   Receiving objects:  61% (23390/38344)   Receiving objects:  62% (23774/38344)   Receiving objects:  63% (24157/38344)   Receiving objects:  64% (24541/38344)   Receiving objects:  65% (24924/38344)   Receiving objects:  66% (25308/38344)   Receiving objects:  67% (25691/38344)   Receiving objects:  68% (26074/38344)   Receiving objects:  69% (26458/38344)   Receiving objects:  70% (26841/38344)   Receiving objects:  71% (27225/38344)   Receiving objects:  72% (27608/38344)   Receiving objects:  73% (27992/38344), 7.81 MiB | 15.62 MiB/s   Receiving objects:  74% (28375/38344), 7.81 MiB | 15.62 MiB/s   Receiving objects:  75% (28758/38344), 7.81 MiB | 15.62 MiB/s   Receiving objects:  76% (29142/38344), 7.81 MiB | 15.62 MiB/s   Receiving objects:  77% (29525/38344), 7.81 MiB | 15.62 MiB/s   Receiving objects:  78% (29909/38344), 7.81 MiB | 15.62 MiB/s   Receiving objects:  79% (30292/38344), 7.81 MiB | 15.62 MiB/s   Receiving objects:  80% (30676/38344), 7.81 MiB | 15.62 MiB/s   Receiving objects:  81% (31059/38344), 7.81 MiB | 15.62 MiB/s   Receiving objects:  82% (31443/38344), 7.81 MiB | 15.62 MiB/s   Receiving objects:  83% (31826/38344), 7.81 MiB | 15.62 MiB/s   Receiving objects:  84% (32209/38344), 7.81 MiB | 15.62 MiB/s   Receiving objects:  85% (32593/38344), 7.81 MiB | 15.62 MiB/s   Receiving objects:  85% (32934/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  86% (32976/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  87% (33360/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  88% (33743/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  89% (34127/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  90% (34510/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  91% (34894/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  92% (35277/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  93% (35660/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  94% (36044/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  95% (36427/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  96% (36811/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  97% (37194/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  98% (37578/38344), 14.47 MiB | 14.46 MiB/s   Receiving objects:  99% (37961/38344), 14.47 MiB | 14.46 MiB/s   remote: Total 38344 (delta 19361), reused 28421 (delta 11978), pack-reused 0[K
-Receiving objects: 100% (38344/38344), 23.67 MiB | 15.78 MiB/s   Receiving objects: 100% (38344/38344), 24.67 MiB | 15.94 MiB/s, done.
-Resolving deltas:   0% (0/19361)   Resolving deltas:   1% (228/19361)   Resolving deltas:   2% (391/19361)   Resolving deltas:   3% (581/19361)   Resolving deltas:   4% (778/19361)   Resolving deltas:   5% (989/19361)   Resolving deltas:   6% (1182/19361)   Resolving deltas:   7% (1361/19361)   Resolving deltas:   8% (1550/19361)   Resolving deltas:   9% (1743/19361)   Resolving deltas:  10% (1938/19361)   Resolving deltas:  11% (2131/19361)   Resolving deltas:  12% (2339/19361)   Resolving deltas:  13% (2517/19361)   Resolving deltas:  14% (2714/19361)   Resolving deltas:  15% (2906/19361)   Resolving deltas:  16% (3098/19361)   Resolving deltas:  17% (3303/19361)   Resolving deltas:  18% (3486/19361)   Resolving deltas:  19% (3679/19361)   Resolving deltas:  20% (3879/19361)   Resolving deltas:  21% (4068/19361)   Resolving deltas:  22% (4269/19361)   Resolving deltas:  23% (4461/19361)   Resolving deltas:  24% (4654/19361)   Resolving deltas:  25% (4841/19361)   Resolving deltas:  26% (5034/19361)   Resolving deltas:  27% (5232/19361)   Resolving deltas:  28% (5423/19361)   Resolving deltas:  29% (5618/19361)   Resolving deltas:  30% (5810/19361)   Resolving deltas:  31% (6019/19361)   Resolving deltas:  32% (6200/19361)   Resolving deltas:  33% (6393/19361)   Resolving deltas:  34% (6586/19361)   Resolving deltas:  35% (6778/19361)   Resolving deltas:  36% (6971/19361)   Resolving deltas:  37% (7169/19361)   Resolving deltas:  38% (7445/19361)   Resolving deltas:  39% (7554/19361)   Resolving deltas:  41% (7991/19361)   Resolving deltas:  42% (8143/19361)   Resolving deltas:  43% (8329/19361)   Resolving deltas:  44% (8522/19361)   Resolving deltas:  45% (8732/19361)   Resolving deltas:  46% (8910/19361)   Resolving deltas:  47% (9100/19361)   Resolving deltas:  48% (9301/19361)   Resolving deltas:  49% (9489/19361)   Resolving deltas:  50% (9681/19361)   Resolving deltas:  51% (9880/19361)   Resolving deltas:  52% (10075/19361)   Resolving deltas:  53% (10266/19361)   Resolving deltas:  54% (10473/19361)   Resolving deltas:  55% (10650/19361)   Resolving deltas:  56% (10894/19361)   Resolving deltas:  57% (11044/19361)   Resolving deltas:  58% (11250/19361)   Resolving deltas:  59% (11423/19361)   Resolving deltas:  60% (11664/19361)   Resolving deltas:  61% (11840/19361)   Resolving deltas:  62% (12026/19361)   Resolving deltas:  63% (12199/19361)   Resolving deltas:  64% (12403/19361)   Resolving deltas:  65% (12586/19361)   Resolving deltas:  66% (12840/19361)   Resolving deltas:  67% (13002/19361)   Resolving deltas:  68% (13182/19361)   Resolving deltas:  69% (13376/19361)   Resolving deltas:  71% (13884/19361)   Resolving deltas:  72% (13947/19361)   Resolving deltas:  73% (14137/19361)   Resolving deltas:  74% (14439/19361)   Resolving deltas:  75% (14523/19361)   Resolving deltas:  76% (14716/19361)   Resolving deltas:  77% (14915/19361)   Resolving deltas:  78% (15107/19361)   Resolving deltas:  79% (15297/19361)   Resolving deltas:  80% (15506/19361)   Resolving deltas:  81% (15713/19361)   Resolving deltas:  82% (15877/19361)   Resolving deltas:  83% (16112/19361)   Resolving deltas:  84% (16265/19361)   Resolving deltas:  85% (16458/19361)   Resolving deltas:  86% (16654/19361)   Resolving deltas:  87% (16845/19361)   Resolving deltas:  88% (17048/19361)   Resolving deltas:  89% (17242/19361)   Resolving deltas:  90% (17429/19361)   Resolving deltas:  91% (17622/19361)   Resolving deltas:  92% (17813/19361)   Resolving deltas:  93% (18006/19361)   Resolving deltas:  94% (18201/19361)   Resolving deltas:  95% (18398/19361)   Resolving deltas:  96% (18599/19361)   Resolving deltas:  97% (18782/19361)   Resolving deltas:  98% (18978/19361)   Resolving deltas:  99% (19168/19361)   Resolving deltas: 100% (19361/19361)   Resolving deltas: 100% (19361/19361), done.
+remote: Compressing objects:   0% (1/21068)   [K
+remote: Compressing objects:   1% (211/21068)   [K
+remote: Compressing objects:   2% (422/21068)   [K
+remote: Compressing objects:   3% (633/21068)   [K
+remote: Compressing objects:   4% (843/21068)   [K
+remote: Compressing objects:   5% (1054/21068)   [K
+remote: Compressing objects:   5% (1144/21068)   [K
+remote: Compressing objects:   6% (1265/21068)   [K
+remote: Compressing objects:   7% (1475/21068)   [K
+remote: Compressing objects:   8% (1686/21068)   [K
+remote: Compressing objects:   9% (1897/21068)   [K
+remote: Compressing objects:  10% (2107/21068)   [K
+remote: Compressing objects:  11% (2318/21068)   [K
+remote: Compressing objects:  12% (2529/21068)   [K
+remote: Compressing objects:  13% (2739/21068)   [K
+remote: Compressing objects:  14% (2950/21068)   [K
+remote: Compressing objects:  15% (3161/21068)   [K
+remote: Compressing objects:  16% (3371/21068)   [K
+remote: Compressing objects:  17% (3582/21068)   [K
+remote: Compressing objects:  18% (3793/21068)   [K
+remote: Compressing objects:  19% (4003/21068)   [K
+remote: Compressing objects:  20% (4214/21068)   [K
+remote: Compressing objects:  21% (4425/21068)   [K
+remote: Compressing objects:  22% (4635/21068)   [K
+remote: Compressing objects:  22% (4790/21068)   [K
+remote: Compressing objects:  23% (4846/21068)   [K
+remote: Compressing objects:  24% (5057/21068)   [K
+remote: Compressing objects:  25% (5267/21068)   [K
+remote: Compressing objects:  26% (5478/21068)   [K
+remote: Compressing objects:  27% (5689/21068)   [K
+remote: Compressing objects:  28% (5900/21068)   [K
+remote: Compressing objects:  29% (6110/21068)   [K
+remote: Compressing objects:  30% (6321/21068)   [K
+remote: Compressing objects:  30% (6442/21068)   [K
+remote: Compressing objects:  31% (6532/21068)   [K
+remote: Compressing objects:  32% (6742/21068)   [K
+remote: Compressing objects:  33% (6953/21068)   [K
+remote: Compressing objects:  34% (7164/21068)   [K
+remote: Compressing objects:  35% (7374/21068)   [K
+remote: Compressing objects:  36% (7585/21068)   [K
+remote: Compressing objects:  37% (7796/21068)   [K
+remote: Compressing objects:  38% (8006/21068)   [K
+remote: Compressing objects:  39% (8217/21068)   [K
+remote: Compressing objects:  40% (8428/21068)   [K
+remote: Compressing objects:  41% (8638/21068)   [K
+remote: Compressing objects:  42% (8849/21068)   [K
+remote: Compressing objects:  43% (9060/21068)   [K
+remote: Compressing objects:  44% (9270/21068)   [K
+remote: Compressing objects:  45% (9481/21068)   [K
+remote: Compressing objects:  46% (9692/21068)   [K
+remote: Compressing objects:  47% (9902/21068)   [K
+remote: Compressing objects:  48% (10113/21068)   [K
+remote: Compressing objects:  49% (10324/21068)   [K
+remote: Compressing objects:  50% (10534/21068)   [K
+remote: Compressing objects:  51% (10745/21068)   [K
+remote: Compressing objects:  52% (10956/21068)   [K
+remote: Compressing objects:  53% (11167/21068)   [K
+remote: Compressing objects:  54% (11377/21068)   [K
+remote: Compressing objects:  55% (11588/21068)   [K
+remote: Compressing objects:  56% (11799/21068)   [K
+remote: Compressing objects:  57% (12009/21068)   [K
+remote: Compressing objects:  58% (12220/21068)   [K
+remote: Compressing objects:  59% (12431/21068)   [K
+remote: Compressing objects:  60% (12641/21068)   [K
+remote: Compressing objects:  61% (12852/21068)   [K
+remote: Compressing objects:  62% (13063/21068)   [K
+remote: Compressing objects:  63% (13273/21068)   [K
+remote: Compressing objects:  64% (13484/21068)   [K
+remote: Compressing objects:  65% (13695/21068)   [K
+remote: Compressing objects:  66% (13905/21068)   [K
+remote: Compressing objects:  67% (14116/21068)   [K
+remote: Compressing objects:  68% (14327/21068)   [K
+remote: Compressing objects:  69% (14537/21068)   [K
+remote: Compressing objects:  70% (14748/21068)   [K
+remote: Compressing objects:  71% (14959/21068)   [K
+remote: Compressing objects:  72% (15169/21068)   [K
+remote: Compressing objects:  73% (15380/21068)   [K
+remote: Compressing objects:  74% (15591/21068)   [K
+remote: Compressing objects:  75% (15801/21068)   [K
+remote: Compressing objects:  76% (16012/21068)   [K
+remote: Compressing objects:  77% (16223/21068)   [K
+remote: Compressing objects:  78% (16434/21068)   [K
+remote: Compressing objects:  79% (16644/21068)   [K
+remote: Compressing objects:  80% (16855/21068)   [K
+remote: Compressing objects:  81% (17066/21068)   [K
+remote: Compressing objects:  82% (17276/21068)   [K
+remote: Compressing objects:  83% (17487/21068)   [K
+remote: Compressing objects:  84% (17698/21068)   [K
+remote: Compressing objects:  85% (17908/21068)   [K
+remote: Compressing objects:  86% (18119/21068)   [K
+remote: Compressing objects:  87% (18330/21068)   [K
+remote: Compressing objects:  88% (18540/21068)   [K
+remote: Compressing objects:  89% (18751/21068)   [K
+remote: Compressing objects:  90% (18962/21068)   [K
+remote: Compressing objects:  91% (19172/21068)   [K
+remote: Compressing objects:  92% (19383/21068)   [K
+remote: Compressing objects:  93% (19594/21068)   [K
+remote: Compressing objects:  94% (19804/21068)   [K
+remote: Compressing objects:  95% (20015/21068)   [K
+remote: Compressing objects:  96% (20226/21068)   [K
+remote: Compressing objects:  97% (20436/21068)   [K
+remote: Compressing objects:  98% (20647/21068)   [K
+remote: Compressing objects:  99% (20858/21068)   [K
+remote: Compressing objects: 100% (21068/21068)   [K
+remote: Compressing objects: 100% (21068/21068), done.[K
+Receiving objects:   0% (1/38344)   
+Receiving objects:   1% (384/38344)   
+Receiving objects:   2% (767/38344)   
+Receiving objects:   3% (1151/38344)   
+Receiving objects:   4% (1534/38344)   
+Receiving objects:   5% (1918/38344)   
+Receiving objects:   6% (2301/38344)   
+Receiving objects:   7% (2685/38344)   
+Receiving objects:   8% (3068/38344)   
+Receiving objects:   9% (3451/38344)   
+Receiving objects:  10% (3835/38344)   
+Receiving objects:  11% (4218/38344)   
+Receiving objects:  12% (4602/38344)   
+Receiving objects:  13% (4985/38344)   
+Receiving objects:  14% (5369/38344)   
+Receiving objects:  15% (5752/38344)   
+Receiving objects:  16% (6136/38344)   
+Receiving objects:  17% (6519/38344)   
+Receiving objects:  18% (6902/38344)   
+Receiving objects:  19% (7286/38344)   
+Receiving objects:  20% (7669/38344)   
+Receiving objects:  21% (8053/38344)   
+Receiving objects:  22% (8436/38344)   
+Receiving objects:  23% (8820/38344)   
+Receiving objects:  24% (9203/38344)   
+Receiving objects:  25% (9586/38344)   
+Receiving objects:  26% (9970/38344)   
+Receiving objects:  27% (10353/38344)   
+Receiving objects:  28% (10737/38344)   
+Receiving objects:  29% (11120/38344)   
+Receiving objects:  30% (11504/38344)   
+Receiving objects:  31% (11887/38344)   
+Receiving objects:  32% (12271/38344)   
+Receiving objects:  33% (12654/38344)   
+Receiving objects:  34% (13037/38344)   
+Receiving objects:  35% (13421/38344)   
+Receiving objects:  36% (13804/38344)   
+Receiving objects:  37% (14188/38344)   
+Receiving objects:  38% (14571/38344)   
+Receiving objects:  39% (14955/38344)   
+Receiving objects:  40% (15338/38344)   
+Receiving objects:  41% (15722/38344)   
+Receiving objects:  42% (16105/38344)   
+Receiving objects:  43% (16488/38344)   
+Receiving objects:  44% (16872/38344)   
+Receiving objects:  45% (17255/38344)   
+Receiving objects:  46% (17639/38344)   
+Receiving objects:  47% (18022/38344)   
+Receiving objects:  48% (18406/38344)   
+Receiving objects:  49% (18789/38344)   
+Receiving objects:  50% (19172/38344)   
+Receiving objects:  51% (19556/38344)   
+Receiving objects:  52% (19939/38344)   
+Receiving objects:  53% (20323/38344)   
+Receiving objects:  54% (20706/38344)   
+Receiving objects:  55% (21090/38344)   
+Receiving objects:  56% (21473/38344)   
+Receiving objects:  57% (21857/38344)   
+Receiving objects:  58% (22240/38344)   
+Receiving objects:  59% (22623/38344)   
+Receiving objects:  60% (23007/38344)   
+Receiving objects:  61% (23390/38344)   
+Receiving objects:  62% (23774/38344)   
+Receiving objects:  63% (24157/38344)   
+Receiving objects:  64% (24541/38344)   
+Receiving objects:  65% (24924/38344)   
+Receiving objects:  66% (25308/38344)   
+Receiving objects:  67% (25691/38344)   
+Receiving objects:  68% (26074/38344)   
+Receiving objects:  69% (26458/38344)   
+Receiving objects:  70% (26841/38344)   
+Receiving objects:  71% (27225/38344)   
+Receiving objects:  72% (27608/38344)   
+Receiving objects:  73% (27992/38344), 7.81 MiB | 15.62 MiB/s   
+Receiving objects:  74% (28375/38344), 7.81 MiB | 15.62 MiB/s   
+Receiving objects:  75% (28758/38344), 7.81 MiB | 15.62 MiB/s   
+Receiving objects:  76% (29142/38344), 7.81 MiB | 15.62 MiB/s   
+Receiving objects:  77% (29525/38344), 7.81 MiB | 15.62 MiB/s   
+Receiving objects:  78% (29909/38344), 7.81 MiB | 15.62 MiB/s   
+Receiving objects:  79% (30292/38344), 7.81 MiB | 15.62 MiB/s   
+Receiving objects:  80% (30676/38344), 7.81 MiB | 15.62 MiB/s   
+Receiving objects:  81% (31059/38344), 7.81 MiB | 15.62 MiB/s   
+Receiving objects:  82% (31443/38344), 7.81 MiB | 15.62 MiB/s   
+Receiving objects:  83% (31826/38344), 7.81 MiB | 15.62 MiB/s   
+Receiving objects:  84% (32209/38344), 7.81 MiB | 15.62 MiB/s   
+Receiving objects:  85% (32593/38344), 7.81 MiB | 15.62 MiB/s   
+Receiving objects:  85% (32934/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  86% (32976/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  87% (33360/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  88% (33743/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  89% (34127/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  90% (34510/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  91% (34894/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  92% (35277/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  93% (35660/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  94% (36044/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  95% (36427/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  96% (36811/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  97% (37194/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  98% (37578/38344), 14.47 MiB | 14.46 MiB/s   
+Receiving objects:  99% (37961/38344), 14.47 MiB | 14.46 MiB/s   
+remote: Total 38344 (delta 19361), reused 28421 (delta 11978), pack-reused 0[K
+Receiving objects: 100% (38344/38344), 23.67 MiB | 15.78 MiB/s   
+Receiving objects: 100% (38344/38344), 24.67 MiB | 15.94 MiB/s, done.
+Resolving deltas:   0% (0/19361)   
+Resolving deltas:   1% (228/19361)   
+Resolving deltas:   2% (391/19361)   
+Resolving deltas:   3% (581/19361)   
+Resolving deltas:   4% (778/19361)   
+Resolving deltas:   5% (989/19361)   
+Resolving deltas:   6% (1182/19361)   
+Resolving deltas:   7% (1361/19361)   
+Resolving deltas:   8% (1550/19361)   
+Resolving deltas:   9% (1743/19361)   
+Resolving deltas:  10% (1938/19361)   
+Resolving deltas:  11% (2131/19361)   
+Resolving deltas:  12% (2339/19361)   
+Resolving deltas:  13% (2517/19361)   
+Resolving deltas:  14% (2714/19361)   
+Resolving deltas:  15% (2906/19361)   
+Resolving deltas:  16% (3098/19361)   
+Resolving deltas:  17% (3303/19361)   
+Resolving deltas:  18% (3486/19361)   
+Resolving deltas:  19% (3679/19361)   
+Resolving deltas:  20% (3879/19361)   
+Resolving deltas:  21% (4068/19361)   
+Resolving deltas:  22% (4269/19361)   
+Resolving deltas:  23% (4461/19361)   
+Resolving deltas:  24% (4654/19361)   
+Resolving deltas:  25% (4841/19361)   
+Resolving deltas:  26% (5034/19361)   
+Resolving deltas:  27% (5232/19361)   
+Resolving deltas:  28% (5423/19361)   
+Resolving deltas:  29% (5618/19361)   
+Resolving deltas:  30% (5810/19361)   
+Resolving deltas:  31% (6019/19361)   
+Resolving deltas:  32% (6200/19361)   
+Resolving deltas:  33% (6393/19361)   
+Resolving deltas:  34% (6586/19361)   
+Resolving deltas:  35% (6778/19361)   
+Resolving deltas:  36% (6971/19361)   
+Resolving deltas:  37% (7169/19361)   
+Resolving deltas:  38% (7445/19361)   
+Resolving deltas:  39% (7554/19361)   
+Resolving deltas:  41% (7991/19361)   
+Resolving deltas:  42% (8143/19361)   
+Resolving deltas:  43% (8329/19361)   
+Resolving deltas:  44% (8522/19361)   
+Resolving deltas:  45% (8732/19361)   
+Resolving deltas:  46% (8910/19361)   
+Resolving deltas:  47% (9100/19361)   
+Resolving deltas:  48% (9301/19361)   
+Resolving deltas:  49% (9489/19361)   
+Resolving deltas:  50% (9681/19361)   
+Resolving deltas:  51% (9880/19361)   
+Resolving deltas:  52% (10075/19361)   
+Resolving deltas:  53% (10266/19361)   
+Resolving deltas:  54% (10473/19361)   
+Resolving deltas:  55% (10650/19361)   
+Resolving deltas:  56% (10894/19361)   
+Resolving deltas:  57% (11044/19361)   
+Resolving deltas:  58% (11250/19361)   
+Resolving deltas:  59% (11423/19361)   
+Resolving deltas:  60% (11664/19361)   
+Resolving deltas:  61% (11840/19361)   
+Resolving deltas:  62% (12026/19361)   
+Resolving deltas:  63% (12199/19361)   
+Resolving deltas:  64% (12403/19361)   
+Resolving deltas:  65% (12586/19361)   
+Resolving deltas:  66% (12840/19361)   
+Resolving deltas:  67% (13002/19361)   
+Resolving deltas:  68% (13182/19361)   
+Resolving deltas:  69% (13376/19361)   
+Resolving deltas:  71% (13884/19361)   
+Resolving deltas:  72% (13947/19361)   
+Resolving deltas:  73% (14137/19361)   
+Resolving deltas:  74% (14439/19361)   
+Resolving deltas:  75% (14523/19361)   
+Resolving deltas:  76% (14716/19361)   
+Resolving deltas:  77% (14915/19361)   
+Resolving deltas:  78% (15107/19361)   
+Resolving deltas:  79% (15297/19361)   
+Resolving deltas:  80% (15506/19361)   
+Resolving deltas:  81% (15713/19361)   
+Resolving deltas:  82% (15877/19361)   
+Resolving deltas:  83% (16112/19361)   
+Resolving deltas:  84% (16265/19361)   
+Resolving deltas:  85% (16458/19361)   
+Resolving deltas:  86% (16654/19361)   
+Resolving deltas:  87% (16845/19361)   
+Resolving deltas:  88% (17048/19361)   
+Resolving deltas:  89% (17242/19361)   
+Resolving deltas:  90% (17429/19361)   
+Resolving deltas:  91% (17622/19361)   
+Resolving deltas:  92% (17813/19361)   
+Resolving deltas:  93% (18006/19361)   
+Resolving deltas:  94% (18201/19361)   
+Resolving deltas:  95% (18398/19361)   
+Resolving deltas:  96% (18599/19361)   
+Resolving deltas:  97% (18782/19361)   
+Resolving deltas:  98% (18978/19361)   
+Resolving deltas:  99% (19168/19361)   
+Resolving deltas: 100% (19361/19361)   
+Resolving deltas: 100% (19361/19361), done.
 
-travis_time:end:0b703db0:start=1505992644893784946,finish=1505992653395949364,duration=8502164418[0K$ cd apache/cloudstack
-travis_time:start:08a62eb7[0K$ git fetch origin +refs/pull/2258/merge:
+travis_time:end:0b703db0:start=1505992644893784946,finish=1505992653395949364,duration=8502164418
+[0K$ cd apache/cloudstack
+travis_time:start:08a62eb7
+[0K$ git fetch origin +refs/pull/2258/merge:
 remote: Counting objects: 32, done.[K
-remote: Compressing objects:   7% (1/14)   [Kremote: Compressing objects:  14% (2/14)   [Kremote: Compressing objects:  21% (3/14)   [Kremote: Compressing objects:  28% (4/14)   [Kremote: Compressing objects:  35% (5/14)   [Kremote: Compressing objects:  42% (6/14)   [Kremote: Compressing objects:  50% (7/14)   [Kremote: Compressing objects:  57% (8/14)   [Kremote: Compressing objects:  64% (9/14)   [Kremote: Compressing objects:  71% (10/14)   [Kremote: Compressing objects:  78% (11/14)   [Kremote: Compressing objects:  85% (12/14)   [Kremote: Compressing objects:  92% (13/14)   [Kremote: Compressing objects: 100% (14/14)   [Kremote: Compressing objects: 100% (14/14), done.[K
+remote: Compressing objects:   7% (1/14)   [K
+remote: Compressing objects:  14% (2/14)   [K
+remote: Compressing objects:  21% (3/14)   [K
+remote: Compressing objects:  28% (4/14)   [K
+remote: Compressing objects:  35% (5/14)   [K
+remote: Compressing objects:  42% (6/14)   [K
+remote: Compressing objects:  50% (7/14)   [K
+remote: Compressing objects:  57% (8/14)   [K
+remote: Compressing objects:  64% (9/14)   [K
+remote: Compressing objects:  71% (10/14)   [K
+remote: Compressing objects:  78% (11/14)   [K
+remote: Compressing objects:  85% (12/14)   [K
+remote: Compressing objects:  92% (13/14)   [K
+remote: Compressing objects: 100% (14/14)   [K
+remote: Compressing objects: 100% (14/14), done.[K
 remote: Total 32 (delta 18), reused 24 (delta 11), pack-reused 0[K
-Unpacking objects:   3% (1/32)   Unpacking objects:   6% (2/32)   Unpacking objects:   9% (3/32)   Unpacking objects:  12% (4/32)   Unpacking objects:  15% (5/32)   Unpacking objects:  18% (6/32)   Unpacking objects:  21% (7/32)   Unpacking objects:  25% (8/32)   Unpacking objects:  28% (9/32)   Unpacking objects:  31% (10/32)   Unpacking objects:  34% (11/32)   Unpacking objects:  37% (12/32)   Unpacking objects:  40% (13/32)   Unpacking objects:  43% (14/32)   Unpacking objects:  46% (15/32)   Unpacking objects:  50% (16/32)   Unpacking objects:  53% (17/32)   Unpacking objects:  56% (18/32)   Unpacking objects:  59% (19/32)   Unpacking objects:  62% (20/32)   Unpacking objects:  65% (21/32)   Unpacking objects:  68% (22/32)   Unpacking objects:  71% (23/32)   Unpacking objects:  75% (24/32)   Unpacking objects:  78% (25/32)   Unpacking objects:  81% (26/32)   Unpacking objects:  84% (27/32)   Unpacking objects:  87% (28/32)   Unpacking objects:  90% (29/32)   Unpacking objects:  93% (30/32)   Unpacking objects:  96% (31/32)   Unpacking objects: 100% (32/32)   Unpacking objects: 100% (32/32), done.
+Unpacking objects:   3% (1/32)   
+Unpacking objects:   6% (2/32)   
+Unpacking objects:   9% (3/32)   
+Unpacking objects:  12% (4/32)   
+Unpacking objects:  15% (5/32)   
+Unpacking objects:  18% (6/32)   
+Unpacking objects:  21% (7/32)   
+Unpacking objects:  25% (8/32)   
+Unpacking objects:  28% (9/32)   
+Unpacking objects:  31% (10/32)   
+Unpacking objects:  34% (11/32)   
+Unpacking objects:  37% (12/32)   
+Unpacking objects:  40% (13/32)   
+Unpacking objects:  43% (14/32)   
+Unpacking objects:  46% (15/32)   
+Unpacking objects:  50% (16/32)   
+Unpacking objects:  53% (17/32)   
+Unpacking objects:  56% (18/32)   
+Unpacking objects:  59% (19/32)   
+Unpacking objects:  62% (20/32)   
+Unpacking objects:  65% (21/32)   
+Unpacking objects:  68% (22/32)   
+Unpacking objects:  71% (23/32)   
+Unpacking objects:  75% (24/32)   
+Unpacking objects:  78% (25/32)   
+Unpacking objects:  81% (26/32)   
+Unpacking objects:  84% (27/32)   
+Unpacking objects:  87% (28/32)   
+Unpacking objects:  90% (29/32)   
+Unpacking objects:  93% (30/32)   
+Unpacking objects:  96% (31/32)   
+Unpacking objects: 100% (32/32)   
+Unpacking objects: 100% (32/32), done.
 From https://github.com/apache/cloudstack
  * branch              refs/pull/2258/merge -> FETCH_HEAD
 
-travis_time:end:08a62eb7:start=1505992653402430965,finish=1505992654141735800,duration=739304835[0K$ git checkout -qf FETCH_HEAD
-travis_fold:end:git.checkout[0K
+travis_time:end:08a62eb7:start=1505992653402430965,finish=1505992654141735800,duration=739304835
+[0K$ git checkout -qf FETCH_HEAD
+travis_fold:end:git.checkout
+[0K
 [33;1mSetting environment variables from .travis.yml[0m
 $ export PATH=$HOME/.local/bin:$PATH
 $ export TESTS="smoke/test_affinity_groups smoke/test_affinity_groups_projects smoke/test_certauthority_root smoke/test_deploy_vgpu_enabled_vm smoke/test_deploy_vm_iso smoke/test_deploy_vm_root_resize smoke/test_deploy_vm_with_userdata smoke/test_deploy_vms_with_varied_deploymentplanners smoke/test_disk_offerings smoke/test_dynamicroles smoke/test_global_settings smoke/test_guest_vlan_range"
 
 [33;1mDisabling Gradle daemon[0m
-travis_time:start:01c0e35e[0K$ mkdir -p ~/.gradle && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
+travis_time:start:01c0e35e
+[0K$ mkdir -p ~/.gradle && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
 
-travis_time:end:01c0e35e:start=1505992654489953323,finish=1505992654494950336,duration=4997013[0K$ export PATH=$JAVA_HOME/bin:$PATH
-travis_fold:start:cache.1[0KSetting up build cache
+travis_time:end:01c0e35e:start=1505992654489953323,finish=1505992654494950336,duration=4997013
+[0K$ export PATH=$JAVA_HOME/bin:$PATH
+travis_fold:start:cache.1
+[0KSetting up build cache
 $ export CASHER_DIR=$HOME/.casher
-travis_time:start:01b97224[0K$ Installing caching utilities
+travis_time:start:01b97224
+[0K$ Installing caching utilities
 
-travis_time:end:01b97224:start=1505992658426743860,finish=1505992658575440989,duration=148697129[0Ktravis_time:start:00d86420[0K
-travis_time:end:00d86420:start=1505992658581882411,finish=1505992658586768818,duration=4886407[0Ktravis_time:start:2479341f[0K[32;1mattempting to download cache archive[0m
+travis_time:end:01b97224:start=1505992658426743860,finish=1505992658575440989,duration=148697129
+[0Ktravis_time:start:00d86420
+[0K
+travis_time:end:00d86420:start=1505992658581882411,finish=1505992658586768818,duration=4886407
+[0Ktravis_time:start:2479341f
+[0K[32;1mattempting to download cache archive[0m
 [32;1mfetching PR.2258/cache-linux-trusty-6c155ebedc554ec6a6c4ff0621d97703938be5727ac279627ae7305d348046f9--jdk-oraclejdk8.tgz[0m
 [32;1mfound cache[0m
 
-travis_time:end:2479341f:start=1505992658591904375,finish=1505992665377812751,duration=6785908376[0Ktravis_time:start:0792dc1c[0K
-travis_time:end:0792dc1c:start=1505992665382847593,finish=1505992665387450152,duration=4602559[0Ktravis_time:start:1393be34[0K[32;1madding /home/travis/.m2 to cache[0m
+travis_time:end:2479341f:start=1505992658591904375,finish=1505992665377812751,duration=6785908376
+[0Ktravis_time:start:0792dc1c
+[0K
+travis_time:end:0792dc1c:start=1505992665382847593,finish=1505992665387450152,duration=4602559
+[0Ktravis_time:start:1393be34
+[0K[32;1madding /home/travis/.m2 to cache[0m
 
-travis_time:end:1393be34:start=1505992665392759274,finish=1505992676772630063,duration=11379870789[0Ktravis_fold:end:cache.1[0K$ java -Xmx32m -version
+travis_time:end:1393be34:start=1505992665392759274,finish=1505992676772630063,duration=11379870789
+[0Ktravis_fold:end:cache.1
+[0K$ java -Xmx32m -version
 java version "1.8.0_144"
 Java(TM) SE Runtime Environment (build 1.8.0_144-b01)
 Java HotSpot(TM) 64-Bit Server VM (build 25.144-b01, mixed mode)
 $ javac -J-Xmx32m -version
 javac 1.8.0_144
-travis_fold:start:before_install[0Ktravis_time:start:02b5f93f[0K$ travis_wait 30 ./tools/travis/before_install.sh
+travis_fold:start:before_install
+[0Ktravis_time:start:02b5f93f
+[0K$ travis_wait 30 ./tools/travis/before_install.sh
 
 
-Still running (1 of 30): ./tools/travis/before_install.shStill running (2 of 30): ./tools/travis/before_install.sh
+Still running (1 of 30): ./tools/travis/before_install.sh
+Still running (2 of 30): ./tools/travis/before_install.sh
+
 [32;1mThe command ./tools/travis/before_install.sh exited with 0.[0m
 
 [32;1mLog:[0m
@@ -536,7 +915,10 @@ gpg: Total number processed: 1
 gpg:         new signatures: 3
 W: http://dl.hhvm.com/ubuntu/dists/trusty/InRelease: Signature by key 36AEF64D0207E7EEE352D4875A16E7281BE7A449 uses weak digest algorithm (SHA1)
 W: http://ppa.launchpad.net/couchdb/stable/ubuntu/dists/trusty/Release.gpg: Signature by key 15866BAFD9BCC4F3C1E0DFC7D69548E1C17EAB57 uses weak digest algorithm (SHA1)
-Extracting templates from packages: 41%Extracting templates from packages: 83%Extracting templates from packages: 100%
+
+Extracting templates from packages: 41%
+Extracting templates from packages: 83%
+Extracting templates from packages: 100%
 ipmitool version 1.8.16
 
 Installing some python packages: 
@@ -545,12 +927,167 @@ Requirement already up-to-date: pip in /usr/local/lib/python2.7/dist-packages
 python packages installed successfully
 /home/travis/.travis/job_stages: line 169:  4402 Terminated              travis_jigger $! $timeout $cmd
 
-travis_time:end:02b5f93f:start=1505992686185557800,finish=1505992793173653216,duration=106988095416[0Ktravis_fold:end:before_install[0Ktravis_fold:start:install[0Ktravis_time:start:0e59f140[0K$ ./tools/travis/install.sh
+travis_time:end:02b5f93f:start=1505992686185557800,finish=1505992793173653216,duration=106988095416
+[0Ktravis_fold:end:before_install
+[0Ktravis_fold:start:install
+[0Ktravis_time:start:0e59f140
+[0K$ ./tools/travis/install.sh
 Cloning into 'nonoss'...
 remote: Counting objects: 730, done.[K
-Receiving objects:   0% (1/730)   Receiving objects:   1% (8/730)   Receiving objects:   2% (15/730)   Receiving objects:   2% (18/730), 23.43 MiB | 23.42 MiB/s   Receiving objects:   3% (22/730), 23.43 MiB | 23.42 MiB/s   Receiving objects:   4% (30/730), 23.43 MiB | 23.42 MiB/s   Receiving objects:   5% (37/730), 23.43 MiB | 23.42 MiB/s   Receiving objects:   6% (44/730), 23.43 MiB | 23.42 MiB/s   Receiving objects:   7% (52/730), 36.12 MiB | 24.08 MiB/s   Receiving objects:   8% (59/730), 36.12 MiB | 24.08 MiB/s   Receiving objects:   9% (66/730), 36.12 MiB | 24.08 MiB/s   Receiving objects:  10% (73/730), 36.12 MiB | 24.08 MiB/s   Receiving objects:  11% (81/730), 36.12 MiB | 24.08 MiB/s   Receiving objects:  12% (88/730), 36.12 MiB | 24.08 MiB/s   Receiving objects:  12% (91/730), 48.86 MiB | 24.42 MiB/s   Receiving objects:  13% (95/730), 48.86 MiB | 24.42 MiB/s   Receiving objects:  14% (103/730), 48.86 MiB | 24.42 MiB/s   Receiving objects:  15% (110/730), 48.86 MiB | 24.42 MiB/s   Receiving objects:  16% (117/730), 48.86 MiB | 24.42 MiB/s   Receiving objects:  16% (122/730), 74.42 MiB | 24.80 MiB/s   Receiving objects:  16% (122/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  17% (125/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  18% (132/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  19% (139/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  20% (146/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  21% (154/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  22% (161/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  23% (168/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  24% (176/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  25% (183/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  26% (190/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  27% (198/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  28% (205/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  29% (212/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  30% (219/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  31% (227/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  32% (234/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  33% (241/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  34% (249/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  35% (256/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  36% (263/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  37% (271/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  38% (278/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  39% (285/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  40% (292/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  41% (300/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  42% (307/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  43% (314/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  44% (322/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  45% (329/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  46% (336/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  47% (344/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  48% (351/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  49% (358/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  50% (365/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  51% (373/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  52% (380/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  53% (387/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  54% (395/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  55% (402/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  56% (409/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  57% (417/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  58% (424/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  59% (431/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  60% (438/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  61% (446/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  62% (453/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  63% (460/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  64% (468/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  65% (475/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  66% (482/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  67% (490/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  68% (497/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  69% (504/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  70% (511/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  71% (519/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  72% (526/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  73% (533/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  74% (541/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  75% (548/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  76% (555/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  77% (563/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  78% (570/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  79% (577/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  80% (584/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  81% (592/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  82% (599/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  83% (606/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  84% (614/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  85% (621/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  86% (628/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  87% (636/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  88% (643/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  89% (650/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  90% (657/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  91% (665/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  92% (672/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  93% (679/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  94% (687/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  95% (694/730), 100.35 MiB | 25.08 MiB/s   Receiving objects:  96% (701/730), 112.71 MiB | 25.05 MiB/s   Receiving objects:  97% (709/730), 112.71 MiB | 25.05 MiB/s   Receiving objects:  98% (716/730), 112.71 MiB | 25.05 MiB/s   Receiving objects:  99% (723/730), 112.71 MiB | 25.05 MiB/s   remote: Total 730 (delta 0), reused 0 (delta 0), pack-reused 730[K
-Receiving objects: 100% (730/730), 112.71 MiB | 25.05 MiB/s   Receiving objects: 100% (730/730), 125.15 MiB | 25.09 MiB/s, done.
-Resolving deltas:   0% (0/372)   Resolving deltas:   1% (4/372)   Resolving deltas:   2% (11/372)   Resolving deltas:   3% (14/372)   Resolving deltas:   4% (15/372)   Resolving deltas:   6% (23/372)   Resolving deltas:   8% (30/372)   Resolving deltas:   9% (34/372)   Resolving deltas:  10% (40/372)   Resolving deltas:  18% (67/372)   Resolving deltas:  20% (77/372)   Resolving deltas:  27% (102/372)   Resolving deltas:  31% (116/372)   Resolving deltas:  34% (127/372)   Resolving deltas:  35% (132/372)   Resolving deltas:  40% (151/372)   Resolving deltas:  41% (156/372)   Resolving deltas:  44% (165/372)   Resolving deltas:  47% (175/372)   Resolving deltas:  49% (185/372)   Resolving deltas:  51% (192/372)   Resolving deltas:  53% (200/372)   Resolving deltas:  58% (219/372)   Resolving deltas:  63% (238/372)   Resolving deltas:  67% (250/372)   Resolving deltas:  68% (254/372)   Resolving deltas:  69% (258/372)   Resolving deltas:  73% (272/372)   Resolving deltas:  75% (281/372)   Resolving deltas:  76% (283/372)   Resolving deltas:  77% (290/372)   Resolving deltas:  78% (291/372)   Resolving deltas:  79% (297/372)   Resolving deltas:  80% (300/372)   Resolving deltas:  82% (306/372)   Resolving deltas:  83% (312/372)   Resolving deltas:  84% (313/372)   Resolving deltas:  85% (317/372)   Resolving deltas:  86% (320/372)   Resolving deltas:  87% (325/372)   Resolving deltas:  88% (328/372)   Resolving deltas:  89% (332/372)   Resolving deltas:  90% (335/372)   Resolving deltas:  91% (339/372)   Resolving deltas:  94% (351/372)   Resolving deltas: 100% (372/372)   Resolving deltas: 100% (372/372), done.
+Receiving objects:   0% (1/730)   
+Receiving objects:   1% (8/730)   
+Receiving objects:   2% (15/730)   
+Receiving objects:   2% (18/730), 23.43 MiB | 23.42 MiB/s   
+Receiving objects:   3% (22/730), 23.43 MiB | 23.42 MiB/s   
+Receiving objects:   4% (30/730), 23.43 MiB | 23.42 MiB/s   
+Receiving objects:   5% (37/730), 23.43 MiB | 23.42 MiB/s   
+Receiving objects:   6% (44/730), 23.43 MiB | 23.42 MiB/s   
+Receiving objects:   7% (52/730), 36.12 MiB | 24.08 MiB/s   
+Receiving objects:   8% (59/730), 36.12 MiB | 24.08 MiB/s   
+Receiving objects:   9% (66/730), 36.12 MiB | 24.08 MiB/s   
+Receiving objects:  10% (73/730), 36.12 MiB | 24.08 MiB/s   
+Receiving objects:  11% (81/730), 36.12 MiB | 24.08 MiB/s   
+Receiving objects:  12% (88/730), 36.12 MiB | 24.08 MiB/s   
+Receiving objects:  12% (91/730), 48.86 MiB | 24.42 MiB/s   
+Receiving objects:  13% (95/730), 48.86 MiB | 24.42 MiB/s   
+Receiving objects:  14% (103/730), 48.86 MiB | 24.42 MiB/s   
+Receiving objects:  15% (110/730), 48.86 MiB | 24.42 MiB/s   
+Receiving objects:  16% (117/730), 48.86 MiB | 24.42 MiB/s   
+Receiving objects:  16% (122/730), 74.42 MiB | 24.80 MiB/s   
+Receiving objects:  16% (122/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  17% (125/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  18% (132/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  19% (139/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  20% (146/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  21% (154/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  22% (161/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  23% (168/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  24% (176/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  25% (183/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  26% (190/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  27% (198/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  28% (205/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  29% (212/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  30% (219/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  31% (227/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  32% (234/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  33% (241/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  34% (249/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  35% (256/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  36% (263/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  37% (271/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  38% (278/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  39% (285/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  40% (292/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  41% (300/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  42% (307/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  43% (314/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  44% (322/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  45% (329/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  46% (336/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  47% (344/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  48% (351/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  49% (358/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  50% (365/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  51% (373/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  52% (380/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  53% (387/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  54% (395/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  55% (402/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  56% (409/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  57% (417/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  58% (424/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  59% (431/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  60% (438/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  61% (446/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  62% (453/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  63% (460/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  64% (468/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  65% (475/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  66% (482/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  67% (490/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  68% (497/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  69% (504/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  70% (511/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  71% (519/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  72% (526/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  73% (533/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  74% (541/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  75% (548/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  76% (555/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  77% (563/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  78% (570/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  79% (577/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  80% (584/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  81% (592/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  82% (599/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  83% (606/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  84% (614/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  85% (621/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  86% (628/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  87% (636/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  88% (643/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  89% (650/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  90% (657/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  91% (665/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  92% (672/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  93% (679/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  94% (687/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  95% (694/730), 100.35 MiB | 25.08 MiB/s   
+Receiving objects:  96% (701/730), 112.71 MiB | 25.05 MiB/s   
+Receiving objects:  97% (709/730), 112.71 MiB | 25.05 MiB/s   
+Receiving objects:  98% (716/730), 112.71 MiB | 25.05 MiB/s   
+Receiving objects:  99% (723/730), 112.71 MiB | 25.05 MiB/s   
+remote: Total 730 (delta 0), reused 0 (delta 0), pack-reused 730[K
+Receiving objects: 100% (730/730), 112.71 MiB | 25.05 MiB/s   
+Receiving objects: 100% (730/730), 125.15 MiB | 25.09 MiB/s, done.
+Resolving deltas:   0% (0/372)   
+Resolving deltas:   1% (4/372)   
+Resolving deltas:   2% (11/372)   
+Resolving deltas:   3% (14/372)   
+Resolving deltas:   4% (15/372)   
+Resolving deltas:   6% (23/372)   
+Resolving deltas:   8% (30/372)   
+Resolving deltas:   9% (34/372)   
+Resolving deltas:  10% (40/372)   
+Resolving deltas:  18% (67/372)   
+Resolving deltas:  20% (77/372)   
+Resolving deltas:  27% (102/372)   
+Resolving deltas:  31% (116/372)   
+Resolving deltas:  34% (127/372)   
+Resolving deltas:  35% (132/372)   
+Resolving deltas:  40% (151/372)   
+Resolving deltas:  41% (156/372)   
+Resolving deltas:  44% (165/372)   
+Resolving deltas:  47% (175/372)   
+Resolving deltas:  49% (185/372)   
+Resolving deltas:  51% (192/372)   
+Resolving deltas:  53% (200/372)   
+Resolving deltas:  58% (219/372)   
+Resolving deltas:  63% (238/372)   
+Resolving deltas:  67% (250/372)   
+Resolving deltas:  68% (254/372)   
+Resolving deltas:  69% (258/372)   
+Resolving deltas:  73% (272/372)   
+Resolving deltas:  75% (281/372)   
+Resolving deltas:  76% (283/372)   
+Resolving deltas:  77% (290/372)   
+Resolving deltas:  78% (291/372)   
+Resolving deltas:  79% (297/372)   
+Resolving deltas:  80% (300/372)   
+Resolving deltas:  82% (306/372)   
+Resolving deltas:  83% (312/372)   
+Resolving deltas:  84% (313/372)   
+Resolving deltas:  85% (317/372)   
+Resolving deltas:  86% (320/372)   
+Resolving deltas:  87% (325/372)   
+Resolving deltas:  88% (328/372)   
+Resolving deltas:  89% (332/372)   
+Resolving deltas:  90% (335/372)   
+Resolving deltas:  91% (339/372)   
+Resolving deltas:  94% (351/372)   
+Resolving deltas: 100% (372/372)   
+Resolving deltas: 100% (372/372), done.
 +mvn install:install-file -Dfile=cloud-iControl.jar -DgroupId=com.cloud.com.f5 -DartifactId=icontrol -Dversion=1.0 -Dpackaging=jar
 Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=800m; support was removed in 8.0
 [[1;34mINFO[m] Scanning for projects...
@@ -824,7 +1361,7 @@ Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=800m; sup
 [[1;34mINFO[m] Exclude: tools/devcloud/src/deps/boxes/basebox-build/definition.rb
 [[1;34mINFO[m] Exclude: tools/devcloud/src/deps/boxes/basebox-build/preseed.cfg
 [[1;34mINFO[m] Exclude: tools/marvin/Marvin.egg-info/*
-[[1;34mINFO[m] Exclude: ui/css/token-input-facebook.css
+[[1;34mINFO[m] Exclude: ui/css/travisToken-input-facebook.css
 [[1;34mINFO[m] Exclude: ui/l10n/*
 [[1;34mINFO[m] Exclude: ui/lib/flot/jquery.colorhelpers.js
 [[1;34mINFO[m] Exclude: ui/lib/flot/jquery.flot.crosshair.js
@@ -6099,31 +6636,305 @@ Processing ./tools/marvin/dist/Marvin-4.11.0.0-SNAPSHOT.tar.gz
 Requirement already up-to-date: mysql-connector-python>=1.1.6 in /home/travis/.local/lib/python2.7/site-packages (from Marvin===4.11.0.0-SNAPSHOT)
 Collecting requests>=2.2.1 (from Marvin===4.11.0.0-SNAPSHOT)
   Downloading requests-2.18.4-py2.py3-none-any.whl (88kB)
-[?25l[K    11% |███▊                            | 10kB 17.2MB/s eta 0:00:01[K    23% |███████▍                        | 20kB 2.2MB/s eta 0:00:01[K    34% |███████████                     | 30kB 3.2MB/s eta 0:00:01[K    46% |██████████████▊                 | 40kB 3.5MB/s eta 0:00:01[K    57% |██████████████████▌             | 51kB 3.8MB/s eta 0:00:01[K    69% |██████████████████████▏         | 61kB 4.5MB/s eta 0:00:01[K    80% |█████████████████████████▉      | 71kB 3.8MB/s eta 0:00:01[K    92% |█████████████████████████████▌  | 81kB 4.3MB/s eta 0:00:01[K    100% |████████████████████████████████| 92kB 3.3MB/s 
+[?25l
+[K    11% |███▊                            | 10kB 17.2MB/s eta 0:00:01
+[K    23% |███████▍                        | 20kB 2.2MB/s eta 0:00:01
+[K    34% |███████████                     | 30kB 3.2MB/s eta 0:00:01
+[K    46% |██████████████▊                 | 40kB 3.5MB/s eta 0:00:01
+[K    57% |██████████████████▌             | 51kB 3.8MB/s eta 0:00:01
+[K    69% |██████████████████████▏         | 61kB 4.5MB/s eta 0:00:01
+[K    80% |█████████████████████████▉      | 71kB 3.8MB/s eta 0:00:01
+[K    92% |█████████████████████████████▌  | 81kB 4.3MB/s eta 0:00:01
+[K    100% |████████████████████████████████| 92kB 3.3MB/s 
 [?25hRequirement already up-to-date: paramiko>=1.13.0 in /home/travis/.local/lib/python2.7/site-packages (from Marvin===4.11.0.0-SNAPSHOT)
 Requirement already up-to-date: nose>=1.3.3 in /home/travis/.local/lib/python2.7/site-packages (from Marvin===4.11.0.0-SNAPSHOT)
 Collecting ddt>=0.4.0 (from Marvin===4.11.0.0-SNAPSHOT)
   Downloading ddt-1.1.1-py2.py3-none-any.whl
 Collecting pyvmomi>=5.5.0 (from Marvin===4.11.0.0-SNAPSHOT)
   Downloading pyvmomi-6.5.0.2017.5-1.tar.gz (252kB)
-[?25l[K    4% |█▎                              | 10kB 7.6MB/s eta 0:00:01[K    8% |██▋                             | 20kB 5.7MB/s eta 0:00:01[K    12% |████                            | 30kB 4.7MB/s eta 0:00:01[K    16% |█████▏                          | 40kB 3.8MB/s eta 0:00:01[K    20% |██████▌                         | 51kB 3.6MB/s eta 0:00:01[K    24% |███████▉                        | 61kB 4.3MB/s eta 0:00:01[K    28% |█████████                       | 71kB 4.1MB/s eta 0:00:01[K    32% |██████████▍                     | 81kB 3.9MB/s eta 0:00:01[K    36% |███████████▊                    | 92kB 4.3MB/s eta 0:00:01[K    40% |█████████████                   | 102kB 4.5MB/s eta 0:00:01[K    44% |██████████████▎                 | 112kB 4.7MB/s eta 0:00:01[K    48% |███████████████▋                | 122kB 4.6MB/s eta 0:00:01[K    52% |█████████████████               | 133kB 4.4MB/s eta 0:00:01[K    56% |██████████████████▏             | 143kB 5.4MB/s eta 0:00:01[K    60% |███████████████████▌            | 153kB 5.7MB/s eta 0:00:01[K    64% |████████████████████▉           | 163kB 5.1MB/s eta 0:00:01[K    69% |██████████████████████          | 174kB 5.9MB/s eta 0:00:01[K    73% |███████████████████████▍        | 184kB 6.3MB/s eta 0:00:01[K    77% |████████████████████████▊       | 194kB 6.3MB/s eta 0:00:01[K    81% |██████████████████████████      | 204kB 6.0MB/s eta 0:00:01[K    85% |███████████████████████████▎    | 215kB 5.3MB/s eta 0:00:01[K    89% |████████████████████████████▋   | 225kB 6.2MB/s eta 0:00:01[K    93% |██████████████████████████████  | 235kB 6.1MB/s eta 0:00:01[K    97% |███████████████████████████████▏| 245kB 6.1MB/s eta 0:00:01[K    100% |████████████████████████████████| 256kB 2.8MB/s 
+[?25l
+[K    4% |█▎                              | 10kB 7.6MB/s eta 0:00:01
+[K    8% |██▋                             | 20kB 5.7MB/s eta 0:00:01
+[K    12% |████                            | 30kB 4.7MB/s eta 0:00:01
+[K    16% |█████▏                          | 40kB 3.8MB/s eta 0:00:01
+[K    20% |██████▌                         | 51kB 3.6MB/s eta 0:00:01
+[K    24% |███████▉                        | 61kB 4.3MB/s eta 0:00:01
+[K    28% |█████████                       | 71kB 4.1MB/s eta 0:00:01
+[K    32% |██████████▍                     | 81kB 3.9MB/s eta 0:00:01
+[K    36% |███████████▊                    | 92kB 4.3MB/s eta 0:00:01
+[K    40% |█████████████                   | 102kB 4.5MB/s eta 0:00:01
+[K    44% |██████████████▎                 | 112kB 4.7MB/s eta 0:00:01
+[K    48% |███████████████▋                | 122kB 4.6MB/s eta 0:00:01
+[K    52% |█████████████████               | 133kB 4.4MB/s eta 0:00:01
+[K    56% |██████████████████▏             | 143kB 5.4MB/s eta 0:00:01
+[K    60% |███████████████████▌            | 153kB 5.7MB/s eta 0:00:01
+[K    64% |████████████████████▉           | 163kB 5.1MB/s eta 0:00:01
+[K    69% |██████████████████████          | 174kB 5.9MB/s eta 0:00:01
+[K    73% |███████████████████████▍        | 184kB 6.3MB/s eta 0:00:01
+[K    77% |████████████████████████▊       | 194kB 6.3MB/s eta 0:00:01
+[K    81% |██████████████████████████      | 204kB 6.0MB/s eta 0:00:01
+[K    85% |███████████████████████████▎    | 215kB 5.3MB/s eta 0:00:01
+[K    89% |████████████████████████████▋   | 225kB 6.2MB/s eta 0:00:01
+[K    93% |██████████████████████████████  | 235kB 6.1MB/s eta 0:00:01
+[K    97% |███████████████████████████████▏| 245kB 6.1MB/s eta 0:00:01
+[K    100% |████████████████████████████████| 256kB 2.8MB/s 
 [?25hCollecting netaddr>=0.7.14 (from Marvin===4.11.0.0-SNAPSHOT)
   Downloading netaddr-0.7.19-py2.py3-none-any.whl (1.6MB)
-[?25l[K    0% |▏                               | 10kB 42.8MB/s eta 0:00:01[K    1% |▍                               | 20kB 12.4MB/s eta 0:00:01[K    1% |▋                               | 30kB 16.3MB/s eta 0:00:01[K    2% |▉                               | 40kB 8.7MB/s eta 0:00:01[K    3% |█                               | 51kB 6.6MB/s eta 0:00:01[K    3% |█▏                              | 61kB 7.7MB/s eta 0:00:01[K    4% |█▍                              | 71kB 6.9MB/s eta 0:00:01[K    5% |█▋                              | 81kB 6.5MB/s eta 0:00:01[K    5% |█▉                              | 92kB 7.1MB/s eta 0:00:01[K    6% |██                              | 102kB 6.7MB/s eta 0:00:01[K    6% |██▏                             | 112kB 6.7MB/s eta 0:00:01[K    7% |██▍                             | 122kB 6.4MB/s eta 0:00:01[K    8% |██▋                             | 133kB 5.6MB/s eta 0:00:01[K    8% |██▉                             | 143kB 6.5MB/s eta 0:00:01[K    9% |███                             | 153kB 6.8MB/s eta 0:00:01[K    10% |███▏                            | 163kB 5.8MB/s eta 0:00:01[K    10% |███▍                            | 174kB 6.7MB/s eta 0:00:01[K    11% |███▋                            | 184kB 6.9MB/s eta 0:00:01[K    11% |███▉                            | 194kB 7.0MB/s eta 0:00:01[K    12% |████                            | 204kB 7.3MB/s eta 0:00:01[K    13% |████▎                           | 215kB 6.4MB/s eta 0:00:01[K    13% |████▍                           | 225kB 7.3MB/s eta 0:00:01[K    14% |████▋                           | 235kB 7.2MB/s eta 0:00:01[K    15% |████▉                           | 245kB 6.4MB/s eta 0:00:01[K    15% |█████                           | 256kB 7.3MB/s eta 0:00:01[K    16% |█████▎                          | 266kB 8.1MB/s eta 0:00:01[K    16% |█████▍                          | 276kB 8.0MB/s eta 0:00:01[K    17% |█████▋                          | 286kB 7.9MB/s eta 0:00:01[K    18% |█████▉                          | 296kB 6.9MB/s eta 0:00:01[K    18% |██████                          | 307kB 7.6MB/s eta 0:00:01[K    19% |██████▎                         | 317kB 7.9MB/s eta 0:00:01[K    20% |██████▍                         | 327kB 6.8MB/s eta 0:00:01[K    20% |██████▋                         | 337kB 8.2MB/s eta 0:00:01[K    21% |██████▉                         | 348kB 8.6MB/s eta 0:00:01[K    22% |███████                         | 358kB 8.6MB/s eta 0:00:01[K    22% |███████▎                        | 368kB 8.5MB/s eta 0:00:01[K    23% |███████▌                        | 378kB 7.4MB/s eta 0:00:01[K    23% |███████▋                        | 389kB 8.4MB/s eta 0:00:01[K    24% |███████▉                        | 399kB 8.6MB/s eta 0:00:01[K    25% |████████                        | 409kB 7.2MB/s eta 0:00:01[K    25% |████████▎                       | 419kB 8.2MB/s eta 0:00:01[K    26% |████████▌                       | 430kB 8.3MB/s eta 0:00:01[K    27% |████████▋                       | 440kB 8.3MB/s eta 0:00:01[K    27% |████████▉                       | 450kB 8.7MB/s eta 0:00:01[K    28% |█████████                       | 460kB 6.9MB/s eta 0:00:01[K    28% |█████████▎                      | 471kB 7.7MB/s eta 0:00:01[K    29% |█████████▌                      | 481kB 8.4MB/s eta 0:00:01[K    30% |█████████▋                      | 491kB 7.2MB/s eta 0:00:01[K    30% |█████████▉                      | 501kB 8.2MB/s eta 0:00:01[K    31% |██████████                      | 512kB 8.4MB/s eta 0:00:01[K    32% |██████████▎                     | 522kB 8.4MB/s eta 0:00:01[K    32% |██████████▌                     | 532kB 9.2MB/s eta 0:00:01[K    33% |██████████▋                     | 542kB 8.7MB/s eta 0:00:01[K    33% |██████████▉                     | 552kB 9.2MB/s eta 0:00:01[K    34% |███████████                     | 563kB 9.4MB/s eta 0:00:01[K    35% |███████████▎                    | 573kB 7.9MB/s eta 0:00:01[K    35% |███████████▌                    | 583kB 8.3MB/s eta 0:00:01[K    36% |█████████���█▊                    | 593kB 9.0MB/s eta 0:00:01[K    37% |███████████▉                    | 604kB 8.9MB/s eta 0:00:01[K    37% |████████████                    | 614kB 10.4MB/s eta 0:00:01[K    38% |████████████▎                   | 624kB 8.9MB/s eta 0:00:01[K    38% |████████████▌                   | 634kB 9.6MB/s eta 0:00:01[K    39% |████████████▊                   | 645kB 8.5MB/s eta 0:00:01[K    40% |████████████▉                   | 655kB 7.0MB/s eta 0:00:01[K    40% |█████████████                   | 665kB 8.5MB/s eta 0:00:01[K    41% |█████████████▎                  | 675kB 10.3MB/s eta 0:00:01[K    42% |█████████████▌                  | 686kB 10.4MB/s eta 0:00:01[K    42% |█████████████▊                  | 696kB 9.5MB/s eta 0:00:01[K    43% |█████████████▉                  | 706kB 9.0MB/s eta 0:00:01[K    44% |██████████████                  | 716kB 9.3MB/s eta 0:00:01[K    44% |██████████████▎                 | 727kB 9.5MB/s eta 0:00:01[K    45% |██████████████▌                 | 737kB 8.5MB/s eta 0:00:01[K    45% |██████████████▊                 | 747kB 10.1MB/s eta 0:00:01[K    46% |███████████████                 | 757kB 10.3MB/s eta 0:00:01[K    47% |███████████████                 | 768kB 10.4MB/s eta 0:00:01[K    47% |███████████████▎                | 778kB 10.3MB/s eta 0:00:01[K    48% |███████████████▌                | 788kB 8.4MB/s eta 0:00:01[K    49% |███████████████▊                | 798kB 10.2MB/s eta 0:00:01[K    49% |████████████████                | 808kB 10.3MB/s eta 0:00:01[K    50% |████████████████                | 819kB 8.9MB/s eta 0:00:01[K    50% |████████████████▎               | 829kB 10.1MB/s eta 0:00:01[K    51% |████████████████▌               | 839kB 10.4MB/s eta 0:00:01[K    52% |████████████████▊               | 849kB 10.4MB/s eta 0:00:01[K    52% |█████████████████               | 860kB 10.3MB/s eta 0:00:01[K    53% |█████████████████               | 870kB 10.0MB/s eta 0:00:01[K    54% |█████████████████▎              | 880kB 10.2MB/s eta 0:00:01[K    54% |█████████████████▌              | 890kB 10.2MB/s eta 0:00:01[K    55% |█████████████████▊              | 901kB 9.7MB/s eta 0:00:01[K    55% |██████████████████              | 911kB 10.1MB/s eta 0:00:01[K    56% |███████████████���██              | 921kB 10.9MB/s eta 0:00:01[K    57% |██████████████████▎             | 931kB 11.0MB/s eta 0:00:01[K    57% |██████████████████▌             | 942kB 11.6MB/s eta 0:00:01[K    58% |██████████████████▊             | 952kB 8.1MB/s eta 0:00:01[K    59% |███████████████████             | 962kB 10.1MB/s eta 0:00:01[K    59% |███████████████████▏            | 972kB 10.3MB/s eta 0:00:01[K    60% |███████████████████▎            | 983kB 9.3MB/s eta 0:00:01[K    60% |███████████████████▌            | 993kB 11.6MB/s eta 0:00:01[K    61% |███████████████████▊            | 1.0MB 11.1MB/s eta 0:00:01[K    62% |████████████████████            | 1.0MB 11.2MB/s eta 0:00:01[K    62% |████████████████████▏           | 1.0MB 10.4MB/s eta 0:00:01[K    63% |████████████████████▎           | 1.0MB 9.6MB/s eta 0:00:01[K    64% |████████████████████▌           | 1.0MB 10.1MB/s eta 0:00:01[K    64% |████████████████████▊           | 1.1MB 14.3MB/s eta 0:00:01[K    65% |█████████████████████           | 1.1MB 10.4MB/s eta 0:00:01[K    66% |███���█████████████████▏          | 1.1MB 10.6MB/s eta 0:00:01[K    66% |█████████████████████▎          | 1.1MB 10.5MB/s eta 0:00:01[K    67% |█████████████████████▌          | 1.1MB 10.5MB/s eta 0:00:01[K    67% |█████████████████████▊          | 1.1MB 10.9MB/s eta 0:00:01[K    68% |██████████████████████          | 1.1MB 9.8MB/s eta 0:00:01[K    69% |██████████████████████▏         | 1.1MB 11.5MB/s eta 0:00:01[K    69% |██████████████████████▍         | 1.1MB 11.8MB/s eta 0:00:01[K    70% |██████████████████████▌         | 1.1MB 9.8MB/s eta 0:00:01[K    71% |██████████████████████▊         | 1.2MB 10.8MB/s eta 0:00:01[K    71% |███████████████████████         | 1.2MB 13.9MB/s eta 0:00:01[K    72% |███████████████████████▏        | 1.2MB 13.8MB/s eta 0:00:01[K    72% |███████████████████████▍        | 1.2MB 12.1MB/s eta 0:00:01[K    73% |███████████████████████▌        | 1.2MB 10.6MB/s eta 0:00:01[K    74% |███████████████████████▊        | 1.2MB 11.3MB/s eta 0:00:01[K    74% |���███████████████████████        | 1.2MB 11.8MB/s eta 0:00:01[K    75% |████████████████████████▏       | 1.2MB 10.6MB/s eta 0:00:01[K    76% |████████████████████████▍       | 1.2MB 10.1MB/s eta 0:00:01[K    76% |████████████████████████▌       | 1.2MB 12.1MB/s eta 0:00:01[K    77% |████████████████████████▊       | 1.3MB 12.2MB/s eta 0:00:01[K    77% |█████████████████████████       | 1.3MB 11.4MB/s eta 0:00:01[K    78% |█████████████████████████▏      | 1.3MB 10.6MB/s eta 0:00:01[K    79% |█████████████████████████▍      | 1.3MB 13.5MB/s eta 0:00:01[K    79% |█████████████████████████▌      | 1.3MB 12.1MB/s eta 0:00:01[K    80% |█████████████████████████▊      | 1.3MB 11.7MB/s eta 0:00:01[K    81% |██████████████████████████      | 1.3MB 12.6MB/s eta 0:00:01[K    81% |██████████████████████████▏     | 1.3MB 13.2MB/s eta 0:00:01[K    82% |██████████████████████████▍     | 1.3MB 15.0MB/s eta 0:00:01[K    83% |██████████████████████████▋     | 1.4MB 11.9MB/s eta 0:00:01[K    83% |██████████████████████████▊     | 1.4MB 10.5MB/s eta 0:00:01[K    84% |███████████████████████████     | 1.4MB 11.8MB/s eta 0:00:01[K    84% |███████████████████████████▏    | 1.4MB 12.9MB/s eta 0:00:01[K    85% |███████████████████████████▍    | 1.4MB 10.5MB/s eta 0:00:01[K    86% |███████████████████████████▋    | 1.4MB 13.4MB/s eta 0:00:01[K    86% |███████████████████████████▊    | 1.4MB 10.8MB/s eta 0:00:01[K    87% |████████████████████████████    | 1.4MB 10.7MB/s eta 0:00:01[K    88% |████████████████████████████▏   | 1.4MB 11.4MB/s eta 0:00:01[K    88% |████████████████████████████▍   | 1.4MB 11.0MB/s eta 0:00:01[K    89% |████████████████████████████▋   | 1.5MB 13.7MB/s eta 0:00:01[K    89% |████████████████████████████▊   | 1.5MB 13.0MB/s eta 0:00:01[K    90% |█████████████████████████████   | 1.5MB 11.9MB/s eta 0:00:01[K    91% |███���█████████████████████████▏  | 1.5MB 11.9MB/s eta 0:00:01[K    91% |█████████████████████████████▍  | 1.5MB 13.8MB/s eta 0:00:01[K    92% |█████████████████████████████▋  | 1.5MB 13.9MB/s eta 0:00:01[K    93% |█████████████████████████████▉  | 1.5MB 18.7MB/s eta 0:00:01[K    93% |██████████████████████████████  | 1.5MB 16.5MB/s eta 0:00:01[K    94% |██████████████████████████████▏ | 1.5MB 16.8MB/s eta 0:00:01[K    94% |██████████████████████████████▍ | 1.5MB 11.5MB/s eta 0:00:01[K    95% |██████████████████████████████▋ | 1.6MB 11.3MB/s eta 0:00:01[K    96% |██████████████████████████████▉ | 1.6MB 13.4MB/s eta 0:00:01[K    96% |███████████████████████████████ | 1.6MB 14.7MB/s eta 0:00:01[K    97% |███████████████████████████████▏| 1.6MB 14.7MB/s eta 0:00:01[K    98% |███████████████████████████████▍| 1.6MB 12.8MB/s eta 0:00:01[K    98% |████████████████���██████████████▋| 1.6MB 11.7MB/s eta 0:00:01[K    99% |███████████████████████████████▉| 1.6MB 11.9MB/s eta 0:00:01[K    99% |████████████████████████████████| 1.6MB 13.1MB/s eta 0:00:01[K    100% |████████████████████████████████| 1.6MB 735kB/s 
+[?25l
+[K    0% |▏                               | 10kB 42.8MB/s eta 0:00:01
+[K    1% |▍                               | 20kB 12.4MB/s eta 0:00:01
+[K    1% |▋                               | 30kB 16.3MB/s eta 0:00:01
+[K    2% |▉                               | 40kB 8.7MB/s eta 0:00:01
+[K    3% |█                               | 51kB 6.6MB/s eta 0:00:01
+[K    3% |█▏                              | 61kB 7.7MB/s eta 0:00:01
+[K    4% |█▍                              | 71kB 6.9MB/s eta 0:00:01
+[K    5% |█▋                              | 81kB 6.5MB/s eta 0:00:01
+[K    5% |█▉                              | 92kB 7.1MB/s eta 0:00:01
+[K    6% |██                              | 102kB 6.7MB/s eta 0:00:01
+[K    6% |██▏                             | 112kB 6.7MB/s eta 0:00:01
+[K    7% |██▍                             | 122kB 6.4MB/s eta 0:00:01
+[K    8% |██▋                             | 133kB 5.6MB/s eta 0:00:01
+[K    8% |██▉                             | 143kB 6.5MB/s eta 0:00:01
+[K    9% |███                             | 153kB 6.8MB/s eta 0:00:01
+[K    10% |███▏                            | 163kB 5.8MB/s eta 0:00:01
+[K    10% |███▍                            | 174kB 6.7MB/s eta 0:00:01
+[K    11% |███▋                            | 184kB 6.9MB/s eta 0:00:01
+[K    11% |███▉                            | 194kB 7.0MB/s eta 0:00:01
+[K    12% |████                            | 204kB 7.3MB/s eta 0:00:01
+[K    13% |████▎                           | 215kB 6.4MB/s eta 0:00:01
+[K    13% |████▍                           | 225kB 7.3MB/s eta 0:00:01
+[K    14% |████▋                           | 235kB 7.2MB/s eta 0:00:01
+[K    15% |████▉                           | 245kB 6.4MB/s eta 0:00:01
+[K    15% |█████                           | 256kB 7.3MB/s eta 0:00:01
+[K    16% |█████▎                          | 266kB 8.1MB/s eta 0:00:01
+[K    16% |█████▍                          | 276kB 8.0MB/s eta 0:00:01
+[K    17% |█████▋                          | 286kB 7.9MB/s eta 0:00:01
+[K    18% |█████▉                          | 296kB 6.9MB/s eta 0:00:01
+[K    18% |██████                          | 307kB 7.6MB/s eta 0:00:01
+[K    19% |██████▎                         | 317kB 7.9MB/s eta 0:00:01
+[K    20% |██████▍                         | 327kB 6.8MB/s eta 0:00:01
+[K    20% |██████▋                         | 337kB 8.2MB/s eta 0:00:01
+[K    21% |██████▉                         | 348kB 8.6MB/s eta 0:00:01
+[K    22% |███████                         | 358kB 8.6MB/s eta 0:00:01
+[K    22% |███████▎                        | 368kB 8.5MB/s eta 0:00:01
+[K    23% |███████▌                        | 378kB 7.4MB/s eta 0:00:01
+[K    23% |███████▋                        | 389kB 8.4MB/s eta 0:00:01
+[K    24% |███████▉                        | 399kB 8.6MB/s eta 0:00:01
+[K    25% |████████                        | 409kB 7.2MB/s eta 0:00:01
+[K    25% |████████▎                       | 419kB 8.2MB/s eta 0:00:01
+[K    26% |████████▌                       | 430kB 8.3MB/s eta 0:00:01
+[K    27% |████████▋                       | 440kB 8.3MB/s eta 0:00:01
+[K    27% |████████▉                       | 450kB 8.7MB/s eta 0:00:01
+[K    28% |█████████                       | 460kB 6.9MB/s eta 0:00:01
+[K    28% |█████████▎                      | 471kB 7.7MB/s eta 0:00:01
+[K    29% |█████████▌                      | 481kB 8.4MB/s eta 0:00:01
+[K    30% |█████████▋                      | 491kB 7.2MB/s eta 0:00:01
+[K    30% |█████████▉                      | 501kB 8.2MB/s eta 0:00:01
+[K    31% |██████████                      | 512kB 8.4MB/s eta 0:00:01
+[K    32% |██████████▎                     | 522kB 8.4MB/s eta 0:00:01
+[K    32% |██████████▌                     | 532kB 9.2MB/s eta 0:00:01
+[K    33% |██████████▋                     | 542kB 8.7MB/s eta 0:00:01
+[K    33% |██████████▉                     | 552kB 9.2MB/s eta 0:00:01
+[K    34% |███████████                     | 563kB 9.4MB/s eta 0:00:01
+[K    35% |███████████▎                    | 573kB 7.9MB/s eta 0:00:01
+[K    35% |███████████▌                    | 583kB 8.3MB/s eta 0:00:01
+[K    36% |█████████���█▊                    | 593kB 9.0MB/s eta 0:00:01
+[K    37% |███████████▉                    | 604kB 8.9MB/s eta 0:00:01
+[K    37% |████████████                    | 614kB 10.4MB/s eta 0:00:01
+[K    38% |████████████▎                   | 624kB 8.9MB/s eta 0:00:01
+[K    38% |████████████▌                   | 634kB 9.6MB/s eta 0:00:01
+[K    39% |████████████▊                   | 645kB 8.5MB/s eta 0:00:01
+[K    40% |████████████▉                   | 655kB 7.0MB/s eta 0:00:01
+[K    40% |█████████████                   | 665kB 8.5MB/s eta 0:00:01
+[K    41% |█████████████▎                  | 675kB 10.3MB/s eta 0:00:01
+[K    42% |█████████████▌                  | 686kB 10.4MB/s eta 0:00:01
+[K    42% |█████████████▊                  | 696kB 9.5MB/s eta 0:00:01
+[K    43% |█████████████▉                  | 706kB 9.0MB/s eta 0:00:01
+[K    44% |██████████████                  | 716kB 9.3MB/s eta 0:00:01
+[K    44% |██████████████▎                 | 727kB 9.5MB/s eta 0:00:01
+[K    45% |██████████████▌                 | 737kB 8.5MB/s eta 0:00:01
+[K    45% |██████████████▊                 | 747kB 10.1MB/s eta 0:00:01
+[K    46% |███████████████                 | 757kB 10.3MB/s eta 0:00:01
+[K    47% |███████████████                 | 768kB 10.4MB/s eta 0:00:01
+[K    47% |███████████████▎                | 778kB 10.3MB/s eta 0:00:01
+[K    48% |███████████████▌                | 788kB 8.4MB/s eta 0:00:01
+[K    49% |███████████████▊                | 798kB 10.2MB/s eta 0:00:01
+[K    49% |████████████████                | 808kB 10.3MB/s eta 0:00:01
+[K    50% |████████████████                | 819kB 8.9MB/s eta 0:00:01
+[K    50% |████████████████▎               | 829kB 10.1MB/s eta 0:00:01
+[K    51% |████████████████▌               | 839kB 10.4MB/s eta 0:00:01
+[K    52% |████████████████▊               | 849kB 10.4MB/s eta 0:00:01
+[K    52% |█████████████████               | 860kB 10.3MB/s eta 0:00:01
+[K    53% |█████████████████               | 870kB 10.0MB/s eta 0:00:01
+[K    54% |█████████████████▎              | 880kB 10.2MB/s eta 0:00:01
+[K    54% |█████████████████▌              | 890kB 10.2MB/s eta 0:00:01
+[K    55% |█████████████████▊              | 901kB 9.7MB/s eta 0:00:01
+[K    55% |██████████████████              | 911kB 10.1MB/s eta 0:00:01
+[K    56% |███████████████���██              | 921kB 10.9MB/s eta 0:00:01
+[K    57% |██████████████████▎             | 931kB 11.0MB/s eta 0:00:01
+[K    57% |██████████████████▌             | 942kB 11.6MB/s eta 0:00:01
+[K    58% |██████████████████▊             | 952kB 8.1MB/s eta 0:00:01
+[K    59% |███████████████████             | 962kB 10.1MB/s eta 0:00:01
+[K    59% |███████████████████▏            | 972kB 10.3MB/s eta 0:00:01
+[K    60% |███████████████████▎            | 983kB 9.3MB/s eta 0:00:01
+[K    60% |███████████████████▌            | 993kB 11.6MB/s eta 0:00:01
+[K    61% |███████████████████▊            | 1.0MB 11.1MB/s eta 0:00:01
+[K    62% |████████████████████            | 1.0MB 11.2MB/s eta 0:00:01
+[K    62% |████████████████████▏           | 1.0MB 10.4MB/s eta 0:00:01
+[K    63% |████████████████████▎           | 1.0MB 9.6MB/s eta 0:00:01
+[K    64% |████████████████████▌           | 1.0MB 10.1MB/s eta 0:00:01
+[K    64% |████████████████████▊           | 1.1MB 14.3MB/s eta 0:00:01
+[K    65% |█████████████████████           | 1.1MB 10.4MB/s eta 0:00:01
+[K    66% |███���█████████████████▏          | 1.1MB 10.6MB/s eta 0:00:01
+[K    66% |█████████████████████▎          | 1.1MB 10.5MB/s eta 0:00:01
+[K    67% |█████████████████████▌          | 1.1MB 10.5MB/s eta 0:00:01
+[K    67% |█████████████████████▊          | 1.1MB 10.9MB/s eta 0:00:01
+[K    68% |██████████████████████          | 1.1MB 9.8MB/s eta 0:00:01
+[K    69% |██████████████████████▏         | 1.1MB 11.5MB/s eta 0:00:01
+[K    69% |██████████████████████▍         | 1.1MB 11.8MB/s eta 0:00:01
+[K    70% |██████████████████████▌         | 1.1MB 9.8MB/s eta 0:00:01
+[K    71% |██████████████████████▊         | 1.2MB 10.8MB/s eta 0:00:01
+[K    71% |███████████████████████         | 1.2MB 13.9MB/s eta 0:00:01
+[K    72% |███████████████████████▏        | 1.2MB 13.8MB/s eta 0:00:01
+[K    72% |███████████████████████▍        | 1.2MB 12.1MB/s eta 0:00:01
+[K    73% |███████████████████████▌        | 1.2MB 10.6MB/s eta 0:00:01
+[K    74% |███████████████████████▊        | 1.2MB 11.3MB/s eta 0:00:01
+[K    74% |���███████████████████████        | 1.2MB 11.8MB/s eta 0:00:01
+[K    75% |████████████████████████▏       | 1.2MB 10.6MB/s eta 0:00:01
+[K    76% |████████████████████████▍       | 1.2MB 10.1MB/s eta 0:00:01
+[K    76% |████████████████████████▌       | 1.2MB 12.1MB/s eta 0:00:01
+[K    77% |████████████████████████▊       | 1.3MB 12.2MB/s eta 0:00:01
+[K    77% |█████████████████████████       | 1.3MB 11.4MB/s eta 0:00:01
+[K    78% |█████████████████████████▏      | 1.3MB 10.6MB/s eta 0:00:01
+[K    79% |█████████████████████████▍      | 1.3MB 13.5MB/s eta 0:00:01
+[K    79% |█████████████████████████▌      | 1.3MB 12.1MB/s eta 0:00:01
+[K    80% |█████████████████████████▊      | 1.3MB 11.7MB/s eta 0:00:01
+[K    81% |██████████████████████████      | 1.3MB 12.6MB/s eta 0:00:01
+[K    81% |██████████████████████████▏     | 1.3MB 13.2MB/s eta 0:00:01
+[K    82% |██████████████████████████▍     | 1.3MB 15.0MB/s eta 0:00:01
+[K    83% |██████████████████████████▋     | 1.4MB 11.9MB/s eta 0:00:01
+[K    83% |██████████████████████████▊     | 1.4MB 10.5MB/s eta 0:00:01
+[K    84% |███████████████████████████     | 1.4MB 11.8MB/s eta 0:00:01
+[K    84% |███████████████████████████▏    | 1.4MB 12.9MB/s eta 0:00:01
+[K    85% |███████████████████████████▍    | 1.4MB 10.5MB/s eta 0:00:01
+[K    86% |███████████████████████████▋    | 1.4MB 13.4MB/s eta 0:00:01
+[K    86% |███████████████████████████▊    | 1.4MB 10.8MB/s eta 0:00:01
+[K    87% |████████████████████████████    | 1.4MB 10.7MB/s eta 0:00:01
+[K    88% |████████████████████████████▏   | 1.4MB 11.4MB/s eta 0:00:01
+[K    88% |████████████████████████████▍   | 1.4MB 11.0MB/s eta 0:00:01
+[K    89% |████████████████████████████▋   | 1.5MB 13.7MB/s eta 0:00:01
+[K    89% |████████████████████████████▊   | 1.5MB 13.0MB/s eta 0:00:01
+[K    90% |█████████████████████████████   | 1.5MB 11.9MB/s eta 0:00:01
+[K    91% |███���█████████████████████████▏  | 1.5MB 11.9MB/s eta 0:00:01
+[K    91% |█████████████████████████████▍  | 1.5MB 13.8MB/s eta 0:00:01
+[K    92% |█████████████████████████████▋  | 1.5MB 13.9MB/s eta 0:00:01
+[K    93% |█████████████████████████████▉  | 1.5MB 18.7MB/s eta 0:00:01
+[K    93% |██████████████████████████████  | 1.5MB 16.5MB/s eta 0:00:01
+[K    94% |██████████████████████████████▏ | 1.5MB 16.8MB/s eta 0:00:01
+[K    94% |██████████████████████████████▍ | 1.5MB 11.5MB/s eta 0:00:01
+[K    95% |██████████████████████████████▋ | 1.6MB 11.3MB/s eta 0:00:01
+[K    96% |██████████████████████████████▉ | 1.6MB 13.4MB/s eta 0:00:01
+[K    96% |███████████████████████████████ | 1.6MB 14.7MB/s eta 0:00:01
+[K    97% |███████████████████████████████▏| 1.6MB 14.7MB/s eta 0:00:01
+[K    98% |███████████████████████████████▍| 1.6MB 12.8MB/s eta 0:00:01
+[K    98% |████████████████���██████████████▋| 1.6MB 11.7MB/s eta 0:00:01
+[K    99% |███████████████████████████████▉| 1.6MB 11.9MB/s eta 0:00:01
+[K    99% |████████████████████████████████| 1.6MB 13.1MB/s eta 0:00:01
+[K    100% |████████████████████████████████| 1.6MB 735kB/s 
 [?25hCollecting dnspython (from Marvin===4.11.0.0-SNAPSHOT)
   Downloading dnspython-1.15.0-py2.py3-none-any.whl (177kB)
-[?25l[K    5% |█▉                              | 10kB 38.5MB/s eta 0:00:01[K    11% |███▊                            | 20kB 39.4MB/s eta 0:00:01[K    17% |█████▌                          | 30kB 44.7MB/s eta 0:00:01[K    23% |███████▍                        | 40kB 47.7MB/s eta 0:00:01[K    28% |█████████▎                      | 51kB 44.2MB/s eta 0:00:01[K    34% |███████████                     | 61kB 45.5MB/s eta 0:00:01[K    40% |█████████████                   | 71kB 32.7MB/s eta 0:00:01[K    46% |██████████████▊                 | 81kB 26.1MB/s eta 0:00:01[K    51% |████████████████▋               | 92kB 27.8MB/s eta 0:00:01[K    57% |██████████████████▌             | 102kB 24.9MB/s eta 0:00:01[K    63% |████████████████████▎           | 112kB 25.6MB/s eta 0:00:01[K    69% |██████████████████████▏         | 122kB 22.5MB/s eta 0:00:01[K    75% |████████████████████████        | 133kB 19.0MB/s eta 0:00:01[K    80% |█████████████████████████▉      | 143kB 19.0MB/s eta 0:00:01[K    86% |███████████████████████████▊    | 153kB 13.4MB/s eta 0:00:01[K    92% |█████████████████████████████▌  | 163kB 13.1MB/s eta 0:00:01[K    98% |███████████████████████████████▍| 174kB 14.2MB/s eta 0:00:01[K    100% |████████████████████████████████| 184kB 5.1MB/s 
+[?25l
+[K    5% |█▉                              | 10kB 38.5MB/s eta 0:00:01
+[K    11% |███▊                            | 20kB 39.4MB/s eta 0:00:01
+[K    17% |█████▌                          | 30kB 44.7MB/s eta 0:00:01
+[K    23% |███████▍                        | 40kB 47.7MB/s eta 0:00:01
+[K    28% |█████████▎                      | 51kB 44.2MB/s eta 0:00:01
+[K    34% |███████████                     | 61kB 45.5MB/s eta 0:00:01
+[K    40% |█████████████                   | 71kB 32.7MB/s eta 0:00:01
+[K    46% |██████████████▊                 | 81kB 26.1MB/s eta 0:00:01
+[K    51% |████████████████▋               | 92kB 27.8MB/s eta 0:00:01
+[K    57% |██████████████████▌             | 102kB 24.9MB/s eta 0:00:01
+[K    63% |████████████████████▎           | 112kB 25.6MB/s eta 0:00:01
+[K    69% |██████████████████████▏         | 122kB 22.5MB/s eta 0:00:01
+[K    75% |████████████████████████        | 133kB 19.0MB/s eta 0:00:01
+[K    80% |█████████████████████████▉      | 143kB 19.0MB/s eta 0:00:01
+[K    86% |███████████████████████████▊    | 153kB 13.4MB/s eta 0:00:01
+[K    92% |█████████████████████████████▌  | 163kB 13.1MB/s eta 0:00:01
+[K    98% |███████████████████████████████▍| 174kB 14.2MB/s eta 0:00:01
+[K    100% |████████████████████████████████| 184kB 5.1MB/s 
 [?25hRequirement already up-to-date: ipmisim>=0.7 in /home/travis/.local/lib/python2.7/site-packages (from Marvin===4.11.0.0-SNAPSHOT)
 Collecting urllib3<1.23,>=1.21.1 (from requests>=2.2.1->Marvin===4.11.0.0-SNAPSHOT)
   Downloading urllib3-1.22-py2.py3-none-any.whl (132kB)
-[?25l[K    7% |██▌                             | 10kB 42.8MB/s eta 0:00:01[K    15% |█████                           | 20kB 40.0MB/s eta 0:00:01[K    23% |███████▍                        | 30kB 44.3MB/s eta 0:00:01[K    30% |██████████                      | 40kB 46.0MB/s eta 0:00:01[K    38% |████████████▍                   | 51kB 43.6MB/s eta 0:00:01[K    46% |██████████████▉                 | 61kB 44.9MB/s eta 0:00:01[K    54% |█████████████████▍              | 71kB 32.7MB/s eta 0:00:01[K    61% |███████████████████▉            | 81kB 25.4MB/s eta 0:00:01[K    69% |██████████████████���███▎         | 92kB 27.0MB/s eta 0:00:01[K    77% |████████████████████████▊       | 102kB 24.1MB/s eta 0:00:01[K    85% |███████████████████████████▎    | 112kB 24.5MB/s eta 0:00:01[K    92% |█████████████████████████████▊  | 122kB 21.7MB/s eta 0:00:01[K    100% |████████████████████████████████| 133kB 6.7MB/s 
+[?25l
+[K    7% |██▌                             | 10kB 42.8MB/s eta 0:00:01
+[K    15% |█████                           | 20kB 40.0MB/s eta 0:00:01
+[K    23% |███████▍                        | 30kB 44.3MB/s eta 0:00:01
+[K    30% |██████████                      | 40kB 46.0MB/s eta 0:00:01
+[K    38% |████████████▍                   | 51kB 43.6MB/s eta 0:00:01
+[K    46% |██████████████▉                 | 61kB 44.9MB/s eta 0:00:01
+[K    54% |█████████████████▍              | 71kB 32.7MB/s eta 0:00:01
+[K    61% |███████████████████▉            | 81kB 25.4MB/s eta 0:00:01
+[K    69% |██████████████████���███▎         | 92kB 27.0MB/s eta 0:00:01
+[K    77% |████████████████████████▊       | 102kB 24.1MB/s eta 0:00:01
+[K    85% |███████████████████████████▎    | 112kB 24.5MB/s eta 0:00:01
+[K    92% |█████████████████████████████▊  | 122kB 21.7MB/s eta 0:00:01
+[K    100% |████████████████████████████████| 133kB 6.7MB/s 
 [?25hRequirement already up-to-date: idna<2.7,>=2.5 in /home/travis/.local/lib/python2.7/site-packages (from requests>=2.2.1->Marvin===4.11.0.0-SNAPSHOT)
 Collecting chardet<3.1.0,>=3.0.2 (from requests>=2.2.1->Marvin===4.11.0.0-SNAPSHOT)
   Downloading chardet-3.0.4-py2.py3-none-any.whl (133kB)
-[?25l[K    7% |██▌                             | 10kB 35.6MB/s eta 0:00:01[K    15% |█████                           | 20kB 38.5MB/s eta 0:00:01[K    23% |███████▍                        | 30kB 42.0MB/s eta 0:00:01[K    30% |█████████▉                      | 40kB 42.4MB/s eta 0:00:01[K    38% |████████████▎                   | 51kB 27.0MB/s eta 0:00:01[K    46% |██████████████▊                 | 61kB 28.4MB/s eta 0:00:01[K    53% |█████████████████▏              | 71kB 24.8MB/s eta 0:00:01[K    61% |███████████████████▋            | 81kB 21.4MB/s eta 0:00:01[K    69% |████���█████████████████▏         | 92kB 22.9MB/s eta 0:00:01[K    76% |████████████████████████▋       | 102kB 17.9MB/s eta 0:00:01[K    84% |███████████████████████████     | 112kB 18.1MB/s eta 0:00:01[K    92% |█████████████████████████████▌  | 122kB 17.5MB/s eta 0:00:01[K    99% |████████████████████████████████| 133kB 16.6MB/s eta 0:00:01[K    100% |████████████████████████████████| 143kB 6.1MB/s 
+[?25l
+[K    7% |██▌                             | 10kB 35.6MB/s eta 0:00:01
+[K    15% |█████                           | 20kB 38.5MB/s eta 0:00:01
+[K    23% |███████▍                        | 30kB 42.0MB/s eta 0:00:01
+[K    30% |█████████▉                      | 40kB 42.4MB/s eta 0:00:01
+[K    38% |████████████▎                   | 51kB 27.0MB/s eta 0:00:01
+[K    46% |██████████████▊                 | 61kB 28.4MB/s eta 0:00:01
+[K    53% |█████████████████▏              | 71kB 24.8MB/s eta 0:00:01
+[K    61% |███████████████████▋            | 81kB 21.4MB/s eta 0:00:01
+[K    69% |████���█████████████████▏         | 92kB 22.9MB/s eta 0:00:01
+[K    76% |████████████████████████▋       | 102kB 17.9MB/s eta 0:00:01
+[K    84% |███████████████████████████     | 112kB 18.1MB/s eta 0:00:01
+[K    92% |█████████████████████████████▌  | 122kB 17.5MB/s eta 0:00:01
+[K    99% |████████████████████████████████| 133kB 16.6MB/s eta 0:00:01
+[K    100% |████████████████████████████████| 143kB 6.1MB/s 
 [?25hCollecting certifi>=2017.4.17 (from requests>=2.2.1->Marvin===4.11.0.0-SNAPSHOT)
   Downloading certifi-2017.7.27.1-py2.py3-none-any.whl (349kB)
-[?25l[K    2% |█                               | 10kB 40.3MB/s eta 0:00:01[K    5% |█▉                              | 20kB 41.7MB/s eta 0:00:01[K    8% |██▉                             | 30kB 36.4MB/s eta 0:00:01[K    11% |███▊                            | 40kB 33.1MB/s eta 0:00:01[K    14% |████▊                           | 51kB 16.4MB/s eta 0:00:01[K    17% |█████▋                          | 61kB 18.7MB/s eta 0:00:01[K    20% |██████▋                         | 71kB 17.5MB/s eta 0:00:01[K    23% |███████▌                        | 81kB 13.4MB/s eta 0:00:01[K    26% |████████▍                       | 92kB 14.6MB/s eta 0:00:01[K    29% |█████████▍                      | 102kB 14.6MB/s eta 0:00:01[K    32% |██████████▎                     | 112kB 14.7MB/s eta 0:00:01[K    35% |███████████▎                    | 122kB 12.4MB/s eta 0:00:01[K    38% |████████████▏                   | 133kB 11.6MB/s eta 0:00:01[K    41% |█████████████▏                  | 143kB 11.9MB/s eta 0:00:01[K    43% |██████████████                  | 153kB 12.6MB/s eta 0:00:01[K    46% |███████████████                 | 163kB 10.9MB/s eta 0:00:01[K    49% |████████████████                | 174kB 11.7MB/s eta 0:00:01[K    52% |█████████████���██▉               | 184kB 13.6MB/s eta 0:00:01[K    55% |█████████████████▉              | 194kB 13.7MB/s eta 0:00:01[K    58% |██████████████████▊             | 204kB 13.8MB/s eta 0:00:01[K    61% |███████████████████▊            | 215kB 11.7MB/s eta 0:00:01[K    64% |████████████████████▋           | 225kB 13.8MB/s eta 0:00:01[K    67% |█████████████████████▋          | 235kB 13.8MB/s eta 0:00:01[K    70% |██████████████████████▌         | 245kB 12.5MB/s eta 0:00:01[K    73% |███████████████████████▍        | 256kB 14.9MB/s eta 0:00:01[K    76% |████████████████████████▍       | 266kB 16.9MB/s eta 0:00:01[K    79% |█████████████████████████▎      | 276kB 16.9MB/s eta 0:00:01[K    82% |██████████████████████████▎     | 286kB 16.6MB/s eta 0:00:01[K    84% |███████████████████████████▏    | 296kB 13.7MB/s eta 0:00:01[K    87% |████████████████████████████▏   | 307kB 14.7MB/s eta 0:00:01[K    90% |█████████████████████████████   | 317kB 17.0MB/s eta 0:00:01[K    93% |█████���████████████████████████  | 327kB 15.0MB/s eta 0:00:01[K    96% |███████████████████████████████ | 337kB 16.8MB/s eta 0:00:01[K    99% |███████████████████████████████▉| 348kB 19.3MB/s eta 0:00:01[K    100% |████████████████████████████████| 358kB 3.1MB/s 
+[?25l
+[K    2% |█                               | 10kB 40.3MB/s eta 0:00:01
+[K    5% |█▉                              | 20kB 41.7MB/s eta 0:00:01
+[K    8% |██▉                             | 30kB 36.4MB/s eta 0:00:01
+[K    11% |███▊                            | 40kB 33.1MB/s eta 0:00:01
+[K    14% |████▊                           | 51kB 16.4MB/s eta 0:00:01
+[K    17% |█████▋                          | 61kB 18.7MB/s eta 0:00:01
+[K    20% |██████▋                         | 71kB 17.5MB/s eta 0:00:01
+[K    23% |███████▌                        | 81kB 13.4MB/s eta 0:00:01
+[K    26% |████████▍                       | 92kB 14.6MB/s eta 0:00:01
+[K    29% |█████████▍                      | 102kB 14.6MB/s eta 0:00:01
+[K    32% |██████████▎                     | 112kB 14.7MB/s eta 0:00:01
+[K    35% |███████████▎                    | 122kB 12.4MB/s eta 0:00:01
+[K    38% |████████████▏                   | 133kB 11.6MB/s eta 0:00:01
+[K    41% |█████████████▏                  | 143kB 11.9MB/s eta 0:00:01
+[K    43% |██████████████                  | 153kB 12.6MB/s eta 0:00:01
+[K    46% |███████████████                 | 163kB 10.9MB/s eta 0:00:01
+[K    49% |████████████████                | 174kB 11.7MB/s eta 0:00:01
+[K    52% |█████████████���██▉               | 184kB 13.6MB/s eta 0:00:01
+[K    55% |█████████████████▉              | 194kB 13.7MB/s eta 0:00:01
+[K    58% |██████████████████▊             | 204kB 13.8MB/s eta 0:00:01
+[K    61% |███████████████████▊            | 215kB 11.7MB/s eta 0:00:01
+[K    64% |████████████████████▋           | 225kB 13.8MB/s eta 0:00:01
+[K    67% |█████████████████████▋          | 235kB 13.8MB/s eta 0:00:01
+[K    70% |██████████████████████▌         | 245kB 12.5MB/s eta 0:00:01
+[K    73% |███████████████████████▍        | 256kB 14.9MB/s eta 0:00:01
+[K    76% |████████████████████████▍       | 266kB 16.9MB/s eta 0:00:01
+[K    79% |█████████████████████████▎      | 276kB 16.9MB/s eta 0:00:01
+[K    82% |██████████████████████████▎     | 286kB 16.6MB/s eta 0:00:01
+[K    84% |███████████████████████████▏    | 296kB 13.7MB/s eta 0:00:01
+[K    87% |████████████████████████████▏   | 307kB 14.7MB/s eta 0:00:01
+[K    90% |█████████████████████████████   | 317kB 17.0MB/s eta 0:00:01
+[K    93% |█████���████████████████████████  | 327kB 15.0MB/s eta 0:00:01
+[K    96% |███████████████████████████████ | 337kB 16.8MB/s eta 0:00:01
+[K    99% |███████████████████████████████▉| 348kB 19.3MB/s eta 0:00:01
+[K    100% |████████████████████████████████| 358kB 3.1MB/s 
 [?25hRequirement already up-to-date: pynacl>=1.0.1 in /home/travis/.local/lib/python2.7/site-packages (from paramiko>=1.13.0->Marvin===4.11.0.0-SNAPSHOT)
 Requirement already up-to-date: cryptography>=1.5 in /home/travis/.local/lib/python2.7/site-packages (from paramiko>=1.13.0->Marvin===4.11.0.0-SNAPSHOT)
 Requirement already up-to-date: bcrypt>=3.1.3 in /home/travis/.local/lib/python2.7/site-packages (from paramiko>=1.13.0->Marvin===4.11.0.0-SNAPSHOT)
@@ -6180,10 +6991,19 @@ log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more in
 ========> Processing SQL file at /home/travis/build/apache/cloudstack/developer/target/db/hypervisor_capabilities.simulator.sql
 ========> Processing upgrade: com.cloud.upgrade.DatabaseUpgradeChecker
 
-travis_time:end:0e59f140:start=1505992793179496960,finish=1505993685363234686,duration=892183737726[0Ktravis_fold:end:install[0Ktravis_fold:start:before_script[0Ktravis_time:start:08447a73[0K$ travis_wait 30 ./tools/travis/before_script.sh
+travis_time:end:0e59f140:start=1505992793179496960,finish=1505993685363234686,duration=892183737726
+[0Ktravis_fold:end:install
+[0Ktravis_fold:start:before_script
+[0Ktravis_time:start:08447a73
+[0K$ travis_wait 30 ./tools/travis/before_script.sh
 
 
-Still running (1 of 30): ./tools/travis/before_script.shStill running (2 of 30): ./tools/travis/before_script.shStill running (3 of 30): ./tools/travis/before_script.shStill running (4 of 30): ./tools/travis/before_script.shStill running (5 of 30): ./tools/travis/before_script.sh
+Still running (1 of 30): ./tools/travis/before_script.sh
+Still running (2 of 30): ./tools/travis/before_script.sh
+Still running (3 of 30): ./tools/travis/before_script.sh
+Still running (4 of 30): ./tools/travis/before_script.sh
+Still running (5 of 30): ./tools/travis/before_script.sh
+
 [32;1mThe command ./tools/travis/before_script.sh exited with 0.[0m
 
 [32;1mLog:[0m
@@ -6216,10 +7036,18 @@ Starting DataCenter deployment
 ====Deploy DC Successful=====
 /home/travis/.travis/job_stages: line 169: 29597 Terminated              travis_jigger $! $timeout $cmd
 
-travis_time:end:08447a73:start=1505993685369022205,finish=1505993979626023786,duration=294257001581[0Ktravis_fold:end:before_script[0Ktravis_time:start:1cb7c827[0K$ travis_wait 40 ./tools/travis/script.sh ${TESTS}
+travis_time:end:08447a73:start=1505993685369022205,finish=1505993979626023786,duration=294257001581
+[0Ktravis_fold:end:before_script
+[0Ktravis_time:start:1cb7c827
+[0K$ travis_wait 40 ./tools/travis/script.sh ${TESTS}
 
 
-Still running (1 of 40): ./tools/travis/script.sh smoke/test_affinity_groups smoke/test_affinity_groups_projects smoke/test_certauthority_root smoke/test_deploy_vgpu_enabled_vm smoke/test_deploy_vm_iso smoke/test_deploy_vm_root_resize smoke/test_deploy_vm_with_userdata smoke/test_deploy_vms_with_varied_deploymentplanners smoke/test_disk_offerings smoke/test_dynamicroles smoke/test_global_settings smoke/test_guest_vlan_rangeStill running (2 of 40): ./tools/travis/script.sh smoke/test_affinity_groups smoke/test_affinity_groups_projects smoke/test_certauthority_root smoke/test_deploy_vgpu_enabled_vm smoke/test_deploy_vm_iso smoke/test_deploy_vm_root_resize smoke/test_deploy_vm_with_userdata smoke/test_deploy_vms_with_varied_deploymentplanners smoke/test_disk_offerings smoke/test_dynamicroles smoke/test_global_settings smoke/test_guest_vlan_rangeStill running (3 of 40): ./tools/travis/script.sh smoke/test_affinity_groups smoke/test_affinity_groups_projects smoke/test_certauthority_root smoke/test_deploy_vgpu_enabled_vm smoke/test_deploy_vm_iso smoke/test_deploy_vm_root_resize smoke/test_deploy_vm_with_userdata smoke/test_deploy_vms_with_varied_deploymentplanners smoke/test_disk_offerings smoke/test_dynamicroles smoke/test_global_settings smoke/test_guest_vlan_rangeStill running (4 of 40): ./tools/travis/script.sh smoke/test_affinity_groups smoke/test_affinity_groups_projects smoke/test_certauthority_root smoke/test_deploy_vgpu_enabled_vm smoke/test_deploy_vm_iso smoke/test_deploy_vm_root_resize smoke/test_deploy_vm_with_userdata smoke/test_deploy_vms_with_varied_deploymentplanners smoke/test_disk_offerings smoke/test_dynamicroles smoke/test_global_settings smoke/test_guest_vlan_rangeStill running (5 of 40): ./tools/travis/script.sh smoke/test_affinity_groups smoke/test_affinity_groups_projects smoke/test_certauthority_root smoke/test_deploy_vgpu_enabled_vm smoke/test_deploy_vm_iso smoke/test_deploy_vm_root_resize smoke/test_deploy_vm_with_userdata smoke/test_deploy_vms_with_varied_deploymentplanners smoke/test_disk_offerings smoke/test_dynamicroles smoke/test_global_settings smoke/test_guest_vlan_range
+Still running (1 of 40): ./tools/travis/script.sh smoke/test_affinity_groups smoke/test_affinity_groups_projects smoke/test_certauthority_root smoke/test_deploy_vgpu_enabled_vm smoke/test_deploy_vm_iso smoke/test_deploy_vm_root_resize smoke/test_deploy_vm_with_userdata smoke/test_deploy_vms_with_varied_deploymentplanners smoke/test_disk_offerings smoke/test_dynamicroles smoke/test_global_settings smoke/test_guest_vlan_range
+Still running (2 of 40): ./tools/travis/script.sh smoke/test_affinity_groups smoke/test_affinity_groups_projects smoke/test_certauthority_root smoke/test_deploy_vgpu_enabled_vm smoke/test_deploy_vm_iso smoke/test_deploy_vm_root_resize smoke/test_deploy_vm_with_userdata smoke/test_deploy_vms_with_varied_deploymentplanners smoke/test_disk_offerings smoke/test_dynamicroles smoke/test_global_settings smoke/test_guest_vlan_range
+Still running (3 of 40): ./tools/travis/script.sh smoke/test_affinity_groups smoke/test_affinity_groups_projects smoke/test_certauthority_root smoke/test_deploy_vgpu_enabled_vm smoke/test_deploy_vm_iso smoke/test_deploy_vm_root_resize smoke/test_deploy_vm_with_userdata smoke/test_deploy_vms_with_varied_deploymentplanners smoke/test_disk_offerings smoke/test_dynamicroles smoke/test_global_settings smoke/test_guest_vlan_range
+Still running (4 of 40): ./tools/travis/script.sh smoke/test_affinity_groups smoke/test_affinity_groups_projects smoke/test_certauthority_root smoke/test_deploy_vgpu_enabled_vm smoke/test_deploy_vm_iso smoke/test_deploy_vm_root_resize smoke/test_deploy_vm_with_userdata smoke/test_deploy_vms_with_varied_deploymentplanners smoke/test_disk_offerings smoke/test_dynamicroles smoke/test_global_settings smoke/test_guest_vlan_range
+Still running (5 of 40): ./tools/travis/script.sh smoke/test_affinity_groups smoke/test_affinity_groups_projects smoke/test_certauthority_root smoke/test_deploy_vgpu_enabled_vm smoke/test_deploy_vm_iso smoke/test_deploy_vm_root_resize smoke/test_deploy_vm_with_userdata smoke/test_deploy_vms_with_varied_deploymentplanners smoke/test_disk_offerings smoke/test_dynamicroles smoke/test_global_settings smoke/test_guest_vlan_range
+
 [32;1mThe command ./tools/travis/script.sh smoke/test_affinity_groups smoke/test_affinity_groups_projects smoke/test_certauthority_root smoke/test_deploy_vgpu_enabled_vm smoke/test_deploy_vm_iso smoke/test_deploy_vm_root_resize smoke/test_deploy_vm_with_userdata smoke/test_deploy_vms_with_varied_deploymentplanners smoke/test_disk_offerings smoke/test_dynamicroles smoke/test_global_settings smoke/test_guest_vlan_range exited with 0.[0m
 
 [32;1mLog:[0m
@@ -6556,11 +7384,16 @@ Currently running test: smoke/test_guest_vlan_range
 +-----------------------------+---------+--------+-----------------------------+
 /home/travis/.travis/job_stages: line 169: 30047 Terminated              travis_jigger $! $timeout $cmd
 
-travis_time:end:1cb7c827:start=1505993979633583879,finish=1505994256709878420,duration=277076294541[0K
+travis_time:end:1cb7c827:start=1505993979633583879,finish=1505994256709878420,duration=277076294541
+[0K
 [32;1mThe command "travis_wait 40 ./tools/travis/script.sh ${TESTS}" exited with 0.[0m
-travis_fold:start:cache.2[0Kstore build cache
-travis_time:start:17293234[0K
-travis_time:end:17293234:start=1505994256716077892,finish=1505994256720936312,duration=4858420[0Ktravis_time:start:05830f63[0K[32;1mchange detected (content changed, file is created, or file is deleted):
+travis_fold:start:cache.2
+[0Kstore build cache
+travis_time:start:17293234
+[0K
+travis_time:end:17293234:start=1505994256716077892,finish=1505994256720936312,duration=4858420
+[0Ktravis_time:start:05830f63
+[0K[32;1mchange detected (content changed, file is created, or file is deleted):
 /home/travis/.m2/repository/com/cloud/com/citrix/netscaler-sdx/1.0/_remote.repositories
 /home/travis/.m2/repository/com/cloud/com/citrix/netscaler-sdx/maven-metadata-local.xml
 /home/travis/.m2/repository/com/cloud/com/f5/icontrol/1.0/_remote.repositories
@@ -6585,9 +7418,17 @@ travis_time:end:17293234:start=1505994256716077892,finish=1505994256720936312,du
 .
 [32;1muploading archive[0m
 
-travis_time:end:05830f63:start=1505994256726654748,finish=1505994296648800374,duration=39922145626[0Ktravis_fold:end:cache.2[0Ktravis_fold:start:after_success[0Ktravis_time:start:33044f40[0K$ ./tools/travis/after_success.sh
+travis_time:end:05830f63:start=1505994256726654748,finish=1505994296648800374,duration=39922145626
+[0Ktravis_fold:end:cache.2
+[0Ktravis_fold:start:after_success
+[0Ktravis_time:start:33044f40
+[0K$ ./tools/travis/after_success.sh
 
-travis_time:end:33044f40:start=1505994296654284969,finish=1505994296661271385,duration=6986416[0Ktravis_fold:end:after_success[0Ktravis_fold:start:after_script[0Ktravis_time:start:33ecf4a7[0K$ ./tools/travis/after_script.sh
+travis_time:end:33044f40:start=1505994296654284969,finish=1505994296661271385,duration=6986416
+[0Ktravis_fold:end:after_success
+[0Ktravis_fold:start:after_script
+[0Ktravis_time:start:33ecf4a7
+[0K$ ./tools/travis/after_script.sh
 [[1;34mINFO[m] Scanning for projects...
 [[1;34mINFO[m] 
 [[1;34mINFO[m] [1m------------------------------------------------------------------------[m
@@ -6603,5 +7444,7 @@ travis_time:end:33044f40:start=1505994296654284969,finish=1505994296661271385,du
 [[1;34mINFO[m] Final Memory: 36M/203M
 [[1;34mINFO[m] [1m------------------------------------------------------------------------[m
 
-travis_time:end:33ecf4a7:start=1505994296666660906,finish=1505994300768479159,duration=4101818253[0Ktravis_fold:end:after_script[0K
+travis_time:end:33ecf4a7:start=1505994296666660906,finish=1505994300768479159,duration=4101818253
+[0Ktravis_fold:end:after_script
+[0K
 Done. Your build exited with 0.

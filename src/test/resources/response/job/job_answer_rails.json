@@ -1,0 +1,62 @@
+{
+  "@type": "job",
+  "@href": "/job/86601347",
+  "@representation": "standard",
+  "@permissions": {
+    "read": true,
+    "debug": false,
+    "cancel": false,
+    "restart": false,
+    "delete_log": false
+  },
+  "id": 86601347,
+  "allow_failure": false,
+  "number": "28677.1",
+  "state": "passed",
+  "started_at": "2015-10-21T11:54:01Z",
+  "finished_at": "2015-10-21T12:12:27Z",
+  "build": {
+    "@type": "build",
+    "@href": "/build/86601346",
+    "@representation": "minimal",
+    "id": 86601346,
+    "number": "28677",
+    "state": "passed",
+    "duration": 5241,
+    "event_type": "pull_request",
+    "previous_state": "passed",
+    "pull_request_title": "Add SQL parameter sanitization to `.joins`",
+    "pull_request_number": 21847,
+    "started_at": "2015-10-21T11:54:01Z",
+    "finished_at": "2015-10-21T12:13:12Z"
+  },
+  "queue": "builds.docker",
+  "repository": {
+    "@type": "repository",
+    "@href": "/repo/891",
+    "@representation": "minimal",
+    "id": 891,
+    "name": "rails",
+    "slug": "rails/rails"
+  },
+  "commit": {
+    "@type": "commit",
+    "@representation": "minimal",
+    "id": 24633751,
+    "sha": "c5019a4229539ea68c3e5df137219e6000ba16da",
+    "ref": "refs/pull/21847/merge",
+    "message": "move build_join to private methods",
+    "compare_url": "https://github.com/rails/rails/pull/21847",
+    "committed_at": "2015-10-21T11:53:32Z"
+  },
+  "owner": {
+    "@type": "organization",
+    "@href": "/org/23",
+    "@representation": "minimal",
+    "id": 23,
+    "login": "rails"
+  },
+  "stage": null,
+  "created_at": "2015-10-21T11:53:49.382Z",
+  "updated_at": "2015-10-21T12:12:27.213Z"
+}

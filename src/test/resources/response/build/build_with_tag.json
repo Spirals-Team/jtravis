@@ -1,0 +1,88 @@
+{
+  "@type": "build",
+  "@href": "/build/319252906",
+  "@representation": "standard",
+  "@permissions": {
+    "read": true,
+    "cancel": false,
+    "restart": false
+  },
+  "id": 319252906,
+  "number": "4602",
+  "state": "passed",
+  "duration": 1448,
+  "event_type": "push",
+  "previous_state": null,
+  "pull_request_title": null,
+  "pull_request_number": null,
+  "started_at": "2017-12-20T16:24:11Z",
+  "finished_at": "2017-12-20T16:32:08Z",
+  "repository": {
+    "@type": "repository",
+    "@href": "/repo/2800492",
+    "@representation": "minimal",
+    "id": 2800492,
+    "name": "spoon",
+    "slug": "INRIA/spoon"
+  },
+  "branch": {
+    "@type": "branch",
+    "@href": "/repo/2800492/branch/spoon-core-6.1.0",
+    "@representation": "minimal",
+    "name": "spoon-core-6.1.0"
+  },
+  "tag": {
+    "@type": "tag",
+    "@representation": "minimal",
+    "repository_id": 2800492,
+    "name": "spoon-core-6.1.0",
+    "last_build_id": null
+  },
+  "commit": {
+    "@type": "commit",
+    "@representation": "minimal",
+    "id": 94920460,
+    "sha": "a2791df6ab20831045312aa12d13045629805182",
+    "ref": "refs/tags/spoon-core-6.1.0",
+    "message": "[maven-release-plugin] prepare release spoon-core-6.1.0",
+    "compare_url": "https://github.com/INRIA/spoon/commit/a2791df6ab20",
+    "committed_at": "2017-12-20T16:03:54Z"
+  },
+  "jobs": [
+    {
+      "@type": "job",
+      "@href": "/job/319252907",
+      "@representation": "minimal",
+      "id": 319252907
+    },
+    {
+      "@type": "job",
+      "@href": "/job/319252908",
+      "@representation": "minimal",
+      "id": 319252908
+    },
+    {
+      "@type": "job",
+      "@href": "/job/319252909",
+      "@representation": "minimal",
+      "id": 319252909
+    },
+    {
+      "@type": "job",
+      "@href": "/job/319252910",
+      "@representation": "minimal",
+      "id": 319252910
+    }
+  ],
+  "stages": [
+
+  ],
+  "created_by": {
+    "@type": "user",
+    "@href": "/user/95813",
+    "@representation": "minimal",
+    "id": 95813,
+    "login": "surli"
+  },
+  "updated_at": "2017-12-20T16:32:08.481Z"
+}

@@ -1,11 +1,6 @@
 package fr.inria.jtravis.parsers;
 
-import fr.inria.jtravis.TestUtils;
-import fr.inria.jtravis.entities.Build;
 import fr.inria.jtravis.entities.BuildTool;
-import fr.inria.jtravis.entities.Job;
-import fr.inria.jtravis.entities.Log;
-import fr.inria.jtravis.helpers.BuildHelper;
 import org.junit.Test;
 
 import java.io.File;
@@ -80,43 +75,43 @@ public class LogParserTest {
         assertEquals(BuildTool.GRADLE, parser.getBuildTool());
     }
 
-    @Test
-    public void testToEnsureBuildToolIsMaven() {
-        int buildId = 218154223;
-
-        Build build = BuildHelper.getBuildFromId(buildId, null);
-
-        boolean result = false;
-        for (Job job : build.getJobs()) {
-            Log jobLog = job.getLog();
-
-            if (jobLog != null && jobLog.getBuildTool() == BuildTool.MAVEN) {
-                result = true;
-            }
-        }
-
-        assertTrue(build != null);
-        assertEquals(true, result);
-    }
-
-    @Test
-    public void testToEnsureBuildToolIsGradle() {
-        int buildId = 218180742;
-
-        Build build = BuildHelper.getBuildFromId(buildId, null);
-
-        boolean result = false;
-        for (Job job : build.getJobs()) {
-            Log jobLog = job.getLog();
-
-            if (jobLog != null && jobLog.getBuildTool() == BuildTool.GRADLE) {
-                result = true;
-            }
-        }
-
-        assertTrue(build != null);
-        assertEquals(true, result);
-    }
+//    @Test
+//    public void testToEnsureBuildToolIsMaven() {
+//        int buildId = 218154223;
+//
+//        Build build = BuildHelper.getBuildFromId(buildId, null);
+//
+//        boolean result = false;
+//        for (Job job : build.getJobs()) {
+//            Log jobLog = job.getLog();
+//
+//            if (jobLog != null && jobLog.getBuildTool() == BuildTool.MAVEN) {
+//                result = true;
+//            }
+//        }
+//
+//        assertTrue(build != null);
+//        assertEquals(true, result);
+//    }
+//
+//    @Test
+//    public void testToEnsureBuildToolIsGradle() {
+//        int buildId = 218180742;
+//
+//        Build build = BuildHelper.getBuildFromId(buildId, null);
+//
+//        boolean result = false;
+//        for (Job job : build.getJobs()) {
+//            Log jobLog = job.getLog();
+//
+//            if (jobLog != null && jobLog.getBuildTool() == BuildTool.GRADLE) {
+//                result = true;
+//            }
+//        }
+//
+//        assertTrue(build != null);
+//        assertEquals(true, result);
+//    }
 
 
     //Maven test
@@ -467,7 +462,7 @@ public class LogParserTest {
                         String fileContent = TestUtils.readFile(file2.getPath());
                         LogParser parser = new LogParser(fileContent);
                         System.err.println("file : "+file2.getPath());
-                        assertEquals("Failed file path: "+ file2.getPath(),BuildTool.UNKNOWN, parser.getBuildTool());
+                        assertEquals("Failed file path: "+ file2.getPath(), BuildTool.UNKNOWN, parser.getBuildTool());
                     }
                 }
             }

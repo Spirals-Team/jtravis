@@ -1,0 +1,22 @@
+{
+  "@type": "log",
+  "@href": "/job/340617745/log",
+  "@representation": "standard",
+  "@permissions": {
+    "read": false,
+    "debug": false,
+    "cancel": false,
+    "restart": false,
+    "delete_log": false
+  },
+  "id": 248551122,
+  "content": "travis_fold:start:worker_info\r\u001b[0K\u001b[33;1mWorker information\u001b[0m\nhostname: 88255186-1dd4-4654-8979-a9de8297acc1@1.i-05992b1-production-2-worker-org-ec2.travisci.net\n[FULL LOG CUT]",
+  "log_parts": [
+    {
+      "content": "travis_fold:start:worker_info\r\u001b[0K\u001b[33;1mWorker information\u001b[0m\nhostname: 88255186-1dd4-4654-8979-a9de8297acc1@1.i-05992b1-production-2-worker-org-ec2.travisci.net\n[FULL LOG CUT]",
+      "final": true,
+      "number": 0
+    }
+  ],
+  "@raw_log_href": "/v3/job/340617745/log.txt"
+}

@@ -1,0 +1,162 @@
+{
+  "@type": "builds",
+  "@href": "/builds?limit=2&offset=2",
+  "@representation": "standard",
+  "@pagination": {
+    "limit": 2,
+    "offset": 2,
+    "count": 2843,
+    "is_first": false,
+    "is_last": false,
+    "next": {
+      "@href": "/builds?limit=2&offset=4",
+      "offset": 4,
+      "limit": 2
+    },
+    "prev": {
+      "@href": "/builds?limit=2&offset=0",
+      "offset": 0,
+      "limit": 2
+    },
+    "first": {
+      "@href": "/builds?limit=2&offset=0",
+      "offset": 0,
+      "limit": 2
+    },
+    "last": {
+      "@href": "/builds?limit=2&offset=2842",
+      "offset": 2842,
+      "limit": 2
+    }
+  },
+  "builds": [
+    {
+      "@type": "build",
+      "@href": "/build/340863044",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": true,
+        "restart": true
+      },
+      "id": 340863044,
+      "number": "25",
+      "state": "errored",
+      "duration": 124,
+      "event_type": "push",
+      "previous_state": "errored",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2018-02-13T09:25:08Z",
+      "finished_at": "2018-02-13T09:27:12Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/17328693",
+        "@representation": "minimal",
+        "id": 17328693,
+        "name": "jtravis",
+        "slug": "Spirals-Team/jtravis"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/17328693/branch/travisV3",
+        "@representation": "minimal",
+        "name": "travisV3"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 101354863,
+        "sha": "199b38150c969a5f00fe74af40eca20f8005a9c5",
+        "ref": "refs/heads/travisV3",
+        "message": "Improve entities with new documentation",
+        "compare_url": "https://github.com/Spirals-Team/jtravis/compare/a3d5714b53ff...199b38150c96",
+        "committed_at": "2018-02-13T09:21:55Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/340863045",
+          "@representation": "minimal",
+          "id": 340863045
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2018-02-13T09:27:12.379Z"
+    },
+    {
+      "@type": "build",
+      "@href": "/build/340617742",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "cancel": true,
+        "restart": true
+      },
+      "id": 340617742,
+      "number": "648",
+      "state": "failed",
+      "duration": 43,
+      "event_type": "cron",
+      "previous_state": "failed",
+      "pull_request_title": null,
+      "pull_request_number": null,
+      "started_at": "2018-02-12T18:31:30Z",
+      "finished_at": "2018-02-12T18:32:13Z",
+      "repository": {
+        "@type": "repository",
+        "@href": "/repo/11594784",
+        "@representation": "minimal",
+        "id": 11594784,
+        "name": "failingProject",
+        "slug": "surli/failingProject"
+      },
+      "branch": {
+        "@type": "branch",
+        "@href": "/repo/11594784/branch/erroring-branch",
+        "@representation": "minimal",
+        "name": "erroring-branch"
+      },
+      "tag": null,
+      "commit": {
+        "@type": "commit",
+        "@representation": "minimal",
+        "id": 101281499,
+        "sha": "349626e0c9138dbea032dc9cec92794e97401d48",
+        "ref": null,
+        "message": "Remove tests in fail",
+        "compare_url": "https://github.com/surli/failingProject/compare/28e6430ececcb3b511292ca4f85b66fd5b606b3a...349626e0c9138dbea032dc9cec92794e97401d48",
+        "committed_at": "2017-03-02T15:35:36Z"
+      },
+      "jobs": [
+        {
+          "@type": "job",
+          "@href": "/job/340617745",
+          "@representation": "minimal",
+          "id": 340617745
+        }
+      ],
+      "stages": [
+
+      ],
+      "created_by": {
+        "@type": "user",
+        "@href": "/user/95813",
+        "@representation": "minimal",
+        "id": 95813,
+        "login": "surli"
+      },
+      "updated_at": "2018-02-12T18:32:13.797Z"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "@type": "user",
+  "@href": "/user/95813",
+  "@representation": "standard",
+  "@permissions": {
+    "read": true,
+    "sync": true
+  },
+  "id": 95813,
+  "login": "surli",
+  "name": "Simon Urli",
+  "github_id": 1478232,
+  "avatar_url": "https://avatars2.githubusercontent.com/u/1478232?v=4",
+  "is_syncing": false,
+  "synced_at": "2018-02-12T03:34:17Z"
+}

@@ -1,0 +1,64 @@
+{
+  "@type": "build",
+  "@href": "/build/340617742",
+  "@representation": "standard",
+  "@permissions": {
+    "read": true,
+    "cancel": true,
+    "restart": true
+  },
+  "id": 340617742,
+  "number": "648",
+  "state": "failed",
+  "duration": 43,
+  "event_type": "cron",
+  "previous_state": "failed",
+  "pull_request_title": null,
+  "pull_request_number": null,
+  "started_at": "2018-02-12T18:31:30Z",
+  "finished_at": "2018-02-12T18:32:13Z",
+  "repository": {
+    "@type": "repository",
+    "@href": "/repo/11594784",
+    "@representation": "minimal",
+    "id": 11594784,
+    "name": "failingProject",
+    "slug": "surli/failingProject"
+  },
+  "branch": {
+    "@type": "branch",
+    "@href": "/repo/11594784/branch/erroring-branch",
+    "@representation": "minimal",
+    "name": "erroring-branch"
+  },
+  "tag": null,
+  "commit": {
+    "@type": "commit",
+    "@representation": "minimal",
+    "id": 101281499,
+    "sha": "349626e0c9138dbea032dc9cec92794e97401d48",
+    "ref": null,
+    "message": "Remove tests in fail",
+    "compare_url": "https://github.com/surli/failingProject/compare/28e6430ececcb3b511292ca4f85b66fd5b606b3a...349626e0c9138dbea032dc9cec92794e97401d48",
+    "committed_at": "2017-03-02T15:35:36Z"
+  },
+  "jobs": [
+    {
+      "@type": "job",
+      "@href": "/job/340617745",
+      "@representation": "minimal",
+      "id": 340617745
+    }
+  ],
+  "stages": [
+
+  ],
+  "created_by": {
+    "@type": "user",
+    "@href": "/user/95813",
+    "@representation": "minimal",
+    "id": 95813,
+    "login": "surli"
+  },
+  "updated_at": "2018-02-12T18:32:13.797Z"
+}

@@ -1,42 +1,53 @@
 package fr.inria.jtravis.entities;
 
+import com.google.gson.annotations.Expose;
 import fr.inria.jtravis.parsers.LogParser;
+
+import java.util.Objects;
 
 /**
  * Business object to deal with log in Travis CI API
- * If the body of the log has been archived, it is lazily get as plain text from the archive using job endpoint
  *
  * @see <a href="https://docs.travis-ci.com/api#logs">https://docs.travis-ci.com/api#logs</a>
  * @author Simon Urli
  */
-public class Log {
+public final class Log extends EntityUnary {
 
-    private String body;
+    @Expose
+    private String content;
+
+
     private TestsInformation testsInformation;
     private BuildTool buildTool;
-    private int jobId;
 
-    public Log(int jobId, String body) {
-        this.jobId = jobId;
-        this.body = body;
+    public String getContent() {
+        return content;
     }
 
-    public String getBody() {
-        return this.body;
+    protected void setContent(String content) {
+        this.content = content;
     }
 
-    public int getJobId() {
-        return jobId;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Log log = (Log) o;
+        return Objects.equals(content, log.content) &&
+                Objects.equals(testsInformation, log.testsInformation) &&
+                buildTool == log.buildTool;
     }
 
-    public void setJobId(int jobId) {
-        this.jobId = jobId;
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), content, testsInformation, buildTool);
     }
 
     public TestsInformation getTestsInformation() {
         if (testsInformation == null) {
-            String body = getBody();
-            LogParser logParser = new LogParser(body);
+            LogParser logParser = new LogParser(getContent());
 
             this.testsInformation = logParser.getTestsInformation();
         }
@@ -46,9 +57,7 @@ public class Log {
 
     public BuildTool getBuildTool() {
         if (this.buildTool == null) {
-            String body = getBody();
-
-            LogParser logParser = new LogParser(body);
+            LogParser logParser = new LogParser(getContent());
             this.buildTool = logParser.getBuildTool();
         }
 

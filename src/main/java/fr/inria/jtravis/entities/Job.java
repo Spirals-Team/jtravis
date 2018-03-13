@@ -1,7 +1,10 @@
 package fr.inria.jtravis.entities;
 
-import fr.inria.jtravis.pojos.JobPojo;
-import fr.inria.jtravis.helpers.LogHelper;
+import com.google.gson.annotations.Expose;
+
+import java.util.Date;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Business object to deal with job in Travis CI API
@@ -9,44 +12,176 @@ import fr.inria.jtravis.helpers.LogHelper;
  *
  * @author Simon Urli
  */
-public class Job extends JobPojo {
-    private Config config;
-    private Log log;
-    private BuildTool buildTool;
+public final class Job extends EntityUnary {
+    @Expose
+    private boolean allowFailure;
 
-    public Config getConfig() {
-        return config;
+    @Expose
+    private String number;
+
+    @Expose
+    private StateType state;
+
+    @Expose
+    private Date startedAt;
+
+    @Expose
+    private Date finishedAt;
+
+    @Expose
+    private Build build;
+
+    @Expose
+    private String queue;
+
+    @Expose
+    private Repository repository;
+
+    @Expose
+    private Commit commit;
+
+    @Expose
+    private Owner owner;
+
+    @Expose
+    private Date createdAt;
+
+    @Expose
+    private Date updatedAt;
+
+    private transient Log log;
+    private transient BuildTool buildTool;
+
+    // GETTER
+
+    public boolean isAllowFailure() {
+        return allowFailure;
     }
 
-    public void setConfig(Config config) {
-        this.config = config;
+    public String getNumber() {
+        return number;
     }
 
-    public BuildStatus getBuildStatus() {
-        if (this.getState() != null) {
-            return BuildStatus.valueOf(this.getState().toUpperCase());
-        } else {
-            return null;
+    public StateType getState() {
+        return state;
+    }
+
+    public Date getStartedAt() {
+        return startedAt;
+    }
+
+    public Date getFinishedAt() {
+        return finishedAt;
+    }
+
+    public Build getBuild() {
+        return build;
+    }
+
+    public String getQueue() {
+        return queue;
+    }
+
+    public Repository getRepository() {
+        return repository;
+    }
+
+    public Commit getCommit() {
+        return commit;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    // SETTER
+
+    protected void setAllowFailure(boolean allowFailure) {
+        this.allowFailure = allowFailure;
+    }
+
+    protected void setNumber(String number) {
+        this.number = number;
+    }
+
+    protected void setState(StateType state) {
+        this.state = state;
+    }
+
+    protected void setStartedAt(Date startedAt) {
+        this.startedAt = startedAt;
+    }
+
+    protected void setFinishedAt(Date finishedAt) {
+        this.finishedAt = finishedAt;
+    }
+
+    protected void setBuild(Build build) {
+        this.build = build;
+    }
+
+    protected void setQueue(String queue) {
+        this.queue = queue;
+    }
+
+    protected void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    protected void setCommit(Commit commit) {
+        this.commit = commit;
+    }
+
+    protected void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    protected void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    protected void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public boolean fetchLog() {
+        if (this.getJtravis() != null) {
+            Optional<Log> log = this.getJtravis().log().from(this);
+            if (log.isPresent()) {
+                this.log = log.get();
+                return true;
+            }
         }
+        return false;
     }
 
-    public Log getLog() {
-        if (log == null) {
-            this.log = LogHelper.getLogFromJob(this);
+    public Optional<Log> getLog() {
+        if (this.log == null) {
+            if (!this.fetchLog()) {
+                return Optional.empty();
+            }
         }
-        return this.log;
+        return Optional.of(this.log);
     }
 
-    public BuildTool getBuildTool() {
-        if (buildTool == null) {
-            if (this.getLog() != null) {
-                buildTool = this.getLog().getBuildTool();
+    public Optional<BuildTool> getBuildTool() {
+        if (this.buildTool == null) {
+            if (this.getLog().isPresent()) {
+                this.buildTool = this.getLog().get().getBuildTool();
             } else {
-                buildTool = BuildTool.UNKNOWN;
+                return Optional.empty();
             }
         }
 
-        return buildTool;
+        return Optional.of(buildTool);
     }
 
     public int getJobNumber() {
@@ -67,27 +202,46 @@ public class Job extends JobPojo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-
-        Job job = (Job) o;
-
-        if (config != null ? !config.equals(job.config) : job.config != null) return false;
-        return log != null ? log.equals(job.log) : job.log == null;
+        final Job job = (Job) o;
+        return allowFailure == job.allowFailure &&
+                Objects.equals(number, job.number) &&
+                state == job.state &&
+                Objects.equals(startedAt, job.startedAt) &&
+                Objects.equals(finishedAt, job.finishedAt) &&
+                Objects.equals(build, job.build) &&
+                Objects.equals(queue, job.queue) &&
+                Objects.equals(repository, job.repository) &&
+                Objects.equals(commit, job.commit) &&
+                Objects.equals(owner, job.owner) &&
+                Objects.equals(createdAt, job.createdAt) &&
+                Objects.equals(updatedAt, job.updatedAt) &&
+                Objects.equals(log, job.log) &&
+                buildTool == job.buildTool;
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (config != null ? config.hashCode() : 0);
-        result = 31 * result + (log != null ? log.hashCode() : 0);
-        return result;
+
+        return Objects.hash(super.hashCode(), allowFailure, number, state, startedAt, finishedAt, build, queue, repository, commit, owner, createdAt, updatedAt, log, buildTool);
     }
 
     @Override
     public String toString() {
         return "Job{" +
-                super.toString() +
-                "config=" + config +
+                "allowFailure=" + allowFailure +
+                ", number='" + number + '\'' +
+                ", state=" + state +
+                ", startedAt=" + startedAt +
+                ", finishedAt=" + finishedAt +
+                ", build=" + build +
+                ", queue='" + queue + '\'' +
+                ", repository=" + repository +
+                ", commit=" + commit +
+                ", owner=" + owner +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 ", log=" + log +
+                ", buildTool=" + buildTool +
                 '}';
     }
 }

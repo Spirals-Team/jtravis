@@ -1,0 +1,106 @@
+{
+  "@type": "repositories",
+  "@href": "/owner/surli/repos?limit=2",
+  "@representation": "standard",
+  "@pagination": {
+    "limit": 2,
+    "offset": 0,
+    "count": 4,
+    "is_first": true,
+    "is_last": false,
+    "next": {
+      "@href": "/owner/surli/repos?limit=2&offset=2",
+      "offset": 2,
+      "limit": 2
+    },
+    "prev": null,
+    "first": {
+      "@href": "/owner/surli/repos?limit=2",
+      "offset": 0,
+      "limit": 2
+    },
+    "last": {
+      "@href": "/owner/surli/repos?limit=2&offset=2",
+      "offset": 2,
+      "limit": 2
+    }
+  },
+  "repositories": [
+    {
+      "@type": "repository",
+      "@href": "/repo/11594784",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "admin": true,
+        "activate": true,
+        "deactivate": true,
+        "star": true,
+        "unstar": true,
+        "create_cron": true,
+        "create_env_var": true,
+        "create_key_pair": true,
+        "delete_key_pair": true,
+        "create_request": true
+      },
+      "id": 11594784,
+      "name": "failingProject",
+      "slug": "surli/failingProject",
+      "description": null,
+      "github_language": null,
+      "active": true,
+      "private": false,
+      "owner": {
+        "@type": "user",
+        "id": 95813,
+        "login": "surli",
+        "@href": "/user/95813"
+      },
+      "default_branch": {
+        "@type": "branch",
+        "@href": "/repo/11594784/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "starred": false
+    },
+    {
+      "@type": "repository",
+      "@href": "/repo/17103452",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "admin": true,
+        "activate": true,
+        "deactivate": true,
+        "star": true,
+        "unstar": true,
+        "create_cron": true,
+        "create_env_var": true,
+        "create_key_pair": true,
+        "delete_key_pair": true,
+        "create_request": true
+      },
+      "id": 17103452,
+      "name": "astor",
+      "slug": "surli/astor",
+      "description": "automatic program repair for Java with generate-and-validate techniques - jGenProg (GenProg for Java) - jKali - jMutRepair - DeepRepair - Cardumen",
+      "github_language": null,
+      "active": false,
+      "private": false,
+      "owner": {
+        "@type": "user",
+        "id": 95813,
+        "login": "surli",
+        "@href": "/user/95813"
+      },
+      "default_branch": {
+        "@type": "branch",
+        "@href": "/repo/17103452/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "starred": false
+    }
+  ]
+}

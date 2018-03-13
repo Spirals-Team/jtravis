@@ -1,0 +1,62 @@
+{
+  "@type": "job",
+  "@href": "/job/340663038",
+  "@representation": "standard",
+  "@permissions": {
+    "read": true,
+    "debug": true,
+    "cancel": true,
+    "restart": true,
+    "delete_log": true
+  },
+  "id": 340663038,
+  "allow_failure": false,
+  "number": "4744.1",
+  "state": "failed",
+  "started_at": "2018-02-12T20:20:36Z",
+  "finished_at": "2018-02-12T20:28:09Z",
+  "build": {
+    "@type": "build",
+    "@href": "/build/340663037",
+    "@representation": "minimal",
+    "id": 340663037,
+    "number": "4744",
+    "state": "failed",
+    "duration": 1735,
+    "event_type": "pull_request",
+    "previous_state": "passed",
+    "pull_request_title": "WiP: feature: Pattern = more abstract Template",
+    "pull_request_number": 1686,
+    "started_at": "2018-02-12T20:20:29Z",
+    "finished_at": "2018-02-12T20:29:02Z"
+  },
+  "queue": "builds.gce",
+  "repository": {
+    "@type": "repository",
+    "@href": "/repo/2800492",
+    "@representation": "minimal",
+    "id": 2800492,
+    "name": "spoon",
+    "slug": "INRIA/spoon"
+  },
+  "commit": {
+    "@type": "commit",
+    "@representation": "minimal",
+    "id": 101294919,
+    "sha": "c581397a4b1e627451fbb0a736cfc7a6e4e7aea0",
+    "ref": "refs/pull/1686/merge",
+    "message": "match attribute of type map",
+    "compare_url": "https://github.com/INRIA/spoon/pull/1686",
+    "committed_at": "2018-02-12T20:19:27Z"
+  },
+  "owner": {
+    "@type": "organization",
+    "@href": "/org/83206",
+    "@representation": "minimal",
+    "id": 83206,
+    "login": "INRIA"
+  },
+  "stage": null,
+  "created_at": "2018-02-12T20:19:53.212Z",
+  "updated_at": "2018-02-12T20:28:09.121Z"
+}

@@ -1,0 +1,166 @@
+{
+  "@type": "build",
+  "@href": "/build/86601346",
+  "@representation": "standard",
+  "@permissions": {
+    "read": true,
+    "cancel": false,
+    "restart": false
+  },
+  "id": 86601346,
+  "number": "28677",
+  "state": "passed",
+  "duration": 5241,
+  "event_type": "pull_request",
+  "previous_state": "passed",
+  "pull_request_title": "Add SQL parameter sanitization to `.joins`",
+  "pull_request_number": 21847,
+  "started_at": "2015-10-21T11:54:01Z",
+  "finished_at": "2015-10-21T12:13:12Z",
+  "repository": {
+    "@type": "repository",
+    "@href": "/repo/891",
+    "@representation": "minimal",
+    "id": 891,
+    "name": "rails",
+    "slug": "rails/rails"
+  },
+  "branch": {
+    "@type": "branch",
+    "@href": "/repo/891/branch/master",
+    "@representation": "minimal",
+    "name": "master"
+  },
+  "tag": null,
+  "commit": {
+    "@type": "commit",
+    "@representation": "minimal",
+    "id": 24633751,
+    "sha": "c5019a4229539ea68c3e5df137219e6000ba16da",
+    "ref": "refs/pull/21847/merge",
+    "message": "move build_join to private methods",
+    "compare_url": "https://github.com/rails/rails/pull/21847",
+    "committed_at": "2015-10-21T11:53:32Z"
+  },
+  "jobs": [
+    {
+      "@type": "job",
+      "@href": "/job/86601347",
+      "@representation": "minimal",
+      "id": 86601347
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601348",
+      "@representation": "minimal",
+      "id": 86601348
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601349",
+      "@representation": "minimal",
+      "id": 86601349
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601350",
+      "@representation": "minimal",
+      "id": 86601350
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601351",
+      "@representation": "minimal",
+      "id": 86601351
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601352",
+      "@representation": "minimal",
+      "id": 86601352
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601353",
+      "@representation": "minimal",
+      "id": 86601353
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601354",
+      "@representation": "minimal",
+      "id": 86601354
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601355",
+      "@representation": "minimal",
+      "id": 86601355
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601356",
+      "@representation": "minimal",
+      "id": 86601356
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601357",
+      "@representation": "minimal",
+      "id": 86601357
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601358",
+      "@representation": "minimal",
+      "id": 86601358
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601359",
+      "@representation": "minimal",
+      "id": 86601359
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601360",
+      "@representation": "minimal",
+      "id": 86601360
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601361",
+      "@representation": "minimal",
+      "id": 86601361
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601362",
+      "@representation": "minimal",
+      "id": 86601362
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601363",
+      "@representation": "minimal",
+      "id": 86601363
+    },
+    {
+      "@type": "job",
+      "@href": "/job/86601364",
+      "@representation": "minimal",
+      "id": 86601364
+    }
+  ],
+  "stages": [
+
+  ],
+  "created_by": {
+    "@type": "user",
+    "@href": "/user/610866",
+    "@representation": "minimal",
+    "id": 610866,
+    "login": "esjee"
+  },
+  "updated_at": "2017-04-17T11:53:42.240Z"
+}

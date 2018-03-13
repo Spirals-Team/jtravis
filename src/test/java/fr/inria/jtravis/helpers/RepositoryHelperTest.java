@@ -1,64 +1,67 @@
 package fr.inria.jtravis.helpers;
 
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
+import com.squareup.okhttp.mockwebserver.RecordedRequest;
+import fr.inria.jtravis.AbstractTest;
+import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Repository;
-import org.junit.After;
+import fr.inria.jtravis.entities.TestRepository;
 import org.junit.Test;
 
-import java.io.IOException;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+
 /**
  * Created by urli on 21/12/2016.
  */
-public class RepositoryHelperTest {
+public class RepositoryHelperTest extends AbstractTest {
 
-    MockWebServer server;
+    @Test
+    public void testFromSlugMocked() throws InterruptedException {
+        String slug = "INRIA/spoon";
+        String encodedSlug = "INRIA%2Fspoon";
+        String buildContent = this.getFileContent(TestRepository.PATH_REPO_STANDARD);
 
-    @After
-    public void tearDown() {
-        if (server != null) {
-            try {
-                server.shutdown();
-            } catch (IOException e) {
-            }
-        }
-        RepositoryHelper.getInstance().setEndpoint(AbstractHelper.TRAVIS_API_ENDPOINT);
+        this.enqueueContentMockServer(buildContent);
+
+        Optional<Repository> repositoryOpt = getJTravis().repository().fromSlug(slug);
+        assertTrue(repositoryOpt.isPresent());
+        Repository repository = repositoryOpt.get();
+
+        assertEquals(TestRepository.getStandardExpectedRepo(), repository);
+        RecordedRequest request1 = getMockServer().takeRequest();
+        assertEquals(this.expectedUrl(TravisConstants.REPO_ENDPOINT, encodedSlug), request1.getPath());
     }
 
     @Test
-    public void testGetSpoonRepoFromSlugWorks() throws IOException {
-        server = new MockWebServer();
-        String mockAnswer = "{\"repo\":{\"id\":2800492,\"slug\":\"INRIA/spoon\",\"active\":true,\"description\":\"Spoon is a library to analyze, rewrite, transform, transpile Java source code. It parses source files to build a well-designed AST with powerful analysis and transformation API. It fully supports Java 8. Made at Inria with :heart:, :beers: and :sparkles:\",\"last_build_id\":190205141,\"last_build_number\":\"2433\",\"last_build_state\":\"started\",\"last_build_duration\":null,\"last_build_language\":null,\"last_build_started_at\":\"2017-01-09T10:28:08Z\",\"last_build_finished_at\":null,\"github_language\":null}}";
-        server.enqueue(new MockResponse().setBody(mockAnswer));
+    public void testFromIdStrMocked() throws InterruptedException {
+        String id = "2800492";
+        String buildContent = this.getFileContent(TestRepository.PATH_REPO_STANDARD);
 
-        server.start();
-        HttpUrl baseUrl = server.url("/repos/INRIA/spoon");
+        this.enqueueContentMockServer(buildContent);
+        Optional<Repository> repositoryOpt = getJTravis().repository().fromId(id);
+        assertTrue(repositoryOpt.isPresent());
+        Repository repository = repositoryOpt.get();
 
-        RepositoryHelper.getInstance().setEndpoint(baseUrl.toString());
-        Repository spoonRepo = RepositoryHelper.getRepositoryFromSlug("INRIA/spoon");
-
-        assertEquals("INRIA/spoon",spoonRepo.getSlug());
-        assertEquals(2800492, spoonRepo.getId());
-        assertTrue(spoonRepo.getLastBuildId() > 0);
+        assertEquals(TestRepository.getStandardExpectedRepo(), repository);
+        RecordedRequest request1 = getMockServer().takeRequest();
+        assertEquals(this.expectedUrl(TravisConstants.REPO_ENDPOINT, id), request1.getPath());
     }
 
     @Test
-    public void testGetSpoonRepoFromIdWorks() {
-        Repository spoonRepo = RepositoryHelper.getRepositoryFromId(2800492);
+    public void testFromIdIntMocked() throws InterruptedException {
+        int id = 2800492;
+        String buildContent = this.getFileContent(TestRepository.PATH_REPO_STANDARD);
 
-        assertEquals("INRIA/spoon",spoonRepo.getSlug());
-        assertEquals(2800492, spoonRepo.getId());
-        assertTrue(spoonRepo.getLastBuildId() > 0);
-    }
+        this.enqueueContentMockServer(buildContent);
+        Optional<Repository> repositoryOpt = getJTravis().repository().fromId(id);
+        assertTrue(repositoryOpt.isPresent());
+        Repository repository = repositoryOpt.get();
 
-    @Test
-    public void testGetUnknownRepoThrowsException() {
-        Repository unknownRepo = RepositoryHelper.getRepositoryFromSlug("surli/unknown");
-        assertTrue(unknownRepo == null);
+        assertEquals(TestRepository.getStandardExpectedRepo(), repository);
+        RecordedRequest request1 = getMockServer().takeRequest();
+        assertEquals(this.expectedUrl(TravisConstants.REPO_ENDPOINT, String.valueOf(id)), request1.getPath());
     }
 }

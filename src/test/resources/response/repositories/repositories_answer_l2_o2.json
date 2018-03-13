@@ -1,0 +1,106 @@
+{
+  "@type": "repositories",
+  "@href": "/owner/surli/repos?limit=2&offset=2",
+  "@representation": "standard",
+  "@pagination": {
+    "limit": 2,
+    "offset": 2,
+    "count": 4,
+    "is_first": false,
+    "is_last": true,
+    "next": null,
+    "prev": {
+      "@href": "/owner/surli/repos?limit=2&offset=0",
+      "offset": 0,
+      "limit": 2
+    },
+    "first": {
+      "@href": "/owner/surli/repos?limit=2&offset=0",
+      "offset": 0,
+      "limit": 2
+    },
+    "last": {
+      "@href": "/owner/surli/repos?limit=2&offset=2",
+      "offset": 2,
+      "limit": 2
+    }
+  },
+  "repositories": [
+    {
+      "@type": "repository",
+      "@href": "/repo/16432953",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "admin": true,
+        "activate": true,
+        "deactivate": true,
+        "star": true,
+        "unstar": true,
+        "create_cron": true,
+        "create_env_var": true,
+        "create_key_pair": true,
+        "delete_key_pair": true,
+        "create_request": true
+      },
+      "id": 16432953,
+      "name": "intellij-bug-resources",
+      "slug": "surli/intellij-bug-resources",
+      "description": null,
+      "github_language": null,
+      "active": false,
+      "private": false,
+      "owner": {
+        "@type": "user",
+        "id": 95813,
+        "login": "surli",
+        "@href": "/user/95813"
+      },
+      "default_branch": {
+        "@type": "branch",
+        "@href": "/repo/16432953/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "starred": false
+    },
+    {
+      "@type": "repository",
+      "@href": "/repo/16306191",
+      "@representation": "standard",
+      "@permissions": {
+        "read": true,
+        "admin": true,
+        "activate": true,
+        "deactivate": true,
+        "star": true,
+        "unstar": true,
+        "create_cron": true,
+        "create_env_var": true,
+        "create_key_pair": true,
+        "delete_key_pair": true,
+        "create_request": true
+      },
+      "id": 16306191,
+      "name": "gumtree-spoon-ast-diff",
+      "slug": "surli/gumtree-spoon-ast-diff",
+      "description": "Computes the AST difference (aka edit script) between two Spoon Java abstract syntax trees",
+      "github_language": null,
+      "active": false,
+      "private": false,
+      "owner": {
+        "@type": "user",
+        "id": 95813,
+        "login": "surli",
+        "@href": "/user/95813"
+      },
+      "default_branch": {
+        "@type": "branch",
+        "@href": "/repo/16306191/branch/master",
+        "@representation": "minimal",
+        "name": "master"
+      },
+      "starred": false
+    }
+  ]
+}

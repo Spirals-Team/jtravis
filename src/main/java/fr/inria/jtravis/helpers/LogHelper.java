@@ -1,47 +1,30 @@
 package fr.inria.jtravis.helpers;
 
+import fr.inria.jtravis.JTravis;
+import fr.inria.jtravis.TravisConfig;
+import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Log;
-import fr.inria.jtravis.entities.BuildStatus;
+import okhttp3.OkHttpClient;
 
-import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * The helper to deal with log objects
  *
  * @author Simon Urli
  */
-public class LogHelper extends AbstractHelper {
-    public static final String LOG_ENDPOINT = "logs/";
-    public static final String LOG_JOB_ENDPOINT = "/log";
+public class LogHelper extends EntityHelper {
 
-    private static LogHelper instance;
-
-    private LogHelper() {
-        super();
+    public LogHelper(JTravis jTravis, TravisConfig config, OkHttpClient client) {
+        super(jTravis, config, client);
     }
 
-    protected static LogHelper getInstance() {
-        if (instance == null) {
-            instance = new LogHelper();
-        }
-        return instance;
-    }
-
-    public static Log getLogFromJob(Job job) {
-        if (job.getId() != 0) {
-            if (job.getBuildStatus() == BuildStatus.FAILED || job.getBuildStatus() == BuildStatus.PASSED || job.getBuildStatus() == BuildStatus.ERRORED) {
-                String logJobUrl = getInstance().getEndpoint()+JobHelper.JOB_ENDPOINT+job.getId()+LOG_JOB_ENDPOINT;
-                try {
-                    String body = getInstance().rawGet(logJobUrl);
-                    return new Log(job.getId(), body);
-                } catch (IOException e) {
-                    getInstance().getLogger().warn("Error when getting log from job id "+job.getId()+" ",e);
-                }
-            } else {
-                getInstance().getLogger().warn("Error when getting log from job id "+job.getId()+" : build status is neither failed or passed: "+job.getBuildStatus().name());
-            }
-        }
-        return null;
+    public Optional<Log> from(Job job) {
+        return this.getEntityFromUri(Log.class, Arrays.asList(
+                TravisConstants.JOB_ENDPOINT,
+                String.valueOf(job.getId()),
+                TravisConstants.LOG_ENDPOINT), null);
     }
 }
