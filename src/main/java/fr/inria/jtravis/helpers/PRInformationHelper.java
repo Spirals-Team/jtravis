@@ -64,7 +64,12 @@ public class PRInformationHelper extends AbstractHelper {
 
 
                     Repository repoPR = new Repository();
-                    repoPR.setId(headRepo.getId());
+
+                    if (headRepo.getId() > Integer.MAX_VALUE) {
+                        getInstance().getLogger().error("Error while getting the repository ID: it's not supported by Java int. ");
+                        return null;
+                    }
+                    repoPR.setId(Math.toIntExact(headRepo.getId()));
                     repoPR.setDescription(headRepo.getDescription());
                     repoPR.setActive(true);
                     repoPR.setSlug(headRepo.getFullName());
