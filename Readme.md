@@ -16,7 +16,7 @@ The API can be immediately used after specifying the following dependency in you
 <dependency>
     <groupId>fr.inria.jtravis</groupId>
     <artifactId>jtravis</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
 </dependency>
 ```
 
