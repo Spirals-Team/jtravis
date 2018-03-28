@@ -10,7 +10,7 @@
 
     <groupId>fr.inria.jtravis</groupId>
     <artifactId>jtravis</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.3</version>
 
     <name>jtravis</name>
     <description>jTravis is a Java API for accessing TravisCI API</description>
