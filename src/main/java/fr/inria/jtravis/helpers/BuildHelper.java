@@ -245,7 +245,7 @@ public class BuildHelper extends EntityHelper {
                 Build lastBuild = buildList.get(buildList.size()-1);
 
                 if (firstBuild.getFinishedAt() != null && firstBuild.getFinishedAt().toInstant().isBefore(limitDateBeginOfTheRange)) {
-                    return Optional.empty();
+                    break;
                 } else if (lastBuild.getFinishedAt().toInstant().isAfter(limitDateEndOfTheRange)) {
                     optionalBuilds = this.next(builds);
                 } else {
