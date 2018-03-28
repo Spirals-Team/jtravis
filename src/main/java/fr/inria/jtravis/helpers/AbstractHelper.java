@@ -58,19 +58,18 @@ public abstract class AbstractHelper {
 
     protected GitHub getGithub() throws IOException {
         if (this.github == null) {
-            if (!this.config.getGithubLogin().isEmpty() && !this.config.getGithubToken().isEmpty()) {
+            if (!this.config.getGithubToken().isEmpty()) {
                 try {
-                    this.getLogger().debug("Get GH login: "+this.config.getGithubLogin()+ "; OAuth (10 first characters): "+this.config.getGithubToken().substring(0,10));
-                    this.github = GitHubBuilder.fromEnvironment().withOAuthToken(this.config.getGithubToken(), this.config.getGithubLogin()).build();
+                    this.getLogger().debug("Get GH OAuth (10 first characters): "+this.config.getGithubToken().substring(0,10));
+                    this.github = GitHubBuilder.fromEnvironment().withOAuthToken(this.config.getGithubToken()).build();
                 } catch (IOException e) {
                     this.getLogger().warn("Error while using credentials: try to use anonymous access to github.", e);
                     this.github = GitHub.connectAnonymously();
-                    this.getLogger().warn("No github information has been given to connect (set GITHUB_OAUTH and GITHUB_LOGIN), you will have a very low ratelimit for github requests.");
+                    this.getLogger().warn("No github information has been given to connect (set GITHUB_OAUTH), you will have a very low ratelimit for github requests.");
                 }
-
             } else {
                 this.github = GitHub.connectAnonymously();
-                this.getLogger().warn("No github information has been given to connect (set GITHUB_OAUTH and GITHUB_LOGIN), you will have a very low ratelimit for github requests.");
+                this.getLogger().warn("No github information has been given to connect (set GITHUB_OAUTH), you will have a very low ratelimit for github requests.");
             }
         }
         return this.github;
