@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import fr.inria.jtravis.TravisConfig;
+import fr.inria.jtravis.TravisConstants;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -38,16 +39,29 @@ public abstract class AbstractHelper {
         this.client = client;
     }
 
+    public TravisConfig getConfig() {
+        return config;
+    }
+
     protected Logger getLogger() {
         return LoggerFactory.getLogger(this.getClass());
     }
 
-    private Request.Builder requestBuilder(String url) {
-        return new Request.Builder()
-                .header("User-Agent",USER_AGENT)
-                .header("Travis-API-Version", "3")
-                .header("Authorization", this.config.getTravisToken())
-                .url(url);
+    private Request.Builder requestBuilder(String url, boolean useV2) {
+        Request.Builder builder = new Request.Builder()
+                .header("User-Agent",USER_AGENT);
+
+        if (useV2) {
+            builder.header("Accept", TravisConstants.TRAVIS_API_V2_ACCEPT_APP);
+        } else {
+            builder.header("Travis-API-Version", "3");
+        }
+
+        if (this.config.getTravisToken() != null && !this.config.getTravisToken().isEmpty()) {
+            builder.header("Authorization", this.config.getTravisToken());
+        }
+
+        return builder.url(url);
     }
 
     private void checkResponse(Response response) throws IOException {
@@ -91,7 +105,11 @@ public abstract class AbstractHelper {
     }
 
     protected String get(String url) throws IOException {
-        Request request = this.requestBuilder(url).get().build();
+        return this.get(url, false);
+    }
+
+    protected String get(String url, boolean useV2) throws IOException {
+        Request request = this.requestBuilder(url, useV2).get().build();
         Call call = this.client.newCall(request);
         long dateBegin = new Date().getTime();
         Response response = call.execute();
@@ -114,7 +132,7 @@ public abstract class AbstractHelper {
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
     }
 
-    public String buildUrl(List<String> pathComponent, Properties queryParameters) {
+    protected String buildUrl(List<String> pathComponent, Properties queryParameters) {
 
         StringBuilder stringBuilder = new StringBuilder(StringUtils.join(pathComponent, "/"));
 
