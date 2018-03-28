@@ -26,13 +26,11 @@ public class JTravis {
     public static class Builder {
         private String travisToken;
         private String endpoint;
-        private String githubLogin;
         private String githubToken;
 
         public Builder() {
             this.endpoint = TravisConstants.TRAVIS_API_ENDPOINT;
             this.setTravisToken(System.getenv(TravisConstants.TRAVIS_TOKEN_ENV_PROPERTY));
-            this.setGithubLogin(System.getenv(TravisConstants.GITHUB_LOGIN_ENV_PROPERTY));
             this.setGithubToken(System.getenv(TravisConstants.GITHUB_TOKEN_ENV_PROPERTY));
         }
 
@@ -50,15 +48,6 @@ public class JTravis {
                 this.endpoint = endpoint;
             } else {
                 this.endpoint = "";
-            }
-            return this;
-        }
-
-        public Builder setGithubLogin(String githubLogin) {
-            if (githubLogin != null) {
-                this.githubLogin = githubLogin;
-            } else {
-                this.githubLogin = "";
             }
             return this;
         }
