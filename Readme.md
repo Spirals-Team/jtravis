@@ -16,14 +16,12 @@ The API can be immediately used after specifying the following dependency in you
 <dependency>
     <groupId>fr.inria.jtravis</groupId>
     <artifactId>jtravis</artifactId>
-    <version>1.1</version>
+    <version>2.0</version>
 </dependency>
 ```
 
-For now the API rely on Travis CI API V2 and only allow to get information from the API, like build statuses, logs, repository, etc. 
+The API rely on Travis CI API V3 for most of its part, but some endpoints of Travis CI API V2 are still available (like /jobs endpoint).
 It *does not* allow to trigger new builds for now. But it does not require to use TravisCI authentication either.
-
-The migration towards API V3 is planned soon.
 
 ### Limitations
 
@@ -33,7 +31,6 @@ Don't hesitate to propose pull requests in order to enhance the current state of
 ### Github Integration
 
 JTravis uses Github API in order to get useful information about pull requests when builds has been triggered by pull requests. 
-You currently can use `GITHUB_OAUTH` and `GITHUB_LOGIN` environment variable in order to avoid improve the requests limitations imposed by Github.
 
 See [javadoc from github-api library](http://github-api.kohsuke.org/apidocs/org/kohsuke/github/GitHubBuilder.html#fromEnvironment--) for more information.
 
@@ -41,22 +38,17 @@ See [javadoc from github-api library](http://github-api.kohsuke.org/apidocs/org/
 
 ```java 
 
-Repository repo = RepositoryHelper.getRepositoryFromSlug("Spirals-Team/jtravis");
-Build build = repo.getLastBuild(false); // false here means that we looks for all builds, not only on master branch
-if (build.getBuildStatus() == BuildStatus.FAILED) {
-    if (build.isPullRequest()) {
-        PRInformation prInfo = build.getPrInformations() // get all information on the pull request from Github API
-        
-        ... 
-        for (Job job : build.getJobs()) {
-            if (job.getLog() != null) {
-                TestsInformation testInfo = job.getLog().getTestsInformation(); 
-                if (testInfo != null) {
-                    System.out.println(testInfo.getFailing()+" failings tests (on "+testInfo.getRunning()+" tests) on job "+job.getId());
-                }
-            }
+JTravis jTravis = new JTravis.Builder().build(); // you can specify in the builder the Github API token and/or the Travis CI API token
+Optional<Repository> repository = jTravis.repository().fromSlug("Spirals-Team/jtravis");
+
+if (repository.isPresent()) {
+    Optional<Builds> optionalBuilds = jTravis.build().fromRepository(repository.get());
+
+    if (optionalBuilds.isPresent()) {
+        for (Build build : optionalBuilds.get().getBuilds()) {
+            System.out.println("build id: "+build.getId()+" status: "+build.getState().name());
         }
-    }           
+    }
 }
 ```
 
