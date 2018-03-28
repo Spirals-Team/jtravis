@@ -73,7 +73,7 @@ public class JTravis {
         }
 
         public JTravis build() {
-            TravisConfig travisConfig = new TravisConfig(this.endpoint, this.travisToken, this.githubLogin, this.githubToken);
+            TravisConfig travisConfig = new TravisConfig(this.endpoint, this.travisToken, this.githubToken);
             return new JTravis(travisConfig);
         }
     }
