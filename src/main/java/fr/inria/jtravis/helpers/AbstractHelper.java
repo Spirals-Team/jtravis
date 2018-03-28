@@ -63,8 +63,8 @@ public abstract class AbstractHelper {
         if (this.github == null) {
             if (GithubTokenHelper.getInstance().isAvailable()) {
                 try {
-                    this.getLogger().debug("Get GH login: "+GithubTokenHelper.getInstance().getGithubLogin()+ "; OAuth (10 first characters): "+GithubTokenHelper.getInstance().getGithubOauth().substring(0,10));
-                    this.github = GitHubBuilder.fromEnvironment().withOAuthToken(GithubTokenHelper.getInstance().getGithubOauth(), GithubTokenHelper.getInstance().getGithubLogin()).build();
+                    this.getLogger().debug("Get GH OAuth (10 first characters): "+GithubTokenHelper.getInstance().getGithubOauth().substring(0,10));
+                    this.github = GitHubBuilder.fromEnvironment().withOAuthToken(GithubTokenHelper.getInstance().getGithubOauth()).build();
                 } catch (IOException e) {
                     this.getLogger().warn("Error while using credentials: try to use anonymous access to github.", e);
                     this.github = GitHub.connectAnonymously();

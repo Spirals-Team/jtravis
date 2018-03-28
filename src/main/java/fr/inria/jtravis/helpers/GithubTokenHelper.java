@@ -6,7 +6,6 @@ package fr.inria.jtravis.helpers;
 public class GithubTokenHelper {
     private static GithubTokenHelper instance;
 
-    private String githubLogin;
     private String githubOauth;
 
     private GithubTokenHelper() {}
@@ -18,14 +17,6 @@ public class GithubTokenHelper {
         return instance;
     }
 
-    public String getGithubLogin() {
-        return (isAvailable()) ? githubLogin : null;
-    }
-
-    public void setGithubLogin(String githubLogin) {
-        this.githubLogin = githubLogin;
-    }
-
     public String getGithubOauth() {
         return (isAvailable()) ? githubOauth : null;
     }
@@ -35,12 +26,11 @@ public class GithubTokenHelper {
     }
 
     public boolean isAvailable() {
-        if (this.githubLogin != null && this.githubOauth != null) {
+        if (this.githubOauth != null) {
             return true;
         }
 
-        if (System.getenv("GITHUB_OAUTH") != null && !System.getenv("GITHUB_OAUTH").equals("") && System.getenv("GITHUB_LOGIN") != null && !System.getenv("GITHUB_LOGIN").equals("")) {
-            this.setGithubLogin(System.getenv("GITHUB_LOGIN"));
+        if (System.getenv("GITHUB_OAUTH") != null && !System.getenv("GITHUB_OAUTH").equals("")) {
             this.setGithubOauth(System.getenv("GITHUB_OAUTH"));
             return true;
         }
