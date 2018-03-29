@@ -331,6 +331,24 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
     @Test
     @Category(IntegrationTest.class)
+    public void testGetBuildsFromRepositoryInTimeIntervalAPI2() {
+        String slug = "Spirals-Team/repairnator";
+        Date beginDate = getDateFor(2017, Calendar.MARCH, 13, 23, 0, 0, 0);
+        Date endDate = getDateFor(2017, Calendar.MARCH, 16, 23, 0, 0, 0);
+
+        Optional<List<Build>> optionalBuild = getJTravis().build().betweenDates(slug, beginDate, endDate);
+
+        assertTrue(optionalBuild.isPresent());
+
+        List<Build> buildList = optionalBuild.get();
+
+        assertEquals(60, buildList.size());
+        assertEquals("215", buildList.get(0).getNumber());
+        assertEquals("156", buildList.get(buildList.size()-1).getNumber());
+    }
+
+    @Test
+    @Category(IntegrationTest.class)
     public void testGetBuildsFromRepositoryInTimeIntervalAlsoTakePR() {
         String slug = "INRIA/spoon";
         Date initialDate = getDateFor(2017, Calendar.JUNE, 26, 20, 0, 0, 0);

@@ -280,6 +280,10 @@ public class BuildHelper extends EntityHelper {
         }
     }
 
+    public Optional<List<Build>> betweenDates(String slug, Date beginDate, Date endDate) {
+        return this.allForDate(slug, beginDate, endDate, false, false);
+    }
+
     public Optional<Build> first(String slug) {
         Optional<String> optionalS = this.getEncodedSlug(slug);
 
