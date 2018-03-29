@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Business object to deal with repository in Travis CI API
@@ -122,35 +123,14 @@ public final class Repository extends EntityUnary {
      * @param onMaster True if the last build should be search only on the master branch
      * @return The last build
      */
-    public Build getLastBuild(boolean onMaster) {
-
-        return null;
+    public Optional<Build> getLastBuild(boolean onMaster) {
         // first case: we should get the last build on master
-        /*if (onMaster) {
-
-            // if we already get the last build and it's not a PR, then it's the last build on master
-            if (this.lastBuildOnMaster == null && this.lastBuild != null && !this.lastBuild.isPullRequest()) {
-                this.lastBuildOnMaster = this.lastBuild;
-
-            // else we have to request it
-            } else if (this.lastBuildOnMaster == null) {
-                this.lastBuildOnMaster = BuildHelper.getLastBuildFromMaster(this);
-            }
-            return this.lastBuildOnMaster;
-
+        if (onMaster) {
+            return this.getJtravis().build().lastBuildFromMasterBranch(this);
         // second case: we should get the last build, no matter if it's on master or not
         } else {
-
-            // if we already get the last build on master and it has the same ID as the last build, then there're the same
-            if (this.lastBuild == null && this.lastBuildOnMaster != null && this.getLastBuildId() > 0 && this.lastBuildOnMaster.getId() == this.getLastBuildId()) {
-                this.lastBuild = this.lastBuildOnMaster;
-
-            // else we have to request it
-            } else if (this.lastBuild == null && this.getLastBuildId() > 0) {
-                this.lastBuild = BuildHelper.getBuildFromId(this.getLastBuildId(), this);
-            }
-            return this.lastBuild;
-        }*/
+            return this.getJtravis().build().last(this.getSlug());
+        }
     }
 
     @Override
