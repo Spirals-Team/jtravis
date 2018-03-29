@@ -6,6 +6,7 @@ import fr.inria.jtravis.helpers.BuildHelper;
 import fr.inria.jtravis.helpers.EntityHelper;
 import fr.inria.jtravis.helpers.JobHelper;
 import fr.inria.jtravis.helpers.LogHelper;
+import fr.inria.jtravis.helpers.OwnerHelper;
 import fr.inria.jtravis.helpers.PullRequestHelper;
 import fr.inria.jtravis.helpers.RepositoryHelper;
 import okhttp3.OkHttpClient;
@@ -22,6 +23,7 @@ public class JTravis {
     private PullRequestHelper pullRequestHelper;
     private BuildHelper buildHelper;
     private LogHelper logHelper;
+    private OwnerHelper ownerHelper;
 
     public static class Builder {
         private String travisToken;
@@ -115,6 +117,13 @@ public class JTravis {
             this.logHelper = new LogHelper(this, this.travisConfig, this.client);
         }
         return this.logHelper;
+    }
+
+    public OwnerHelper owner() {
+        if (this.ownerHelper == null) {
+            this.ownerHelper = new OwnerHelper(this, this.travisConfig, this.client);
+        }
+        return this.ownerHelper;
     }
 
     public static Builder builder() {

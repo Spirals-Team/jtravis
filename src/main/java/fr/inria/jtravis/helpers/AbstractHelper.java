@@ -13,6 +13,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.apache.commons.lang.StringUtils;
+import org.kohsuke.github.GHRateLimit;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +88,9 @@ public abstract class AbstractHelper {
                 this.getLogger().warn("No github information has been given to connect (set GITHUB_OAUTH), you will have a very low ratelimit for github requests.");
             }
         }
+        GHRateLimit rateLimit = this.github.getRateLimit();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        this.getLogger().debug("GitHub ratelimit: Limit: " + rateLimit.limit + " Remaining: " + rateLimit.remaining + " Reset hour: " + dateFormat.format(rateLimit.reset));
         return this.github;
     }
 
