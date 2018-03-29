@@ -17,4 +17,6 @@ public class TravisConstants {
     public static final String JOBS_ENDPOINT = "jobs";
     public static final String LOG_ENDPOINT = "log";
     public static final String OWNER_ENDPOINT = "owner";
+
+    public static final int DEFAULT_OKHTTP_CACHE_SIZE = 10 * 1024 * 1024; // 10 MiB
 }

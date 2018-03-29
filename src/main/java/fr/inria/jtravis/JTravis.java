@@ -9,6 +9,7 @@ import fr.inria.jtravis.helpers.LogHelper;
 import fr.inria.jtravis.helpers.OwnerHelper;
 import fr.inria.jtravis.helpers.PullRequestHelper;
 import fr.inria.jtravis.helpers.RepositoryHelper;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import org.kohsuke.github.GHRateLimit;
 import org.kohsuke.github.GitHub;
@@ -16,11 +17,18 @@ import org.kohsuke.github.GitHubBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.FileAttribute;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
+import java.util.Set;
 
 public class JTravis {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JTravis.class);
     private static final JTravis instance = new JTravis();
     private static final SimpleDateFormat hourSimpleDateFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -81,40 +89,48 @@ public class JTravis {
         }
     }
 
-    private JTravis() {}
+    private JTravis() {
+        Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxrwxrwx");
+        FileAttribute<Set<PosixFilePermission>> attr = PosixFilePermissions.asFileAttribute(perms);
+        try {
+            File cacheDirectory = Files.createTempDirectory("okhttpcache", attr).toFile();
+            Cache cache = new Cache(cacheDirectory, TravisConstants.DEFAULT_OKHTTP_CACHE_SIZE);
+            this.client = new OkHttpClient.Builder().cache(cache).build();
+        } catch (IOException e) {
+            LOGGER.error("Error while doing the setup for OKhttp cache", e);
+            this.client = new OkHttpClient();
+        }
+    }
 
     private void reset(TravisConfig travisConfig) {
         this.travisConfig = travisConfig;
         this.client = new OkHttpClient();
     }
 
-    protected Logger getLogger() {
-        return LoggerFactory.getLogger(this.getClass());
-    }
-
     public GitHub getGithub() throws IOException {
         if (this.github == null) {
             if (!this.travisConfig.getGithubToken().isEmpty()) {
                 try {
-                    this.getLogger().debug("Get GH OAuth (10 first characters): "+this.travisConfig.getGithubToken().substring(0,10));
+                    LOGGER.debug("Get GH OAuth (10 first characters): "+this.travisConfig.getGithubToken().substring(0,10));
                     this.github = GitHubBuilder.fromEnvironment().withOAuthToken(this.travisConfig.getGithubToken()).build();
                 } catch (IOException e) {
-                    this.getLogger().warn("Error while using credentials: try to use anonymous access to github.", e);
+                    LOGGER.warn("Error while using credentials: try to use anonymous access to github.", e);
                     this.github = GitHub.connectAnonymously();
-                    this.getLogger().warn("No github information has been given to connect (set GITHUB_OAUTH), you will have a very low ratelimit for github requests.");
+                    LOGGER.warn("No github information has been given to connect (set GITHUB_OAUTH), you will have a very low ratelimit for github requests.");
                 }
             } else {
                 this.github = GitHub.connectAnonymously();
-                this.getLogger().warn("No github information has been given to connect (set GITHUB_OAUTH), you will have a very low ratelimit for github requests.");
+                LOGGER.warn("No github information has been given to connect (set GITHUB_OAUTH), you will have a very low ratelimit for github requests.");
             }
         }
         GHRateLimit rateLimit = this.github.getRateLimit();
 
-        this.getLogger().debug("GitHub ratelimit: Limit: " + rateLimit.limit + " Remaining: " + rateLimit.remaining + " Reset hour: " + hourSimpleDateFormat.format(rateLimit.reset));
+        LOGGER.info("GitHub ratelimit: Limit: " + rateLimit.limit + " Remaining: " + rateLimit.remaining + " Reset hour: " + hourSimpleDateFormat.format(rateLimit.reset));
         return this.github;
     }
 
     public OkHttpClient getHttpClient() {
+
         return this.client;
     }
 
