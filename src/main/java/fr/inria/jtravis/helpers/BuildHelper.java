@@ -1,14 +1,12 @@
 package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.JTravis;
-import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Build;
 import fr.inria.jtravis.entities.Builds;
 import fr.inria.jtravis.entities.Commit;
 import fr.inria.jtravis.entities.Repository;
 import fr.inria.jtravis.entities.StateType;
-import okhttp3.OkHttpClient;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
@@ -31,8 +29,8 @@ import java.util.Properties;
  */
 public class BuildHelper extends EntityHelper {
 
-    public BuildHelper(JTravis jTravis, TravisConfig config, OkHttpClient client) {
-        super(jTravis, config, client);
+    public BuildHelper(JTravis jTravis) {
+        super(jTravis);
     }
 
     public Optional<Builds> fromRepository(Repository repository) {
@@ -327,7 +325,7 @@ public class BuildHelper extends EntityHelper {
         Commit commit = build.getCommit();
 
         try {
-            GitHub gitHub = this.getGithub();
+            GitHub gitHub = this.getjTravis().getGithub();
             GHRepository ghRepository = gitHub.getRepository(repository.getSlug());
             GHCommit ghCommit = ghRepository.getCommit(commit.getSha());
             return ghCommit.getCommitShortInfo();

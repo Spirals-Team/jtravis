@@ -3,13 +3,11 @@ package fr.inria.jtravis.helpers;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import fr.inria.jtravis.JTravis;
-import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.entities.Entity;
 import fr.inria.jtravis.entities.EntityCollection;
 import fr.inria.jtravis.entities.Pagination;
 import fr.inria.jtravis.entities.RepresentationType;
 import fr.inria.jtravis.entities.Warning;
-import okhttp3.OkHttpClient;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -25,11 +23,9 @@ import java.util.Properties;
  * @author Simon Urli
  */
 public class EntityHelper extends AbstractHelper {
-    private JTravis jTravis;
 
-    public EntityHelper(JTravis jTravis, TravisConfig config, OkHttpClient client) {
-        super(config, client);
-        this.jTravis = jTravis;
+    public EntityHelper(JTravis jTravis) {
+        super(jTravis);
     }
 
     public <T extends Entity> Optional<T> getEntityFromUri(Class<T> zeClass, String uri) {
@@ -46,7 +42,7 @@ public class EntityHelper extends AbstractHelper {
                 try {
                     Field jTravisField = Entity.class.getDeclaredField("jtravis");
                     jTravisField.setAccessible(true);
-                    jTravisField.set(result, this.jTravis);
+                    jTravisField.set(result, this.getjTravis());
                     jTravisField.setAccessible(false);
                 } catch (NoSuchFieldException|IllegalAccessException e) {
                     this.getLogger().error("Error while setting jtravis field", e);

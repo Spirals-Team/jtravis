@@ -5,11 +5,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import fr.inria.jtravis.JTravis;
-import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.JobV2;
-import okhttp3.OkHttpClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,8 +21,8 @@ import java.util.Optional;
  * @author Simon Urli
  */
 public class JobHelper extends EntityHelper {
-    public JobHelper(JTravis jTravis, TravisConfig config, OkHttpClient client) {
-        super(jTravis, config, client);
+    public JobHelper(JTravis jTravis) {
+        super(jTravis);
     }
 
     public Optional<Job> fromId(int id) {

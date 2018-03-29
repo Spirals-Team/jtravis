@@ -5,24 +5,20 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.TravisConstants;
 import okhttp3.Call;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.apache.commons.lang.StringUtils;
-import org.kohsuke.github.GHRateLimit;
-import org.kohsuke.github.GitHub;
-import org.kohsuke.github.GitHubBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,18 +27,18 @@ import java.util.Properties;
 
 public abstract class AbstractHelper {
     private static final String USER_AGENT = "MyClient/1.0.0";
+    private JTravis jTravis;
 
-    private TravisConfig config;
-    private OkHttpClient client;
-    private GitHub github;
+    AbstractHelper(JTravis jTravis) {
+        this.jTravis = jTravis;
+    }
 
-    AbstractHelper(TravisConfig config, OkHttpClient client) {
-        this.config = config;
-        this.client = client;
+    public JTravis getjTravis() {
+        return jTravis;
     }
 
     public TravisConfig getConfig() {
-        return config;
+        return this.getjTravis().getTravisConfig();
     }
 
     protected Logger getLogger() {
@@ -59,8 +55,8 @@ public abstract class AbstractHelper {
             builder.header("Travis-API-Version", "3");
         }
 
-        if (this.config.getTravisToken() != null && !this.config.getTravisToken().isEmpty()) {
-            builder.header("Authorization", this.config.getTravisToken());
+        if (this.getConfig().getTravisToken() != null && !this.getConfig().getTravisToken().isEmpty()) {
+            builder.header("Authorization", this.getConfig().getTravisToken());
         }
 
         return builder.url(url);
@@ -72,31 +68,9 @@ public abstract class AbstractHelper {
         }
     }
 
-    protected GitHub getGithub() throws IOException {
-        if (this.github == null) {
-            if (!this.config.getGithubToken().isEmpty()) {
-                try {
-                    this.getLogger().debug("Get GH OAuth (10 first characters): "+this.config.getGithubToken().substring(0,10));
-                    this.github = GitHubBuilder.fromEnvironment().withOAuthToken(this.config.getGithubToken()).build();
-                } catch (IOException e) {
-                    this.getLogger().warn("Error while using credentials: try to use anonymous access to github.", e);
-                    this.github = GitHub.connectAnonymously();
-                    this.getLogger().warn("No github information has been given to connect (set GITHUB_OAUTH), you will have a very low ratelimit for github requests.");
-                }
-            } else {
-                this.github = GitHub.connectAnonymously();
-                this.getLogger().warn("No github information has been given to connect (set GITHUB_OAUTH), you will have a very low ratelimit for github requests.");
-            }
-        }
-        GHRateLimit rateLimit = this.github.getRateLimit();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-        this.getLogger().debug("GitHub ratelimit: Limit: " + rateLimit.limit + " Remaining: " + rateLimit.remaining + " Reset hour: " + dateFormat.format(rateLimit.reset));
-        return this.github;
-    }
-
     protected String rawGet(String url) throws IOException {
         Request request = new Request.Builder().url(url).build();
-        Call call = this.client.newCall(request);
+        Call call = this.getjTravis().getHttpClient().newCall(request);
         long dateBegin = new Date().getTime();
         this.getLogger().debug("Execute raw get request to the following URL: "+url);
         Response response = call.execute();
@@ -115,7 +89,7 @@ public abstract class AbstractHelper {
 
     protected String get(String url, boolean useV2) throws IOException {
         Request request = this.requestBuilder(url, useV2).get().build();
-        Call call = this.client.newCall(request);
+        Call call = this.getjTravis().getHttpClient().newCall(request);
         long dateBegin = new Date().getTime();
         Response response = call.execute();
         long dateEnd = new Date().getTime();
@@ -160,7 +134,7 @@ public abstract class AbstractHelper {
             result = "/"+result;
         }
 
-        return this.config.getTravisEndpoint()+result;
+        return this.getConfig().getTravisEndpoint()+result;
     }
 
     public Optional<String> getEncodedSlug(String slug) {

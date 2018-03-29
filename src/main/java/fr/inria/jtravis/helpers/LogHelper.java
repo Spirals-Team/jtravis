@@ -1,11 +1,9 @@
 package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.JTravis;
-import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Log;
-import okhttp3.OkHttpClient;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -17,8 +15,8 @@ import java.util.Optional;
  */
 public class LogHelper extends EntityHelper {
 
-    public LogHelper(JTravis jTravis, TravisConfig config, OkHttpClient client) {
-        super(jTravis, config, client);
+    public LogHelper(JTravis jTravis) {
+        super(jTravis);
     }
 
     public Optional<Log> from(Job job) {

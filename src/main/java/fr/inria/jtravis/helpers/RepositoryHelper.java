@@ -1,10 +1,8 @@
 package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.JTravis;
-import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Repository;
-import okhttp3.OkHttpClient;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -15,8 +13,8 @@ import java.util.Optional;
  * @author Simon Urli
  */
 public class RepositoryHelper extends EntityHelper {
-    public RepositoryHelper(JTravis jTravis, TravisConfig config, OkHttpClient client) {
-        super(jTravis, config, client);
+    public RepositoryHelper(JTravis jTravis) {
+        super(jTravis);
     }
 
     public Optional<Repository> fromSlug(String slug) {

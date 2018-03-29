@@ -10,12 +10,23 @@ import fr.inria.jtravis.helpers.OwnerHelper;
 import fr.inria.jtravis.helpers.PullRequestHelper;
 import fr.inria.jtravis.helpers.RepositoryHelper;
 import okhttp3.OkHttpClient;
+import org.kohsuke.github.GHRateLimit;
+import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 
 public class JTravis {
+    private static final JTravis instance = new JTravis();
+    private static final SimpleDateFormat hourSimpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+
     private TravisConfig travisConfig;
     private OkHttpClient client;
+    private GitHub github;
 
     private RepositoryHelper repositoryHelper;
     private EntityHelper entityHelper;
@@ -25,12 +36,12 @@ public class JTravis {
     private LogHelper logHelper;
     private OwnerHelper ownerHelper;
 
-    public static class Builder {
+    static class Builder {
         private String travisToken;
         private String endpoint;
         private String githubToken;
 
-        public Builder() {
+        Builder() {
             this.endpoint = TravisConstants.TRAVIS_API_ENDPOINT;
             this.setTravisToken(System.getenv(TravisConstants.TRAVIS_TOKEN_ENV_PROPERTY));
             this.setGithubToken(System.getenv(TravisConstants.GITHUB_TOKEN_ENV_PROPERTY));
@@ -65,18 +76,55 @@ public class JTravis {
 
         public JTravis build() {
             TravisConfig travisConfig = new TravisConfig(this.endpoint, this.travisToken, this.githubToken);
-            return new JTravis(travisConfig);
+            instance.reset(travisConfig);
+            return instance;
         }
     }
 
-    private JTravis(TravisConfig travisConfig) {
-        this.client = new OkHttpClient();
+    private JTravis() {}
+
+    private void reset(TravisConfig travisConfig) {
         this.travisConfig = travisConfig;
+        this.client = new OkHttpClient();
+    }
+
+    protected Logger getLogger() {
+        return LoggerFactory.getLogger(this.getClass());
+    }
+
+    public GitHub getGithub() throws IOException {
+        if (this.github == null) {
+            if (!this.travisConfig.getGithubToken().isEmpty()) {
+                try {
+                    this.getLogger().debug("Get GH OAuth (10 first characters): "+this.travisConfig.getGithubToken().substring(0,10));
+                    this.github = GitHubBuilder.fromEnvironment().withOAuthToken(this.travisConfig.getGithubToken()).build();
+                } catch (IOException e) {
+                    this.getLogger().warn("Error while using credentials: try to use anonymous access to github.", e);
+                    this.github = GitHub.connectAnonymously();
+                    this.getLogger().warn("No github information has been given to connect (set GITHUB_OAUTH), you will have a very low ratelimit for github requests.");
+                }
+            } else {
+                this.github = GitHub.connectAnonymously();
+                this.getLogger().warn("No github information has been given to connect (set GITHUB_OAUTH), you will have a very low ratelimit for github requests.");
+            }
+        }
+        GHRateLimit rateLimit = this.github.getRateLimit();
+
+        this.getLogger().debug("GitHub ratelimit: Limit: " + rateLimit.limit + " Remaining: " + rateLimit.remaining + " Reset hour: " + hourSimpleDateFormat.format(rateLimit.reset));
+        return this.github;
+    }
+
+    public OkHttpClient getHttpClient() {
+        return this.client;
+    }
+
+    public TravisConfig getTravisConfig() {
+        return this.travisConfig;
     }
 
     private EntityHelper entityHelper() {
         if (this.entityHelper == null) {
-            this.entityHelper = new EntityHelper(this, this.travisConfig, this.client);
+            this.entityHelper = new EntityHelper(this);
         }
 
         return this.entityHelper;
@@ -84,7 +132,7 @@ public class JTravis {
 
     public RepositoryHelper repository() {
         if (repositoryHelper == null) {
-            this.repositoryHelper = new RepositoryHelper(this, this.travisConfig, this.client);
+            this.repositoryHelper = new RepositoryHelper(this);
         }
 
         return this.repositoryHelper;
@@ -92,7 +140,7 @@ public class JTravis {
 
     public JobHelper job() {
         if (this.jobHelper == null) {
-            this.jobHelper = new JobHelper(this, this.travisConfig, this.client);
+            this.jobHelper = new JobHelper(this);
         }
 
         return this.jobHelper;
@@ -100,28 +148,28 @@ public class JTravis {
 
     public PullRequestHelper pullRequest() {
         if (this.pullRequestHelper == null) {
-            this.pullRequestHelper = new PullRequestHelper(this, this.travisConfig, this.client);
+            this.pullRequestHelper = new PullRequestHelper(this);
         }
         return pullRequestHelper;
     }
 
     public BuildHelper build() {
         if (this.buildHelper == null) {
-            this.buildHelper = new BuildHelper(this, this.travisConfig, this.client);
+            this.buildHelper = new BuildHelper(this);
         }
         return buildHelper;
     }
 
     public LogHelper log() {
         if (this.logHelper == null) {
-            this.logHelper = new LogHelper(this, this.travisConfig, this.client);
+            this.logHelper = new LogHelper(this);
         }
         return this.logHelper;
     }
 
     public OwnerHelper owner() {
         if (this.ownerHelper == null) {
-            this.ownerHelper = new OwnerHelper(this, this.travisConfig, this.client);
+            this.ownerHelper = new OwnerHelper(this);
         }
         return this.ownerHelper;
     }

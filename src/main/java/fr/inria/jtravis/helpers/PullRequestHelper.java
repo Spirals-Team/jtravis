@@ -1,10 +1,8 @@
 package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.JTravis;
-import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.entities.PullRequest;
 import fr.inria.jtravis.entities.Build;
-import okhttp3.OkHttpClient;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHPullRequest;
 import org.kohsuke.github.GHRepository;
@@ -19,15 +17,15 @@ import java.util.Optional;
  */
 public class PullRequestHelper extends EntityHelper {
 
-    public PullRequestHelper(JTravis jTravis, TravisConfig config, OkHttpClient client) {
-        super(jTravis, config, client);
+    public PullRequestHelper(JTravis jTravis) {
+        super(jTravis);
     }
 
 
     public Optional<PullRequest> fromBuild(Build build) {
         try {
             if (build.isPullRequest()) {
-                GitHub github = this.getGithub();
+                GitHub github = this.getjTravis().getGithub();
                 GHRepository ghRepo = github.getRepository(build.getRepository().getSlug());
                 GHPullRequest pullRequest = ghRepo.getPullRequest(build.getPullRequestNumber());
                 PullRequest prInformation = new PullRequest();
