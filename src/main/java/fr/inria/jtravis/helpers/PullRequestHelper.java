@@ -7,13 +7,11 @@ import fr.inria.jtravis.entities.Build;
 import okhttp3.OkHttpClient;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHPullRequest;
-import org.kohsuke.github.GHRateLimit;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Optional;
 
 /**
