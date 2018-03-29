@@ -1,6 +1,7 @@
 package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.AbstractTest;
+import fr.inria.jtravis.IntegrationTest;
 import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Build;
 import fr.inria.jtravis.entities.BuildStub;
@@ -12,6 +13,7 @@ import fr.inria.jtravis.parsers.TestUtils;
 import org.hamcrest.CoreMatchers;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ import static org.junit.Assert.assertTrue;
 
 public class BuildHelperIntegrationTest extends AbstractTest {
     @Test
+    @Category(IntegrationTest.class)
     public void testGetBuildFromIdReturnTheRightBuild() {
        int buildId = 185719843;
         Optional<Build> obtainedBuildOpt = getJTravis().build().fromId(buildId);
@@ -40,6 +43,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testBuildOrderDescIsWorkingAsExpected() {
         int repositoryId = 2800492; // spoon
 
@@ -84,6 +88,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
     // WARNING: This test MIGHT be flaky
     @Test
+    @Category(IntegrationTest.class)
     public void testBuildOrderIsWorkingAsExpected() {
         int repositoryId = 2800492; // spoon
 
@@ -115,6 +120,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetBuildToolFromBuildRecognizeTool() {
         int buildId = 185719843;
         Optional<Build> obtainedBuildOpt = getJTravis().build().fromId(buildId);
@@ -127,6 +133,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetLastFailingBuildBeforeGivenBuild() {
         int buildId = 197104485;
         Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
@@ -141,6 +148,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetNextPassingBuildAfterGivenFailingBuild() {
         int buildId = 197067445;
         Optional<Build> failingBuildOpt = getJTravis().build().fromId(buildId);
@@ -155,6 +163,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetLastErroredBuildBeforeGivenBuild() {
         int buildId = 197233494;
         Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
@@ -169,6 +178,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetNextPassingBuildAfterGivenErroredBuildOnSameBranch() {
         int buildId = 193970329;
         Optional<Build> erroredBuildOpt = getJTravis().build().fromId(buildId);
@@ -184,6 +194,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetLastBuildJustBeforeGivenBuild() {
         int buildId = 191511078;
         Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
@@ -198,6 +209,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetNextBuildJustAfterGivenBuild() {
         int buildId = 191412122;
         Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
@@ -212,6 +224,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetLastBuildJustBeforeGivenBuildOnMaster() {
         int buildId = 207455891;
         Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
@@ -226,6 +239,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetNextBuildJustAfterGivenBuildOnMaster() {
         int buildId = 207113449;
         Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
@@ -240,6 +254,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetLastBuildJustBeforeGivenBuildOnTheSameBranch() {
         int buildId = 208181440;
         Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
@@ -254,6 +269,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetNextBuildJustAfterGivenBuildOnTheSameBranch() {
         int buildId = 208116073;
         Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
@@ -268,6 +284,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetTheLastBuildNumberOfADate() {
         Date date = getDateFor(2017, Calendar.MARCH, 16, 22, 59, 59, 0);
         String slug = "Spirals-Team/repairnator";
@@ -281,6 +298,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetTheLastBuildNumberOfADate2() {
         Date date = getDateFor(2017, Calendar.MARCH, 14, 22, 59, 59, 0);
         String slug = "Spirals-Team/repairnator";
@@ -295,6 +313,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetBuildsFromRepositoryInTimeInterval() {
         String slug = "Spirals-Team/repairnator";
         Date initialDate = getDateFor(2017, Calendar.MARCH, 13, 23, 0, 0, 0);
@@ -311,6 +330,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetBuildsFromRepositoryInTimeIntervalAlsoTakePR() {
         String slug = "INRIA/spoon";
         Date initialDate = getDateFor(2017, Calendar.JUNE, 26, 20, 0, 0, 0);
@@ -330,6 +350,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetLastBuildFromMasterIgnoreNumberNullBuilds() {
         String slug = "Graylog2/graylog2-server";
         Optional<Build> buildOptional = getJTravis().build().last(slug);
@@ -339,6 +360,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetFutureBuildOfBranch() {
         int buildId = 220970612;
         Optional<Build> optionalBuild = getJTravis().build().fromId(buildId);
@@ -356,6 +378,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     // we MUST use some improvement in our algo
     @Ignore
     @Test
+    @Category(IntegrationTest.class)
     public void testGetFutureBuildOfBranch2() {
         int buildId = 219250521;
 
@@ -371,6 +394,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetBuildsFromSlugWithLimitDate() {
         String slug = "surli/failingProject";
         //Retrieve builds done after this date
@@ -394,6 +418,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetBuildsFromRepositoryWithLimitDate() {
         String slug = "google/jsonnet";
         //Retrieve builds done after this date
@@ -416,10 +441,60 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         assertThat(obtainedIds, CoreMatchers.hasItems("685","684","679"));
     }
 
+    @Test
+    @Category(IntegrationTest.class)
+    public void testGetShortInfo() {
+        int stdandardBuildId = 359429242;
+        Optional<Build> optionalBuild = this.getJTravis().build().fromId(stdandardBuildId);
+        assertTrue(optionalBuild.isPresent());
+
+        Build build = optionalBuild.get();
+
+        String expectedEmail = "simon.urli@inria.fr";
+        String authorEmail = build.getAuthorEmail();
+        String committerEmail = build.getCommitterEmail();
+
+        assertEquals(expectedEmail, authorEmail);
+        assertEquals(expectedEmail, committerEmail);
+    }
+
+    @Test
+    @Category(IntegrationTest.class)
+    public void testGetShortInfoWithPR() {
+        int prBuildId = 358367158;
+        Optional<Build> optionalBuild = this.getJTravis().build().fromId(prBuildId);
+        assertTrue(optionalBuild.isPresent());
+
+        Build build = optionalBuild.get();
+
+        String authorEmail = build.getAuthorEmail();
+        String committerEmail = build.getCommitterEmail();
+
+        assertEquals("simon.urli@gmail.com", authorEmail);
+        assertEquals("noreply@github.com", committerEmail); // automatic merge
+    }
+
+    @Test
+    @Category(IntegrationTest.class)
+    public void testGetShortInfoWithMergeCommit() {
+        int prBuildId = 355763901;
+        Optional<Build> optionalBuild = this.getJTravis().build().fromId(prBuildId);
+        assertTrue(optionalBuild.isPresent());
+
+        Build build = optionalBuild.get();
+
+        String authorEmail = build.getAuthorEmail();
+        String committerEmail = build.getCommitterEmail();
+
+        assertEquals("pvojtechovsky@users.noreply.github.com", authorEmail);
+        assertEquals("simon.urli@gmail.com", committerEmail); // automatic merge
+    }
+
     // This test can actually take up than 3 min 30
-    // IT MUST BE IMPROVED
+    // TODO IT MUST BE IMPROVED
     @Ignore
     @Test
+    @Category(IntegrationTest.class)
     public void testDifferentBuildIdsShouldNotGiveSameInFuture() {
         int build1 = 210419994;
         int build2 = 207796355;

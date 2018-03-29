@@ -5,10 +5,15 @@ import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Build;
 import fr.inria.jtravis.entities.Builds;
+import fr.inria.jtravis.entities.Commit;
 import fr.inria.jtravis.entities.Repository;
 import fr.inria.jtravis.entities.StateType;
 import okhttp3.OkHttpClient;
+import org.kohsuke.github.GHCommit;
+import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GitHub;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -311,5 +316,20 @@ public class BuildHelper extends EntityHelper {
 
         Optional<Builds> optionalBuilds = this.getEntityFromUri(Builds.class, pathParameter, properties);
         return optionalBuilds.map(builds -> builds.getBuilds().get(0));
+    }
+
+    public GHCommit.ShortInfo getShortInfo(Build build) {
+        Repository repository = build.getRepository();
+        Commit commit = build.getCommit();
+
+        try {
+            GitHub gitHub = this.getGithub();
+            GHRepository ghRepository = gitHub.getRepository(repository.getSlug());
+            GHCommit ghCommit = ghRepository.getCommit(commit.getSha());
+            return ghCommit.getCommitShortInfo();
+        } catch (IOException e) {
+            getLogger().error("Error while getting short information from build", e);
+            return null;
+        }
     }
 }

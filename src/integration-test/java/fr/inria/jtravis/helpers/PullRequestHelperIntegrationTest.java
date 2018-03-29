@@ -1,9 +1,11 @@
 package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.AbstractTest;
+import fr.inria.jtravis.IntegrationTest;
 import fr.inria.jtravis.entities.Build;
 import fr.inria.jtravis.entities.PullRequest;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.Optional;
 
@@ -15,6 +17,7 @@ import static org.junit.Assert.assertTrue;
  * Created by urli on 04/01/2017.
  */
 public class PullRequestHelperIntegrationTest extends AbstractTest {
+    @Category(IntegrationTest.class)
     @Test
     public void testGetBuildWithPRWhenMergeCommitDeleted() {
         int id = 187029370;
@@ -24,6 +27,7 @@ public class PullRequestHelperIntegrationTest extends AbstractTest {
         assertFalse(obtainedPRInfo.isPresent());
     }
 
+    @Category(IntegrationTest.class)
     @Test
     public void testGetCommitInformationFromPR() {
         int id = 186814810;

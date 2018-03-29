@@ -1,10 +1,12 @@
 package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.AbstractTest;
+import fr.inria.jtravis.IntegrationTest;
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.JobStub;
 import fr.inria.jtravis.entities.Log;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.Optional;
 
@@ -19,6 +21,7 @@ public class LogHelperIntegrationTest extends AbstractTest {
     private static String failingLogEnd = "Done. Your build exited with 1.";
     private static String erroringLogEnd = "Your build has been stopped.";
 
+    @Category(IntegrationTest.class)
     @Test
     public void testGetLogFromPassingJob() {
         Job job = JobStub.passingJob();
@@ -34,6 +37,7 @@ public class LogHelperIntegrationTest extends AbstractTest {
         assertTrue(obtainedLog.getContent().trim().endsWith(passingLogEnd));
     }
 
+    @Category(IntegrationTest.class)
     @Test
     public void testGetFailingLogFromId() {
         Job job = JobStub.failingJob();
@@ -50,6 +54,7 @@ public class LogHelperIntegrationTest extends AbstractTest {
         assertTrue(obtainedLog.getContent().trim().endsWith(failingLogEnd));
     }
 
+    @Category(IntegrationTest.class)
     @Test
     public void testGetErroringLogFromId() {
         Job job = JobStub.erroringJob();

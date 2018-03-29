@@ -2,6 +2,7 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
 import org.apache.commons.lang.StringUtils;
+import org.kohsuke.github.GHCommit;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,6 +66,9 @@ public final class Build extends EntityUnary implements Comparable<Build> {
 
     @Expose
     private Owner createdBy;
+
+    private GHCommit.ShortInfo shortInfo;
+    private boolean shortInfoLoaded;
 
     public Build() {
         super();
@@ -205,6 +209,31 @@ public final class Build extends EntityUnary implements Comparable<Build> {
 
     public boolean isPullRequest() {
         return this.getPullRequestNumber() > 0;
+    }
+
+    private void loadShortInfo() {
+        if (!this.shortInfoLoaded) {
+            this.shortInfo = this.getJtravis().build().getShortInfo(this);
+            this.shortInfoLoaded = true;
+        }
+    }
+
+    public String getCommitterEmail() {
+        this.loadShortInfo();
+
+        if (this.shortInfo != null && this.shortInfo.getCommitter() != null) {
+            return this.shortInfo.getCommitter().getEmail();
+        }
+        return "";
+    }
+
+    public String getAuthorEmail() {
+        this.loadShortInfo();
+
+        if (this.shortInfo != null && this.shortInfo.getAuthor() != null) {
+            return this.shortInfo.getAuthor().getEmail();
+        }
+        return "";
     }
 
     public Optional<BuildTool> getBuildTool() {
