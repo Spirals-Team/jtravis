@@ -14,6 +14,9 @@ public final class JobV2 {
     private int repositoryId;
 
     @Expose
+    private int buildId;
+
+    @Expose
     private String number;
 
     @Expose
@@ -42,6 +45,10 @@ public final class JobV2 {
         return config;
     }
 
+    public int getBuildId() {
+        return buildId;
+    }
+
     protected void setId(int id) {
         this.id = id;
     }
@@ -60,6 +67,10 @@ public final class JobV2 {
 
     protected void setConfig(ConfigV2 config) {
         this.config = config;
+    }
+
+    protected void setBuildId(int buildId) {
+        this.buildId = buildId;
     }
 
     @Override

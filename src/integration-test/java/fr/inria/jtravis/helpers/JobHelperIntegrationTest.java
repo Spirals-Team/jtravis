@@ -83,6 +83,7 @@ public class JobHelperIntegrationTest extends AbstractTest {
         assertEquals(StateType.FAILED, job.getState());
         assertEquals("4744.1", job.getNumber());
         assertEquals(2800492, job.getRepositoryId());
+        assertEquals(340663037, job.getBuildId());
         assertEquals("java", job.getConfig().getLanguage());
     }
 }

@@ -1,6 +1,7 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
+import fr.inria.jtravis.RequestAPI;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.github.GHCommit;
 
@@ -211,6 +212,7 @@ public final class Build extends EntityUnary implements Comparable<Build> {
         return this.getPullRequestNumber() > 0;
     }
 
+    @RequestAPI
     private void loadShortInfo() {
         if (!this.shortInfoLoaded) {
             this.shortInfo = this.getJtravis().build().getShortInfo(this);
@@ -218,6 +220,7 @@ public final class Build extends EntityUnary implements Comparable<Build> {
         }
     }
 
+    @RequestAPI
     public String getCommitterEmail() {
         this.loadShortInfo();
 
@@ -227,6 +230,7 @@ public final class Build extends EntityUnary implements Comparable<Build> {
         return "";
     }
 
+    @RequestAPI
     public String getAuthorEmail() {
         this.loadShortInfo();
 
@@ -236,8 +240,9 @@ public final class Build extends EntityUnary implements Comparable<Build> {
         return "";
     }
 
+    @RequestAPI
     public Optional<BuildTool> getBuildTool() {
-        if (!this.getJobs().isEmpty()) {
+        if (this.getJobs() != null && !this.getJobs().isEmpty()) {
             Job firstJob = this.getJobs().get(0);
             if (this.getJtravis() != null) {
                 firstJob.setJtravis(this.getJtravis());
@@ -246,6 +251,15 @@ public final class Build extends EntityUnary implements Comparable<Build> {
         }
 
         return Optional.empty();
+    }
+
+    @RequestAPI
+    public String getLanguage() {
+        if (this.getJobs() != null && !this.getJobs().isEmpty()) {
+            Job firstJob = this.getJobs().get(0);
+            return firstJob.getLanguage();
+        }
+        return "";
     }
 
     @Override
