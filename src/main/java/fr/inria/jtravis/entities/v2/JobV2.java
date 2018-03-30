@@ -1,6 +1,7 @@
-package fr.inria.jtravis.entities;
+package fr.inria.jtravis.entities.v2;
 
 import com.google.gson.annotations.Expose;
+import fr.inria.jtravis.entities.StateType;
 
 import java.util.Objects;
 
@@ -18,6 +19,9 @@ public final class JobV2 {
     @Expose
     private StateType state;
 
+    @Expose
+    private ConfigV2 config;
+
     public int getId() {
         return id;
     }
@@ -34,20 +38,28 @@ public final class JobV2 {
         return state;
     }
 
-    public void setId(int id) {
+    public ConfigV2 getConfig() {
+        return config;
+    }
+
+    protected void setId(int id) {
         this.id = id;
     }
 
-    public void setRepositoryId(int repositoryId) {
+    protected void setRepositoryId(int repositoryId) {
         this.repositoryId = repositoryId;
     }
 
-    public void setNumber(String number) {
+    protected void setNumber(String number) {
         this.number = number;
     }
 
-    public void setState(StateType state) {
+    protected void setState(StateType state) {
         this.state = state;
+    }
+
+    protected void setConfig(ConfigV2 config) {
+        this.config = config;
     }
 
     @Override
@@ -58,12 +70,14 @@ public final class JobV2 {
         return id == jobV2.id &&
                 repositoryId == jobV2.repositoryId &&
                 Objects.equals(number, jobV2.number) &&
-                state == jobV2.state;
+                state == jobV2.state &&
+                Objects.equals(config, jobV2.config);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, repositoryId, number, state);
+
+        return Objects.hash(id, repositoryId, number, state, config);
     }
 
     @Override
@@ -73,6 +87,7 @@ public final class JobV2 {
                 ", repositoryId=" + repositoryId +
                 ", number='" + number + '\'' +
                 ", state=" + state +
+                ", config=" + config +
                 '}';
     }
 }

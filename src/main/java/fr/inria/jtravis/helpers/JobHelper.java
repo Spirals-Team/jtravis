@@ -7,7 +7,7 @@ import com.google.gson.JsonSyntaxException;
 import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Job;
-import fr.inria.jtravis.entities.JobV2;
+import fr.inria.jtravis.entities.v2.JobV2;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,6 +54,19 @@ public class JobHelper extends EntityHelper {
             this.getLogger().error("Error while getting jobs from V2 API", e);
         }
 
+        return Optional.empty();
+    }
+
+    public Optional<JobV2> fromIdV2(int id) {
+        String url = this.getConfig().getTravisEndpoint() + "/" + TravisConstants.JOBS_ENDPOINT + "/" + id;
+        try {
+            String response = this.get(url, true);
+            JsonObject jsonObject = getJsonFromStringContent(response).getAsJsonObject("job");
+            JobV2 jobV2 = createGson().fromJson(jsonObject, JobV2.class);
+            return Optional.of(jobV2);
+        } catch (IOException e) {
+            this.getLogger().error("Error while getting job from V2 API", e);
+        }
         return Optional.empty();
     }
 }

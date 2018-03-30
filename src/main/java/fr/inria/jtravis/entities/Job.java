@@ -1,6 +1,8 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
+import fr.inria.jtravis.RequestAPI;
+import fr.inria.jtravis.entities.v2.JobV2;
 
 import java.util.Date;
 import java.util.Objects;
@@ -152,6 +154,7 @@ public final class Job extends EntityUnary {
         this.updatedAt = updatedAt;
     }
 
+    @RequestAPI
     public boolean fetchLog() {
         if (this.getJtravis() != null) {
             Optional<Log> log = this.getJtravis().log().from(this);
@@ -163,6 +166,7 @@ public final class Job extends EntityUnary {
         return false;
     }
 
+    @RequestAPI
     public Optional<Log> getLog() {
         if (this.log == null) {
             if (!this.fetchLog()) {
@@ -172,6 +176,7 @@ public final class Job extends EntityUnary {
         return Optional.of(this.log);
     }
 
+    @RequestAPI
     public Optional<BuildTool> getBuildTool() {
         if (this.buildTool == null) {
             if (this.getLog().isPresent()) {
@@ -195,6 +200,23 @@ public final class Job extends EntityUnary {
         }
 
         return Integer.parseInt(numbers[1]);
+    }
+
+    /**
+     * This method will request Travis API V2 to get the information about the language
+     * as it is not natively supported with Travis API V3
+     * @return The string corresponding to the language or an empty string
+     */
+    @RequestAPI
+    private String getLanguage() {
+        Optional<JobV2> optionalJobV2 = this.getJtravis().job().fromIdV2(this.getId());
+        if (optionalJobV2.isPresent()) {
+            JobV2 jobV2 = optionalJobV2.get();
+            if (jobV2.getConfig() != null) {
+                return jobV2.getConfig().getLanguage();
+            }
+        }
+        return "";
     }
 
     @Override

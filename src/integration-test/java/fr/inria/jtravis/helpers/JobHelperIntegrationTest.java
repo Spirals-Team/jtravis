@@ -2,14 +2,11 @@ package fr.inria.jtravis.helpers;
 
 import fr.inria.jtravis.AbstractTest;
 import fr.inria.jtravis.IntegrationTest;
-import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.entities.Job;
-import fr.inria.jtravis.entities.JobV2;
+import fr.inria.jtravis.entities.v2.JobV2;
 import fr.inria.jtravis.entities.StateType;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
-import javax.swing.text.html.Option;
 
 import java.util.List;
 import java.util.Optional;
@@ -71,5 +68,21 @@ public class JobHelperIntegrationTest extends AbstractTest {
         assertNotNull(jobV2.getNumber());
         assertNotNull(jobV2.getState());
         assertTrue(jobV2.getRepositoryId() > 0);
+    }
+
+    @Category(IntegrationTest.class)
+    @Test
+    public void testFromIdV2() {
+        int id = 340663038;
+        Optional<JobV2> jobOptional = getJTravis().job().fromIdV2(id);
+
+        assertTrue(jobOptional.isPresent());
+        JobV2 job = jobOptional.get();
+
+        assertEquals(id, job.getId());
+        assertEquals(StateType.FAILED, job.getState());
+        assertEquals("4744.1", job.getNumber());
+        assertEquals(2800492, job.getRepositoryId());
+        assertEquals("java", job.getConfig().getLanguage());
     }
 }

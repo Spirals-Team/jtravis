@@ -44,7 +44,7 @@ public class JTravis {
     private LogHelper logHelper;
     private OwnerHelper ownerHelper;
 
-    static class Builder {
+    public static class Builder {
         private String travisToken;
         private String endpoint;
         private String githubToken;
