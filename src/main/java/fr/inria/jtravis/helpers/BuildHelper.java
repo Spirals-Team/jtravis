@@ -82,6 +82,26 @@ public class BuildHelper extends EntityHelper {
         return Optional.empty();
     }
 
+    public Optional<Build> lastBuildFromMasterWithState(Repository repository, StateType stateType) {
+        Properties properties = new Properties();
+        properties.put("branch.name", repository.getDefaultBranch().getName());
+        properties.put("limit", 1);
+        properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
+        properties.put("state", stateType.name().toLowerCase());
+        Optional<Builds> builds = getEntityFromUri(Builds.class, Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                String.valueOf(repository.getId()),
+                TravisConstants.BUILDS_ENDPOINT),
+                properties);
+
+        if (builds.isPresent()) {
+            if (builds.get().getBuilds().size() > 0) {
+                return Optional.of(builds.get().getBuilds().get(0));
+            }
+        }
+        return Optional.empty();
+    }
+
     public Optional<Build> getBefore(Build originalBuild, boolean sameBranch) {
         return this.getBeforeOrAfter(true, originalBuild, sameBranch, Optional.empty());
     }

@@ -8,6 +8,7 @@ import fr.inria.jtravis.entities.BuildStub;
 import fr.inria.jtravis.entities.BuildTool;
 import fr.inria.jtravis.entities.Builds;
 import fr.inria.jtravis.entities.EventType;
+import fr.inria.jtravis.entities.Repository;
 import fr.inria.jtravis.entities.StateType;
 import fr.inria.jtravis.parsers.TestUtils;
 import org.hamcrest.CoreMatchers;
@@ -506,6 +507,22 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
         assertEquals("pvojtechovsky@users.noreply.github.com", authorEmail);
         assertEquals("simon.urli@gmail.com", committerEmail); // automatic merge
+    }
+
+
+    // this test might change in the future. It should be improved.
+    @Ignore
+    @Test
+    @Category(IntegrationTest.class)
+    public void testGetLastBuildFromMasterWithStateType() {
+        String repo = "surli/failingProject";
+        Optional<Repository> repositoryOptional = this.getJTravis().repository().fromSlug(repo);
+        assertTrue(repositoryOptional.isPresent());
+
+        Repository repository = repositoryOptional.get();
+        Optional<Build> optionalBuild = this.getJTravis().build().lastBuildFromMasterWithState(repository, StateType.ERRORED);
+        assertTrue(optionalBuild.isPresent());
+        assertEquals("682", optionalBuild.get().getNumber());
     }
 
     // This test can actually take up than 3 min 30

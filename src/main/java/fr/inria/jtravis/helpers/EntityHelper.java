@@ -60,7 +60,7 @@ public class EntityHelper extends AbstractHelper {
     }
 
     public <T extends Entity> boolean refresh(T entity) {
-        if (entity.getRepresentation() == RepresentationType.MINIMAL && entity.getUri() != null) {
+        if (entity.getUri() != null) {
             Optional<T> instance1Opt = (Optional<T>) this.getEntityFromUri(entity.getClass(), entity.getUri());
 
             if (instance1Opt.isPresent()) {
@@ -79,18 +79,20 @@ public class EntityHelper extends AbstractHelper {
                         }
                     }
                 }
-                try {
-                    Field representationField = Entity.class.getDeclaredField("representation");
-                    if (representationField != null) {
-                        representationField.setAccessible(true);
-                        representationField.set(entity, RepresentationType.STANDARD);
-                        representationField.setAccessible(false);
-                    }
-                } catch (NoSuchFieldException|IllegalAccessException e) {
-                    this.getLogger().error("Error while setting representation field: "+entity.getClass().getName(), e);
-                    return false;
-                }
 
+                if (entity.getRepresentation() == RepresentationType.MINIMAL) {
+                    try {
+                        Field representationField = Entity.class.getDeclaredField("representation");
+                        if (representationField != null) {
+                            representationField.setAccessible(true);
+                            representationField.set(entity, RepresentationType.STANDARD);
+                            representationField.setAccessible(false);
+                        }
+                    } catch (NoSuchFieldException|IllegalAccessException e) {
+                        this.getLogger().error("Error while setting representation field: "+entity.getClass().getName(), e);
+                        return false;
+                    }
+                }
                 return true;
             }
         }
