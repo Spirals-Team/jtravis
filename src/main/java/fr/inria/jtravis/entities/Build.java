@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import fr.inria.jtravis.RequestAPI;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.github.GHCommit;
+import org.kohsuke.github.GitUser;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -221,23 +222,23 @@ public final class Build extends EntityUnary implements Comparable<Build> {
     }
 
     @RequestAPI
-    public String getCommitterEmail() {
+    public GitUser getCommitter() {
         this.loadShortInfo();
 
         if (this.shortInfo != null && this.shortInfo.getCommitter() != null) {
-            return this.shortInfo.getCommitter().getEmail();
+            return this.shortInfo.getCommitter();
         }
-        return "";
+        return null;
     }
 
     @RequestAPI
-    public String getAuthorEmail() {
+    public GitUser getAuthor() {
         this.loadShortInfo();
 
         if (this.shortInfo != null && this.shortInfo.getAuthor() != null) {
-            return this.shortInfo.getAuthor().getEmail();
+            return this.shortInfo.getAuthor();
         }
-        return "";
+        return null;
     }
 
     @RequestAPI
