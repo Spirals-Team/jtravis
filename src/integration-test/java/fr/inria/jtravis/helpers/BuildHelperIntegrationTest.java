@@ -470,8 +470,8 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         Build build = optionalBuild.get();
 
         String expectedEmail = "simon.urli@inria.fr";
-        String authorEmail = build.getAuthorEmail();
-        String committerEmail = build.getCommitterEmail();
+        String authorEmail = build.getAuthor().getEmail();
+        String committerEmail = build.getCommitter().getEmail();
 
         assertEquals(expectedEmail, authorEmail);
         assertEquals(expectedEmail, committerEmail);
@@ -486,8 +486,8 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
         Build build = optionalBuild.get();
 
-        String authorEmail = build.getAuthorEmail();
-        String committerEmail = build.getCommitterEmail();
+        String authorEmail = build.getAuthor().getEmail();
+        String committerEmail = build.getCommitter().getEmail();
 
         assertEquals("simon.urli@gmail.com", authorEmail);
         assertEquals("noreply@github.com", committerEmail); // automatic merge
@@ -502,8 +502,8 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
         Build build = optionalBuild.get();
 
-        String authorEmail = build.getAuthorEmail();
-        String committerEmail = build.getCommitterEmail();
+        String authorEmail = build.getAuthor().getEmail();
+        String committerEmail = build.getCommitter().getEmail();
 
         assertEquals("pvojtechovsky@users.noreply.github.com", authorEmail);
         assertEquals("simon.urli@gmail.com", committerEmail); // automatic merge
