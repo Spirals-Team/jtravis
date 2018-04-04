@@ -15,6 +15,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.kohsuke.github.GitUser;
 
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -470,8 +471,14 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         Build build = optionalBuild.get();
 
         String expectedEmail = "simon.urli@inria.fr";
-        String authorEmail = build.getAuthor().getEmail();
-        String committerEmail = build.getCommitter().getEmail();
+        Optional<GitUser> optionalAuthor = build.getAuthor();
+        Optional<GitUser> optionalCommitter = build.getCommitter();
+
+        assertTrue(optionalAuthor.isPresent());
+        assertTrue(optionalCommitter.isPresent());
+
+        String authorEmail = optionalAuthor.get().getEmail();
+        String committerEmail = optionalCommitter.get().getEmail();
 
         assertEquals(expectedEmail, authorEmail);
         assertEquals(expectedEmail, committerEmail);
@@ -486,8 +493,14 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
         Build build = optionalBuild.get();
 
-        String authorEmail = build.getAuthor().getEmail();
-        String committerEmail = build.getCommitter().getEmail();
+        Optional<GitUser> optionalAuthor = build.getAuthor();
+        Optional<GitUser> optionalCommitter = build.getCommitter();
+
+        assertTrue(optionalAuthor.isPresent());
+        assertTrue(optionalCommitter.isPresent());
+
+        String authorEmail = optionalAuthor.get().getEmail();
+        String committerEmail = optionalCommitter.get().getEmail();
 
         assertEquals("simon.urli@gmail.com", authorEmail);
         assertEquals("noreply@github.com", committerEmail); // automatic merge
@@ -502,8 +515,14 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
         Build build = optionalBuild.get();
 
-        String authorEmail = build.getAuthor().getEmail();
-        String committerEmail = build.getCommitter().getEmail();
+        Optional<GitUser> optionalAuthor = build.getAuthor();
+        Optional<GitUser> optionalCommitter = build.getCommitter();
+
+        assertTrue(optionalAuthor.isPresent());
+        assertTrue(optionalCommitter.isPresent());
+
+        String authorEmail = optionalAuthor.get().getEmail();
+        String committerEmail = optionalCommitter.get().getEmail();
 
         assertEquals("pvojtechovsky@users.noreply.github.com", authorEmail);
         assertEquals("simon.urli@gmail.com", committerEmail); // automatic merge

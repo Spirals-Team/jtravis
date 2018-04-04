@@ -222,23 +222,23 @@ public final class Build extends EntityUnary implements Comparable<Build> {
     }
 
     @RequestAPI
-    public GitUser getCommitter() {
+    public Optional<GitUser> getCommitter() {
         this.loadShortInfo();
 
         if (this.shortInfo != null && this.shortInfo.getCommitter() != null) {
-            return this.shortInfo.getCommitter();
+            return Optional.of(this.shortInfo.getCommitter());
         }
-        return null;
+        return Optional.empty();
     }
 
     @RequestAPI
-    public GitUser getAuthor() {
+    public Optional<GitUser> getAuthor() {
         this.loadShortInfo();
 
         if (this.shortInfo != null && this.shortInfo.getAuthor() != null) {
-            return this.shortInfo.getAuthor();
+            return Optional.of(this.shortInfo.getAuthor());
         }
-        return null;
+        return Optional.empty();
     }
 
     @RequestAPI
