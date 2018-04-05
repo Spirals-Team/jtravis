@@ -111,20 +111,22 @@ public class JTravis {
         if (this.github == null) {
             if (!this.travisConfig.getGithubToken().isEmpty()) {
                 try {
-                    LOGGER.debug("Get GH OAuth (10 first characters): "+this.travisConfig.getGithubToken().substring(0,10));
                     this.github = GitHubBuilder.fromEnvironment().withOAuthToken(this.travisConfig.getGithubToken()).build();
                 } catch (IOException e) {
-                    LOGGER.warn("Error while using credentials: try to use anonymous access to github.", e);
+                    LOGGER.error("Error while using credentials (10 first characters of token: "+this.travisConfig.getGithubToken().substring(0,10)+"): fallback to anonymous connection.", e);
                     this.github = GitHub.connectAnonymously();
-                    LOGGER.warn("No github information has been given to connect (set GITHUB_OAUTH), you will have a very low ratelimit for github requests.");
                 }
             } else {
-                this.github = GitHub.connectAnonymously();
-                LOGGER.warn("No github information has been given to connect (set GITHUB_OAUTH), you will have a very low ratelimit for github requests.");
+                LOGGER.info("No Github token has been given, try to connect using environment information");
+                try {
+                    this.github = GitHubBuilder.fromEnvironment().build();
+                } catch (IOException e) {
+                    LOGGER.warn("Error while using environment credentials: fallback to anonymous connection. In the future try by setting a proper token in GITHUB_OAUTH env variable.", e);
+                    this.github = GitHub.connectAnonymously();
+                }
             }
         }
         GHRateLimit rateLimit = this.github.getRateLimit();
-
         LOGGER.info("GitHub ratelimit: Limit: " + rateLimit.limit + " Remaining: " + rateLimit.remaining + " Reset hour: " + hourSimpleDateFormat.format(rateLimit.reset));
         return this.github;
     }
