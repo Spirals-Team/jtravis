@@ -113,7 +113,8 @@ public class JTravis {
                 try {
                     this.github = GitHubBuilder.fromEnvironment().withOAuthToken(this.travisConfig.getGithubToken()).build();
                 } catch (IOException e) {
-                    LOGGER.error("Error while using credentials (10 first characters of token: "+this.travisConfig.getGithubToken().substring(0,10)+"): fallback to anonymous connection.", e);
+                    String token = (this.travisConfig.getGithubToken().length() > 10) ? "[10 first characters of token] "+this.travisConfig.getGithubToken().substring(0,10) : this.travisConfig.getGithubToken();
+                    LOGGER.error("Error while using credentials ("+token+"): fallback to anonymous connection.", e);
                     this.github = GitHub.connectAnonymously();
                 }
             } else {
