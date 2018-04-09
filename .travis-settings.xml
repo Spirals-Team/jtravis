@@ -1,0 +1,9 @@
+<settings>
+    <servers>
+        <server>
+            <id>ossrh-jtravis-snapshot</id>
+            <username>${env.OSS_JTRAVIS_USERNAME}</username>
+            <password>${env.OSS_JTRAVIS_PASSWORD}</password>
+        </server>
+    </servers>
+</settings>
