@@ -168,33 +168,40 @@ public class BuildHelper extends EntityHelper {
             // lastPage -> we should interrupt the loop after it.
             isFinished = (builds.getPagination().isLast());
 
-            List<Build> buildList = builds.getBuilds();
-            Build lastBuild = buildList.get(buildList.size()-1);
+            if (!isFinished) {
+                List<Build> buildList = builds.getBuilds();
+                if (buildList.isEmpty()) {
+                    getLogger().error("Build list should not be empty!");
+                    isFinished = true;
+                } else {
+                    Build lastBuild = buildList.get(buildList.size()-1);
 
-            // we ensure that the build we target is in the current page
-            if (buildComparator.compare(lastBuild, originalBuild) > 0) {
-                for (Build build : buildList) {
+                    // we ensure that the build we target is in the current page
+                    if (buildComparator.compare(lastBuild, originalBuild) > 0) {
+                        for (Build build : buildList) {
 
-                    // we do not want to get the originalBuild and if it does not respect the time criteria we don't want it either
-                    if (build.getId() == originalBuild.getId() ||  buildComparator.compare(build, originalBuild) <= 0) {
-                        continue;
-                    }
-
-                    if (sameBranch) {
-                        if (originalBuild.isPullRequest()) {
-
-                            // if we want the same branch as a pull request we have to check the PR number
-                            if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
+                            // we do not want to get the originalBuild and if it does not respect the time criteria we don't want it either
+                            if (build.getId() == originalBuild.getId() ||  buildComparator.compare(build, originalBuild) <= 0) {
                                 continue;
                             }
-                        } else if (build.isPullRequest()) {
-                            continue;
+
+                            if (sameBranch) {
+                                if (originalBuild.isPullRequest()) {
+
+                                    // if we want the same branch as a pull request we have to check the PR number
+                                    if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
+                                        continue;
+                                    }
+                                } else if (build.isPullRequest()) {
+                                    continue;
+                                }
+                                if (build.getBranch().equals(originalBuild.getBranch())) {
+                                    return Optional.of(build);
+                                }
+                            } else {
+                                return Optional.of(build);
+                            }
                         }
-                        if (build.getBranch().equals(originalBuild.getBranch())) {
-                            return Optional.of(build);
-                        }
-                    } else {
-                        return Optional.of(build);
                     }
                 }
             }
@@ -264,31 +271,34 @@ public class BuildHelper extends EntityHelper {
             while (optionalBuilds.isPresent() && !isFinished) {
                 Builds builds = optionalBuilds.get();
                 List<Build> buildList = builds.getBuilds();
-                Build firstBuild = buildList.get(0);
-                Build lastBuild = buildList.get(buildList.size()-1);
 
-                if (firstBuild.getFinishedAt() != null && firstBuild.getFinishedAt().toInstant().isBefore(limitDateBeginOfTheRange)) {
-                    break;
-                } else if (lastBuild.getFinishedAt().toInstant().isAfter(limitDateEndOfTheRange)) {
-                    optionalBuilds = this.next(builds);
+                if (buildList.isEmpty()) {
+                    isFinished = true;
                 } else {
-                    for (Build build : buildList) {
-                        if ((getRunning && build.getFinishedAt() == null) || (build.getFinishedAt() != null && isBetween(build.getFinishedAt().toInstant(), limitDateBeginOfTheRange, limitDateEndOfTheRange))) {
-                            resultList.add(build);
-                            if (stopAfterFirstOne) {
-                                break;
+                    Build firstBuild = buildList.get(0);
+                    Build lastBuild = buildList.get(buildList.size()-1);
+
+                    if (firstBuild.getFinishedAt() != null && firstBuild.getFinishedAt().toInstant().isBefore(limitDateBeginOfTheRange)) {
+                        break;
+                    } else if (lastBuild.getFinishedAt().toInstant().isAfter(limitDateEndOfTheRange)) {
+                        optionalBuilds = this.next(builds);
+                    } else {
+                        for (Build build : buildList) {
+                            if ((getRunning && build.getFinishedAt() == null) || (build.getFinishedAt() != null && isBetween(build.getFinishedAt().toInstant(), limitDateBeginOfTheRange, limitDateEndOfTheRange))) {
+                                resultList.add(build);
+                                if (stopAfterFirstOne) {
+                                    break;
+                                }
                             }
                         }
-                    }
 
-                    if (lastBuild.getFinishedAt().toInstant().isBefore(limitDateBeginOfTheRange)) {
-                        isFinished = true;
-                    } else {
-                        optionalBuilds = this.next(builds);
+                        if (lastBuild.getFinishedAt().toInstant().isBefore(limitDateBeginOfTheRange)) {
+                            isFinished = true;
+                        } else {
+                            optionalBuilds = this.next(builds);
+                        }
                     }
                 }
-
-
             }
             if (resultList.isEmpty()) {
                 return Optional.empty();
