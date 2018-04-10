@@ -347,6 +347,11 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         assertEquals(60, buildList.size());
         assertEquals("215", buildList.get(0).getNumber());
         assertEquals("156", buildList.get(buildList.size()-1).getNumber());
+
+        Build firstBuild = buildList.get(0);
+        String language = firstBuild.getLanguage();
+        assertNotNull(language);
+        assertFalse(language.isEmpty());
     }
 
     @Test

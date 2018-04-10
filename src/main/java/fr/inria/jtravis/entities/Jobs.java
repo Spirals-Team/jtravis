@@ -33,6 +33,14 @@ public final class Jobs extends EntityCollection {
     }
 
     @Override
+    protected void dispatchJTravisToChildren() {
+        for (Job job : this.getJobs()) {
+            job.setJtravis(this.getJtravis());
+        }
+
+    }
+
+    @Override
     public String toString() {
         return "Jobs{" +
                 "jobs=" + jobs +

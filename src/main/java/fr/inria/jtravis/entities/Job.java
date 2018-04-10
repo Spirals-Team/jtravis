@@ -209,13 +209,16 @@ public final class Job extends EntityUnary {
      */
     @RequestAPI
     public String getLanguage() {
-        Optional<JobV2> optionalJobV2 = this.getJtravis().job().fromIdV2(this.getId());
-        if (optionalJobV2.isPresent()) {
-            JobV2 jobV2 = optionalJobV2.get();
-            if (jobV2.getConfig() != null) {
-                return jobV2.getConfig().getLanguage();
+        if (this.getJtravis() != null) {
+            Optional<JobV2> optionalJobV2 = this.getJtravis().job().fromIdV2(this.getId());
+            if (optionalJobV2.isPresent()) {
+                JobV2 jobV2 = optionalJobV2.get();
+                if (jobV2.getConfig() != null) {
+                    return jobV2.getConfig().getLanguage();
+                }
             }
         }
+
         return "";
     }
 

@@ -33,6 +33,13 @@ public final class Builds extends EntityCollection {
     }
 
     @Override
+    protected void dispatchJTravisToChildren() {
+        for (Build build : this.getBuilds()) {
+            build.setJtravis(this.getJtravis());
+        }
+    }
+
+    @Override
     public String toString() {
         return "Builds{" +
                 "builds=" + builds +

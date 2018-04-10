@@ -2,6 +2,7 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import fr.inria.jtravis.JTravis;
 
 import java.util.Objects;
 
@@ -31,4 +32,12 @@ public abstract class EntityCollection extends Entity {
 
         return Objects.hash(pagination);
     }
+    
+    @Override
+    public void setJtravis(JTravis jTravis) {
+        super.setJtravis(jTravis);
+        this.dispatchJTravisToChildren();
+    }
+
+    protected abstract void dispatchJTravisToChildren();
 }

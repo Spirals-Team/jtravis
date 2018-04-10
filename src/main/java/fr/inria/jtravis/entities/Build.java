@@ -258,6 +258,9 @@ public final class Build extends EntityUnary implements Comparable<Build> {
     public String getLanguage() {
         if (this.getJobs() != null && !this.getJobs().isEmpty()) {
             Job firstJob = this.getJobs().get(0);
+            if (this.getJtravis() != null) {
+                firstJob.setJtravis(this.getJtravis());
+            }
             return firstJob.getLanguage();
         }
         return "";

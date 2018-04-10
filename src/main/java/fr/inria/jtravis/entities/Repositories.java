@@ -33,6 +33,14 @@ public final class Repositories extends EntityCollection {
     }
 
     @Override
+    protected void dispatchJTravisToChildren() {
+        for (Repository repository : this.getRepositories()) {
+            repository.setJtravis(this.getJtravis());
+        }
+
+    }
+
+    @Override
     public String toString() {
         return "Repositories{" +
                 "pagination=" + this.getPagination() +

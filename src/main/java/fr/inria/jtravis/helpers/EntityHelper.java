@@ -11,6 +11,8 @@ import fr.inria.jtravis.entities.Warning;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -40,11 +42,9 @@ public class EntityHelper extends AbstractHelper {
             if (jsonObj != null) {
                 T result = createGson().fromJson(jsonObj, zeClass);
                 try {
-                    Field jTravisField = Entity.class.getDeclaredField("jtravis");
-                    jTravisField.setAccessible(true);
-                    jTravisField.set(result, this.getjTravis());
-                    jTravisField.setAccessible(false);
-                } catch (NoSuchFieldException|IllegalAccessException e) {
+                    Method jtravisSetter = zeClass.getMethod("setJtravis", JTravis.class);
+                    jtravisSetter.invoke(result, this.getjTravis());
+                } catch (IllegalAccessException|NoSuchMethodException|InvocationTargetException e) {
                     this.getLogger().error("Error while setting jtravis field", e);
                 }
                 for (Warning warning : result.getWarnings()) {
