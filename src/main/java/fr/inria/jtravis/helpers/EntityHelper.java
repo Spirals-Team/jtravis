@@ -42,8 +42,10 @@ public class EntityHelper extends AbstractHelper {
             if (jsonObj != null) {
                 T result = createGson().fromJson(jsonObj, zeClass);
                 try {
-                    Method jtravisSetter = zeClass.getMethod("setJtravis", JTravis.class);
+                    Method jtravisSetter = Entity.class.getDeclaredMethod("setJtravis", JTravis.class);
+                    jtravisSetter.setAccessible(true);
                     jtravisSetter.invoke(result, this.getjTravis());
+                    jtravisSetter.setAccessible(false);
                 } catch (IllegalAccessException|NoSuchMethodException|InvocationTargetException e) {
                     this.getLogger().error("Error while setting jtravis field", e);
                 }

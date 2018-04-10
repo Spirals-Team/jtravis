@@ -34,7 +34,7 @@ public abstract class EntityCollection extends Entity {
     }
     
     @Override
-    public void setJtravis(JTravis jTravis) {
+    protected void setJtravis(JTravis jTravis) {
         super.setJtravis(jTravis);
         this.dispatchJTravisToChildren();
     }
