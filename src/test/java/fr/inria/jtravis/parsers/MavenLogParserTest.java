@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by urli on 03/01/2017.
@@ -101,5 +102,17 @@ public class MavenLogParserTest {
         assertEquals(0,  infoTest.get(2).getErrored());
         assertEquals(39, infoTest.get(2).getPassing());
 
+    }
+
+    @Test
+    public void testParseLine() {
+        String line = "[\u001B[1;31mERROR\u001B[m] \u001B[1;31mTests run: 1406, Failures: 4, Errors: 11, Skipped: 4\u001B[m";
+        MavenLogParser mavenLogParser = new MavenLogParser();
+        boolean result = mavenLogParser.parseTestLine(line);
+        assertTrue(result);
+        assertEquals(1406, mavenLogParser.globalResults.getRunning());
+        assertEquals(4, mavenLogParser.globalResults.getFailing());
+        assertEquals(11, mavenLogParser.globalResults.getErrored());
+        assertEquals(4, mavenLogParser.globalResults.getSkipping());
     }
 }

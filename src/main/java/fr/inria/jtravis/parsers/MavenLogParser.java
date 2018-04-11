@@ -19,9 +19,13 @@ public class MavenLogParser extends JavaLogParser {
     private static final String MVN_TESTS_PATTERN = ".* T E S T S";
     // | ([[1;34mINFO[m]  T E S T S)
     private static final String MVN_RESULTS_PATTERN = "(.*Results:)|(.*Results :)";
-    private static final String MVN_TEST_NUMBER_PATTERN = ".*Tests run: (\\d*), Failures: (\\d*), Errors: (\\d*)(, Skipped: (\\d*))?";
+    private static final String MVN_TEST_NUMBER_PATTERN = ".*Tests run: (\\d*), Failures: (\\d*), Errors: (\\d*)(, Skipped: (\\d*))?.*";
+
+    private boolean globalParsing, detailedParsing;
 
     public MavenLogParser() {
+        this.globalResults = new TestsInformation();
+        this.detailedResults = new ArrayList<TestsInformation>();
     }
 
     private void computePassingTests() {
@@ -29,7 +33,7 @@ public class MavenLogParser extends JavaLogParser {
         this.globalResults.setPassing(this.globalResults.getRunning()- notPassing);
     }
 
-    private Boolean parseTestLine(String line) {
+    public Boolean parseTestLine(String line) {
         Pattern mvnTestNumberPattern = Pattern.compile(MVN_TEST_NUMBER_PATTERN);
         Matcher mvnTestNumberMatcher = mvnTestNumberPattern.matcher(line);
 
@@ -59,16 +63,18 @@ public class MavenLogParser extends JavaLogParser {
 
     @Override
     public TestsInformation parseLog(TravisFold outOfFold) {
-        if (this.globalResults == null) {
+        if (!this.globalParsing) {
             this.advancedParseLog(outOfFold);
+            this.globalParsing = true;
         }
         return this.globalResults;
     }
 
     @Override
     public List<TestsInformation> parseDetailedLog(TravisFold outOfFold) {
-        if (this.detailedResults == null) {
+        if (!this.detailedParsing) {
             this.advancedParseLog(outOfFold);
+            this.detailedParsing = true;
         }
         return this.detailedResults;
     }
@@ -76,8 +82,7 @@ public class MavenLogParser extends JavaLogParser {
     private void advancedParseLog(TravisFold outOfFold) {
         boolean inTestBlock = false;
         boolean inTestResults = false;
-        this.globalResults = new TestsInformation();
-        this.detailedResults = new ArrayList<TestsInformation>();
+
 
         Pattern mvnTestHeadPattern = Pattern.compile(MVN_TESTS_PATTERN);
         Pattern mvnTestResultsPattern = Pattern.compile(MVN_RESULTS_PATTERN);
