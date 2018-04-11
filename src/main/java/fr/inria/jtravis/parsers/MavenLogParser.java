@@ -19,7 +19,7 @@ public class MavenLogParser extends JavaLogParser {
     private static final String MVN_TESTS_PATTERN = ".* T E S T S";
     // | ([[1;34mINFO[m]  T E S T S)
     private static final String MVN_RESULTS_PATTERN = "(.*Results:)|(.*Results :)";
-    private static final String MVN_TEST_NUMBER_PATTERN = ".*Tests run: (\\d*), Failures: (\\d*), Errors: (\\d*)(, Skipped: (\\d*))?.*";
+    private static final String MVN_TEST_NUMBER_PATTERN = "^.*Tests run: (\\d*), Failures: (\\d*), Errors: (\\d*)(, Skipped: (\\d*))?((?!, Time elapsed).)*$";
 
     private boolean globalParsing, detailedParsing;
 
@@ -48,7 +48,7 @@ public class MavenLogParser extends JavaLogParser {
             this.globalResults.setErrored(this.globalResults.getErrored() + Integer.parseInt(mvnTestNumberMatcher.group(3)));
             res.setErrored(Integer.parseInt(mvnTestNumberMatcher.group(3)));
 
-            if (nbMatch == 5) {
+            if (nbMatch >= 5) {
                 this.globalResults.setSkipping(this.globalResults.getSkipping() + Integer.parseInt(mvnTestNumberMatcher.group(5)));
                 res.setSkipping(Integer.parseInt(mvnTestNumberMatcher.group(5)));
             }
