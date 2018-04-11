@@ -2,9 +2,7 @@ language: java
 
 jdk: openjdk8
 
-script:
-  - mvn clean install javadoc:javadoc
-  - mvn jacoco:report coveralls:report --fail-never
+script: "./.travis/travis-run.sh"
 
 after_success:
-  - cp .travis-settings.xml $HOME/.m2/settings.xml && mvn deploy
+  - "./.travis/travis-deploy.sh"
