@@ -8,6 +8,7 @@ import fr.inria.jtravis.entities.BuildStub;
 import fr.inria.jtravis.entities.BuildTool;
 import fr.inria.jtravis.entities.Builds;
 import fr.inria.jtravis.entities.EventType;
+import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.Repository;
 import fr.inria.jtravis.entities.StateType;
 import fr.inria.jtravis.parsers.TestUtils;
@@ -29,6 +30,7 @@ import java.util.Properties;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -585,6 +587,30 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         Build build1 = firstBuild.get();
         Optional<Build> optBuildPassing = getJTravis().build().getAfter(build1, true, StateType.PASSED);
         assertFalse(optBuildPassing.isPresent());
+    }
+
+    @Test
+    public void testJTravisPropagation() {
+        // jtravis should be propagated to entities
+        int buildId = 364156914; // inria/spoon with 5 jobs
+
+        Optional<Build> buildOptional = this.getJTravis().build().fromId(buildId);
+        assertTrue(buildOptional.isPresent());
+        Build build = buildOptional.get();
+
+        assertSame(this.getJTravis(), build.getJtravis());
+        assertSame(this.getJTravis(), build.getRepository().getJtravis());
+        assertSame(this.getJTravis(), build.getBranch().getJtravis());
+        assertSame(this.getJTravis(), build.getCreatedBy().getJtravis());
+        int counter = 0;
+
+        for (Job job : build.getJobs()) {
+            assertSame(this.getJTravis(), job.getJtravis());
+            counter++;
+        }
+
+        assertEquals(5, counter);
+
     }
 
 }

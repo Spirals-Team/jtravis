@@ -41,7 +41,7 @@ public abstract class Entity {
         this.representation = representation;
     }
 
-    protected JTravis getJtravis() {
+    public JTravis getJtravis() {
         return jtravis;
     }
 

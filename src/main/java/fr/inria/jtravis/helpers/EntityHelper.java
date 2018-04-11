@@ -45,7 +45,29 @@ public class EntityHelper extends AbstractHelper {
                     Method jtravisSetter = Entity.class.getDeclaredMethod("setJtravis", JTravis.class);
                     jtravisSetter.setAccessible(true);
                     jtravisSetter.invoke(result, this.getjTravis());
+
+                    for (Field field : zeClass.getDeclaredFields()) {
+                        if (field.getAnnotation(Expose.class) != null) {
+                            field.setAccessible(true);
+                            if (Entity.class.isAssignableFrom(field.getType())) {
+                                Entity fieldEntity = (Entity) field.get(result);
+                                if (fieldEntity != null) {
+                                    jtravisSetter.invoke(fieldEntity, this.getjTravis());
+                                }
+                            } else if (Iterable.class.isAssignableFrom(field.getType())) {
+                                Iterable fieldCollection = (Iterable) field.get(result);
+
+                                for (Object entity : fieldCollection) {
+                                    if (entity instanceof Entity) {
+                                        jtravisSetter.invoke(entity, this.getjTravis());
+                                    }
+                                }
+                            }
+                            field.setAccessible(false);
+                        }
+                    }
                     jtravisSetter.setAccessible(false);
+
                 } catch (IllegalAccessException|NoSuchMethodException|InvocationTargetException e) {
                     this.getLogger().error("Error while setting jtravis field", e);
                 }
