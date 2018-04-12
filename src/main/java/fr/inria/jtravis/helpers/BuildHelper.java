@@ -126,11 +126,27 @@ public class BuildHelper extends EntityHelper {
         Comparator<Build> buildComparator;
         if (before) {
             buildComparator = (o1, o2) -> {
-                return Math.round(o2.getFinishedAt().getTime() - o1.getFinishedAt().getTime()); // > 0 means o1 finished before o2
+                if (o1.getFinishedAt() == null && o2.getFinishedAt() == null) {
+                    return 0;
+                } else if (o1.getFinishedAt() != null && o2.getFinishedAt() == null) {
+                    return 1;
+                } else if (o1.getFinishedAt() == null && o2.getFinishedAt() != null) {
+                    return -1;
+                } else {
+                    return Math.round(o2.getFinishedAt().getTime() - o1.getFinishedAt().getTime()); // > 0 means o1 finished before o2
+                }
             };
         } else {
             buildComparator = (o1, o2) -> {
-                return Math.round(o1.getFinishedAt().getTime() - o2.getFinishedAt().getTime()); // > 0 means o1 finished after o2
+                if (o1.getFinishedAt() == null && o2.getFinishedAt() == null) {
+                    return 0;
+                } else if (o1.getFinishedAt() != null && o2.getFinishedAt() == null) {
+                    return -1;
+                } else if (o1.getFinishedAt() == null && o2.getFinishedAt() != null) {
+                    return 1;
+                } else {
+                    return Math.round(o1.getFinishedAt().getTime() - o2.getFinishedAt().getTime()); // > 0 means o1 finished after o2
+                }
             };
         }
 
