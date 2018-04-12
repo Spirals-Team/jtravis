@@ -26,6 +26,7 @@ import java.nio.file.attribute.PosixFilePermissions;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class JTravis {
     private static final Logger LOGGER = LoggerFactory.getLogger(JTravis.class);
@@ -95,7 +96,12 @@ public class JTravis {
         try {
             File cacheDirectory = Files.createTempDirectory("okhttpcache", attr).toFile();
             Cache cache = new Cache(cacheDirectory, TravisConstants.DEFAULT_OKHTTP_CACHE_SIZE);
-            this.client = new OkHttpClient.Builder().cache(cache).build();
+            this.client = new OkHttpClient.Builder()
+                    .connectTimeout(TravisConstants.DEFAULT_CONNECTION_TIMOUT, TimeUnit.SECONDS)
+                    .writeTimeout(TravisConstants.DEFAULT_WRITE_TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(TravisConstants.DEFAULT_READ_TIMEOUT, TimeUnit.SECONDS)
+                    .cache(cache)
+                    .build();
         } catch (IOException e) {
             LOGGER.error("Error while doing the setup for OKhttp cache", e);
             this.client = new OkHttpClient();
