@@ -13,11 +13,14 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.apache.commons.lang.StringUtils;
+import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GitHub;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
@@ -147,4 +150,30 @@ public abstract class AbstractHelper {
             return Optional.empty();
         }
     }
+
+    public Optional<String> getDecodedSlug(String slug) {
+        String decodedSlug;
+        try {
+            decodedSlug = URLDecoder.decode(slug, "UTF-8");
+            return Optional.of(decodedSlug);
+        } catch (UnsupportedEncodingException e) {
+            getLogger().error("Error while decoding given repository slug: "+slug, e);
+            return Optional.empty();
+        }
+    }
+
+    public Optional<String> searchCurrentRepoNameWithGHAPI(String slug) {
+        GitHub gitHub;
+        try {
+            gitHub = this.getjTravis().getGithub();
+            GHRepository repository = gitHub.getRepository(slug);
+            if (repository != null) {
+                return Optional.of(repository.getFullName());
+            }
+        } catch (IOException e) {
+            getLogger().error("Error while trying to retrieve the repository from slug "+slug, e);
+        }
+        return Optional.empty();
+    }
+
 }
