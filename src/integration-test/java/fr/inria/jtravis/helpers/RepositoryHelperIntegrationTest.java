@@ -31,4 +31,17 @@ public class RepositoryHelperIntegrationTest extends AbstractTest {
         assertEquals("rails/rails", repository.getSlug());
         assertEquals(891, repository.getId());
     }
+
+    @Category(IntegrationTest.class)
+    @Test
+    public void testGetRenamedRepository() {
+        Optional<Repository> repositoryOptional = getJTravis().repository().fromSlug("alibaba/dubbo");
+
+        assertTrue(repositoryOptional.isPresent());
+
+        Repository repository = repositoryOptional.get();
+        assertEquals("apache/incubator-dubbo", repository.getSlug());
+        assertEquals(515461, repository.getId());
+    }
+
 }
