@@ -307,13 +307,18 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     public void testGetTheLastBuildNumberOfADateFromRenamedRepository() {
         Date date = getDateFor(2017, Calendar.MARCH, 16, 22, 59, 59, 0);
         String oldSlug = "Spirals-Team/librepair";
+        String newSlug = "Spirals-Team/repairnator";
 
         int buildId = 212115810;
         String expectedBuildNumber = "226";
+
         Optional<Build> optionalBuild = getJTravis().build().forDate(oldSlug, date, 1, ChronoUnit.DAYS);
+
         assertTrue(optionalBuild.isPresent());
-        assertEquals(expectedBuildNumber, optionalBuild.get().getNumber());
-        assertEquals(buildId, optionalBuild.get().getId());
+        Build build = optionalBuild.get();
+        assertEquals(expectedBuildNumber, build.getNumber());
+        assertEquals(buildId, build.getId());
+        assertEquals(newSlug, build.getRepository().getSlug());
     }
 
     @Test
@@ -405,10 +410,14 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     @Category(IntegrationTest.class)
     public void testGetLastBuildFromRenamedRepository() {
         String oldSlug = "alibaba/dubbo";
+        String newSlug = "apache/incubator-dubbo";
+
         Optional<Build> buildOptional = getJTravis().build().last(oldSlug);
 
         assertTrue(buildOptional.isPresent());
-        assertNotNull(buildOptional.get().getNumber());
+        Build build = buildOptional.get();
+        assertNotNull(build.getNumber());
+        assertEquals(newSlug, build.getRepository().getSlug());
     }
 
     @Test
