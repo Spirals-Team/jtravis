@@ -58,11 +58,11 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
 
         Properties properties = new Properties();
-        properties.put("state", StateType.FAILED);
+        properties.put("state", StateType.FAILED.name().toLowerCase());
         properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
 
         properties.put("branch.name", "master");
-        properties.put("event_type", EventType.PULL_REQUEST);
+        properties.put("event_type", EventType.PULL_REQUEST.name().toLowerCase());
 
         Optional<Builds> buildsOptional = getJTravis().build().getEntityFromUri(Builds.class, pathParameter, properties);
         assertTrue(buildsOptional.isPresent());
@@ -103,11 +103,11 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
 
         Properties properties = new Properties();
-        properties.put("state", StateType.FAILED);
+        properties.put("state", StateType.FAILED.name().toLowerCase());
         properties.put("sort_by", new BuildsSorting().byFinishedAt().build());
 
         properties.put("branch.name", "master");
-        properties.put("event_type", EventType.PULL_REQUEST);
+        properties.put("event_type", EventType.PULL_REQUEST.name().toLowerCase());
 
         Optional<Builds> buildsOptional = getJTravis().build().getEntityFromUri(Builds.class, pathParameter, properties);
         assertTrue(buildsOptional.isPresent());
@@ -644,7 +644,22 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         }
 
         assertEquals(5, counter);
+    }
 
+    @Test
+    public void testGetPreviousBuildOnASpecificBranch() {
+        int buildId = 336004206; // project: GJL/flink
+        int previousBuildId = 335775164;
+
+        Optional<Build> optionalBuild = this.getJTravis().build().fromId(buildId);
+        assertTrue(optionalBuild.isPresent());
+
+        Build b = optionalBuild.get();
+        Optional<Build> optionalBuild1 = this.getJTravis().build().getBefore(b, true);
+        assertTrue(optionalBuild1.isPresent());
+
+        Build b1 = optionalBuild1.get();
+        assertEquals(previousBuildId, b1.getId());
     }
 
 }
