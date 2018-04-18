@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import fr.inria.jtravis.Http404Exception;
 import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.TravisConstants;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -144,25 +146,44 @@ public abstract class AbstractHelper {
         String encodedSlug;
         try {
             encodedSlug = URLEncoder.encode(slug, "UTF-8");
-            return Optional.of(encodedSlug);
+
+            boolean checkSlugExists = this.checkSlugExists(encodedSlug);
+            if (checkSlugExists) {
+                return Optional.of(encodedSlug);
+            } else {
+                Optional<String> rightSlug = this.searchCurrentRepoNameWithGHAPI(slug);
+                if (rightSlug.isPresent()) {
+                    getLogger().warn("The slug name has changed! "+slug+" is now "+rightSlug.get());
+                    return this.getEncodedSlug(rightSlug.get());
+                }
+            }
         } catch (UnsupportedEncodingException e) {
             getLogger().error("Error while encoding given repository slug: "+slug, e);
-            return Optional.empty();
+        } catch (IOException e) {
+            getLogger().error("Error while checking existence of the slug on TravisCI: "+slug, e);
         }
+        return Optional.empty();
     }
 
-    public Optional<String> getDecodedSlug(String slug) {
-        String decodedSlug;
+    /**
+     * Check that a slug name is recognized by TravisCI
+     * @param encodedSlug A slug name encoded for URL
+     * @return true if it is recognized by the API
+     */
+    private boolean checkSlugExists(String encodedSlug) throws IOException {
+        List<String> pathComponent = Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                encodedSlug);
+        String url = this.buildUrl(pathComponent, null);
         try {
-            decodedSlug = URLDecoder.decode(slug, "UTF-8");
-            return Optional.of(decodedSlug);
-        } catch (UnsupportedEncodingException e) {
-            getLogger().error("Error while decoding given repository slug: "+slug, e);
-            return Optional.empty();
+            this.get(url);
+            return true;
+        } catch (Http404Exception e) {
+            return false;
         }
     }
 
-    public Optional<String> searchCurrentRepoNameWithGHAPI(String slug) {
+    private Optional<String> searchCurrentRepoNameWithGHAPI(String slug) {
         GitHub gitHub;
         try {
             gitHub = this.getjTravis().getGithub();

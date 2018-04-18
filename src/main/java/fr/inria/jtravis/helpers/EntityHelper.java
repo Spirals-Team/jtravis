@@ -2,6 +2,7 @@ package fr.inria.jtravis.helpers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
+import fr.inria.jtravis.Http404Exception;
 import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.*;
@@ -74,41 +75,6 @@ public class EntityHelper extends AbstractHelper {
             }
         } catch (IOException e) {
             this.getLogger().error("Error while getting JSON at URL: "+url, e);
-
-            // In case of 404 when getting repository or build, the repo might had been renamed
-            if ((zeClass == Repository.class || zeClass == Builds.class) && e.getMessage().contains("404 Not Found")) {
-                String slug = pathComponent.get(pathComponent.indexOf(TravisConstants.REPO_ENDPOINT)+1);
-
-                // Check if the repo id is not being used instead of slug
-                if (!slug.matches("[0-9]+")) {
-
-                    Optional<String> optionalS = this.getDecodedSlug(slug);
-                    if (optionalS.isPresent()) {
-                        String decodedSlug = optionalS.get();
-
-                        optionalS = this.searchCurrentRepoNameWithGHAPI(decodedSlug);
-                        if (optionalS.isPresent()) {
-                            String newSlug = optionalS.get();
-
-                            if (!newSlug.equals(decodedSlug)) {
-                                // New attempt at getting entity from uri with the new slug
-                                this.getLogger().info("Apparently the repository "+decodedSlug+" was renamed to "+newSlug+". A new attempt to get it will be done...");
-
-                                optionalS = this.getEncodedSlug(newSlug);
-                                if (optionalS.isPresent()) {
-                                    List<String> newPathComponent = new ArrayList<>();
-                                    newPathComponent.add(TravisConstants.REPO_ENDPOINT);
-                                    newPathComponent.add(optionalS.get());
-                                    if (zeClass == Builds.class) {
-                                        newPathComponent.add(TravisConstants.BUILDS_ENDPOINT);
-                                    }
-                                    ret = this.getEntityFromUri(zeClass, newPathComponent, queryParameters);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
         return ret;
     }
