@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Date;
@@ -69,6 +68,9 @@ public abstract class AbstractHelper {
 
     private void checkResponse(Response response) throws IOException {
         if (response.code() != 200) {
+            if (response.code() == 404) {
+                throw new Http404Exception(response.message());
+            }
             throw new IOException("The response answer to "+response.request().url().toString()+" is not 200: "+response.code()+" "+response.message());
         }
     }

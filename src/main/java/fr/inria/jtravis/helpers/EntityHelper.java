@@ -2,9 +2,7 @@ package fr.inria.jtravis.helpers;
 
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
-import fr.inria.jtravis.Http404Exception;
 import fr.inria.jtravis.JTravis;
-import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.*;
 
 import java.io.IOException;
