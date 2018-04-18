@@ -58,11 +58,11 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
 
         Properties properties = new Properties();
-        properties.put("state", StateType.FAILED);
+        properties.put("state", StateType.FAILED.name().toLowerCase());
         properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
 
         properties.put("branch.name", "master");
-        properties.put("event_type", EventType.PULL_REQUEST);
+        properties.put("event_type", EventType.PULL_REQUEST.name().toLowerCase());
 
         Optional<Builds> buildsOptional = getJTravis().build().getEntityFromUri(Builds.class, pathParameter, properties);
         assertTrue(buildsOptional.isPresent());
@@ -103,11 +103,11 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
 
         Properties properties = new Properties();
-        properties.put("state", StateType.FAILED);
+        properties.put("state", StateType.FAILED.name().toLowerCase());
         properties.put("sort_by", new BuildsSorting().byFinishedAt().build());
 
         properties.put("branch.name", "master");
-        properties.put("event_type", EventType.PULL_REQUEST);
+        properties.put("event_type", EventType.PULL_REQUEST.name().toLowerCase());
 
         Optional<Builds> buildsOptional = getJTravis().build().getEntityFromUri(Builds.class, pathParameter, properties);
         assertTrue(buildsOptional.isPresent());

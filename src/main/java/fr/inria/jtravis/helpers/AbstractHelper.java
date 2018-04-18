@@ -118,6 +118,14 @@ public abstract class AbstractHelper {
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
     }
 
+    /**
+     * Build a valid URL for Travis CI API based on the endpoint registered in the configuration
+     * and the given components of the path and query parameters.
+     * @param pathComponent base component of the path, generally an entity and optionnaly its id (like /repos/12)
+     * @param queryParameters filters for the request, those parameters are passed after to filter the request (like /repos/12/builds?state=failed).
+     *                        Please note that the value of the parameters is case sensitive.
+     * @return A proper URL for Travis CI
+     */
     protected String buildUrl(List<String> pathComponent, Properties queryParameters) {
 
         StringBuilder stringBuilder = new StringBuilder(StringUtils.join(pathComponent, "/"));
