@@ -644,7 +644,22 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         }
 
         assertEquals(5, counter);
+    }
 
+    @Test
+    public void testGetPreviousBuildOnASpecificBranch() {
+        int buildId = 336004206; // project: GJL/flink
+        int previousBuildId = 335775164;
+
+        Optional<Build> optionalBuild = this.getJTravis().build().fromId(buildId);
+        assertTrue(optionalBuild.isPresent());
+
+        Build b = optionalBuild.get();
+        Optional<Build> optionalBuild1 = this.getJTravis().build().getBefore(b, true);
+        assertTrue(optionalBuild1.isPresent());
+
+        Build b1 = optionalBuild1.get();
+        assertEquals(previousBuildId, b1.getId());
     }
 
 }
