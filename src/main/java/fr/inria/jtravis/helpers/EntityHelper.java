@@ -3,20 +3,13 @@ package fr.inria.jtravis.helpers;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import fr.inria.jtravis.JTravis;
-import fr.inria.jtravis.entities.Entity;
-import fr.inria.jtravis.entities.EntityCollection;
-import fr.inria.jtravis.entities.Pagination;
-import fr.inria.jtravis.entities.RepresentationType;
-import fr.inria.jtravis.entities.Warning;
+import fr.inria.jtravis.entities.*;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * This abstract helper is the base helper for all the others.
@@ -35,6 +28,8 @@ public class EntityHelper extends AbstractHelper {
     }
 
     public <T extends Entity> Optional<T> getEntityFromUri(Class<T> zeClass, List<String> pathComponent, Properties queryParameters) {
+        Optional<T> ret = Optional.empty();
+
         String url = this.buildUrl(pathComponent, queryParameters);
         try {
             String jsonContent = this.get(url);
@@ -79,8 +74,7 @@ public class EntityHelper extends AbstractHelper {
         } catch (IOException e) {
             this.getLogger().error("Error while getting JSON at URL: "+url, e);
         }
-
-        return Optional.empty();
+        return ret;
     }
 
     public <T extends Entity> boolean refresh(T entity) {

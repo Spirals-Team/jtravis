@@ -24,6 +24,8 @@ public class RepositoryHelperTest extends AbstractTest {
         String encodedSlug = "INRIA%2Fspoon";
         String buildContent = this.getFileContent(TestRepository.PATH_REPO_STANDARD);
 
+        // the request will be executed twice: one for checking the slug name, the other to retrieve info
+        this.enqueueContentMockServer(buildContent);
         this.enqueueContentMockServer(buildContent);
 
         Optional<Repository> repositoryOpt = getJTravis().repository().fromSlug(slug);

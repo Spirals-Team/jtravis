@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import fr.inria.jtravis.Http404Exception;
 import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.TravisConstants;
@@ -13,12 +14,15 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.apache.commons.lang.StringUtils;
+import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GitHub;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +68,9 @@ public abstract class AbstractHelper {
 
     private void checkResponse(Response response) throws IOException {
         if (response.code() != 200) {
+            if (response.code() == 404) {
+                throw new Http404Exception(response.message());
+            }
             throw new IOException("The response answer to "+response.request().url().toString()+" is not 200: "+response.code()+" "+response.message());
         }
     }
@@ -141,10 +148,55 @@ public abstract class AbstractHelper {
         String encodedSlug;
         try {
             encodedSlug = URLEncoder.encode(slug, "UTF-8");
-            return Optional.of(encodedSlug);
+
+            boolean checkSlugExists = this.checkSlugExists(encodedSlug);
+            if (checkSlugExists) {
+                return Optional.of(encodedSlug);
+            } else {
+                Optional<String> rightSlug = this.searchCurrentRepoNameWithGHAPI(slug);
+                if (rightSlug.isPresent()) {
+                    getLogger().warn("The slug name has changed! "+slug+" is now "+rightSlug.get());
+                    return this.getEncodedSlug(rightSlug.get());
+                }
+            }
         } catch (UnsupportedEncodingException e) {
             getLogger().error("Error while encoding given repository slug: "+slug, e);
-            return Optional.empty();
+        } catch (IOException e) {
+            getLogger().error("Error while checking existence of the slug on TravisCI: "+slug, e);
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Check that a slug name is recognized by TravisCI
+     * @param encodedSlug A slug name encoded for URL
+     * @return true if it is recognized by the API
+     */
+    private boolean checkSlugExists(String encodedSlug) throws IOException {
+        List<String> pathComponent = Arrays.asList(
+                TravisConstants.REPO_ENDPOINT,
+                encodedSlug);
+        String url = this.buildUrl(pathComponent, null);
+        try {
+            this.get(url);
+            return true;
+        } catch (Http404Exception e) {
+            return false;
         }
     }
+
+    private Optional<String> searchCurrentRepoNameWithGHAPI(String slug) {
+        GitHub gitHub;
+        try {
+            gitHub = this.getjTravis().getGithub();
+            GHRepository repository = gitHub.getRepository(slug);
+            if (repository != null) {
+                return Optional.of(repository.getFullName());
+            }
+        } catch (IOException e) {
+            getLogger().error("Error while trying to retrieve the repository from slug "+slug, e);
+        }
+        return Optional.empty();
+    }
+
 }
