@@ -19,7 +19,7 @@ public class TravisConstants {
     public static final String OWNER_ENDPOINT = "owner";
 
     public static final int DEFAULT_OKHTTP_CACHE_SIZE = 10 * 1024 * 1024; // 10 MiB
-    public static final int DEFAULT_CONNECTION_TIMOUT = 30; // in seconds
-    public static final int DEFAULT_READ_TIMEOUT = 60; // in seconds
+    public static final int DEFAULT_CONNECTION_TIMOUT = 60; // in seconds
+    public static final int DEFAULT_READ_TIMEOUT = 120; // in seconds
     public static final int DEFAULT_WRITE_TIMEOUT = 30; // in seconds
 }

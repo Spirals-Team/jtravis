@@ -613,6 +613,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetPassingBuildAfterGivenBuild() {
         int buildId = 352395977;
         Optional<Build> firstBuild = getJTravis().build().fromId(buildId);
@@ -624,6 +625,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testJTravisPropagation() {
         // jtravis should be propagated to entities
         int buildId = 364156914; // inria/spoon with 5 jobs
@@ -647,6 +649,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     }
 
     @Test
+    @Category(IntegrationTest.class)
     public void testGetPreviousBuildOnASpecificBranch() {
         int buildId = 336004206; // project: GJL/flink
         int previousBuildId = 335775164;
@@ -660,6 +663,32 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
         Build b1 = optionalBuild1.get();
         assertEquals(previousBuildId, b1.getId());
+    }
+
+    @Test
+    @Category(IntegrationTest.class)
+    public void testTimeoutWithFlink() {
+        // the request should work without timeout
+        String slugFlink = "apache/flink";
+
+        Optional<Repository> repositoryOptional = this.getJTravis().repository().fromSlug(slugFlink);
+        assertTrue(repositoryOptional.isPresent());
+
+        Optional<Build> lastBuild = repositoryOptional.get().getLastBuild(false);
+        assertTrue(lastBuild.isPresent());
+    }
+
+    @Test
+    @Category(IntegrationTest.class)
+    public void testTimeoutWithPresto() {
+        // the request should work without timeout
+        String slugFlink = "prestodb/presto";
+
+        Optional<Repository> repositoryOptional = this.getJTravis().repository().fromSlug(slugFlink);
+        assertTrue(repositoryOptional.isPresent());
+
+        Optional<Build> lastBuild = repositoryOptional.get().getLastBuild(false);
+        assertTrue(lastBuild.isPresent());
     }
 
 }
