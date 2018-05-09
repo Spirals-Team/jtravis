@@ -1,10 +1,10 @@
 package fr.inria.jtravis.helpers;
 
-import com.squareup.okhttp.mockwebserver.RecordedRequest;
 import fr.inria.jtravis.AbstractTest;
 import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.entities.Repository;
 import fr.inria.jtravis.entities.TestRepository;
+import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.Test;
 
 import java.util.Optional;

@@ -1,15 +1,14 @@
 package fr.inria.jtravis.helpers;
 
-import com.squareup.okhttp.mockwebserver.RecordedRequest;
 import fr.inria.jtravis.AbstractTest;
 import fr.inria.jtravis.TravisConstants;
 import fr.inria.jtravis.UnitTest;
 import fr.inria.jtravis.entities.Job;
 import fr.inria.jtravis.entities.TestJob;
+import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.io.IOException;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;

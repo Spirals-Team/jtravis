@@ -1,16 +1,11 @@
 package fr.inria.jtravis;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
 import fr.inria.jtravis.helpers.EntityHelper;
+import okhttp3.HttpUrl;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 import org.apache.commons.lang.StringUtils;
 import org.junit.After;
-import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
