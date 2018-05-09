@@ -1,22 +1,15 @@
 package fr.inria.jtravis.entities;
 
 import com.google.gson.JsonObject;
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
 import fr.inria.jtravis.AbstractTest;
-import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.helpers.EntityHelper;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 public class TestRepositories extends AbstractTest {
     private static final String PATH_REPOSITORIES_LIMIT_2_OFFSET_0 = "./src/test/resources/response/repositories/repositories_answer_l2_o0.json";
