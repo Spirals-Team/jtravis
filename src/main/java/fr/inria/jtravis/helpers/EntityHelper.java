@@ -78,7 +78,7 @@ public class EntityHelper extends AbstractHelper {
     }
 
     public <T extends Entity> boolean refresh(T entity) {
-        if (entity.getUri() != null) {
+        if (entity.getUri() != null && entity.getRepresentation() != RepresentationType.STANDARD) {
             Optional<T> instance1Opt = (Optional<T>) this.getEntityFromUri(entity.getClass(), entity.getUri());
 
             if (instance1Opt.isPresent()) {
