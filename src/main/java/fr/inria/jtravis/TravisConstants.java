@@ -22,4 +22,6 @@ public class TravisConstants {
     public static final int DEFAULT_CONNECTION_TIMOUT = 60; // in seconds
     public static final int DEFAULT_READ_TIMEOUT = 120; // in seconds
     public static final int DEFAULT_WRITE_TIMEOUT = 30; // in seconds
+
+    public static final int DEFAULT_NUMBER_OF_RETRY = 2; // try the request 2 times in case of 500 errors
 }

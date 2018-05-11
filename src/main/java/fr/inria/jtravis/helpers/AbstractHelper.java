@@ -91,21 +91,37 @@ public abstract class AbstractHelper {
     }
 
     protected String get(String url) throws IOException {
-        return this.get(url, false);
+        return this.get(url, false, TravisConstants.DEFAULT_NUMBER_OF_RETRY);
     }
 
-    protected String get(String url, boolean useV2) throws IOException {
+    protected String get(String url, boolean useV2, int numberOfRetry) throws IOException {
         Request request = this.requestBuilder(url, useV2).get().build();
-        Call call = this.getjTravis().getHttpClient().newCall(request);
-        long dateBegin = new Date().getTime();
-        Response response = call.execute();
-        long dateEnd = new Date().getTime();
-        this.getLogger().debug("Get request to :"+url+" done after "+(dateEnd-dateBegin)+" ms");
-        checkResponse(response);
-        ResponseBody responseBody = response.body();
-        String result = responseBody.string();
-        response.close();
-        return result;
+        try {
+            Call call = this.getjTravis().getHttpClient().newCall(request);
+            long dateBegin = new Date().getTime();
+            Response response = call.execute(); // might throw IOException (e.g. in case of timeout)
+            long dateEnd = new Date().getTime();
+            this.getLogger().debug("Get request to :" + url + " done after " + (dateEnd - dateBegin) + " ms");
+            checkResponse(response); // might throw IOException and Http404Exception
+            ResponseBody responseBody = response.body();
+            String result = responseBody.string();
+            response.close();
+            return result;
+        // if it's 404 it's unecessary to redo the request
+        // so let throw it and handle it elsewhere
+        } catch (Http404Exception e) {
+            throw e;
+
+        // in case of any other IOException,
+        // it might be useful to try it again
+        } catch (IOException e) {
+            if (numberOfRetry <= 0) {
+                throw e;
+            } else {
+                this.getLogger().debug("Error while executing the request ("+e.getMessage()+"). Let's try it again.");
+                return this.get(url, useV2, numberOfRetry-1);
+            }
+        }
     }
 
     public static JsonObject getJsonFromStringContent(String content) {
