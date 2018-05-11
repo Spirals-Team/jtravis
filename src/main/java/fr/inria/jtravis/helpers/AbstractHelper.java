@@ -101,12 +101,14 @@ public abstract class AbstractHelper {
             long dateBegin = new Date().getTime();
             Response response = call.execute();
             long dateEnd = new Date().getTime();
-            this.getLogger().debug("Get request to :"+url+" done after "+(dateEnd-dateBegin)+" ms");
+            this.getLogger().debug("Get request to :" + url + " done after " + (dateEnd - dateBegin) + " ms");
             checkResponse(response);
             ResponseBody responseBody = response.body();
             String result = responseBody.string();
             response.close();
             return result;
+        } catch (Http404Exception e) {
+            throw e;
         } catch (IOException e) {
             if (numberOfRetry <= 0) {
                 throw e;
