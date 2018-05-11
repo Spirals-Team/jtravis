@@ -99,16 +99,21 @@ public abstract class AbstractHelper {
         try {
             Call call = this.getjTravis().getHttpClient().newCall(request);
             long dateBegin = new Date().getTime();
-            Response response = call.execute();
+            Response response = call.execute(); // might throw IOException (e.g. in case of timeout)
             long dateEnd = new Date().getTime();
             this.getLogger().debug("Get request to :" + url + " done after " + (dateEnd - dateBegin) + " ms");
-            checkResponse(response);
+            checkResponse(response); // might throw IOException and Http404Exception
             ResponseBody responseBody = response.body();
             String result = responseBody.string();
             response.close();
             return result;
+        // if it's 404 it's unecessary to redo the request
+        // so let throw it and handle it elsewhere
         } catch (Http404Exception e) {
             throw e;
+
+        // in case of any other IOException,
+        // it might be useful to try it again
         } catch (IOException e) {
             if (numberOfRetry <= 0) {
                 throw e;
