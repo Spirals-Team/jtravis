@@ -28,7 +28,7 @@ public class RepositoryHelper extends EntityHelper {
         }
     }
 
-    public Optional<Repository> fromId(int id) {
+    public Optional<Repository> fromId(long id) {
         return getEntityFromUri(Repository.class, Arrays.asList(
                 TravisConstants.REPO_ENDPOINT,
                 String.valueOf(id)), null);

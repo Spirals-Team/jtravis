@@ -268,7 +268,14 @@ public final class Build extends EntityUnary implements Comparable<Build> {
 
     @Override
     public int compareTo(Build o) {
-        return this.getId()-o.getId();
+        long value = this.getId()-o.getId();
+        if (value == 0) {
+            return 0;
+        } else if (value < 0) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 
     @Override

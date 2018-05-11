@@ -57,7 +57,7 @@ public class JobHelper extends EntityHelper {
         return Optional.empty();
     }
 
-    public Optional<JobV2> fromIdV2(int id) {
+    public Optional<JobV2> fromIdV2(long id) {
         String url = this.getConfig().getTravisEndpoint() + "/" + TravisConstants.JOBS_ENDPOINT + "/" + id;
         try {
             String response = this.get(url, true);
