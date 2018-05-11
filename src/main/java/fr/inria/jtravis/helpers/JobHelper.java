@@ -40,7 +40,7 @@ public class JobHelper extends EntityHelper {
     public Optional<List<JobV2>> allFromV2() {
         String url = this.getConfig().getTravisEndpoint() + "/" + TravisConstants.JOBS_ENDPOINT;
         try {
-            String response = this.get(url, true);
+            String response = this.get(url, true, TravisConstants.DEFAULT_NUMBER_OF_RETRY);
             JsonObject jsonObj = getJsonFromStringContent(response);
             JsonArray jsonArray = jsonObj.getAsJsonArray("jobs");
             List<JobV2> result = new ArrayList<>();
@@ -60,7 +60,7 @@ public class JobHelper extends EntityHelper {
     public Optional<JobV2> fromIdV2(int id) {
         String url = this.getConfig().getTravisEndpoint() + "/" + TravisConstants.JOBS_ENDPOINT + "/" + id;
         try {
-            String response = this.get(url, true);
+            String response = this.get(url, true, TravisConstants.DEFAULT_NUMBER_OF_RETRY);
             JsonObject jsonObject = getJsonFromStringContent(response).getAsJsonObject("job");
             JobV2 jobV2 = createGson().fromJson(jsonObject, JobV2.class);
             return Optional.of(jobV2);
