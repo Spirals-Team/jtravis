@@ -6,13 +6,13 @@ import java.util.Objects;
 
 public abstract class EntityUnary extends Entity {
     @Expose
-    private int id;
+    private long id;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    protected void setId(int id) {
+    protected void setId(long id) {
         this.id = id;
     }
 

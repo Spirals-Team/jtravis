@@ -59,7 +59,7 @@ public class BuildHelper extends EntityHelper {
         return this.getNextCollection(builds);
     }
 
-    public Optional<Build> fromId(int id) {
+    public Optional<Build> fromId(long id) {
         return getEntityFromUri(Build.class, Arrays.asList(TravisConstants.BUILD_ENDPOINT, String.valueOf(id)), null);
     }
 
@@ -150,7 +150,7 @@ public class BuildHelper extends EntityHelper {
             };
         }
 
-        int repositoryId = originalBuild.getRepository().getId();
+        long repositoryId = originalBuild.getRepository().getId();
 
         List<String> pathParameter = Arrays.asList(
                 TravisConstants.REPO_ENDPOINT,
