@@ -110,7 +110,6 @@ public class JTravis {
 
     private void reset(TravisConfig travisConfig) {
         this.travisConfig = travisConfig;
-        this.client = new OkHttpClient();
     }
 
     public GitHub getGithub() throws IOException {
