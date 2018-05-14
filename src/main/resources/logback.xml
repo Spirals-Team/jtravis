@@ -5,7 +5,7 @@
     </encoder>
   </appender>
 
-  <logger name="fr.inria.jtravis.helpers" level="debug" />
+  <logger name="fr.inria.jtravis.helpers" level="warn" />
 
   <logger name="org.apache" level="OFF" />
 
