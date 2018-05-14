@@ -232,11 +232,12 @@ public class TestBuild extends AbstractTest {
         String buildContent = this.getFileContent(BUILD_STANDARD_PATH);
 
         this.enqueueContentMockServer(buildContent);
+        this.enqueueContentMockServer(buildContent);
 
 
         assertTrue(getJTravis().refresh(minimalBuild));
         assertEquals(this.getExpectedBuild(), minimalBuild);
-        assertFalse(getJTravis().refresh(minimalBuild));
+        assertTrue(getJTravis().refresh(minimalBuild));
     }
 
     @Test
