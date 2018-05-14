@@ -77,8 +77,14 @@ public class EntityHelper extends AbstractHelper {
         return ret;
     }
 
+    /**
+     * Refresh a given entity: the last standard representation is always retrieved.
+     * @param entity The entity to retrieve: the object will be changed to integrate the latest data
+     * @param <T>
+     * @return true if the last data has been retrieved
+     */
     public <T extends Entity> boolean refresh(T entity) {
-        if (entity.getUri() != null && entity.getRepresentation() != RepresentationType.STANDARD) {
+        if (entity.getUri() != null) {
             Optional<T> instance1Opt = (Optional<T>) this.getEntityFromUri(entity.getClass(), entity.getUri());
 
             if (instance1Opt.isPresent()) {
