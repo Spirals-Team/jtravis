@@ -74,6 +74,7 @@ public class TestRepository extends AbstractTest {
         String buildContent = this.getFileContent(PATH_REPO_STANDARD);
 
         enqueueContentMockServer(buildContent);
+        enqueueContentMockServer(buildContent);
 
 
         assertTrue(getJTravis().refresh(minimalRepo));
@@ -82,6 +83,6 @@ public class TestRepository extends AbstractTest {
         RecordedRequest request1 = getMockServer().takeRequest();
         assertEquals("/fake"+expectedMinimalRepo.getUri(), request1.getPath());
 
-        assertFalse(getJTravis().refresh(minimalRepo));
+        assertTrue(getJTravis().refresh(minimalRepo));
     }
 }
