@@ -691,4 +691,17 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         assertTrue(lastBuild.isPresent());
     }
 
+    @Test
+    @Category(IntegrationTest.class)
+    public void testBuildsFromARepoWithLimit() {
+        String spoonSlug = "INRIA/spoon";
+        Optional<Repository> repositoryOptional = this.getJTravis().repository().fromSlug(spoonSlug);
+        assertTrue(repositoryOptional.isPresent());
+        Optional<Builds> optionalBuilds = this.getJTravis().build().fromRepository(repositoryOptional.get(), 3);
+        assertTrue(optionalBuilds.isPresent());
+
+        List<Build> builds = optionalBuilds.get().getBuilds();
+        assertEquals(3, builds.size());
+    }
+
 }
