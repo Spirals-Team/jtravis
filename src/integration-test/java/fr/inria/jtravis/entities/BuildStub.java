@@ -61,7 +61,7 @@ public class BuildStub extends AbstractTest {
         branch.setName("master");
         expectedBuild.setBranch(branch);
 
-        expectedBuild.setUpdatedAt(getDateFor(2017, Calendar.APRIL, 21, 16, 27, 23, 494));
+        expectedBuild.setUpdatedAt(getDateFor(2018, Calendar.MAY, 26, 21, 8, 21, 397));
 
         return expectedBuild;
     }
