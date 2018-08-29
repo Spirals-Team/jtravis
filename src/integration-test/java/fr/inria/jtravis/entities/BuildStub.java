@@ -47,6 +47,10 @@ public class BuildStub extends AbstractTest {
         jobs.add(job);
         expectedBuild.setJobs(jobs);
 
+        Config config = new Config();
+        config.setLanguage("java");
+        job.setConfig(config);
+
         Owner owner = new Owner();
         owner.setRepresentation(RepresentationType.MINIMAL);
         owner.setUri("/user/95813");

@@ -13,6 +13,10 @@ public final class Config {
         return language;
     }
 
+    protected void setLanguage(String language) {
+        this.language = language;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
