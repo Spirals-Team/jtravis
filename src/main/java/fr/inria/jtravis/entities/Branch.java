@@ -61,6 +61,13 @@ public final class Branch extends Entity {
     }
 
     @Override
+    protected void dispatchJTravisToChildren() {
+        if (this.repository != null) {
+            this.repository.setJtravis(this.getJtravis());
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

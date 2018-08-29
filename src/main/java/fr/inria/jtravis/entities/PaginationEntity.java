@@ -32,6 +32,11 @@ public final class PaginationEntity extends Entity {
     }
 
     @Override
+    protected void dispatchJTravisToChildren() {
+        // do nothing
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

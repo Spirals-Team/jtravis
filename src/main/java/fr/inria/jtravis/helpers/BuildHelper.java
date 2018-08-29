@@ -47,7 +47,6 @@ public class BuildHelper extends EntityHelper {
 
         Properties properties = new Properties();
         properties.put("limit", limit);
-
         return getEntityFromUri(Builds.class, Arrays.asList(
                 TravisConstants.REPO_ENDPOINT,
                 String.valueOf(repository.getId()),
@@ -60,7 +59,10 @@ public class BuildHelper extends EntityHelper {
     }
 
     public Optional<Build> fromId(long id) {
-        return getEntityFromUri(Build.class, Arrays.asList(TravisConstants.BUILD_ENDPOINT, String.valueOf(id)), null);
+        Properties properties = new Properties();
+        properties.put("include","job.config");
+
+        return getEntityFromUri(Build.class, Arrays.asList(TravisConstants.BUILD_ENDPOINT, String.valueOf(id)), properties);
     }
 
     public Optional<Build> lastBuildFromMasterBranch(Repository repository) {
@@ -68,6 +70,7 @@ public class BuildHelper extends EntityHelper {
         properties.put("branch.name", repository.getDefaultBranch().getName());
         properties.put("limit", 1);
         properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
+        properties.put("include","job.config");
         Optional<Builds> builds = getEntityFromUri(Builds.class, Arrays.asList(
                 TravisConstants.REPO_ENDPOINT,
                 String.valueOf(repository.getId()),
@@ -88,6 +91,7 @@ public class BuildHelper extends EntityHelper {
         properties.put("limit", 1);
         properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
         properties.put("state", stateType.name().toLowerCase());
+        properties.put("include","job.config");
         Optional<Builds> builds = getEntityFromUri(Builds.class, Arrays.asList(
                 TravisConstants.REPO_ENDPOINT,
                 String.valueOf(repository.getId()),
@@ -174,6 +178,7 @@ public class BuildHelper extends EntityHelper {
                 properties.put("event_type", originalBuild.getEventType().name().toLowerCase());
             }
         }
+        properties.put("include","job.config");
 
         Optional<Builds> buildsOptional = getEntityFromUri(Builds.class, pathParameter, properties);
 

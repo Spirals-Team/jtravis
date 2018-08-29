@@ -105,6 +105,17 @@ public final class Commit extends EntityUnary {
     }
 
     @Override
+    protected void dispatchJTravisToChildren() {
+        if (this.committer != null) {
+            this.committer.setJtravis(this.getJtravis());
+        }
+
+        if (this.author != null) {
+            this.author.setJtravis(this.getJtravis());
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

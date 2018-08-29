@@ -2,7 +2,6 @@ package fr.inria.jtravis.entities;
 
 import com.google.gson.annotations.Expose;
 import fr.inria.jtravis.RequestAPI;
-import fr.inria.jtravis.entities.v2.JobV2;
 
 import java.util.Date;
 import java.util.Objects;
@@ -50,6 +49,9 @@ public final class Job extends EntityUnary {
 
     @Expose
     private Date updatedAt;
+
+    @Expose
+    private Config config;
 
     private transient Log log;
     private transient BuildTool buildTool;
@@ -104,6 +106,10 @@ public final class Job extends EntityUnary {
         return updatedAt;
     }
 
+    public Config getConfig() {
+        return config;
+    }
+
     // SETTER
 
     protected void setAllowFailure(boolean allowFailure) {
@@ -152,6 +158,10 @@ public final class Job extends EntityUnary {
 
     protected void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    protected void setConfig(Config config) {
+        this.config = config;
     }
 
     @RequestAPI
@@ -203,23 +213,50 @@ public final class Job extends EntityUnary {
     }
 
     /**
-     * This method will request Travis API V2 to get the information about the language
-     * as it is not natively supported with Travis API V3
+     * This method retrieve the language information from the configuration. It might need to refresh the entity.
      * @return The string corresponding to the language or an empty string
      */
     @RequestAPI
     public String getLanguage() {
         if (this.getJtravis() != null) {
-            Optional<JobV2> optionalJobV2 = this.getJtravis().job().fromIdV2(this.getId());
-            if (optionalJobV2.isPresent()) {
-                JobV2 jobV2 = optionalJobV2.get();
-                if (jobV2.getConfig() != null) {
-                    return jobV2.getConfig().getLanguage();
-                }
+            if (this.getRepresentation() == RepresentationType.MINIMAL) {
+                this.getJtravis().refresh(this);
             }
+            return this.getConfig().getLanguage();
         }
 
         return "";
+    }
+
+    /**
+     * We override the getUri method to always include job.config.
+     */
+    @Override
+    public String getUri() {
+        return super.getUri() + "?include=job.config";
+    }
+
+    @Override
+    protected void dispatchJTravisToChildren() {
+        if (this.repository != null) {
+            this.repository.setJtravis(this.getJtravis());
+        }
+
+        if (this.build != null) {
+            this.build.setJtravis(this.getJtravis());
+        }
+
+        if (this.commit != null) {
+            this.commit.setJtravis(this.getJtravis());
+        }
+
+        if (this.owner != null) {
+            this.owner.setJtravis(this.getJtravis());
+        }
+
+        if (this.log != null) {
+            this.log.setJtravis(this.getJtravis());
+        }
     }
 
     @Override
@@ -241,13 +278,14 @@ public final class Job extends EntityUnary {
                 Objects.equals(createdAt, job.createdAt) &&
                 Objects.equals(updatedAt, job.updatedAt) &&
                 Objects.equals(log, job.log) &&
+                Objects.equals(config, job.config) &&
                 buildTool == job.buildTool;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), allowFailure, number, state, startedAt, finishedAt, build, queue, repository, commit, owner, createdAt, updatedAt, log, buildTool);
+        return Objects.hash(super.hashCode(), allowFailure, number, state, startedAt, finishedAt, build, queue, repository, commit, owner, createdAt, updatedAt, log, config, buildTool);
     }
 
     @Override
@@ -266,6 +304,7 @@ public final class Job extends EntityUnary {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", log=" + log +
+                ", config=" + config +
                 ", buildTool=" + buildTool +
                 '}';
     }

@@ -31,7 +31,7 @@ public class JobHelperTest extends AbstractTest {
 
         assertEquals(TestJob.standardExpectedJob(), job);
         RecordedRequest request1 = getMockServer().takeRequest();
-        assertEquals(this.expectedUrl(TravisConstants.JOB_ENDPOINT, id), request1.getPath());
+        assertEquals(this.expectedUrl(TravisConstants.JOB_ENDPOINT, id) + "?include=job.config", request1.getPath());
     }
 
     @Category(UnitTest.class)
@@ -48,6 +48,6 @@ public class JobHelperTest extends AbstractTest {
 
         assertEquals(TestJob.standardExpectedJob(), job);
         RecordedRequest request1 = getMockServer().takeRequest();
-        assertEquals(this.expectedUrl(TravisConstants.JOB_ENDPOINT, String.valueOf(id)), request1.getPath());
+        assertEquals(this.expectedUrl(TravisConstants.JOB_ENDPOINT, String.valueOf(id)) + "?include=job.config", request1.getPath());
     }
 }
