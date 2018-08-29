@@ -46,8 +46,13 @@ public abstract class Entity {
     }
 
     protected void setJtravis(JTravis jtravis) {
-        this.jtravis = jtravis;
+        if (this.jtravis == null) {
+            this.jtravis = jtravis;
+            this.dispatchJTravisToChildren();
+        }
     }
+
+    protected abstract void dispatchJTravisToChildren();
 
     public List<Warning> getWarnings() {
         if (warnings == null) {

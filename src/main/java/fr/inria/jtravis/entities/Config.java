@@ -1,10 +1,10 @@
-package fr.inria.jtravis.entities.v2;
-
-import com.google.gson.annotations.Expose;
+package fr.inria.jtravis.entities;
 
 import java.util.Objects;
 
-public final class ConfigV2 {
+import com.google.gson.annotations.Expose;
+
+public final class Config {
 
     @Expose
     private String language;
@@ -17,13 +17,12 @@ public final class ConfigV2 {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final ConfigV2 configV2 = (ConfigV2) o;
-        return Objects.equals(language, configV2.language);
+        final Config config = (Config) o;
+        return Objects.equals(language, config.language);
     }
 
     @Override
     public int hashCode() {
-
         return Objects.hash(language);
     }
 }

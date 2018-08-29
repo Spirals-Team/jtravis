@@ -134,6 +134,17 @@ public final class Repository extends EntityUnary {
     }
 
     @Override
+    protected void dispatchJTravisToChildren() {
+        if (this.owner != null) {
+            this.owner.setJtravis(this.getJtravis());
+        }
+
+        if (this.defaultBranch != null) {
+            this.defaultBranch.setJtravis(this.getJtravis());
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

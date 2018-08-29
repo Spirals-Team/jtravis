@@ -32,12 +32,4 @@ public abstract class EntityCollection extends Entity {
 
         return Objects.hash(pagination);
     }
-    
-    @Override
-    protected void setJtravis(JTravis jTravis) {
-        super.setJtravis(jTravis);
-        this.dispatchJTravisToChildren();
-    }
-
-    protected abstract void dispatchJTravisToChildren();
 }

@@ -279,6 +279,35 @@ public final class Build extends EntityUnary implements Comparable<Build> {
     }
 
     @Override
+    protected void dispatchJTravisToChildren() {
+        if (this.repository != null) {
+            this.repository.setJtravis(this.getJtravis());
+        }
+
+        if (this.branch != null) {
+            this.branch.setJtravis(this.getJtravis());
+        }
+
+        if (this.commit != null) {
+            this.commit.setJtravis(this.getJtravis());
+        }
+
+        if (this.tag != null) {
+            this.tag.setJtravis(this.getJtravis());
+        }
+
+        if (this.createdBy != null) {
+            this.createdBy.setJtravis(this.getJtravis());
+        }
+
+        if (this.jobs != null) {
+            for (Job job : this.jobs) {
+                job.setJtravis(this.getJtravis());
+            }
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

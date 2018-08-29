@@ -138,6 +138,18 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
     @Test
     @Category(IntegrationTest.class)
+    public void testGetLanguageFromJobOfBuild() {
+        int buildId = 185719843;
+        Optional<Build> obtainedBuildOpt = getJTravis().build().fromId(buildId);
+        assertTrue(obtainedBuildOpt.isPresent());
+        Build obtainedBuild = obtainedBuildOpt.get();
+
+        assertEquals(1, obtainedBuild.getJobs().size());
+        assertEquals("java", obtainedBuild.getJobs().get(0).getLanguage());
+    }
+
+    @Test
+    @Category(IntegrationTest.class)
     public void testGetLastFailingBuildBeforeGivenBuild() {
         int buildId = 197104485;
         Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
@@ -702,6 +714,22 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
         List<Build> builds = optionalBuilds.get().getBuilds();
         assertEquals(3, builds.size());
+
+    }
+
+    @Test
+    @Category(IntegrationTest.class)
+    public void testLanguageOnBuildsJobs() {
+        String spoonSlug = "INRIA/spoon";
+        Optional<Repository> repositoryOptional = this.getJTravis().repository().fromSlug(spoonSlug);
+        assertTrue(repositoryOptional.isPresent());
+        Optional<Builds> optionalBuilds = this.getJTravis().build().fromRepository(repositoryOptional.get(), 1);
+        assertTrue(optionalBuilds.isPresent());
+
+        List<Build> builds = optionalBuilds.get().getBuilds();
+        assertEquals(1, builds.size());
+
+        assertEquals("java", builds.get(0).getJobs().get(0).getLanguage());
     }
 
 }
