@@ -9,6 +9,7 @@ import fr.inria.jtravis.entities.BuildTool;
 import fr.inria.jtravis.entities.Builds;
 import fr.inria.jtravis.entities.EventType;
 import fr.inria.jtravis.entities.Job;
+import fr.inria.jtravis.entities.Log;
 import fr.inria.jtravis.entities.Repository;
 import fr.inria.jtravis.entities.StateType;
 import fr.inria.jtravis.parsers.TestUtils;
@@ -730,6 +731,32 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         assertEquals(1, builds.size());
 
         assertEquals("java", builds.get(0).getJobs().get(0).getLanguage());
+    }
+
+    @Test
+    @Category(IntegrationTest.class)
+    public void testGetBeforeGetLog() {
+        long buildId = 324525330;
+        Optional<Build> buildOptional = this.getJTravis().build().fromId(buildId);
+        assertTrue(buildOptional.isPresent());
+
+        Build build = buildOptional.get();
+        assertEquals("INRIA/spoon", build.getRepository().getSlug());
+
+        Optional<Build> optionalBeforeBuild = this.getJTravis().build().getBefore(build, true);
+        assertTrue(optionalBeforeBuild.isPresent());
+
+        Build beforeBuild = optionalBeforeBuild.get();
+        assertEquals("INRIA/spoon", beforeBuild.getRepository().getSlug());
+
+        List<Job> jobs = beforeBuild.getJobs();
+        assertFalse(jobs.isEmpty());
+
+        for (Job job : jobs) {
+            this.getJTravis().refresh(job);
+            Optional<Log> optionalLog = job.getLog();
+            assertTrue(optionalLog.isPresent());
+        }
     }
 
 }
