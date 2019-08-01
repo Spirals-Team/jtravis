@@ -292,7 +292,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         assertTrue(passingBuildOpt.isPresent());
         Build passingBuild = passingBuildOpt.get();
 
-        int expectedBuildId = 208116073;
+        int expectedBuildId = 207455891;
         Optional<Build> obtainedBuildOpt = getJTravis().build().getAfter(passingBuild, true);
 
         assertTrue(obtainedBuildOpt.isPresent());
