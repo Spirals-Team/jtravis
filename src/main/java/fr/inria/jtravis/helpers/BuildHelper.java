@@ -71,7 +71,7 @@ public class BuildHelper extends EntityHelper {
         properties.put("limit", 1);
         properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
         properties.put("include","job.config");
-        Optional<Builds> builds = getEntityFromUri(Builds.class, Arrays.asList(
+        Optional<Builds> builds = getEntityFromUri(Builds.class, Arrays.asList("v3",
                 TravisConstants.REPO_ENDPOINT,
                 String.valueOf(repository.getId()),
                 TravisConstants.BUILDS_ENDPOINT),

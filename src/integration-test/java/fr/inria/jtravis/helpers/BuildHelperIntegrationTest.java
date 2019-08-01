@@ -686,7 +686,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         Optional<Repository> repositoryOptional = this.getJTravis().repository().fromSlug(slugFlink);
         assertTrue(repositoryOptional.isPresent());
 
-        Optional<Build> lastBuild = repositoryOptional.get().getLastBuild(false);
+        Optional<Build> lastBuild = repositoryOptional.get().getLastBuild();
         assertTrue(lastBuild.isPresent());
     }
 
@@ -699,7 +699,12 @@ public class BuildHelperIntegrationTest extends AbstractTest {
         Optional<Repository> repositoryOptional = this.getJTravis().repository().fromSlug(slugFlink);
         assertTrue(repositoryOptional.isPresent());
 
-        Optional<Build> lastBuild = repositoryOptional.get().getLastBuild(false);
+        Optional<Build> lastBuild = repositoryOptional.get().getLastBuild();
+        assertTrue(lastBuild.isPresent());
+
+        // testing the latest builds on master
+        lastBuild = repositoryOptional.get().getLastBuildOnMaster();
+        assertEquals("master", lastBuild.get().getBranch().getName());
         assertTrue(lastBuild.isPresent());
     }
 
