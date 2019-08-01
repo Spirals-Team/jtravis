@@ -193,18 +193,27 @@ public class BuildHelper extends EntityHelper {
             if (buildList.isEmpty()) {
                 isFinished = true;
             } else {
-                Build lastBuild = buildList.get(buildList.size() - 1);
+                Build lastBuild = buildList.get(buildList.size()-1);
 
                 // we ensure that the build we target is in the current page
                 if (buildComparator.compare(lastBuild, originalBuild) > 0) {
                     for (Build build : buildList) {
 
                         // we do not want to get the originalBuild and if it does not respect the time criteria we don't want it either
-                        if (build.getId() == originalBuild.getId() || buildComparator.compare(build, originalBuild) <= 0) {
+                        if (build.getId() == originalBuild.getId() ||  buildComparator.compare(build, originalBuild) <= 0) {
                             continue;
                         }
 
                         if (sameBranch) {
+                            if (originalBuild.isPullRequest()) {
+
+                                // if we want the same branch as a pull request we have to check the PR number
+                                if (!build.isPullRequest() || originalBuild.getPullRequestNumber() != build.getPullRequestNumber()) {
+                                    continue;
+                                }
+                            } else if (build.isPullRequest()) {
+                                continue;
+                            }
                             if (build.getBranch().getName().equals(originalBuild.getBranch().getName())) {
                                 return Optional.of(build);
                             }
@@ -214,6 +223,7 @@ public class BuildHelper extends EntityHelper {
                     }
                 }
             }
+
             if (!isFinished) {
                 buildsOptional = this.next(builds);
             }

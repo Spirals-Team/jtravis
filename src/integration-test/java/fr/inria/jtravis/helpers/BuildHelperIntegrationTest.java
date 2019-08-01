@@ -43,7 +43,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
 
         assertTrue(obtainedBuildOpt.isPresent());
         Build obtainedBuild = obtainedBuildOpt.get();
-        assertEquals(BuildStub.expectedBuildWithoutPR(), obtainedBuild);
+        assertEquals(BuildStub.expectedBuildWithoutPR().getId(), obtainedBuild.getId());
     }
 
     @Test
@@ -272,12 +272,12 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     @Test
     @Category(IntegrationTest.class)
     public void testGetLastBuildJustBeforeGivenBuildOnTheSameBranch() {
-        int buildId = 208181440;
+        int buildId = 207113449;
         Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
         assertTrue(passingBuildOpt.isPresent());
         Build passingBuild = passingBuildOpt.get();
 
-        int expectedBuildId = 208116073;
+        int expectedBuildId = 207103619;
         Optional<Build> obtainedBuildOpt = getJTravis().build().getBefore(passingBuild, true);
 
         assertTrue(obtainedBuildOpt.isPresent());
@@ -287,12 +287,12 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     @Test
     @Category(IntegrationTest.class)
     public void testGetNextBuildJustAfterGivenBuildOnTheSameBranch() {
-        int buildId = 208116073;
+        int buildId = 207113449;
         Optional<Build> passingBuildOpt = getJTravis().build().fromId(buildId);
         assertTrue(passingBuildOpt.isPresent());
         Build passingBuild = passingBuildOpt.get();
 
-        int expectedBuildId = 208181440;
+        int expectedBuildId = 208116073;
         Optional<Build> obtainedBuildOpt = getJTravis().build().getAfter(passingBuild, true);
 
         assertTrue(obtainedBuildOpt.isPresent());
@@ -422,7 +422,7 @@ public class BuildHelperIntegrationTest extends AbstractTest {
     @Category(IntegrationTest.class)
     public void testGetLastBuildFromRenamedRepository() {
         String oldSlug = "alibaba/dubbo";
-        String newSlug = "apache/incubator-dubbo";
+        String newSlug = "apache/dubbo";
 
         Optional<Build> buildOptional = getJTravis().build().last(oldSlug);
 
