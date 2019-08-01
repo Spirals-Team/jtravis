@@ -81,7 +81,7 @@ public class TestRepository extends AbstractTest {
         assertEquals(getStandardExpectedRepo(), minimalRepo);
 
         RecordedRequest request1 = getMockServer().takeRequest();
-        assertEquals("/fake"+expectedMinimalRepo.getUri(), request1.getPath());
+        assertEquals("/fake/v3"+expectedMinimalRepo.getUri(), request1.getPath());
 
         assertTrue(getJTravis().refresh(minimalRepo));
     }

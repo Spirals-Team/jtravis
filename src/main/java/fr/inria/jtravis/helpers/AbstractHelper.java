@@ -10,6 +10,7 @@ import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.TravisConfig;
 import fr.inria.jtravis.TravisConstants;
 import okhttp3.Call;
+import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -29,7 +30,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
+import static fr.inria.jtravis.helpers.AbstractHelper.API_VERSION.v2;
+import static fr.inria.jtravis.helpers.AbstractHelper.API_VERSION.v3;
+
 public abstract class AbstractHelper {
+    enum API_VERSION {v2, v3}
+
     private static final String USER_AGENT = "MyClient/1.0.0";
     private JTravis jTravis;
 
@@ -49,21 +55,25 @@ public abstract class AbstractHelper {
         return LoggerFactory.getLogger(this.getClass());
     }
 
-    private Request.Builder requestBuilder(String url, boolean useV2) {
+    /** @param url starts with slash (no protocol yet, no server name) */
+    private Request requestBuilder(String url, API_VERSION version) {
         Request.Builder builder = new Request.Builder()
                 .header("User-Agent",USER_AGENT);
 
-        if (useV2) {
+        if (version == v3 && !url.startsWith("/v3")) {
+            url = "/v3" + url;
+        } else if (version == v2) {
             builder.header("Accept", TravisConstants.TRAVIS_API_V2_ACCEPT_APP);
-        } else {
-            builder.header("Travis-API-Version", "3");
         }
+
+        // now we can add the endpoint
+        url = this.getConfig().getTravisEndpoint() + url;
 
         if (this.getConfig().getTravisToken() != null && !this.getConfig().getTravisToken().isEmpty()) {
             builder.header("Authorization", this.getConfig().getTravisToken());
         }
 
-        return builder.url(url);
+        return builder.url(HttpUrl.parse(url)).get().build();
     }
 
     private void checkResponse(Response response) throws IOException {
@@ -75,27 +85,12 @@ public abstract class AbstractHelper {
         }
     }
 
-    protected String rawGet(String url) throws IOException {
-        Request request = new Request.Builder().url(url).build();
-        Call call = this.getjTravis().getHttpClient().newCall(request);
-        long dateBegin = new Date().getTime();
-        this.getLogger().debug("Execute raw get request to the following URL: "+url);
-        Response response = call.execute();
-        long dateEnd = new Date().getTime();
-        this.getLogger().debug("Raw get request to :"+url+" done after "+(dateEnd-dateBegin)+" ms");
-        checkResponse(response);
-        ResponseBody responseBody = response.body();
-        String result = responseBody.string();
-        response.close();
-        return result;
-    }
-
     protected String get(String url) throws IOException {
-        return this.get(url, false, TravisConstants.DEFAULT_NUMBER_OF_RETRY);
+        return this.get(url, v3, TravisConstants.DEFAULT_NUMBER_OF_RETRY);
     }
 
-    protected String get(String url, boolean useV2, int numberOfRetry) throws IOException {
-        Request request = this.requestBuilder(url, useV2).get().build();
+    protected String get(String url, API_VERSION version, int numberOfRetry) throws IOException {
+        Request request = this.requestBuilder(url, version);
         try {
             Call call = this.getjTravis().getHttpClient().newCall(request);
             long dateBegin = new Date().getTime();
@@ -118,8 +113,14 @@ public abstract class AbstractHelper {
             if (numberOfRetry <= 0) {
                 throw e;
             } else {
-                this.getLogger().debug("Error while executing the request ("+e.getMessage()+"). Let's try it again.");
-                return this.get(url, useV2, numberOfRetry-1);
+                this.getLogger().debug("Error while executing the request " +url+ " ("+e.getMessage()+"). Let's wait and try it again.");
+                // sleeping for some time before retrying (in case of 429 or 500)
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e1) {
+                    throw new RuntimeException(e1);
+                }
+                return this.get(url, version, numberOfRetry-1);
             }
         }
     }
@@ -165,7 +166,7 @@ public abstract class AbstractHelper {
             result = "/"+result;
         }
 
-        return this.getConfig().getTravisEndpoint()+result;
+        return result;
     }
 
     public Optional<String> getEncodedSlug(String slug) {

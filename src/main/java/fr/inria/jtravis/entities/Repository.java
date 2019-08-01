@@ -123,14 +123,12 @@ public final class Repository extends EntityUnary {
      * @param onMaster True if the last build should be search only on the master branch
      * @return The last build
      */
-    public Optional<Build> getLastBuild(boolean onMaster) {
-        // first case: we should get the last build on master
-        if (onMaster) {
-            return this.getJtravis().build().lastBuildFromMasterBranch(this);
-        // second case: we should get the last build, no matter if it's on master or not
-        } else {
+    public Optional<Build> getLastBuild() {
             return this.getJtravis().build().last(this.getSlug());
-        }
+    }
+
+    public Optional<Build> getLastBuildOnMaster() {
+        return this.getJtravis().build().lastBuildFromMasterBranch(this);
     }
 
     @Override

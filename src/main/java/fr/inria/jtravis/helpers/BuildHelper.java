@@ -33,13 +33,6 @@ public class BuildHelper extends EntityHelper {
         super(jTravis);
     }
 
-    public Optional<Builds> fromRepository(Repository repository) {
-        return getEntityFromUri(Builds.class, Arrays.asList(
-                TravisConstants.REPO_ENDPOINT,
-                String.valueOf(repository.getId()),
-                TravisConstants.BUILDS_ENDPOINT), null);
-    }
-
     public Optional<Builds> fromRepository(Repository repository, int limit) {
         if (limit <= 0) {
             throw new IllegalArgumentException("The limit should be > 0. Current value: "+limit);
@@ -214,7 +207,7 @@ public class BuildHelper extends EntityHelper {
                             } else if (build.isPullRequest()) {
                                 continue;
                             }
-                            if (build.getBranch().equals(originalBuild.getBranch())) {
+                            if (build.getBranch().getName().equals(originalBuild.getBranch().getName())) {
                                 return Optional.of(build);
                             }
                         } else {
