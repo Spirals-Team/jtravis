@@ -118,7 +118,13 @@ public abstract class AbstractHelper {
             if (numberOfRetry <= 0) {
                 throw e;
             } else {
-                this.getLogger().debug("Error while executing the request ("+e.getMessage()+"). Let's try it again.");
+                this.getLogger().debug("Error while executing the request " +url+ " ("+e.getMessage()+"). Let's wait and try it again.");
+                // sleeping for some time before retrying (in case of 429 or 500)
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e1) {
+                    throw new RuntimeException(e1);
+                }
                 return this.get(url, useV2, numberOfRetry-1);
             }
         }

@@ -62,7 +62,7 @@ public class BuildHelper extends EntityHelper {
         Properties properties = new Properties();
         properties.put("include","job.config");
 
-        return getEntityFromUri(Build.class, Arrays.asList(TravisConstants.BUILD_ENDPOINT, String.valueOf(id)), properties);
+        return getEntityFromUri(Build.class, Arrays.asList("v3", TravisConstants.BUILD_ENDPOINT, String.valueOf(id)), properties);
     }
 
     public Optional<Build> lastBuildFromMasterBranch(Repository repository) {
