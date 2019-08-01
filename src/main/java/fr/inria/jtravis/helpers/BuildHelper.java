@@ -205,7 +205,7 @@ public class BuildHelper extends EntityHelper {
                         }
 
                         if (sameBranch) {
-                            if (build.getBranch().equals(originalBuild.getBranch())) {
+                            if (build.getBranch().getName().equals(originalBuild.getBranch().getName())) {
                                 return Optional.of(build);
                             }
                         } else {
