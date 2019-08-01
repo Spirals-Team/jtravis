@@ -40,7 +40,7 @@ public class RepositoryHelperIntegrationTest extends AbstractTest {
         assertTrue(repositoryOptional.isPresent());
 
         Repository repository = repositoryOptional.get();
-        assertEquals("apache/incubator-dubbo", repository.getSlug());
+        assertEquals("apache/dubbo", repository.getSlug());
         assertEquals(515461, repository.getId());
     }
 

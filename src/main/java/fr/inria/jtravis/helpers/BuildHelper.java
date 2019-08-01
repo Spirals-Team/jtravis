@@ -33,13 +33,6 @@ public class BuildHelper extends EntityHelper {
         super(jTravis);
     }
 
-    public Optional<Builds> fromRepository(Repository repository) {
-        return getEntityFromUri(Builds.class, Arrays.asList(
-                TravisConstants.REPO_ENDPOINT,
-                String.valueOf(repository.getId()),
-                TravisConstants.BUILDS_ENDPOINT), null);
-    }
-
     public Optional<Builds> fromRepository(Repository repository, int limit) {
         if (limit <= 0) {
             throw new IllegalArgumentException("The limit should be > 0. Current value: "+limit);
@@ -62,7 +55,7 @@ public class BuildHelper extends EntityHelper {
         Properties properties = new Properties();
         properties.put("include","job.config");
 
-        return getEntityFromUri(Build.class, Arrays.asList("v3", TravisConstants.BUILD_ENDPOINT, String.valueOf(id)), properties);
+        return getEntityFromUri(Build.class, Arrays.asList(TravisConstants.BUILD_ENDPOINT, String.valueOf(id)), properties);
     }
 
     public Optional<Build> lastBuildFromMasterBranch(Repository repository) {
@@ -71,7 +64,7 @@ public class BuildHelper extends EntityHelper {
         properties.put("limit", 1);
         properties.put("sort_by", new BuildsSorting().byFinishedAtDesc().build());
         properties.put("include","job.config");
-        Optional<Builds> builds = getEntityFromUri(Builds.class, Arrays.asList("v3",
+        Optional<Builds> builds = getEntityFromUri(Builds.class, Arrays.asList(
                 TravisConstants.REPO_ENDPOINT,
                 String.valueOf(repository.getId()),
                 TravisConstants.BUILDS_ENDPOINT),
