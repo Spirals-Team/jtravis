@@ -60,14 +60,14 @@ public abstract class AbstractHelper {
         Request.Builder builder = new Request.Builder()
                 .header("User-Agent",USER_AGENT);
 
-        System.out.println(url);
         if (version == v3 && !url.startsWith("/v3")) {
             url = "/v3" + url;
         } else if (version == v2) {
             builder.header("Accept", TravisConstants.TRAVIS_API_V2_ACCEPT_APP);
         }
-        url = this.getConfig().getTravisEndpoint() + "/v3" + url;
-        System.out.println("++"+url);
+
+        // now we can add the endpoint
+        url = this.getConfig().getTravisEndpoint() + url;
 
         if (this.getConfig().getTravisToken() != null && !this.getConfig().getTravisToken().isEmpty()) {
             builder.header("Authorization", this.getConfig().getTravisToken());

@@ -71,11 +71,13 @@ public class AbstractTest {
             result = uriComponent[0];
         }
 
+        result = PREFIX_FAKE_URL+"/v3/"+result;
+
         if (!result.startsWith("/")) {
             result = "/"+result;
         }
 
-        return "/"+PREFIX_FAKE_URL+result;
+        return result;
     }
 
     protected String getFileContent(String filePath) {
