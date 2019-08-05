@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import fr.inria.jtravis.API_VERSION;
 import fr.inria.jtravis.Http404Exception;
 import fr.inria.jtravis.JTravis;
 import fr.inria.jtravis.TravisConfig;
@@ -30,11 +31,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
-import static fr.inria.jtravis.helpers.AbstractHelper.API_VERSION.v2;
-import static fr.inria.jtravis.helpers.AbstractHelper.API_VERSION.v3;
+import static fr.inria.jtravis.API_VERSION.v2;
+import static fr.inria.jtravis.API_VERSION.v3;
 
 public abstract class AbstractHelper {
-    enum API_VERSION {v2, v3}
 
     private static final String USER_AGENT = "MyClient/1.0.0";
     private JTravis jTravis;
@@ -96,7 +96,7 @@ public abstract class AbstractHelper {
             long dateBegin = new Date().getTime();
             Response response = call.execute(); // might throw IOException (e.g. in case of timeout)
             long dateEnd = new Date().getTime();
-            this.getLogger().debug("Get request to :" + url + " done after " + (dateEnd - dateBegin) + " ms");
+            this.getLogger().debug("Get request to :" + request.url().toString() + " done after " + (dateEnd - dateBegin) + " ms");
             checkResponse(response); // might throw IOException and Http404Exception
             ResponseBody responseBody = response.body();
             String result = responseBody.string();
