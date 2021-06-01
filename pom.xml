@@ -77,6 +77,13 @@
         <maven-coveralls-plugin.version>4.0.0</maven-coveralls-plugin.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>repo.jenkins-ci.org</id>
+            <url>https://repo.jenkins-ci.org/public/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
